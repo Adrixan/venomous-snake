@@ -12,10 +12,12 @@ const CHAR_DELAY_MS = 30;
 
 const PORTRAIT_COLORS: Record<string, string> = {
   cipher: '#00e5ff',
+  handler: '#f5a623',
+  snake: '#c0392b',
 };
 
 export function CutscenePlayer({ cutscene, onComplete }: CutscenePlayerProps): React.JSX.Element {
-  const { t } = useTranslation('dialog');
+  const { t } = useTranslation(['dialog', 'story']);
   const [sceneIndex, setSceneIndex] = useState(0);
   const [displayedText, setDisplayedText] = useState('');
   const [isTyping, setIsTyping] = useState(true);
@@ -94,6 +96,7 @@ export function CutscenePlayer({ cutscene, onComplete }: CutscenePlayerProps): R
     ? (PORTRAIT_COLORS[currentScene.portraitId] ?? '#00ff88')
     : '#00ff88';
   const speakerName = currentScene.speakerNameKey ? t(currentScene.speakerNameKey) : undefined;
+  const portraitBg = `${portraitColor}1e`;
 
   return (
     <div
@@ -170,7 +173,7 @@ export function CutscenePlayer({ cutscene, onComplete }: CutscenePlayerProps): R
               width: 100,
               height: 100,
               flexShrink: 0,
-              background: `rgba(${portraitColor === '#00e5ff' ? '0,229,255' : '0,255,136'},0.12)`,
+              background: portraitBg,
               border: `2px solid ${portraitColor}`,
               display: 'flex',
               alignItems: 'center',

@@ -10,3 +10,16 @@ export type { SkillNode, SkillCategory } from './SkillTree';
 export { AchievementManager, ACHIEVEMENTS } from './Achievements';
 export type { Achievement, AchievementTrigger } from './Achievements';
 export { ChallengeTimer } from './ChallengeTimer';
+export {
+  floorConfigs,
+  getFloorConfig,
+  getChallengesForFloor,
+  isFloorComplete,
+  getNextUnlockedFloor,
+  getFloorProgress,
+  getFloorNumberFromId,
+  getFloorIdFromNumber,
+} from './FloorChallengeMap';
+export type { FloorConfig } from './FloorChallengeMap';
+export { FloorGateSystem } from './FloorGateSystem';
+export type { FloorGateResult } from './FloorGateSystem';

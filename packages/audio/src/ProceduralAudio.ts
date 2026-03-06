@@ -380,29 +380,48 @@ export class ProceduralAudio {
   // ---------------------------------------------------------------------------
 
   /**
-   * Low-frequency drone — layered saws + sines with subtle noise.
+   * Low-frequency drone — layered saws + sines with per-layer pitch LFO and
+   * a slowly sweeping lowpass filter for organic movement.
    * Designed to loop seamlessly (6 s buffer).
    */
   static generateAmbientHum(): Promise<AudioBuffer | null> {
     return ProceduralAudio.render('ambient_hum', 6.0, (ctx) => {
       const dur = 6.0;
 
-      const layers: Array<[OscillatorType, number, number, number]> = [
-        ['sawtooth', 40, -3, 0.09],
-        ['sine', 55, 0, 0.13],
-        ['sawtooth', 80, 4, 0.06],
-        ['sine', 110, -6, 0.04],
+      // [type, freq, detuneBase, vol, lfoRate (Hz), lfoDepth (cents)]
+      const layers: Array<[OscillatorType, number, number, number, number, number]> = [
+        ['sawtooth', 40, -3, 0.09, 0.09, 5],
+        ['sine', 55, 0, 0.13, 0.12, 4],
+        ['sawtooth', 80, 4, 0.06, 0.07, 6],
+        ['sine', 110, -6, 0.04, 0.14, 3],
       ];
 
-      for (const [type, freq, detune, vol] of layers) {
+      for (const [type, freq, detuneBase, vol, lfoRate, lfoDepth] of layers) {
         const osc = ctx.createOscillator();
         osc.type = type;
         osc.frequency.value = freq;
-        osc.detune.value = detune;
+        osc.detune.value = detuneBase;
 
+        // Subtle pitch LFO — adds slow vibrato so the drone breathes
+        const pitchLfo = ctx.createOscillator();
+        pitchLfo.type = 'sine';
+        pitchLfo.frequency.value = lfoRate;
+
+        const pitchDepth = ctx.createGain();
+        pitchDepth.gain.value = lfoDepth;
+
+        pitchLfo.connect(pitchDepth);
+        pitchDepth.connect(osc.detune);
+        pitchLfo.start(0);
+        pitchLfo.stop(dur);
+
+        // Slowly sweeping lowpass — filter opens and closes over the loop
         const lpf = ctx.createBiquadFilter();
         lpf.type = 'lowpass';
-        lpf.frequency.value = 320;
+        lpf.frequency.setValueAtTime(180, 0);
+        lpf.frequency.linearRampToValueAtTime(440, dur * 0.55);
+        lpf.frequency.linearRampToValueAtTime(200, dur);
+        lpf.Q.value = 1.0;
 
         const gain = ctx.createGain();
         gain.gain.setValueAtTime(0, 0);
@@ -417,11 +436,10 @@ export class ProceduralAudio {
         osc.stop(dur);
       }
 
-      // Subtle noise under-layer
+      // Subtle noise under-layer with slowly sweeping filter
       const noiseLen = Math.ceil(SAMPLE_RATE * dur);
       const noiseBuf = ctx.createBuffer(1, noiseLen, SAMPLE_RATE);
       const noiseData = whiteNoise(noiseLen);
-      // Scale noise down
       for (let i = 0; i < noiseData.length; i++) {
         noiseData[i] = (noiseData[i] ?? 0) * 0.018;
       }
@@ -432,7 +450,9 @@ export class ProceduralAudio {
 
       const noiseLpf = ctx.createBiquadFilter();
       noiseLpf.type = 'lowpass';
-      noiseLpf.frequency.value = 140;
+      noiseLpf.frequency.setValueAtTime(90, 0);
+      noiseLpf.frequency.linearRampToValueAtTime(210, dur * 0.6);
+      noiseLpf.frequency.linearRampToValueAtTime(100, dur);
 
       noiseSrc.connect(noiseLpf);
       noiseLpf.connect(ctx.destination);
@@ -441,131 +461,229 @@ export class ProceduralAudio {
   }
 
   /**
-   * Simple cyberpunk beat — kick + snare + hi-hat + sawtooth bass line.
-   * Designed to loop seamlessly (4 s / 120 BPM buffer).
+   * Cyberpunk noir background music — deep sub drone, sawtooth bass line,
+   * soft kick, swung hi-hats, atmospheric pad and noise sweep accents.
+   *
+   * 16-second loopable buffer at 90 BPM (6 bars of 4/4).
+   * Structure: bars 1-3 (section A) → bars 4-6 (section B with 8th-note fills).
+   * Evokes Blade Runner / Deus Ex atmosphere.
    */
   static generateCyberpunkBeat(): Promise<AudioBuffer | null> {
-    return ProceduralAudio.render('cyberpunk_beat', 4.0, (ctx) => {
-      const dur = 4.0;
-      const beatDur = 0.5; // 120 BPM
-      const numBeats = Math.floor(dur / beatDur);
+    const dur = 16.0;
+    const beatDur = 60 / 90; // ≈ 0.6667 s — 90 BPM
+    const barDur = beatDur * 4; // ≈ 2.6667 s
+    const sixteenth = beatDur / 4; // ≈ 0.1667 s
+    const numBars = Math.round(dur / barDur); // 6
+    const totalSixteenths = Math.round(dur / sixteenth); // 96
 
-      for (let beat = 0; beat < numBeats; beat++) {
-        const t = beat * beatDur;
+    return ProceduralAudio.render('cyberpunk_beat', dur, (ctx) => {
+      // ── 1. Sub-bass pad — deep sine drone with slow amplitude modulation ──
+      const subOsc = ctx.createOscillator();
+      subOsc.type = 'sine';
+      subOsc.frequency.value = 45; // ~A0 — deep sub-bass
 
-        // Kick on even beats
-        if (beat % 2 === 0) {
-          const kick = ctx.createOscillator();
-          kick.type = 'sine';
-          kick.frequency.setValueAtTime(155, t);
-          kick.frequency.exponentialRampToValueAtTime(38, t + 0.18);
+      const amLfo = ctx.createOscillator();
+      amLfo.type = 'sine';
+      amLfo.frequency.value = 0.13; // ~7.7-second breathing cycle
 
-          const kickGain = ctx.createGain();
-          kickGain.gain.setValueAtTime(0.85, t);
-          kickGain.gain.exponentialRampToValueAtTime(0.001, t + 0.32);
+      const amDepth = ctx.createGain();
+      amDepth.gain.value = 0.03; // AM depth — gain swings ±0.03
 
-          kick.connect(kickGain);
-          kickGain.connect(ctx.destination);
-          kick.start(t);
-          kick.stop(t + 0.32);
+      const subGain = ctx.createGain();
+      subGain.gain.value = 0.07; // base gain, LFO adds to this
 
-          // Punch click
-          const clickDur = 0.022;
-          const clickLen = Math.ceil(SAMPLE_RATE * clickDur);
-          const clickBuf = ctx.createBuffer(1, clickLen, SAMPLE_RATE);
-          clickBuf.copyToChannel(whiteNoise(clickLen), 0);
-          const clickSrc = ctx.createBufferSource();
-          clickSrc.buffer = clickBuf;
-          const clickGain = ctx.createGain();
-          clickGain.gain.setValueAtTime(0.32, t);
-          clickGain.gain.exponentialRampToValueAtTime(0.001, t + clickDur);
-          clickSrc.connect(clickGain);
-          clickGain.connect(ctx.destination);
-          clickSrc.start(t);
-        }
+      amLfo.connect(amDepth);
+      amDepth.connect(subGain.gain); // audio-rate amplitude modulation
+      subOsc.connect(subGain);
+      subGain.connect(ctx.destination);
+      subOsc.start(0);
+      subOsc.stop(dur);
+      amLfo.start(0);
+      amLfo.stop(dur);
 
-        // Snare on odd beats
-        if (beat % 2 === 1) {
-          const snareDur = 0.12;
-          const snareLen = Math.ceil(SAMPLE_RATE * snareDur);
-          const snareBuf = ctx.createBuffer(1, snareLen, SAMPLE_RATE);
-          snareBuf.copyToChannel(whiteNoise(snareLen), 0);
-
-          const snareSrc = ctx.createBufferSource();
-          snareSrc.buffer = snareBuf;
-
-          const snareHpf = ctx.createBiquadFilter();
-          snareHpf.type = 'highpass';
-          snareHpf.frequency.value = 1100;
-
-          const snareGain = ctx.createGain();
-          snareGain.gain.setValueAtTime(0.42, t);
-          snareGain.gain.exponentialRampToValueAtTime(0.001, t + snareDur);
-
-          snareSrc.connect(snareHpf);
-          snareHpf.connect(snareGain);
-          snareGain.connect(ctx.destination);
-          snareSrc.start(t);
-        }
-
-        // Hi-hat on every 8th note (half-beat)
-        const hhT = t + beatDur * 0.5;
-        if (hhT < dur - 0.01) {
-          const hhDur = 0.042;
-          const hhLen = Math.ceil(SAMPLE_RATE * hhDur);
-          const hhBuf = ctx.createBuffer(1, hhLen, SAMPLE_RATE);
-          hhBuf.copyToChannel(whiteNoise(hhLen), 0);
-
-          const hhSrc = ctx.createBufferSource();
-          hhSrc.buffer = hhBuf;
-
-          const hhHpf = ctx.createBiquadFilter();
-          hhHpf.type = 'highpass';
-          hhHpf.frequency.value = 8500;
-
-          const hhGain = ctx.createGain();
-          hhGain.gain.setValueAtTime(0.15, hhT);
-          hhGain.gain.exponentialRampToValueAtTime(0.001, hhT + hhDur);
-
-          hhSrc.connect(hhHpf);
-          hhHpf.connect(hhGain);
-          hhGain.connect(ctx.destination);
-          hhSrc.start(hhT);
-        }
-      }
-
-      // Sawtooth bass arpeggio
-      const bassNotes: Array<[number, number]> = [
-        [0, 55],
-        [0.5, 55],
-        [1.0, 82.41],
-        [1.5, 55],
-        [2.0, 65.41],
-        [2.5, 55],
-        [3.0, 82.41],
-        [3.5, 55],
+      // ── 2. Synthwave sawtooth bass line ────────────────────────────────────
+      // Progression: Am → Em → Dm | Am (fills) → Em (fills) → Am (resolve)
+      const bd = beatDur;
+      const bassPattern: Array<[number, number, number]> = [
+        // Bar 1 — Am
+        [0 * bd, 55, 0.54],
+        [1 * bd, 55, 0.5],
+        [2 * bd, 65.41, 0.42],
+        [3 * bd, 55, 0.52],
+        // Bar 2 — Em
+        [4 * bd, 82.41, 0.54],
+        [5 * bd, 82.41, 0.5],
+        [6 * bd, 98.0, 0.42],
+        [7 * bd, 82.41, 0.52],
+        // Bar 3 — Dm
+        [8 * bd, 73.42, 0.54],
+        [9 * bd, 73.42, 0.5],
+        [10 * bd, 87.31, 0.42],
+        [11 * bd, 73.42, 0.52],
+        // Bar 4 — Am with 8th-note fills (section B)
+        [12 * bd, 55, 0.52],
+        [13 * bd, 65.41, 0.28],
+        [13 * bd + bd / 2, 55, 0.28],
+        [14 * bd, 73.42, 0.42],
+        [15 * bd, 55, 0.52],
+        // Bar 5 — Em with 8th-note fills
+        [16 * bd, 82.41, 0.52],
+        [17 * bd, 82.41, 0.28],
+        [17 * bd + bd / 2, 98.0, 0.28],
+        [18 * bd, 82.41, 0.42],
+        [19 * bd, 82.41, 0.52],
+        // Bar 6 — Am resolve
+        [20 * bd, 55, 0.58],
+        [21 * bd, 55, 0.52],
+        [22 * bd, 65.41, 0.42],
+        [23 * bd, 55, 0.6],
       ];
 
-      for (const [start, freq] of bassNotes) {
-        const noteDur = 0.38;
+      for (const [start, freq, noteDur] of bassPattern) {
         const osc = ctx.createOscillator();
         osc.type = 'sawtooth';
         osc.frequency.value = freq;
 
         const lpf = ctx.createBiquadFilter();
         lpf.type = 'lowpass';
-        lpf.frequency.setValueAtTime(420, start);
-        lpf.frequency.exponentialRampToValueAtTime(90, start + noteDur);
+        lpf.frequency.setValueAtTime(600, start);
+        lpf.frequency.exponentialRampToValueAtTime(180, start + noteDur);
+        lpf.Q.value = 1.5;
 
         const gain = ctx.createGain();
-        gain.gain.setValueAtTime(0.16, start);
+        gain.gain.setValueAtTime(0, start);
+        gain.gain.linearRampToValueAtTime(0.2, start + 0.012);
+        gain.gain.setValueAtTime(0.2, start + noteDur * 0.65);
         gain.gain.exponentialRampToValueAtTime(0.001, start + noteDur);
 
         osc.connect(lpf);
         lpf.connect(gain);
         gain.connect(ctx.destination);
         osc.start(start);
-        osc.stop(start + noteDur);
+        osc.stop(start + noteDur + 0.01);
+      }
+
+      // ── 3. Kick drum — beats 1 & 3 every bar, with echo tail ──────────────
+      for (let bar = 0; bar < numBars; bar++) {
+        for (const beatInBar of [0, 2] as const) {
+          const t = (bar * 4 + beatInBar) * beatDur;
+
+          const kick = ctx.createOscillator();
+          kick.type = 'sine';
+          kick.frequency.setValueAtTime(100, t);
+          kick.frequency.exponentialRampToValueAtTime(40, t + 0.14);
+
+          const kickGain = ctx.createGain();
+          kickGain.gain.setValueAtTime(0.5, t);
+          kickGain.gain.exponentialRampToValueAtTime(0.001, t + 0.3);
+
+          kick.connect(kickGain);
+          kickGain.connect(ctx.destination);
+          kick.start(t);
+          kick.stop(t + 0.3);
+
+          // Reverb simulation — low-gain echo copy ~80 ms later
+          const tEcho = t + 0.08;
+          if (tEcho < dur - 0.02) {
+            const kickEcho = ctx.createOscillator();
+            kickEcho.type = 'sine';
+            kickEcho.frequency.setValueAtTime(75, tEcho);
+            kickEcho.frequency.exponentialRampToValueAtTime(35, tEcho + 0.1);
+
+            const echoGain = ctx.createGain();
+            echoGain.gain.setValueAtTime(0.13, tEcho);
+            echoGain.gain.exponentialRampToValueAtTime(0.001, tEcho + 0.16);
+
+            kickEcho.connect(echoGain);
+            echoGain.connect(ctx.destination);
+            kickEcho.start(tEcho);
+            kickEcho.stop(tEcho + 0.16);
+          }
+        }
+      }
+
+      // ── 4. Hi-hat — every 16th note, velocity variation + swing ───────────
+      // 8-step velocity pattern (accent / ghost / open / ghost…)
+      const hhVelocities = [0.11, 0.04, 0.08, 0.03, 0.1, 0.04, 0.07, 0.03];
+      const swing = 0.018; // delay odd 16ths for a loose, noir swing feel
+
+      for (let s16 = 0; s16 < totalSixteenths; s16++) {
+        const vel = hhVelocities[s16 % 8] ?? 0.05;
+        const t = s16 * sixteenth + (s16 % 2 === 1 ? swing : 0);
+        if (t >= dur - 0.005) continue;
+
+        const hhDur = 0.032;
+        const hhLen = Math.ceil(SAMPLE_RATE * hhDur);
+        const hhBuf = ctx.createBuffer(1, hhLen, SAMPLE_RATE);
+        hhBuf.copyToChannel(whiteNoise(hhLen), 0);
+
+        const hhSrc = ctx.createBufferSource();
+        hhSrc.buffer = hhBuf;
+
+        const hhHpf = ctx.createBiquadFilter();
+        hhHpf.type = 'highpass';
+        hhHpf.frequency.value = 8500;
+
+        const hhGain = ctx.createGain();
+        hhGain.gain.setValueAtTime(vel, t);
+        hhGain.gain.exponentialRampToValueAtTime(0.001, t + hhDur);
+
+        hhSrc.connect(hhHpf);
+        hhHpf.connect(hhGain);
+        hhGain.connect(ctx.destination);
+        hhSrc.start(t);
+      }
+
+      // ── 5. Atmospheric pad — two detuned sawtooths ~2 Hz apart ─────────────
+      // Creates a slow chorus/phasing wash that fills the high-mid space.
+      for (const oscFreq of [109, 111] as const) {
+        const padOsc = ctx.createOscillator();
+        padOsc.type = 'sawtooth';
+        padOsc.frequency.value = oscFreq;
+
+        const padLpf = ctx.createBiquadFilter();
+        padLpf.type = 'lowpass';
+        padLpf.frequency.value = 800;
+        padLpf.Q.value = 0.8;
+
+        const padGain = ctx.createGain();
+        padGain.gain.setValueAtTime(0, 0);
+        padGain.gain.linearRampToValueAtTime(0.08, 2.5);
+        padGain.gain.setValueAtTime(0.08, dur - 1.5);
+        padGain.gain.linearRampToValueAtTime(0, dur);
+
+        padOsc.connect(padLpf);
+        padLpf.connect(padGain);
+        padGain.connect(ctx.destination);
+        padOsc.start(0);
+        padOsc.stop(dur);
+      }
+
+      // ── 6. Noise sweep accents — every 4 bars (bars 1 and 5) ──────────────
+      // Bandpass sweeps from 200 → 2000 Hz over 0.5 s for tension.
+      for (const accentT of [0, 4 * barDur] as const) {
+        const sweepDur = 0.5;
+        const noiseLen = Math.ceil(SAMPLE_RATE * sweepDur);
+        const noiseBuf = ctx.createBuffer(1, noiseLen, SAMPLE_RATE);
+        noiseBuf.copyToChannel(whiteNoise(noiseLen), 0);
+
+        const noiseSrc = ctx.createBufferSource();
+        noiseSrc.buffer = noiseBuf;
+
+        const bpf = ctx.createBiquadFilter();
+        bpf.type = 'bandpass';
+        bpf.frequency.setValueAtTime(200, accentT);
+        bpf.frequency.exponentialRampToValueAtTime(2000, accentT + sweepDur);
+        bpf.Q.value = 2.5;
+
+        const sweepGain = ctx.createGain();
+        sweepGain.gain.setValueAtTime(0.07, accentT);
+        sweepGain.gain.exponentialRampToValueAtTime(0.001, accentT + sweepDur);
+
+        noiseSrc.connect(bpf);
+        bpf.connect(sweepGain);
+        sweepGain.connect(ctx.destination);
+        noiseSrc.start(accentT);
       }
     });
   }

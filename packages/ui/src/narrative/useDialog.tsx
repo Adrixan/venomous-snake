@@ -1,6 +1,31 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
-import { DialogEngine } from '@venomous-snake/narrative';
-import { lobbyGuardDialog, drSilvaDialog, cipherIntroDialog } from '@venomous-snake/narrative';
+import {
+  DialogEngine,
+  lobbyGuardDialog,
+  drSilvaDialog,
+  cipherIntroDialog,
+  techKaiDialog,
+  sysAdminReevesDialog,
+  researcherPatelDialog,
+  labBotDialog,
+  operatorVossDialog,
+  analystChenDialog,
+  archivistOkaforDialog,
+  internJamieDialog,
+  commOfficerDiazDialog,
+  hackerEchoDialog,
+  secretaryKimDialog,
+  execBlackwellDialog,
+  engineerKowalskiDialog,
+  qaBotDelta7Dialog,
+  drVolkovDialog,
+  aiFragmentDialog,
+  coreGuardianDialog,
+  ghostInMachineDialog,
+  butlerSterlingDialog,
+  rivalAgentNovaDialog,
+  venomousSnakeDialog,
+} from '@venomous-snake/narrative';
 import type { DialogNode, DialogChoice } from '@venomous-snake/narrative';
 import { EventBus } from '@venomous-snake/engine';
 
@@ -31,6 +56,27 @@ export function useDialog(): UseDialogReturn {
     engine.registerDialog(lobbyGuardDialog);
     engine.registerDialog(drSilvaDialog);
     engine.registerDialog(cipherIntroDialog);
+    engine.registerDialog(techKaiDialog);
+    engine.registerDialog(sysAdminReevesDialog);
+    engine.registerDialog(researcherPatelDialog);
+    engine.registerDialog(labBotDialog);
+    engine.registerDialog(operatorVossDialog);
+    engine.registerDialog(analystChenDialog);
+    engine.registerDialog(archivistOkaforDialog);
+    engine.registerDialog(internJamieDialog);
+    engine.registerDialog(commOfficerDiazDialog);
+    engine.registerDialog(hackerEchoDialog);
+    engine.registerDialog(secretaryKimDialog);
+    engine.registerDialog(execBlackwellDialog);
+    engine.registerDialog(engineerKowalskiDialog);
+    engine.registerDialog(qaBotDelta7Dialog);
+    engine.registerDialog(drVolkovDialog);
+    engine.registerDialog(aiFragmentDialog);
+    engine.registerDialog(coreGuardianDialog);
+    engine.registerDialog(ghostInMachineDialog);
+    engine.registerDialog(butlerSterlingDialog);
+    engine.registerDialog(rivalAgentNovaDialog);
+    engine.registerDialog(venomousSnakeDialog);
     engineRef.current = engine;
   }
 

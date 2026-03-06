@@ -69,9 +69,9 @@ export class DialogEngine {
     if (node.choices) {
       const available = this.getAvailableChoices(node.choices);
       this.emitEvent({ type: 'choices_available', choices: available });
-    } else if (!node.nextNodeId) {
-      this.completeDialog();
     }
+    // Terminal nodes (no choices, no nextNodeId) are displayed and wait for
+    // the player to explicitly advance via advanceToNext(), which handles completion.
   }
 
   /**

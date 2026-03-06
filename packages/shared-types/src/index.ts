@@ -48,6 +48,8 @@ export type GameEvent =
   | { type: 'XP_CHANGED'; payload: { xp: number; level: number } }
   | { type: 'ACHIEVEMENT_UNLOCKED'; payload: { id: string; nameKey: string } }
   | { type: 'FLOOR_UNLOCKED'; payload: { floor: number } }
+  | { type: 'FLOOR_COMPLETE'; payload: { floorNumber: number } }
+  | { type: 'FLOOR_CHANGE'; payload: { targetFloor: number } }
   | { type: 'DIALOG_TRIGGERED'; payload: DialogContent }
   | { type: 'DIALOG_DISMISSED' };
 
@@ -99,6 +101,12 @@ export interface GameStoreState {
   // Terminal challenge tracking
   currentChallengeId: string | null;
 
+  // Audio settings
+  masterVolume: number;
+  musicVolume: number;
+  sfxVolume: number;
+  isMuted: boolean;
+
   // Actions
   setPlayerPosition: (x: number, y: number) => void;
   setPlayerDirection: (direction: Direction) => void;
@@ -133,6 +141,12 @@ export interface GameStoreState {
   setDialog: (content: DialogContent) => void;
   clearDialog: () => void;
   resetGameState: () => void;
+
+  // Audio actions
+  setMasterVolume: (volume: number) => void;
+  setMusicVolume: (volume: number) => void;
+  setSfxVolume: (volume: number) => void;
+  toggleMute: () => void;
 }
 
 // ─── Python Runtime Interfaces ──────────────────────────────────────────────

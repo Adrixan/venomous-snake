@@ -22,6 +22,8 @@ export type { JoystickOutput } from './input/VirtualJoystick';
 export { TilemapManager } from './systems/TilemapManager';
 export type { SpawnPoint } from './systems/TilemapManager';
 export { CameraSystem } from './systems/CameraSystem';
+export { TransitionManager } from './systems/TransitionManager';
+export { ParticleManager } from './systems/ParticleManager';
 
 // Procedural tilemap utilities (exported under distinct name to avoid collision)
 export { TilemapManager as ProceduralRoomManager } from './tilemap/TilemapManager';

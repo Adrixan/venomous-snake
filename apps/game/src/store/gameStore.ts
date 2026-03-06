@@ -1,6 +1,53 @@
 import { create } from 'zustand';
 import type { GameStoreState } from '@venomous-snake/shared-types';
 
+const STORAGE_KEY = 'vs-settings';
+
+function loadAudioFromStorage(): { masterVolume: number; musicVolume: number; sfxVolume: number } {
+  if (typeof window === 'undefined') {
+    return { masterVolume: 0.8, musicVolume: 0.6, sfxVolume: 0.7 };
+  }
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw !== null) {
+      const parsed: unknown = JSON.parse(raw);
+      if (typeof parsed === 'object' && parsed !== null) {
+        const p = parsed as Record<string, unknown>;
+        return {
+          masterVolume: typeof p['volumeMaster'] === 'number' ? p['volumeMaster'] / 100 : 0.8,
+          musicVolume: typeof p['volumeMusic'] === 'number' ? p['volumeMusic'] / 100 : 0.6,
+          sfxVolume: typeof p['volumeSfx'] === 'number' ? p['volumeSfx'] / 100 : 0.7,
+        };
+      }
+    }
+  } catch {
+    // ignore parse errors
+  }
+  return { masterVolume: 0.8, musicVolume: 0.6, sfxVolume: 0.7 };
+}
+
+function saveAudioToStorage(masterVolume: number, musicVolume: number, sfxVolume: number): void {
+  if (typeof window === 'undefined') return;
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    const existing: Record<string, unknown> =
+      raw !== null ? (JSON.parse(raw) as Record<string, unknown>) : {};
+    localStorage.setItem(
+      STORAGE_KEY,
+      JSON.stringify({
+        ...existing,
+        volumeMaster: Math.round(masterVolume * 100),
+        volumeMusic: Math.round(musicVolume * 100),
+        volumeSfx: Math.round(sfxVolume * 100),
+      }),
+    );
+  } catch {
+    // ignore write errors
+  }
+}
+
+const initialAudio = loadAudioFromStorage();
+
 const INITIAL_PLAYER_STATE = {
   x: 0,
   y: 0,
@@ -40,6 +87,12 @@ export const useGameStore = create<GameStoreState>((set) => ({
   unlockedFloors: [0],
   dialogActive: false,
   dialogContent: null,
+
+  // Audio settings
+  masterVolume: initialAudio.masterVolume,
+  musicVolume: initialAudio.musicVolume,
+  sfxVolume: initialAudio.sfxVolume,
+  isMuted: false,
 
   // Existing actions
   setPlayerPosition: (x, y) => set((state) => ({ player: { ...state.player, x, y } })),
@@ -113,6 +166,30 @@ export const useGameStore = create<GameStoreState>((set) => ({
     })),
   setDialog: (content) => set({ dialogActive: true, dialogContent: content }),
   clearDialog: () => set({ dialogActive: false, dialogContent: null }),
+
+  // Audio actions
+  setMasterVolume: (volume) => {
+    const v = Math.max(0, Math.min(1, volume));
+    set((state) => {
+      saveAudioToStorage(v, state.musicVolume, state.sfxVolume);
+      return { masterVolume: v };
+    });
+  },
+  setMusicVolume: (volume) => {
+    const v = Math.max(0, Math.min(1, volume));
+    set((state) => {
+      saveAudioToStorage(state.masterVolume, v, state.sfxVolume);
+      return { musicVolume: v };
+    });
+  },
+  setSfxVolume: (volume) => {
+    const v = Math.max(0, Math.min(1, volume));
+    set((state) => {
+      saveAudioToStorage(state.masterVolume, state.musicVolume, v);
+      return { sfxVolume: v };
+    });
+  },
+  toggleMute: () => set((state) => ({ isMuted: !state.isMuted })),
   resetGameState: () =>
     set({
       player: INITIAL_PLAYER_STATE,

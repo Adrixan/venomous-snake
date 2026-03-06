@@ -156,7 +156,7 @@ describe('DialogEngine', () => {
     expect(engine.checkCondition('nonexistent_flag')).toBe(false);
   });
 
-  it('emits dialog_complete when the dialog reaches a terminal node', () => {
+  it('emits dialog_complete when the player explicitly advances past a terminal node', () => {
     const engine = new DialogEngine();
     engine.registerDialog(linearDialog);
 
@@ -166,8 +166,10 @@ describe('DialogEngine', () => {
     });
 
     engine.startDialog('linear');
-    engine.selectChoice(0); // n2 has no nextNodeId → dialog completes
+    engine.selectChoice(0); // advances to n2 (terminal); dialog NOT yet complete
+    expect(completions).toHaveLength(0); // player must click "continue" first
 
+    engine.advanceToNext(); // player clicks "continue" → dialog completes
     expect(completions).toHaveLength(1);
     expect(completions[0]?.dialogId).toBe('linear');
   });
@@ -178,6 +180,7 @@ describe('DialogEngine', () => {
 
     engine.startDialog('linear');
     engine.selectChoice(0);
+    engine.advanceToNext(); // player clicks "continue" on terminal node
 
     expect(engine.getState().completedDialogs).toContain('linear');
   });

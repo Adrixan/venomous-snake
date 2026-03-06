@@ -1,4 +1,8 @@
-import type { Challenge, CurriculumProgress, PythonInterpreter } from '@venomous-snake/shared-types';
+import type {
+  Challenge,
+  CurriculumProgress,
+  PythonInterpreter,
+} from '@venomous-snake/shared-types';
 import {
   ChallengeRunner,
   HintEngine,
@@ -6,10 +10,18 @@ import {
   XPSystem,
   AchievementManager,
   ChallengeTimer,
+  FloorGateSystem,
 } from '@venomous-snake/challenge-engine';
-import type { TestResult, ChallengeResult, Achievement, LevelThreshold } from '@venomous-snake/challenge-engine';
+import type {
+  TestResult,
+  ChallengeResult,
+  Achievement,
+  LevelThreshold,
+  FloorGateResult,
+} from '@venomous-snake/challenge-engine';
 import { CipherAI, DialogEngine } from '@venomous-snake/narrative';
 import { challengeMap } from '@venomous-snake/challenges';
+import { EventBus } from '@venomous-snake/engine';
 
 export interface StartChallengeResult {
   challenge: Challenge;
@@ -23,6 +35,7 @@ export interface SubmitResult {
   newLevel: LevelThreshold | null;
   achievements: Achievement[];
   cipherReaction: string;
+  floorGateResult: FloorGateResult | null;
 }
 
 export interface HintResult {
@@ -40,6 +53,7 @@ export class GameController {
   private timer: ChallengeTimer;
   private dialogEngine: DialogEngine;
   private cipher: CipherAI;
+  private floorGate: FloorGateSystem;
   private activeChallenge: Challenge | null = null;
 
   constructor(interpreter: PythonInterpreter, savedProgress?: CurriculumProgress) {
@@ -51,6 +65,7 @@ export class GameController {
     this.timer = new ChallengeTimer();
     this.dialogEngine = new DialogEngine();
     this.cipher = new CipherAI();
+    this.floorGate = new FloorGateSystem();
   }
 
   // ── Challenge flow ──────────────────────────────────────────────────────────
@@ -77,6 +92,7 @@ export class GameController {
         newLevel: null,
         achievements: [],
         cipherReaction: this.cipher.getLine('challenge_fail'),
+        floorGateResult: null,
       };
     }
 
@@ -107,7 +123,10 @@ export class GameController {
 
       const newAchievements: Achievement[] = [
         ...this.achievements.check({ type: 'challenge_complete', challengeId: challenge.id }),
-        ...this.achievements.check({ type: 'total_challenges', count: progressAfter.completedChallenges }),
+        ...this.achievements.check({
+          type: 'total_challenges',
+          count: progressAfter.completedChallenges,
+        }),
         ...this.achievements.check({ type: 'total_xp', amount: progressAfter.totalXp }),
         ...(attempts === 1
           ? this.achievements.check({ type: 'first_try', challengeId: challenge.id })
@@ -115,8 +134,30 @@ export class GameController {
         ...(hintsUsed === 0
           ? this.achievements.check({ type: 'no_hints', challengeId: challenge.id })
           : []),
-        ...this.achievements.check({ type: 'speed_run', challengeId: challenge.id, maxTimeMs: timeMs }),
+        ...this.achievements.check({
+          type: 'speed_run',
+          challengeId: challenge.id,
+          maxTimeMs: timeMs,
+        }),
       ];
+
+      const allCompleted = Object.entries(progressAfter.challenges)
+        .filter(([, p]) => p.completed)
+        .map(([id]) => id);
+      const floorGateResult = this.floorGate.checkFloorCompletion(challenge.id, allCompleted);
+
+      if (floorGateResult !== null) {
+        EventBus.emit({
+          type: 'FLOOR_COMPLETE',
+          payload: { floorNumber: floorGateResult.completedFloorNumber },
+        });
+        if (floorGateResult.nextFloorUnlocked !== null) {
+          EventBus.emit({
+            type: 'FLOOR_UNLOCKED',
+            payload: { floor: floorGateResult.nextFloorUnlocked },
+          });
+        }
+      }
 
       this.activeChallenge = null;
 
@@ -127,6 +168,7 @@ export class GameController {
         newLevel: levelAfter.level > levelBefore.level ? levelAfter : null,
         achievements: newAchievements,
         cipherReaction: this.cipher.getReaction(true, attempts, hintsUsed),
+        floorGateResult,
       };
     }
 
@@ -142,6 +184,7 @@ export class GameController {
       newLevel: null,
       achievements: [],
       cipherReaction: this.cipher.getReaction(false, attempts, 0),
+      floorGateResult: null,
     };
   }
 
@@ -163,6 +206,19 @@ export class GameController {
       this.timer.stop();
       this.activeChallenge = null;
     }
+  }
+
+  /**
+   * Attempts to navigate to the given floor.
+   * Returns true and emits FLOOR_CHANGE when the floor is unlocked;
+   * returns false when the floor is still locked.
+   * Pass the current unlockedFloors array from the store so validation
+   * stays consistent with what the player has earned.
+   */
+  changeFloor(floorNumber: number, unlockedFloors: number[]): boolean {
+    if (!unlockedFloors.includes(floorNumber)) return false;
+    EventBus.emit({ type: 'FLOOR_CHANGE', payload: { targetFloor: floorNumber } });
+    return true;
   }
 
   // ── State ───────────────────────────────────────────────────────────────────

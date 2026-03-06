@@ -51,12 +51,42 @@ export class NPC extends Phaser.Physics.Arcade.Sprite {
   static createPlaceholderTexture(scene: Phaser.Scene): void {
     if (scene.textures.exists(NPC.TEXTURE_KEY)) return;
     const gfx = scene.make.graphics({}, false);
-    gfx.fillStyle(0xc77dff, 1);
-    gfx.fillRect(0, 0, NPC_WIDTH, NPC_HEIGHT);
-    gfx.fillStyle(0xffffff, 0.5);
-    gfx.fillCircle(11, 6, 5);
+    NPC._drawNPCBody(gfx, 0x4488aa);
     gfx.generateTexture(NPC.TEXTURE_KEY, NPC_WIDTH, NPC_HEIGHT);
     gfx.destroy();
+  }
+
+  /** Draw a corporate/guard silhouette. `accentColor` tints badge and collar only. */
+  private static _drawNPCBody(gfx: Phaser.GameObjects.Graphics, accentColor: number): void {
+    // Legs
+    gfx.fillStyle(0x1e2030, 1);
+    gfx.fillRect(3, 20, 7, 10); // left leg
+    gfx.fillRect(12, 20, 7, 10); // right leg
+    // Boot toes
+    gfx.fillStyle(0x0d0d1a, 1);
+    gfx.fillRect(3, 28, 7, 2);
+    gfx.fillRect(12, 28, 7, 2);
+
+    // Suit / torso
+    gfx.fillStyle(0x1a2035, 1);
+    gfx.fillRect(3, 8, 16, 12);
+    // Lapel gap (lighter inner strip)
+    gfx.fillStyle(0x2d3555, 1);
+    gfx.fillRect(9, 9, 4, 10);
+
+    // Head / mask
+    gfx.fillStyle(0x2a2a3e, 1);
+    gfx.fillRoundedRect(6, 1, 10, 7, 2);
+    // Face visor (dark reflective strip)
+    gfx.fillStyle(0x3a3a5e, 1);
+    gfx.fillRect(6, 3, 10, 3);
+
+    // Accent: collar glow at neckline
+    gfx.fillStyle(accentColor, 0.8);
+    gfx.fillRect(9, 8, 4, 1);
+    // Accent: ID badge on left chest
+    gfx.fillStyle(accentColor, 1);
+    gfx.fillRect(5, 12, 4, 3);
   }
 
   constructor(scene: Phaser.Scene, x: number, y: number, config: NPCConfig) {
@@ -65,10 +95,7 @@ export class NPC extends Phaser.Physics.Arcade.Sprite {
 
     if (config.tint !== undefined && !scene.textures.exists(textureKey)) {
       const gfx = scene.make.graphics({}, false);
-      gfx.fillStyle(config.tint, 1);
-      gfx.fillRect(0, 0, NPC_WIDTH, NPC_HEIGHT);
-      gfx.fillStyle(0xffffff, 0.5);
-      gfx.fillCircle(11, 6, 5);
+      NPC._drawNPCBody(gfx, config.tint);
       gfx.generateTexture(textureKey, NPC_WIDTH, NPC_HEIGHT);
       gfx.destroy();
     }

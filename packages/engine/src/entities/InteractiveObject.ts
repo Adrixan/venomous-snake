@@ -1,7 +1,7 @@
 import Phaser from 'phaser';
 import { EventBus } from '../EventBus';
 
-export type InteractiveObjectType = 'terminal' | 'door' | 'item' | 'npc';
+export type InteractiveObjectType = 'terminal' | 'door' | 'item' | 'npc' | 'elevator';
 
 function getObjectColor(type: InteractiveObjectType): number {
   switch (type) {
@@ -13,6 +13,8 @@ function getObjectColor(type: InteractiveObjectType): number {
       return 0xfb8500;
     case 'npc':
       return 0xc77dff;
+    case 'elevator':
+      return 0x00ff9d;
   }
 }
 
@@ -22,14 +24,14 @@ function getTextureKey(type: InteractiveObjectType): string {
 
 export class InteractiveObject extends Phaser.Physics.Arcade.Sprite {
   private readonly objectId: string;
-  private readonly objectType: InteractiveObjectType;
+  readonly objectType: InteractiveObjectType;
   private readonly objectProperties: Record<string, unknown>;
   private promptLabel: Phaser.GameObjects.Text | null = null;
   private inRange = false;
 
   /** Pre-generate colored rectangle placeholder textures for all object types. */
   static createPlaceholderTextures(scene: Phaser.Scene): void {
-    const types: InteractiveObjectType[] = ['terminal', 'door', 'item', 'npc'];
+    const types: InteractiveObjectType[] = ['terminal', 'door', 'item', 'npc', 'elevator'];
     for (const type of types) {
       const key = getTextureKey(type);
       if (scene.textures.exists(key)) continue;
@@ -111,6 +113,10 @@ export class InteractiveObject extends Phaser.Physics.Arcade.Sprite {
     } else if (this.objectType === 'item') {
       EventBus.emit({ type: 'ITEM_PICKUP', payload: { itemId: this.objectId } });
       this.destroy();
+    } else if (this.objectType === 'elevator') {
+      const rawFloor = this.objectProperties['targetFloor'];
+      const targetFloor = typeof rawFloor === 'number' ? rawFloor : 0;
+      EventBus.emit({ type: 'FLOOR_CHANGE', payload: { targetFloor } });
     }
   }
 

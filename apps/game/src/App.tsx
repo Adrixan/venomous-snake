@@ -8,6 +8,8 @@ import { SaveSlotModal } from './components/SaveSlotModal';
 import { useGameStore } from './store/gameStore';
 import { GameControllerProvider } from './hooks/useGameController';
 import { useSaveSystem } from './hooks/useSaveSystem';
+import { useGameAudio } from './hooks/useGameAudio';
+import { useStoryFlow } from './hooks/useStoryFlow';
 import { MockInterpreter } from '@venomous-snake/python-runtime';
 import {
   MainMenu,
@@ -19,11 +21,17 @@ import {
   FloorMap,
   DialogOverlay,
   useDialog,
+  CRTEffect,
+  CutscenePlayer,
+  TutorialOverlay,
+  CreditsScreen,
 } from '@venomous-snake/ui';
+import type { AudioSettingsPanelProps } from '@venomous-snake/ui';
 import { chapters } from '@venomous-snake/challenges';
 import type { CurriculumProgress } from '@venomous-snake/shared-types';
 import { EventBus } from '@venomous-snake/engine';
 import type { GameController } from './GameController';
+import { useReducedMotion } from '@venomous-snake/ui';
 
 type MenuView = 'main' | 'newgame' | 'settings';
 type SaveModalMode = 'save' | 'load' | null;
@@ -46,8 +54,36 @@ export function App(): React.JSX.Element {
   const setPlayerGender = useGameStore((state) => state.setPlayerGender);
   const currentFloor = useGameStore((state) => state.currentFloor);
   const setCurrentFloor = useGameStore((state) => state.setCurrentFloor);
+  const reducedMotion = useReducedMotion();
   const terminalOpen = useGameStore((state) => state.overlay.terminalOpen);
   const openTerminal = useGameStore((state) => state.openTerminal);
+  const completedChallenges = useGameStore((state) => state.completedChallenges);
+  const xp = useGameStore((state) => state.xp);
+  const unlockedFloors = useGameStore((state) => state.unlockedFloors);
+
+  // Audio store
+  const masterVolume = useGameStore((s) => s.masterVolume);
+  const musicVolume = useGameStore((s) => s.musicVolume);
+  const sfxVolume = useGameStore((s) => s.sfxVolume);
+  const isMuted = useGameStore((s) => s.isMuted);
+  const setMasterVolume = useGameStore((s) => s.setMasterVolume);
+  const setMusicVolume = useGameStore((s) => s.setMusicVolume);
+  const setSfxVolume = useGameStore((s) => s.setSfxVolume);
+  const toggleMute = useGameStore((s) => s.toggleMute);
+
+  // Wire audio to game events (always active once the component mounts)
+  useGameAudio();
+
+  const audioSettings: AudioSettingsPanelProps = {
+    masterVolume,
+    musicVolume,
+    sfxVolume,
+    isMuted,
+    onMasterVolume: setMasterVolume,
+    onMusicVolume: setMusicVolume,
+    onSfxVolume: setSfxVolume,
+    onToggleMute: toggleMute,
+  };
 
   const [menuView, setMenuView] = useState<MenuView>('main');
   const [hasSaveData, setHasSaveData] = useState(false);
@@ -69,6 +105,9 @@ export function App(): React.JSX.Element {
 
   // Dialog state driven by EventBus DIALOG_START / DIALOG_END
   const dialogState = useDialog();
+
+  // Story flow: cutscenes, tutorial, credits
+  const storyFlow = useStoryFlow(completedChallenges);
 
   // Refresh "has save data" flag whenever the modal closes or on mount
   const refreshHasSaveData = useCallback((): void => {
@@ -107,7 +146,15 @@ export function App(): React.JSX.Element {
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [gamePhase, activePanel, terminalOpen, saveModalMode, dialogState.isOpen, setGamePhase, openTerminal]);
+  }, [
+    gamePhase,
+    activePanel,
+    terminalOpen,
+    saveModalMode,
+    dialogState.isOpen,
+    setGamePhase,
+    openTerminal,
+  ]);
 
   // Listen for TERMINAL_OPEN events from the Phaser game world
   useEffect(() => {
@@ -174,8 +221,10 @@ export function App(): React.JSX.Element {
       setPlayerName(name);
       setPlayerGender(gender);
       setGamePhase('playing');
+      // Trigger intro cutscene + tutorial after state settles
+      setTimeout(() => storyFlow.triggerNewGame(), 0);
     },
-    [resetGameState, setPlayerName, setPlayerGender, setGamePhase],
+    [resetGameState, setPlayerName, setPlayerGender, setGamePhase, storyFlow],
   );
 
   const handleNewGameBack = useCallback(() => {
@@ -273,7 +322,7 @@ export function App(): React.JSX.Element {
     if (menuView === 'settings') {
       return (
         <>
-          <SettingsPanel onBack={handleSettingsBack} />
+          <SettingsPanel onBack={handleSettingsBack} audioSettings={audioSettings} />
           <PWAUpdateNotifier />
           <PWAInstallPrompt />
         </>
@@ -313,78 +362,117 @@ export function App(): React.JSX.Element {
       savedProgress={savedProgress}
       controllerRef={controllerRef}
     >
-      <div
-        style={{
-          background: '#0a0a0f',
-          width: '100vw',
-          height: '100vh',
-          overflow: 'hidden',
-          position: 'relative',
-        }}
-      >
-        {/* z-index: 0 — Phaser canvas */}
-        <GameCanvas />
-        <HUD />
+      <CRTEffect enabled={!reducedMotion}>
+        <div
+          style={{
+            background: '#0a0a0f',
+            width: '100vw',
+            height: '100vh',
+            overflow: 'hidden',
+            position: 'relative',
+          }}
+        >
+          {/* z-index: 0 — Phaser canvas */}
+          <GameCanvas />
+          <HUD />
 
-        {/* z-index: 100/101 — Dialog overlay (below terminal) */}
-        <DialogOverlay {...dialogState} />
+          {/* z-index: 100/101 — Dialog overlay (below terminal) */}
+          <DialogOverlay {...dialogState} />
 
-        {/* z-index: 200 — Terminal overlay */}
-        <TerminalOverlay />
+          {/* z-index: 200 — Terminal overlay */}
+          <TerminalOverlay />
 
-        {/* z-index: 300 — Pause menu */}
-        {gamePhase === 'paused' && (
-          <PauseMenu
-            onResume={handleResume}
-            onSaveGame={handlePauseSave}
-            onLoadGame={handlePauseLoad}
-            onSettings={handlePauseSettings}
-            onQuitToMenu={handleQuitToMenu}
+          {/* z-index: 300 — Pause menu */}
+          {gamePhase === 'paused' && (
+            <PauseMenu
+              onResume={handleResume}
+              onSaveGame={handlePauseSave}
+              onLoadGame={handlePauseLoad}
+              onSettings={handlePauseSettings}
+              onQuitToMenu={handleQuitToMenu}
+            />
+          )}
+
+          {/* z-index: 400 — Save/Load slot modal (above pause menu) */}
+          {saveModalMode !== null && (
+            <SaveSlotModal
+              mode={saveModalMode}
+              onClose={handleModalClose}
+              onSave={handleModalSave}
+              onLoad={handleModalLoad}
+              onDelete={handleModalDelete}
+              listSaves={saveSystem.listSaves}
+            />
+          )}
+
+          {/* Settings panel during gameplay */}
+          {activePanel === 'settings' && gamePhase === 'playing' && (
+            <SettingsPanel onBack={handleClosePanel} audioSettings={audioSettings} />
+          )}
+
+          {/* Side panels */}
+          <QuestLog
+            isOpen={activePanel === 'questlog'}
+            onClose={handleClosePanel}
+            curriculumProgress={defaultProgress}
+            chapters={chapters}
+            currentFloor={currentFloor}
           />
-        )}
-
-        {/* z-index: 400 — Save/Load slot modal (above pause menu) */}
-        {saveModalMode !== null && (
-          <SaveSlotModal
-            mode={saveModalMode}
-            onClose={handleModalClose}
-            onSave={handleModalSave}
-            onLoad={handleModalLoad}
-            onDelete={handleModalDelete}
-            listSaves={saveSystem.listSaves}
+          <InventoryPanel
+            isOpen={activePanel === 'inventory'}
+            onClose={handleClosePanel}
+            items={[]}
           />
-        )}
+          <FloorMap
+            isOpen={activePanel === 'map'}
+            onClose={handleClosePanel}
+            currentFloor={currentFloor}
+            unlockedFloors={['lobby']}
+            onFloorSelect={handleFloorSelect}
+          />
 
-        {/* Settings panel during gameplay */}
-        {activePanel === 'settings' && gamePhase === 'playing' && (
-          <SettingsPanel onBack={handleClosePanel} />
-        )}
+          <PWAUpdateNotifier />
+          <PWAInstallPrompt />
 
-        {/* Side panels */}
-        <QuestLog
-          isOpen={activePanel === 'questlog'}
-          onClose={handleClosePanel}
-          curriculumProgress={defaultProgress}
-          chapters={chapters}
-          currentFloor={currentFloor}
-        />
-        <InventoryPanel
-          isOpen={activePanel === 'inventory'}
-          onClose={handleClosePanel}
-          items={[]}
-        />
-        <FloorMap
-          isOpen={activePanel === 'map'}
-          onClose={handleClosePanel}
-          currentFloor={currentFloor}
-          unlockedFloors={['lobby']}
-          onFloorSelect={handleFloorSelect}
-        />
+          {/* z-index: 9000 — Tutorial overlay (above all game UI) */}
+          {storyFlow.activeTutorialStep !== null && (
+            <TutorialOverlay
+              step={storyFlow.activeTutorialStep}
+              onComplete={storyFlow.onTutorialStepComplete}
+              onSkip={storyFlow.onTutorialSkip}
+            />
+          )}
 
-        <PWAUpdateNotifier />
-        <PWAInstallPrompt />
-      </div>
+          {/* z-index: 9999 — Cutscene player (above everything) */}
+          {storyFlow.activeCutscene !== null && (
+            <CutscenePlayer
+              cutscene={storyFlow.activeCutscene}
+              onComplete={storyFlow.onCutsceneComplete}
+            />
+          )}
+
+          {/* Credits screen — shown after the victory cutscene */}
+          {storyFlow.showCredits && (
+            <CreditsScreen
+              stats={{
+                challengesCompleted: completedChallenges.length,
+                totalXp: xp,
+                timePlayed: storyFlow.playTime,
+                achievementsUnlocked: 0,
+                floorsCleared: unlockedFloors.length,
+              }}
+              onNewGamePlus={() => {
+                storyFlow.onNewGamePlus();
+                handleQuitToMenu();
+              }}
+              onReturnToMenu={() => {
+                storyFlow.onCreditsClose();
+                handleQuitToMenu();
+              }}
+            />
+          )}
+        </div>
+      </CRTEffect>
     </GameControllerProvider>
   );
 }
-

@@ -114,6 +114,14 @@ function TerminalEditorInner(
         }
       }),
       EditorState.readOnly.of(disabled),
+      // Android IME compatibility: ensure contentEditable works with virtual keyboards
+      EditorView.contentAttributes.of({
+        inputmode: 'text',
+        enterkeyhint: 'done',
+        autocapitalize: 'off',
+        autocorrect: 'off',
+        spellcheck: 'false',
+      }),
     ];
 
     if (readOnlyRanges && readOnlyRanges.length > 0) {

@@ -299,6 +299,8 @@
   align-items: center;
   justify-content: center;
   background-color: rgba(0, 0, 0, 0.85);
+  /* Use dvh on mobile so the overlay shrinks when virtual keyboard opens */
+  height: 100dvh;
 }
 
 /* ─── Mobile Responsive ───────────────────────────────────────────────────── */
@@ -306,7 +308,7 @@
 @media (max-width: 768px) {
   .terminal-container {
     width: 100vw;
-    height: 100vh;
+    height: 100dvh;
     max-width: none;
     border: none;
     box-shadow: none;
@@ -320,6 +322,11 @@
   .terminal-output-area {
     flex: 1;
     min-height: 120px;
+  }
+
+  /* Ensure CodeMirror editor scrolls cursor into view on Android */
+  .terminal-editor-area .cm-editor .cm-scroller {
+    overflow-anchor: none;
   }
 }
 
@@ -426,5 +433,84 @@
   }
   100% {
     background: rgba(0, 0, 0, 0.88);
+  }
+}
+
+/* ─── Code Editor Cursor Blink with Green Glow ───────────────────────────── */
+
+/* CodeMirror cursor */
+.terminal-container .cm-cursor {
+  border-left-color: var(--term-green) !important;
+  border-left-width: 2px !important;
+  box-shadow: 0 0 6px rgba(0, 255, 157, 0.7);
+  animation: terminal-cursor-blink 1s step-start infinite;
+}
+
+@keyframes terminal-cursor-blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+/* ─── Output Panel Smooth Scroll ─────────────────────────────────────────── */
+
+.terminal-output-log {
+  scroll-behavior: smooth;
+}
+
+/* ─── Error Output Flash ─────────────────────────────────────────────────── */
+
+.terminal-output-stderr {
+  animation: terminal-error-flash 0.35s ease-out;
+}
+
+@keyframes terminal-error-flash {
+  0% {
+    background: rgba(255, 51, 51, 0.18);
+    color: #ff6666;
+  }
+  100% {
+    background: transparent;
+    color: var(--term-red);
+  }
+}
+
+/* ─── Submit Button Success Pulse ────────────────────────────────────────── */
+
+.terminal-btn-submit.submit-success {
+  animation: terminal-submit-pulse 0.5s ease-out;
+}
+
+@keyframes terminal-submit-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(0, 255, 157, 0.7);
+    background: rgba(0, 255, 157, 0.25);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(0, 255, 157, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(0, 255, 157, 0);
+  }
+}
+
+/* ─── Reduce motion overrides ────────────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  .terminal-container .cm-cursor {
+    animation: none;
+  }
+  .terminal-output-stderr {
+    animation: none;
+  }
+  .terminal-btn-submit.submit-success {
+    animation: none;
+  }
+  .terminal-spinner {
+    animation: none;
   }
 }

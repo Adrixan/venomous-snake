@@ -16,3 +16,5 @@ export { useChallengeTerminal } from './useChallengeTerminal';
 export type { UseChallengeTerminalReturn, SubmitResult } from './useChallengeTerminal';
 export { ChallengeSuccessOverlay } from './ChallengeSuccessOverlay';
 export type { ChallengeSuccessOverlayProps } from './ChallengeSuccessOverlay';
+export { TerminalBootSequence } from './TerminalBootSequence';
+export type { TerminalBootSequenceProps } from './TerminalBootSequence';

@@ -8,6 +8,9 @@ import type { NPCBehavior } from '../entities/NPC';
 import { InputManager } from '../input/InputManager';
 import { TilemapManager } from '../systems/TilemapManager';
 import { CameraSystem } from '../systems/CameraSystem';
+import { getFloorTilemap } from '../maps/FloorRegistry';
+import { TransitionManager } from '../systems/TransitionManager';
+import { ParticleManager } from '../systems/ParticleManager';
 
 export interface GameSceneData {
   roomKey?: string;
@@ -21,6 +24,8 @@ export class GameScene extends Phaser.Scene {
   private player: Player | null = null;
   private tilemapManager: TilemapManager | null = null;
   private cameraSystem: CameraSystem | null = null;
+  private transitionManager: TransitionManager | null = null;
+  private particleManager: ParticleManager | null = null;
   private interactiveObjects: InteractiveObject[] = [];
   private npcs: NPC[] = [];
   private inputManager: InputManager | null = null;
@@ -125,10 +130,28 @@ export class GameScene extends Phaser.Scene {
       this.cameraSystem.setup(this, player, loadedTilemap ?? undefined);
     }
 
+    // Transition and particle managers
+    this.transitionManager = new TransitionManager();
+    this.particleManager = new ParticleManager();
+    this.particleManager.attach(this);
+
+    // Ambient dust particles (very sparse background effect)
+    this.particleManager.addAmbientDust();
+
+    // Terminal spark emitters for each terminal interactive object
+    for (const obj of this.interactiveObjects) {
+      if (obj.objectType === 'terminal') {
+        this.particleManager.addTerminalSparks(obj.x, obj.y);
+      }
+    }
+
     this.setupEventBus();
 
     EventBus.emit({ type: 'SCENE_READY' });
     EventBus.emit({ type: 'SCENE_CHANGE', payload: { sceneKey: 'GameScene' } });
+
+    // Fade in on every scene start (covers both fresh loads and floor transitions)
+    this.cameras.main.fadeIn(400, 0, 0, 0);
   }
 
   update(_time: number, delta: number): void {
@@ -146,6 +169,10 @@ export class GameScene extends Phaser.Scene {
     this.unsubscribeEventBus = null;
     this.tilemapManager?.destroy();
     this.tilemapManager = null;
+    this.transitionManager?.destroy();
+    this.transitionManager = null;
+    this.particleManager?.destroy();
+    this.particleManager = null;
     this.inputManager?.destroy();
     this.inputManager = null;
     this.interactiveObjects = [];
@@ -282,6 +309,26 @@ export class GameScene extends Phaser.Scene {
         this.scene.pause();
       } else if (event.type === 'GAME_RESUME') {
         this.scene.resume();
+      } else if (event.type === 'FLOOR_CHANGE') {
+        const { targetFloor } = event.payload;
+        this.player?.freeze();
+        this.cameras.main.fadeOut(400, 0, 0, 0);
+        this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, () => {
+          const tilemapDef = getFloorTilemap(targetFloor);
+          this.scene.restart(tilemapDef !== null ? { roomKey: tilemapDef.mapKey } : {});
+        });
+      } else if (event.type === 'CHALLENGE_RESULT') {
+        const player = this.player;
+        if (event.payload.passed) {
+          // Camera shake + particle burst near the player on success
+          if (player) {
+            this.particleManager?.successShake();
+            this.particleManager?.burstChallengeSuccess(player.x, player.y);
+          }
+        } else {
+          // Red vignette flash on failure
+          this.particleManager?.failureFlash();
+        }
       }
     });
   }

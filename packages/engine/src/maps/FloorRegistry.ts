@@ -12,6 +12,61 @@ import {
   LOBBY_TILESET_NAME,
   type TiledMap,
 } from './TilemapGenerator';
+import {
+  generateFloor1Tilemap,
+  FLOOR_1_MAP_KEY,
+  FLOOR_1_TILESET_NAME,
+} from './floors/floor01-server-room';
+import {
+  generateFloor2Tilemap,
+  FLOOR_2_MAP_KEY,
+  FLOOR_2_TILESET_NAME,
+} from './floors/floor02-rd-laboratory';
+import {
+  generateFloor3Tilemap,
+  FLOOR_3_MAP_KEY,
+  FLOOR_3_TILESET_NAME,
+} from './floors/floor03-surveillance-hub';
+import {
+  generateFloor4Tilemap,
+  FLOOR_4_MAP_KEY,
+  FLOOR_4_TILESET_NAME,
+} from './floors/floor04-data-archives';
+import {
+  generateFloor5Tilemap,
+  FLOOR_5_MAP_KEY,
+  FLOOR_5_TILESET_NAME,
+} from './floors/floor05-communications-center';
+import {
+  generateFloor6Tilemap,
+  FLOOR_6_MAP_KEY,
+  FLOOR_6_TILESET_NAME,
+} from './floors/floor06-executive-wing';
+import {
+  generateFloor7Tilemap,
+  FLOOR_7_MAP_KEY,
+  FLOOR_7_TILESET_NAME,
+} from './floors/floor07-manufacturing-floor';
+import {
+  generateFloor8Tilemap,
+  FLOOR_8_MAP_KEY,
+  FLOOR_8_TILESET_NAME,
+} from './floors/floor08-research-vault';
+import {
+  generateFloor9Tilemap,
+  FLOOR_9_MAP_KEY,
+  FLOOR_9_TILESET_NAME,
+} from './floors/floor09-ai-core';
+import {
+  generateFloor10Tilemap,
+  FLOOR_10_MAP_KEY,
+  FLOOR_10_TILESET_NAME,
+} from './floors/floor10-penthouse-suite';
+import {
+  generateFloor11Tilemap,
+  FLOOR_11_MAP_KEY,
+  FLOOR_11_TILESET_NAME,
+} from './floors/floor11-rooftop';
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 
@@ -35,14 +90,82 @@ registry.set(0, {
   generateTilemap: generateLobbyTilemap,
 });
 
-// Floors 1–11 – stubs (fall back to procedural rooms) ─────────────────────────
-// These are intentionally omitted from the registry so that getFloorTilemap
-// returns null and the caller can use the existing procedural generator.
-//
-// When a floor's dedicated tilemap is ready, add it here:
-//
-//   import { generateFloor1Tilemap, FLOOR1_MAP_KEY, FLOOR1_TILESET_NAME } from './Floor1TilemapGenerator';
-//   registry.set(1, { mapKey: FLOOR1_MAP_KEY, tilesetKey: FLOOR1_TILESET_NAME, generateTilemap: generateFloor1Tilemap });
+// Floor 1 – Server Room ──────────────────────────────────────────────────────
+registry.set(1, {
+  mapKey: FLOOR_1_MAP_KEY,
+  tilesetKey: FLOOR_1_TILESET_NAME,
+  generateTilemap: generateFloor1Tilemap,
+});
+
+// Floor 2 – R&D Laboratory ───────────────────────────────────────────────────
+registry.set(2, {
+  mapKey: FLOOR_2_MAP_KEY,
+  tilesetKey: FLOOR_2_TILESET_NAME,
+  generateTilemap: generateFloor2Tilemap,
+});
+
+// Floor 3 – Surveillance Hub ─────────────────────────────────────────────────
+registry.set(3, {
+  mapKey: FLOOR_3_MAP_KEY,
+  tilesetKey: FLOOR_3_TILESET_NAME,
+  generateTilemap: generateFloor3Tilemap,
+});
+
+// Floor 4 – Data Archives ────────────────────────────────────────────────────
+registry.set(4, {
+  mapKey: FLOOR_4_MAP_KEY,
+  tilesetKey: FLOOR_4_TILESET_NAME,
+  generateTilemap: generateFloor4Tilemap,
+});
+
+// Floor 5 – Communications Center ────────────────────────────────────────────
+registry.set(5, {
+  mapKey: FLOOR_5_MAP_KEY,
+  tilesetKey: FLOOR_5_TILESET_NAME,
+  generateTilemap: generateFloor5Tilemap,
+});
+
+// Floor 6 – Executive Wing ───────────────────────────────────────────────────
+registry.set(6, {
+  mapKey: FLOOR_6_MAP_KEY,
+  tilesetKey: FLOOR_6_TILESET_NAME,
+  generateTilemap: generateFloor6Tilemap,
+});
+
+// Floor 7 – Manufacturing Floor ──────────────────────────────────────────────
+registry.set(7, {
+  mapKey: FLOOR_7_MAP_KEY,
+  tilesetKey: FLOOR_7_TILESET_NAME,
+  generateTilemap: generateFloor7Tilemap,
+});
+
+// Floor 8 – Research Vault ───────────────────────────────────────────────────
+registry.set(8, {
+  mapKey: FLOOR_8_MAP_KEY,
+  tilesetKey: FLOOR_8_TILESET_NAME,
+  generateTilemap: generateFloor8Tilemap,
+});
+
+// Floor 9 – AI Core ──────────────────────────────────────────────────────────
+registry.set(9, {
+  mapKey: FLOOR_9_MAP_KEY,
+  tilesetKey: FLOOR_9_TILESET_NAME,
+  generateTilemap: generateFloor9Tilemap,
+});
+
+// Floor 10 – Penthouse Suite ─────────────────────────────────────────────────
+registry.set(10, {
+  mapKey: FLOOR_10_MAP_KEY,
+  tilesetKey: FLOOR_10_TILESET_NAME,
+  generateTilemap: generateFloor10Tilemap,
+});
+
+// Floor 11 – Rooftop / Final Boss Arena ──────────────────────────────────────
+registry.set(11, {
+  mapKey: FLOOR_11_MAP_KEY,
+  tilesetKey: FLOOR_11_TILESET_NAME,
+  generateTilemap: generateFloor11Tilemap,
+});
 
 // ─── Public API ───────────────────────────────────────────────────────────────
 

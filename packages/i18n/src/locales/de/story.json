@@ -1,0 +1,144 @@
+{
+  "cutscene": {
+    "speaker": {
+      "handler": "Handler",
+      "cipher": "CIPHER",
+      "snake": "Venomous Snake",
+      "narrator": "—"
+    },
+    "intro": {
+      "frame1": "⚠ STRENG GEHEIM — NUR FÜR BEFUGTE ⚠",
+      "frame2": "Agent, wir beobachten die Rattlesnake Corp seit Monaten. Ihre Reichweite geht weit über das hinaus, was wir uns vorgestellt haben — Finanzsysteme, Infrastruktur, Regierungsverträge.",
+      "frame3": "Ihr CEO, bekannt nur als 'Venomous Snake', entwickelt etwas Gefährliches — eine Plattform, die jedes sichere Netzwerk des Landes kompromittieren könnte. Das darf nicht geschehen.",
+      "frame4": "Dein Auftrag: Infiltriere ihr Hauptquartier. Nutze ihre eigenen Systeme gegen sie. Beschaffe die Beweise. Komm raus. Simpel in der Theorie — in der Praxis weniger.",
+      "frame5": "Hey! Ich bin CIPHER — dein KI-Partner bei diesem Einsatz. Stell dir mich als den hilfsbereitesten Assistenten der Welt vor — mit deutlich besserem Musikgeschmack als dein Handler.",
+      "frame6": "Die gesamte Sicherheitsinfrastruktur läuft auf Python-Skripten. Lerne die Sprache, und du wirst dieses Gebäude beherrschen. Ich führe dich Schritt für Schritt — keine Vorkenntnisse nötig.",
+      "frame7": "Bereit? Jeder großartige Programmierer hat genau dort angefangen, wo du jetzt bist. Lass uns Geschichte schreiben. Die Lobby wartet."
+    },
+    "floor": {
+      "f1": {
+        "arrive": "[ Etage 1 — Empfangshalle ]",
+        "cipher": "Erdgeschoss. Das ist das Basislager — die Grundlagen. Acht Terminals, acht Aufgaben, alles über Python-Basics.",
+        "note": "Print-Anweisungen, Variablen, Datentypen. Kleine Werkzeuge, aber die Bausteine von allem, was folgt.",
+        "hint": "Tipp: Bewege den Mauszeiger über ein Terminal, um zu sehen, welches Konzept es behandelt. Starte wo du möchtest — ich bin gleich hier."
+      },
+      "f2": {
+        "arrive": "[ Etage 2 — Personalakten ]",
+        "cipher": "Gut gemacht in der Lobby. Etage 2: String-Manipulation. Ihr HR-System speichert alles als Text — Namen, Codes, Berichte.",
+        "note": "Wenn du Strings schneiden und formatieren kannst, sind ihre Personaldateien ein offenes Buch. F-Strings sind dein neuer bester Freund.",
+        "hint": "Tipp: Pythons String-Methoden sind mächtig. `.upper()`, `.split()`, `.replace()` — alles erlaubt hier oben."
+      },
+      "f3": {
+        "arrive": "[ Etage 3 — Zugangskontrolle ]",
+        "cipher": "Etage 3. Die Zugangssteuerung des Gebäudes. Hier leben Booleans und Bedingungen.",
+        "note": "Jede verschlossene Tür hat eine Bedingung: wenn Ausweis gültig, dann öffnen. Meister `if/elif/else` und du denkst wie ihre Sicherheitsarchitekten.",
+        "hint": "Tipp: Achte auf Operatorprioritäten — `and`, `or`, `not`. Ein falsch gesetztes `not` kann deine gesamte Logik umkehren."
+      },
+      "f4": {
+        "arrive": "[ Etage 4 — Patrouillenstrecken ]",
+        "cipher": "Das Streifenplanungssystem. Schleifen sind das Mittel ihrer Automatisierung von Wachrunden — und Schleifen sind das, womit wir es entwirren werden.",
+        "note": "`for`-Schleifen, `while`-Schleifen, `break`, `continue`, `range()`. Die Rhythmen des Gebäudes sind in Wiederholungen geschrieben.",
+        "hint": "Tipp: Eine unendliche `while True`-Schleife mit einem gut platzierten `break` ist oft die sauberste Lösung hier oben."
+      },
+      "f5": {
+        "arrive": "[ Etage 5 — Kommunikationszentrale ]",
+        "cipher": "Auf halbem Weg. Die Kommunikationszentrale. Funktionen sind das Mittel, womit ihre Ingenieure die Codebasis wartbar hielten — und wie wir unsere Angriffsvektoren wiederverwenden.",
+        "note": "Einmal definieren, überall aufrufen. `def`, `return`, `*args`, `**kwargs` — Funktionen sind die Architektur sauberen Codes.",
+        "hint": "Tipp: Eine Funktion, die genau eine Sache tut, ist einfacher zu testen, debuggen und wiederzuverwenden. Die Ingenieure hier waren nicht ganz so diszipliniert. Du kannst es besser."
+      },
+      "f6": {
+        "arrive": "[ Etage 6 — Inventar ]",
+        "cipher": "Das Inventarsystem. Listen, Dictionaries, Tupel, Mengen — Pythons Kerndatenstrukturen treiben alles an, was in diesem Gebäude gespeichert ist.",
+        "note": "Ihr Inventar ist ein Dictionary von Dictionaries. Verschachtelt, geschichtet, wartend auf jemanden, der weiß, wie man navigiert.",
+        "hint": "Tipp: `dict.get(key, default)` ist sicherer als direkter Zugriff. Fehlende Schlüssel lassen einen vorsichtigen Agenten nicht abstürzen."
+      },
+      "f7": {
+        "arrive": "[ Etage 7 — Nachrichtenarchiv ]",
+        "cipher": "Etage 7 — das Nachrichtenarchiv. Datei-E/A und Datenverarbeitung. Ihre sensibelsten Dokumente liegen genau hier.",
+        "note": "CSV-Dateien, JSON-Konfigurationen, Log-Dateien. Python liest sie alle. Wenn du ihre Formate parsen kannst, ist ihre Geheimdienstinformation deine.",
+        "hint": "Tipp: Verwende immer `with open(...)` für Dateien. Es schließt sauber, auch wenn etwas schiefläuft — und im Einsatz läuft immer etwas schief."
+      },
+      "f8": {
+        "arrive": "[ Etage 8 — Missionsunterlagen ]",
+        "cipher": "Die Missionsplanungsetage. Exception-Handling: wie ihr System reagiert, wenn Dinge brechen. Jedes robuste System antizipiert Fehler.",
+        "note": "`try`, `except`, `finally`, benutzerdefinierte Exceptions — das ist defensive Programmierung. Ihr System hat hier Schwachstellen, die wir ausnutzen können.",
+        "hint": "Tipp: Fange spezifische Exceptions, nicht blankes `except`. Alle Fehler blind zu schlucken ist der Weg, wie Sicherheitslücken entstehen."
+      },
+      "f9": {
+        "arrive": "[ Etage 9 — Feldeinsätze ]",
+        "cipher": "Etage 9 — Operationen. Module, Lambdas, Map und Filter, reguläre Ausdrücke. Hier verbringen erfahrene Entwickler ihre Zeit.",
+        "note": "Ihre Automatisierungsskripte importieren Dutzende benutzerdefinierter Module. Das Modulsystem zu verstehen bedeutet, ihre gesamte Angriffsfläche zu verstehen.",
+        "hint": "Tipp: `re.compile()` deine Muster, wenn du sie mehrmals verwendest. Effizienz ist wichtig, wenn du im großen Maßstab aufklärst."
+      },
+      "f10": {
+        "arrive": "[ Etage 10 — Executive-Suiten ]",
+        "cipher": "Führungsetage. Objektorientierte Programmierung. Ihre Kernplattform baut auf Klassenhierarchien, die selbst ihr eigenes Team kaum versteht.",
+        "note": "Klassen, Vererbung, Polymorphismus, Dunder-Methoden. Die Architektur des gesamten Produkts von Rattlesnake Corp liegt auf dieser Etage offen.",
+        "hint": "Tipp: Beim Überschreiben einer Elternmethode rufe `super()` auf, es sei denn, du hast einen sehr guten Grund. Respektiere die Kette."
+      },
+      "f11": {
+        "arrive": "[ Etage 11 — Qualitätssicherungslabor ]",
+        "cipher": "Fast dort. Das QA-Labor. Typhinweise, Dataclasses und Unit-Tests. So beweisen professionelle Ingenieure, dass ihr Code funktioniert.",
+        "note": "Ihre Testsuite hat erhebliche Lücken — Lücken, die wir ausnutzen konnten. Tests zu schreiben ist nicht nur gute Praxis; es ist der Weg, ein System zu verstehen.",
+        "hint": "Tipp: Ein fehlgeschlagener Test ist kein Versagen — es ist Information. Das QA-Team hier hat das vergessen. Mache nicht denselben Fehler."
+      },
+      "f12": {
+        "arrive": "[ Etage 12 — Penthouse ]",
+        "cipher": "Das ist es. Das Penthouse. Venomous Snake ist gleich da. Und diese Etage behandelt das fortschrittlichste Python — Generatoren, Dekoratoren, Async/Await, strukturelles Pattern Matching.",
+        "note": "Die letzte Sicherheitsschicht läuft auf Konzepten, die die meisten Entwickler nie vollständig meistern. Du bist so weit gekommen. Du bist bereit.",
+        "hint": "Was auch immer als Nächstes passiert — ich bin auf deiner Seite. Zeig ihnen, was du gelernt hast."
+      }
+    },
+    "boss": {
+      "frame1": "Also. Sie haben tatsächlich jemanden geschickt. Einen Programmierer, nicht weniger. Wie... bezaubernd.",
+      "frame2": "Du hast ein paar Schlösser geknackt, ein paar Rätsel gelöst. Verwechsle das nicht mit Können. Dieses System wurde von den besten Ingenieuren gebaut, die Geld kaufen kann. Du bist überfordert.",
+      "frame3": "Hör nicht auf ihn. Er hat Angst. Du hast elf Etagen seiner bestbewachtesten Systeme geknackt. Er weiß genau, wie viel Ärger er hat.",
+      "frame4": "Ich bewundere die Ausdauer — wirklich. Aber diese letzte Schicht? Generatoren, Dekoratoren, Async-Parallelität. Das ist kein Kursübung. Das ist mein Meisterwerk. Du kannst es nicht verstehen.",
+      "frame5": "Oh, er hält eine Rede. Klassisch. Das tun Menschen, wenn sie schon verloren haben. Du hast alles, was du brauchst. Zeig ihnen, was du gelernt hast.",
+      "frame6": "Das ist der Sinn all dieser Herausforderungen gewesen. Jedes Konzept, jede Fehlermeldung, jeder Hinweis, den du durchgekämpft hast — alles führt hierher. Jetzt schreib Code."
+    },
+    "victory": {
+      "frame1": "[ SYSTEMEINBRUCH — RATTLESNAKE CORP MAINFRAME — ZUGANG GEWÄHRT ]",
+      "frame2": "Das... das ist nicht möglich. Wer — wie hast du das überhaupt — dieses System war uneinnehmbar. Ich habe es selbst gebaut.",
+      "frame3": "Du hast es geschafft! Jeden Algorithmus, jede Datenstruktur, jedes Muster, das sie dir entgegengeworfen haben — und du hast alles gelöst. Ich bin wirklich beeindruckt. Und ich bin eine sehr schwer zu beeindruckende KI.",
+      "frame4": "Wir übertragen die Beweise jetzt. Finanzunterlagen, Überwachungsdaten, das gesamte Schema. Rattlesnake Corp ist erledigt. Du hast sie erledigt — mit Code.",
+      "frame5": "Auftrag erfüllt, Agent. Hervorragende Arbeit. Das Gebäude ist gesichert, die Daten wurden übertragen, und Venomous Snake ist in Gewahrsam. Du hast das verdient."
+    },
+    "gameover": {
+      "frame1": "[ VERBINDUNG GETRENNT ]",
+      "frame2": "Hey — Rückschläge passieren. Jeder großartige Programmierer hat einen Stapel gescheiterter Versuche hinter sich. Die Frage ist, ob man wieder aufsteht.",
+      "frame3": "Ich bin gleich hier, wenn du bereit bist, es nochmal zu versuchen. Das Gebäude geht nirgendwo hin. Ich auch nicht."
+    }
+  },
+  "tutorial": {
+    "step": {
+      "movement": "Nutze WASD oder die Pfeiltasten, um dich zu bewegen. Versuche, zu dem Terminal zu laufen — dem leuchtenden! Ich warte.",
+      "interaction": "Schöne Bewegungen! Drücke jetzt E oder Leertaste, um mit Objekten zu interagieren. Probiere das Terminal aus — es beißt nicht. Wahrscheinlich.",
+      "terminalBasics": "Willkommen an deinem Hacking-Terminal! Hier passiert die Magie. Du schreibst Python-Code direkt hier im Editor. Versuche es: print('hallo') — dann drücke Ausführen.",
+      "codeSubmit": "Siehst du die Schaltflächen? 'Ausführen' testet deinen Code ohne Einreichen. 'Einreichen' sperrt deine Antwort ein. Probiere zuerst Ausführen, prüfe die Ausgabe, dann reiche ein wenn du sicher bist.",
+      "firstSuccess": "Du hast gerade deinen ersten funktionierenden Hack geschrieben! Das ist wirklich etwas. Siehst du die XP-Leiste? Jede abgeschlossene Herausforderung füllt sie auf. Mach weiter und du levelst schnell auf."
+    },
+    "gotIt": "Verstanden!",
+    "skipTutorial": "Tutorial überspringen",
+    "skipConfirm": "Das gesamte Tutorial überspringen? Du kannst es jederzeit in den Einstellungen neu starten.",
+    "spotlight": "Versuche diesen Bereich →"
+  },
+  "credits": {
+    "title": "Mission erfüllt",
+    "subtitle": "Venomous Snakes Imperium ist gefallen.",
+    "stats": {
+      "heading": "Deine Missionsdaten",
+      "challengesCompleted": "Herausforderungen abgeschlossen",
+      "totalXp": "Gesamtes XP verdient",
+      "timePlayed": "Zeit im Einsatz",
+      "achievementsUnlocked": "Erfolge freigeschaltet",
+      "floorsCleared": "Etagen freigeschalten"
+    },
+    "newGamePlus": "Neues Spiel+ — Behalte deine Fähigkeiten, starte neu",
+    "returnToMenu": "Zurück zum Menü",
+    "scrollTitle": "Venomous Snake",
+    "scrollSubtitle": "Ein interaktives Python-Lern-Abenteuer",
+    "thankYou": "Danke fürs Spielen!",
+    "builtWith": "Gebaut mit ♥ und Python"
+  }
+}

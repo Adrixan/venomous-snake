@@ -1,0 +1,144 @@
+{
+  "cutscene": {
+    "speaker": {
+      "handler": "Handler",
+      "cipher": "CIPHER",
+      "snake": "Venomous Snake",
+      "narrator": "—"
+    },
+    "intro": {
+      "frame1": "⚠ CLASSIFIED — EYES ONLY ⚠",
+      "frame2": "Agent, we've been tracking Rattlesnake Corp for months. Their reach extends further than anyone imagined — financial systems, infrastructure, government contracts.",
+      "frame3": "Their CEO, known only as 'Venomous Snake', has been developing something dangerous. A platform that could compromise every secure network in the country. We can't let that happen.",
+      "frame4": "Your mission: infiltrate their headquarters. Use their own systems against them. Gather the evidence. Get out. Simple in theory — less so in practice.",
+      "frame5": "Hey there! I'm CIPHER — your AI partner on this op. Think of me as the world's most helpful assistant with significantly better taste in music than your Handler.",
+      "frame6": "Their entire security infrastructure runs on Python scripts. Learn the language, and you'll own this building. I'll guide you every step of the way — no prior coding experience needed.",
+      "frame7": "Ready? Every great programmer started exactly where you are now. Let's make history. The lobby is waiting."
+    },
+    "floor": {
+      "f1": {
+        "arrive": "[ Floor 1 — Lobby ]",
+        "cipher": "Ground floor. This is base camp — the fundamentals. Eight terminals, eight challenges, all about Python basics.",
+        "note": "Print statements, variables, data types. Small tools, but these are the building blocks of everything that follows.",
+        "hint": "Tip: hover any terminal to see which concept it covers. Start anywhere — I'll be right here."
+      },
+      "f2": {
+        "arrive": "[ Floor 2 — Personnel Records ]",
+        "cipher": "Nicely done on the lobby. Floor 2: string manipulation. Their HR system stores everything as text — names, codes, reports.",
+        "note": "Once you can slice and format strings, their personnel files are an open book. F-strings are your new best friend.",
+        "hint": "Tip: Python's string methods are powerful. `.upper()`, `.split()`, `.replace()` — all fair game up here."
+      },
+      "f3": {
+        "arrive": "[ Floor 3 — Access Control ]",
+        "cipher": "Floor 3. The building's access-control logic. This is where booleans and conditionals live.",
+        "note": "Every locked door has a condition: if badge is valid, then open. Master `if/elif/else` and you'll think like their security architects.",
+        "hint": "Tip: watch out for operator precedence — `and`, `or`, `not`. A misplaced `not` can flip your entire logic chain."
+      },
+      "f4": {
+        "arrive": "[ Floor 4 — Patrol Routes ]",
+        "cipher": "The patrol scheduling system. Loops are how they automate guard rotations — and loops are how we'll unravel it.",
+        "note": "`for` loops, `while` loops, `break`, `continue`, `range()`. The building's rhythms are written in repetition.",
+        "hint": "Tip: an infinite `while True` loop with a well-placed `break` is often the cleanest solution up here."
+      },
+      "f5": {
+        "arrive": "[ Floor 5 — Communications Center ]",
+        "cipher": "Halfway there. The comms center. Functions are how their engineers kept the codebase maintainable — and how we'll reuse our attack vectors.",
+        "note": "Define once, call everywhere. `def`, `return`, `*args`, `**kwargs` — functions are the architecture of clean code.",
+        "hint": "Tip: a function that does exactly one thing is easier to test, debug, and reuse. The engineers here weren't quite that disciplined. You can do better."
+      },
+      "f6": {
+        "arrive": "[ Floor 6 — Asset Inventory ]",
+        "cipher": "The inventory system. Lists, dictionaries, tuples, sets — Python's core data structures power everything stored in this building.",
+        "note": "Their inventory is a dictionary of dictionaries. Nested, layered, waiting for someone who knows how to navigate it.",
+        "hint": "Tip: `dict.get(key, default)` is safer than direct access. Missing keys won't crash a cautious operative."
+      },
+      "f7": {
+        "arrive": "[ Floor 7 — Intelligence Files ]",
+        "cipher": "Floor 7 — the intelligence archive. File I/O and data parsing. Their most sensitive documents are sitting right here.",
+        "note": "CSV files, JSON configs, log files. Python reads them all. Once you can parse their formats, their intel is your intel.",
+        "hint": "Tip: always use `with open(...)` to handle files. It closes cleanly even when things go wrong — and in the field, things always go wrong."
+      },
+      "f8": {
+        "arrive": "[ Floor 8 — Mission Dossiers ]",
+        "cipher": "The mission planning floor. Exception handling: how their system reacts when things break. Every robust system anticipates failure.",
+        "note": "`try`, `except`, `finally`, custom exceptions — this is defensive programming. Their system has vulnerabilities here we can exploit.",
+        "hint": "Tip: catch specific exceptions, not bare `except`. Swallowing all errors blindly is how security leaks happen."
+      },
+      "f9": {
+        "arrive": "[ Floor 9 — Field Operations ]",
+        "cipher": "Floor 9 — operations. Modules, lambdas, map and filter, regular expressions. This is where experienced developers spend their time.",
+        "note": "Their automation scripts import a dozen custom modules. Understanding the module system means understanding their full attack surface.",
+        "hint": "Tip: `re.compile()` your patterns if you use them more than once. Efficiency matters when you're running recon at scale."
+      },
+      "f10": {
+        "arrive": "[ Floor 10 — Executive Suites ]",
+        "cipher": "Executive floor. Object-oriented programming. Their core platform is built on class hierarchies their own team barely understands.",
+        "note": "Classes, inheritance, polymorphism, dunder methods. The architecture of Rattlesnake Corp's entire product is exposed on this floor.",
+        "hint": "Tip: when overriding a parent method, call `super()` unless you have a very good reason not to. Respect the chain."
+      },
+      "f11": {
+        "arrive": "[ Floor 11 — Quality Assurance Lab ]",
+        "cipher": "Almost there. The QA lab. Type hints, dataclasses, and unit testing. This is how professional engineers prove their code works.",
+        "note": "Their test suite has significant gaps — gaps we've been able to exploit. Writing tests isn't just good practice; it's how you understand a system.",
+        "hint": "Tip: a failing test is not a failure — it's information. The QA team here forgot that. Don't make their mistake."
+      },
+      "f12": {
+        "arrive": "[ Floor 12 — Penthouse ]",
+        "cipher": "This is it. The penthouse. Venomous Snake is right there. And this floor covers the most advanced Python — generators, decorators, async/await, structural pattern matching.",
+        "note": "The final layer of their security runs on concepts most developers never fully master. You've come this far. You're ready.",
+        "hint": "Whatever happens next — I've got your back. Show them what you've learned."
+      }
+    },
+    "boss": {
+      "frame1": "So. They actually sent someone. A programmer, no less. How... quaint.",
+      "frame2": "You've picked a few locks, solved a few puzzles. Don't mistake that for skill. This system was built by the best engineers money can buy. You are out of your depth.",
+      "frame3": "Don't listen to him. He's scared. You've cracked eleven floors of his most guarded systems. He knows exactly how much trouble he's in.",
+      "frame4": "I admire the persistence — truly. But this final layer? Generators, decorators, async concurrency. This isn't a classroom exercise. This is my masterwork. You can't understand it.",
+      "frame5": "Oh, he's monologuing. Classic. That's what people do when they've already lost. You've got everything you need. Show them what you've learned.",
+      "frame6": "This is what all those challenges were for. Every concept, every error message, every hint you pushed through — it all leads here. Now go write some code."
+    },
+    "victory": {
+      "frame1": "[ SYSTEM BREACH — RATTLESNAKE CORP MAINFRAME — ACCESS GRANTED ]",
+      "frame2": "This... this isn't possible. Who — how did you even — this system was impenetrable. I built it myself.",
+      "frame3": "You did it! Every single algorithm, every data structure, every pattern they threw at you — and you solved them all. I am genuinely impressed. And I'm a very hard AI to impress.",
+      "frame4": "We're transmitting the evidence now. Financial records, surveillance data, the whole scheme. Rattlesnake Corp is finished. You finished them — with code.",
+      "frame5": "Mission accomplished, Agent. Outstanding work. The building is secure, the data is transmitted, and Venomous Snake is in custody. You've earned this."
+    },
+    "gameover": {
+      "frame1": "[ CONNECTION LOST ]",
+      "frame2": "Hey — setbacks happen. Every great programmer has a stack of failed attempts behind them. The question is whether you get back up.",
+      "frame3": "I'll be right here when you're ready to try again. The building isn't going anywhere. Neither am I."
+    }
+  },
+  "tutorial": {
+    "step": {
+      "movement": "Use WASD or the arrow keys to move around. Try walking towards that terminal — the glowing one! I'll wait.",
+      "interaction": "Nice moves! Now press E or Space to interact with objects. Give that terminal a go — it won't bite. Probably.",
+      "terminalBasics": "Welcome to your hacking terminal! This is where the magic happens. You write Python code right here in the editor. Try typing: print('hello') — then hit Run.",
+      "codeSubmit": "See those buttons? 'Run' tests your code without submitting. 'Submit' locks in your answer. Try Run first, check the output, then Submit when you're confident.",
+      "firstSuccess": "You just wrote your first working hack! Seriously — that's not nothing. See that XP bar? Every challenge you complete fills it up. Keep going and you'll level up fast."
+    },
+    "gotIt": "Got it!",
+    "skipTutorial": "Skip tutorial",
+    "skipConfirm": "Skip the whole tutorial? You can restart it from Settings any time.",
+    "spotlight": "Try this area →"
+  },
+  "credits": {
+    "title": "Mission Complete",
+    "subtitle": "Venomous Snake's empire has fallen.",
+    "stats": {
+      "heading": "Your Mission Stats",
+      "challengesCompleted": "Challenges Completed",
+      "totalXp": "Total XP Earned",
+      "timePlayed": "Time in the Field",
+      "achievementsUnlocked": "Achievements Unlocked",
+      "floorsCleared": "Floors Cleared"
+    },
+    "newGamePlus": "New Game+ — Keep your skills, start fresh",
+    "returnToMenu": "Return to Menu",
+    "scrollTitle": "Venomous Snake",
+    "scrollSubtitle": "An Interactive Python Learning Adventure",
+    "thankYou": "Thanks for playing!",
+    "builtWith": "Built with ♥ and Python"
+  }
+}

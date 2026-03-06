@@ -94,6 +94,12 @@ export function GameControllerProvider({
           store.unlockFloor(event.payload.floor);
           break;
 
+        case 'FLOOR_CHANGE':
+          store.setCurrentFloor(
+            event.payload.targetFloor === 0 ? 'lobby' : `floor_${event.payload.targetFloor}`,
+          );
+          break;
+
         case 'DIALOG_TRIGGERED':
           store.setDialog(event.payload);
           break;
@@ -110,11 +116,7 @@ export function GameControllerProvider({
     return unsubscribe;
   }, []);
 
-  return React.createElement(
-    GameControllerContext.Provider,
-    { value: localRef.current },
-    children,
-  );
+  return React.createElement(GameControllerContext.Provider, { value: localRef.current }, children);
 }
 
 // ── Hook ─────────────────────────────────────────────────────────────────────
@@ -143,6 +145,7 @@ export function useGameActions(): {
   submitCode: (code: string) => Promise<SubmitResult>;
   getHint: () => HintResult | null;
   abandonChallenge: () => void;
+  changeFloor: (floorNumber: number) => boolean;
 } {
   const controller = useGameController();
 
@@ -203,7 +206,12 @@ export function useGameActions(): {
     EventBus.emit({ type: 'CHALLENGE_ABANDONED' });
   }
 
-  return { startChallenge, submitCode, getHint, abandonChallenge };
+  function changeFloor(floorNumber: number): boolean {
+    const unlockedFloors = useGameStore.getState().unlockedFloors;
+    return controller.changeFloor(floorNumber, unlockedFloors);
+  }
+
+  return { startChallenge, submitCode, getHint, abandonChallenge, changeFloor };
 }
 
 // ── Helpers ───────────────────────────────────────────────────────────────────

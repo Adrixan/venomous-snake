@@ -10,6 +10,7 @@ const THUMB_COLOR = 0x00ff9d;
 const OUTER_ALPHA = 0.25;
 const THUMB_ALPHA = 0.5;
 const RING_ALPHA = 0.5;
+const GHOST_ALPHA = 0.15;
 const JOYSTICK_DEPTH = 100;
 
 export class VirtualJoystick {
@@ -19,6 +20,7 @@ export class VirtualJoystick {
 
   private readonly outer: Phaser.GameObjects.Graphics;
   private readonly thumb: Phaser.GameObjects.Graphics;
+  private readonly ghost: Phaser.GameObjects.Graphics;
 
   private active = false;
   private pointerId = -1;
@@ -47,6 +49,11 @@ export class VirtualJoystick {
     this.thumb.setDepth(JOYSTICK_DEPTH + 1);
     this.thumb.setAlpha(0);
 
+    this.ghost = scene.add.graphics();
+    this.ghost.setScrollFactor(0);
+    this.ghost.setDepth(JOYSTICK_DEPTH - 1);
+    this.drawGhost();
+
     this.boundDown = this.onPointerDown.bind(this);
     this.boundMove = this.onPointerMove.bind(this);
     this.boundUp = this.onPointerUp.bind(this);
@@ -72,20 +79,25 @@ export class VirtualJoystick {
     this.scene.input.off('pointerupoutside', this.boundUp);
     this.outer.destroy();
     this.thumb.destroy();
+    this.ghost.destroy();
   }
 
   private onPointerDown(pointer: Phaser.Input.Pointer): void {
     if (this.active) return;
-    // Only activate for left half of screen
-    if (pointer.x > this.scene.scale.width / 2) return;
+    // Activate for left 60% of screen
+    if (pointer.x > this.scene.scale.width * 0.6) return;
+
+    const margin = this.outerRadius + 10;
+    const { width, height } = this.scene.scale;
 
     this.active = true;
     this.pointerId = pointer.id;
-    this.baseX = pointer.x;
-    this.baseY = pointer.y;
+    this.baseX = Phaser.Math.Clamp(pointer.x, margin, width - margin);
+    this.baseY = Phaser.Math.Clamp(pointer.y, margin, height - margin);
     this.outputX = 0;
     this.outputY = 0;
 
+    this.ghost.setAlpha(0);
     this.outer.setAlpha(1);
     this.thumb.setAlpha(1);
     this.redrawOuter(this.baseX, this.baseY);
@@ -124,6 +136,7 @@ export class VirtualJoystick {
     this.outputY = 0;
     this.outer.setAlpha(0);
     this.thumb.setAlpha(0);
+    this.drawGhost();
   }
 
   private redrawOuter(x: number, y: number): void {
@@ -138,5 +151,15 @@ export class VirtualJoystick {
     this.thumb.clear();
     this.thumb.fillStyle(THUMB_COLOR, THUMB_ALPHA);
     this.thumb.fillCircle(x, y, this.thumbRadius);
+  }
+
+  private drawGhost(): void {
+    const { height } = this.scene.scale;
+    const gx = this.outerRadius + 20;
+    const gy = height - this.outerRadius - 20;
+    this.ghost.clear();
+    this.ghost.lineStyle(2, OUTER_COLOR, GHOST_ALPHA);
+    this.ghost.strokeCircle(gx, gy, this.outerRadius);
+    this.ghost.setAlpha(1);
   }
 }

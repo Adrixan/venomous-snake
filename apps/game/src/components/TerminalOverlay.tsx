@@ -1,6 +1,6 @@
-import React, { useRef, useEffect, useCallback } from 'react';
+import React, { useRef, useEffect, useCallback, useState } from 'react';
 import { MockInterpreter } from '@venomous-snake/python-runtime';
-import { HackingTerminal } from '@venomous-snake/ui';
+import { HackingTerminal, TerminalBootSequence } from '@venomous-snake/ui';
 import { useGameStore } from '../store/gameStore';
 import { EventBus } from '@venomous-snake/engine';
 
@@ -10,10 +10,18 @@ export const TerminalOverlay = React.memo(function TerminalOverlay(): React.JSX.
   const addXp = useGameStore((s) => s.addXp);
   const currentChallengeId = useGameStore((s) => s.currentChallengeId);
   const interpreterRef = useRef<MockInterpreter | null>(null);
+  const [bootDone, setBootDone] = useState(false);
 
   if (!interpreterRef.current) {
     interpreterRef.current = new MockInterpreter();
   }
+
+  // Reset boot state each time the terminal opens so the sequence can run
+  useEffect(() => {
+    if (terminalOpen) {
+      setBootDone(false);
+    }
+  }, [terminalOpen]);
 
   useEffect(() => {
     return () => {
@@ -43,19 +51,24 @@ export const TerminalOverlay = React.memo(function TerminalOverlay(): React.JSX.
 
   return (
     <div className="terminal-overlay" role="dialog" aria-modal="true" aria-label="Hacking Terminal">
-      {currentChallengeId !== null ? (
-        <HackingTerminal
-          challengeId={currentChallengeId}
-          onClose={handleClose}
-          onChallengeSuccess={handleChallengeSuccess}
-        />
-      ) : (
-        <HackingTerminal
-          interpreter={interpreterRef.current}
-          onClose={handleClose}
-          initialCode={'# Write your Python code here\n'}
-        />
-      )}
+      {/* Boot sequence shown on first open each session */}
+      {!bootDone && <TerminalBootSequence onComplete={() => setBootDone(true)} />}
+
+      {/* Actual terminal — rendered beneath boot sequence then revealed */}
+      {bootDone &&
+        (currentChallengeId !== null ? (
+          <HackingTerminal
+            challengeId={currentChallengeId}
+            onClose={handleClose}
+            onChallengeSuccess={handleChallengeSuccess}
+          />
+        ) : (
+          <HackingTerminal
+            interpreter={interpreterRef.current}
+            onClose={handleClose}
+            initialCode={'# Write your Python code here\n'}
+          />
+        ))}
     </div>
   );
 });
