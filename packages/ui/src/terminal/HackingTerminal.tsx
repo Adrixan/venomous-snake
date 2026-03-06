@@ -5,7 +5,10 @@ import type {
   InterpreterStatus,
 } from '@venomous-snake/shared-types';
 import { TerminalEditor } from './TerminalEditor';
+import type { TerminalEditorHandle } from './TerminalEditor';
 import { OutputPanel } from './OutputPanel';
+import { MobileSymbolBar } from './MobileSymbolBar';
+import { useBreakpoint } from '../responsive/useBreakpoint';
 import './terminal.css';
 
 interface HackingTerminalProps {
@@ -44,6 +47,8 @@ function HackingTerminalInner({
   const [status, setStatus] = useState<InterpreterStatus>('uninitialized');
   const [inputPrompt, setInputPrompt] = useState<string | undefined>(undefined);
   const cleanupRef = useRef<Array<() => void>>([]);
+  const editorRef = useRef<TerminalEditorHandle>(null);
+  const breakpoint = useBreakpoint();
 
   useEffect(() => {
     const cleanups: Array<() => void> = [];
@@ -126,6 +131,10 @@ function HackingTerminalInner({
     onClose();
   }, [onClose]);
 
+  const handleSymbol = useCallback((sym: string) => {
+    editorRef.current?.insertAtCursor(sym);
+  }, []);
+
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
@@ -174,9 +183,13 @@ function HackingTerminalInner({
           <span>Initializing Python interpreter...</span>
         </div>
       ) : (
-        <div className="terminal-split">
+        <div
+          className="terminal-split"
+          style={breakpoint === 'mobile' ? { flexDirection: 'column' } : undefined}
+        >
           <div className="terminal-editor-area">
             <TerminalEditor
+              ref={editorRef}
               initialCode={initialCode}
               onRun={handleRunSync}
               disabled={isDisabled}
@@ -191,6 +204,11 @@ function HackingTerminalInner({
               : {})}
           />
         </div>
+      )}
+
+      {/* Mobile symbol bar — shown below split on mobile */}
+      {breakpoint === 'mobile' && status !== 'loading' && (
+        <MobileSymbolBar onSymbol={handleSymbol} />
       )}
 
       {/* Status bar */}

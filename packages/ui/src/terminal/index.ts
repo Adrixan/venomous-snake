@@ -1,6 +1,9 @@
 export { TerminalEditor } from './TerminalEditor';
+export type { TerminalEditorHandle } from './TerminalEditor';
 export { OutputPanel } from './OutputPanel';
 export { HackingTerminal } from './HackingTerminal';
+export { MobileSymbolBar } from './MobileSymbolBar';
+export type { MobileSymbolBarProps } from './MobileSymbolBar';
 export {
   terminalTheme,
   terminalHighlightStyle,

@@ -10,5 +10,209 @@
   "ch01_03": {
     "title": "Cracking Numbers",
     "description": "The security lock code is the result of a calculation. Compute and print the answer using Python math operators."
+  },
+  "ch01_04": {
+    "title": "Data Recon",
+    "description": "Use the type() function to identify the data types of a string variable and an integer variable."
+  },
+  "ch01_05": {
+    "title": "Thermal Override",
+    "description": "Convert the server room temperature from Celsius to Fahrenheit using the conversion formula."
+  },
+  "ch01_06": {
+    "title": "Name Assembly",
+    "description": "Combine a first name and last name into a full name using string concatenation."
+  },
+  "ch01_07": {
+    "title": "Terminal Art",
+    "description": "Print a simple ASCII art snake on the terminal using multiple print statements."
+  },
+  "ch01_08": {
+    "title": "Code Notes",
+    "description": "Add comments to explain what each line of code does. Comments help other operatives understand your work."
+  },
+  "ch02_01": {
+    "title": "Case Shift",
+    "description": "Transform a codename using .upper(), .lower(), and .title() string methods."
+  },
+  "ch02_02": {
+    "title": "Code Extraction",
+    "description": "Extract specific characters from an access code using string indexing."
+  },
+  "ch02_03": {
+    "title": "Message Intercept",
+    "description": "Slice an intercepted message to extract different parts using string slicing notation."
+  },
+  "ch02_04": {
+    "title": "ID Forge",
+    "description": "Create a formatted ID card using f-strings to embed variables directly in text."
+  },
+  "ch02_05": {
+    "title": "Codename Entry",
+    "description": "Use the input() function to read the operative's codename and display a personalized greeting."
+  },
+  "ch02_06": {
+    "title": "Code Converter",
+    "description": "Read a door code as text input and convert it to a number to perform calculations."
+  },
+  "ch02_07": {
+    "title": "Status Report",
+    "description": "Build a complex mission status report using f-strings with multiple variables."
+  },
+  "ch02_08": {
+    "title": "Password Audit",
+    "description": "Check a password's length using len() and determine if it meets minimum requirements."
+  },
+  "ch03_01": {
+    "title": "Access Check",
+    "description": "Use an if statement to check if an access code matches the secret code."
+  },
+  "ch03_02": {
+    "title": "Door Protocol",
+    "description": "Use if/else to check a door's locked status and print the appropriate message."
+  },
+  "ch03_03": {
+    "title": "Level Assessment",
+    "description": "Compare two clearance levels using comparison operators and print the boolean results."
+  },
+  "ch03_04": {
+    "title": "Threat Classifier",
+    "description": "Classify a threat score into categories using an if/elif/else chain."
+  },
+  "ch03_05": {
+    "title": "Security Gate",
+    "description": "Combine multiple security conditions using and, or, and not logical operators."
+  },
+  "ch03_06": {
+    "title": "Two-Factor Auth",
+    "description": "Implement a two-factor authentication check using nested if statements."
+  },
+  "ch03_07": {
+    "title": "Alarm Logic",
+    "description": "Use boolean variables and logical operators to determine alarm system status."
+  },
+  "ch03_08": {
+    "title": "Password Validator",
+    "description": "Write a password validator that checks length, digit, and letter requirements using complex conditions."
+  },
+  "ch04_01": {
+    "title": "Guard Roster",
+    "description": "Use a for loop to print each guard's name from a patrol list."
+  },
+  "ch04_02": {
+    "title": "Camera Setup",
+    "description": "Use range() in a for loop to label security cameras numbered 0 through 4."
+  },
+  "ch04_03": {
+    "title": "Patrol Schedule",
+    "description": "Use range(start, stop) to print the guard rotation schedule for specific hours."
+  },
+  "ch04_04": {
+    "title": "Launch Countdown",
+    "description": "Use a while loop to count down from 5 to 1, then print LAUNCH!"
+  },
+  "ch04_05": {
+    "title": "Password Loop",
+    "description": "Keep prompting for a password using a while loop until the correct one is entered."
+  },
+  "ch04_06": {
+    "title": "Target Search",
+    "description": "Search a list for a target and use break to stop when found."
+  },
+  "ch04_07": {
+    "title": "Camera Filter",
+    "description": "Skip disabled cameras using continue while printing all active ones."
+  },
+  "ch04_08": {
+    "title": "Grid Scan",
+    "description": "Generate all grid coordinates using nested for loops over rows and columns."
+  },
+  "ch04_09": {
+    "title": "Badge Tally",
+    "description": "Sum all badge numbers using the accumulator pattern with a for loop."
+  },
+  "ch04_10": {
+    "title": "Entry Points",
+    "description": "Number each access point using enumerate() with a starting index of 1."
+  },
+  "ch05_01": {
+    "title": "Greeting Protocol",
+    "description": "Define a function that takes a name parameter and returns a greeting message."
+  },
+  "ch05_02": {
+    "title": "Access Calculator",
+    "description": "Create a function that calculates an access level by multiplying clearance and rank."
+  },
+  "ch05_03": {
+    "title": "ID Card Printer",
+    "description": "Write a function with three parameters to format an operative's ID card."
+  },
+  "ch05_04": {
+    "title": "Alert System",
+    "description": "Create an alert function with a default severity level parameter."
+  },
+  "ch05_05": {
+    "title": "Coordinate Decoder",
+    "description": "Write a function that decodes encoded coordinates and returns multiple values."
+  },
+  "ch05_06": {
+    "title": "Verification Chain",
+    "description": "Build a multi-step verification system where functions call other functions."
+  },
+  "ch05_07": {
+    "title": "Scope Mission",
+    "description": "Understand local vs global variable scope by calling a function that uses local variables."
+  },
+  "ch05_08": {
+    "title": "Activity Logger",
+    "description": "Create a function that accepts any number of arguments using *args."
+  },
+  "ch05_09": {
+    "title": "Terminal Config",
+    "description": "Create a function that accepts keyword arguments using **kwargs to configure a terminal."
+  },
+  "ch05_10": {
+    "title": "Guard Sorter",
+    "description": "Sort a list of guards by their level using a lambda function as the sort key."
+  },
+  "ch06_01": {
+    "title": "Tool Inventory",
+    "description": "Create a list of hacking tools and access each item by its index."
+  },
+  "ch06_02": {
+    "title": "Inventory Update",
+    "description": "Use .append() and .remove() to modify a list of tools."
+  },
+  "ch06_03": {
+    "title": "Message Archive",
+    "description": "Use list slicing to extract recent messages and first messages from a log."
+  },
+  "ch06_04": {
+    "title": "Camera Filter Pro",
+    "description": "Use a list comprehension to filter active camera IDs from a list of dictionaries."
+  },
+  "ch06_05": {
+    "title": "Coordinate Pairs",
+    "description": "Store location coordinates as tuples and unpack them into separate variables."
+  },
+  "ch06_06": {
+    "title": "Employee File",
+    "description": "Create a dictionary to store employee profile data and access values by key."
+  },
+  "ch06_07": {
+    "title": "Profile Editor",
+    "description": "Add new keys and update existing values in a dictionary using dict methods."
+  },
+  "ch06_08": {
+    "title": "Floor Plan",
+    "description": "Navigate nested dictionaries to access deeply stored floor plan data."
+  },
+  "ch06_09": {
+    "title": "Badge Scanner",
+    "description": "Use sets and their union/intersection methods to analyze badge scan data."
+  },
+  "ch06_10": {
+    "title": "Intel Merge",
+    "description": "Merge two dictionaries using spread syntax and iterate over sorted results."
   }
 }

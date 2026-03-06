@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useCallback } from 'react';
+import React, { useEffect, useRef, useCallback, useImperativeHandle, forwardRef } from 'react';
 import { EditorState } from '@codemirror/state';
 import {
   EditorView,
@@ -18,6 +18,10 @@ import {
 import { terminalTheme, syntaxTheme } from './terminalTheme';
 import './terminal.css';
 
+export interface TerminalEditorHandle {
+  insertAtCursor: (text: string) => void;
+}
+
 interface TerminalEditorProps {
   initialCode?: string;
   readOnlyRanges?: Array<{ from: number; to: number }>;
@@ -26,13 +30,10 @@ interface TerminalEditorProps {
   disabled?: boolean;
 }
 
-function TerminalEditorInner({
-  initialCode = '',
-  readOnlyRanges,
-  onRun,
-  onChange,
-  disabled = false,
-}: TerminalEditorProps): React.JSX.Element {
+function TerminalEditorInner(
+  { initialCode = '', readOnlyRanges, onRun, onChange, disabled = false }: TerminalEditorProps,
+  ref: React.ForwardedRef<TerminalEditorHandle>,
+): React.JSX.Element {
   const containerRef = useRef<HTMLDivElement>(null);
   const viewRef = useRef<EditorView | null>(null);
   const onRunRef = useRef(onRun);
@@ -47,6 +48,19 @@ function TerminalEditorInner({
       onRunRef.current(view.state.doc.toString());
     }
   }, []);
+
+  useImperativeHandle(ref, () => ({
+    insertAtCursor: (text: string) => {
+      const view = viewRef.current;
+      if (!view) return;
+      const { from, to } = view.state.selection.main;
+      view.dispatch({
+        changes: { from, to, insert: text },
+        selection: { anchor: from + text.length },
+      });
+      view.focus();
+    },
+  }));
 
   useEffect(() => {
     const container = containerRef.current;
@@ -135,4 +149,4 @@ function TerminalEditorInner({
   );
 }
 
-export const TerminalEditor = React.memo(TerminalEditorInner);
+export const TerminalEditor = React.memo(forwardRef(TerminalEditorInner));

@@ -1,0 +1,10 @@
+export { ch05_01_simple_function } from './ch05_01_simple_function';
+export { ch05_02_function_return } from './ch05_02_function_return';
+export { ch05_03_multiple_parameters } from './ch05_03_multiple_parameters';
+export { ch05_04_default_parameters } from './ch05_04_default_parameters';
+export { ch05_05_return_multiple } from './ch05_05_return_multiple';
+export { ch05_06_functions_calling_functions } from './ch05_06_functions_calling_functions';
+export { ch05_07_scope } from './ch05_07_scope';
+export { ch05_08_args } from './ch05_08_args';
+export { ch05_09_kwargs } from './ch05_09_kwargs';
+export { ch05_10_lambda } from './ch05_10_lambda';

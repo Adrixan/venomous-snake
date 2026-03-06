@@ -82,3 +82,28 @@ jobs:
           name: game-build
           path: dist/apps/game/
           retention-days: 7
+
+  deploy:
+    name: Deploy to Hosting
+    needs: ci
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+    environment: production
+
+    steps:
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: game-build
+          path: dist/
+
+      # Using SCP for shared hosting (user sets up SSH secrets)
+      - name: Deploy via SCP
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.DEPLOY_HOST }}
+          username: ${{ secrets.DEPLOY_USER }}
+          key: ${{ secrets.DEPLOY_KEY }}
+          source: 'dist/*'
+          target: ${{ secrets.DEPLOY_PATH }}
+          strip_components: 1

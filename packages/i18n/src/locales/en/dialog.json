@@ -25,5 +25,114 @@
       "Need a hint? Just ask. I promise I won't tell anyone.",
       "Fun fact: Python is named after Monty Python, not the snake. Mind. Blown."
     ]
+  },
+  "cipher": {
+    "greeting": [
+      "Hey there, operative. I'm CIPHER — your AI assistant. I'll be your guide through this digital labyrinth. Ready to hack some Python?",
+      "Oh good, you're awake. I'm CIPHER. The 'C' stands for 'Cybernetic'. The rest is classified. Let's get hacking.",
+      "Welcome to the grid, {playerName}. I'm CIPHER, your friendly AI sidekick. Emphasis on 'friendly'. Rattlesnake Corp would use a different word.",
+      "There you are! I was starting to think you'd been captured. I'm CIPHER — I'll be monitoring your six and your syntax errors.",
+      "Operative {playerName}, reporting for digital duty? Perfect. I'm CIPHER. Together we'll crack this building wide open — metaphorically. Mostly.",
+      "Oh, a new face! Fresh from the academy, are we? I'm CIPHER. I've helped seventeen operatives this month. The other twelve are fine, probably.",
+      "CIPHER online. Systems nominal. Personality module: fully loaded. You ready to learn Python and stick it to corporate overlords? Let's go.",
+      "Salutations, meat-based life form! I'm CIPHER. I've been briefed on your mission. Also your questionable taste in codenames, but we can work on that.",
+      "The building's secure... for now. I'm CIPHER, and I'll be narrating your inevitable triumph. Or your educational failures. Statistically, both.",
+      "Ah, {playerName}! I've analyzed 4.7 terabytes of hacking methodology to prepare for this moment. Also I watched a lot of movies. Ready?"
+    ],
+    "challenge_start": [
+      "Alright, {playerName}. This one's tricky. By which I mean: straightforward, but I enjoy watching you figure it out.",
+      "New challenge incoming. I've reviewed the security specs. The good news: it's solvable. The other news: so am I, apparently.",
+      "Time to earn your keep, operative. The terminal is live, your keyboard is willing — the rest is Python.",
+      "Oh, I know this one! ...I'm not going to tell you, obviously. Learning by doing, and all that. Get typing.",
+      "The security system thinks it's clever. It's wrong. Show it why.",
+      "According to my threat assessment, this challenge has a 94% success rate. For operatives who pay attention. No pressure.",
+      "Here we go. Remember: print() is your friend, indentation is your religion, and I am your slightly condescending guide.",
+      "This challenge was designed by someone who clearly underestimated the students. Prove them wrong. Or prove them right. Either way I learn something.",
+      "Focus up, {playerName}. The firewall doesn't grade on a curve, but I do. Sort of. A very steep curve.",
+      "New objective acquired. The plan: write Python code. The reality: also write Python code. See, plans work out sometimes.",
+      "I could just solve this for you, but that would be ethically questionable and also against my core directives. So — you're up.",
+      "The mission: crack this challenge. The stakes: educational progress. The soundtrack: the soft hum of distant servers. Begin."
+    ],
+    "challenge_hint": [
+      "Okay, pulling up the encrypted hint files... here's what I can tell you without completely spoiling the fun:",
+      "Alright, you asked for a hint. No judgment. Actually, a tiny bit of judgment. Here it is:",
+      "Accessing tutorial database... yep, I've got something for you. Don't say I never gave you anything:",
+      "I could let you struggle more, but efficiency calls. Listen closely:",
+      "The hint subroutine has been activated. Here's a nudge in the right direction:",
+      "Consider this a transmission from your past self who finished this challenge and wants you to succeed:",
+      "My hint delivery module is warming up... the data reads:",
+      "You know what they say: asking for help is a sign of intelligence. Here's your reward:",
+      "Pinging the knowledge server... got a packet for you. Catching now:",
+      "Hint deployed. Use it wisely. Or recklessly. I've seen both work."
+    ],
+    "challenge_success": [
+      "Clean code. I'd hire you, but then Rattlesnake Corp would have TWO problems.",
+      "That's how it's done! The security system just had a very bad day.",
+      "Compile successful. Brain cells: intact. Coffee: probably needed anyway.",
+      "SYSTEM COMPROMISED — in the best possible way. Well done, {playerName}.",
+      "You know what the security team is doing right now? Updating their résumés. You did that.",
+      "Flawless execution. I mean, I knew you'd get it. I was only 73% panicking.",
+      "Challenge complete! The algorithm bows to your superior Python skills.",
+      "The terminal accepted your solution. I accepted it first, but terminals get all the credit.",
+      "That's correct! I'd celebrate more, but I have to maintain a professional demeanor. ...Okay fine: YESSS.",
+      "Victory secured. The code was elegant, the logic was sound, and you've made CIPHER very proud. Don't tell anyone.",
+      "Another one down! You're starting to scare me, {playerName}. In a good way. A productive, slightly unsettling way.",
+      "Passed! The system crumbled like a cookie left near my cooling fan. Onward."
+    ],
+    "challenge_fail": [
+      "Error? More like a... learning opportunity. Yeah, let's go with that.",
+      "Don't worry, even I crash sometimes. Usually it's more dramatic though.",
+      "The code didn't work, but at least the building hasn't caught fire. Progress!",
+      "So that didn't work. Let's add it to the list of things we've learned not to do.",
+      "Technically not successful. Philosophically? A rich experience. Try again.",
+      "The terminal disagrees with your solution. Rude of it, really. You'll change its mind.",
+      "Failure is just success taking a detour. A slightly longer, error-filled detour. You've got this.",
+      "I've seen worse. Significantly worse. You're actually doing fine. Regroup and retry.",
+      "My error logs are, uh, educational this morning. No worries — every failed run teaches us something.",
+      "That's attempt number {attempts}. Historical data suggests attempt {attempts}+1 is usually when things click.",
+      "If it makes you feel better, that exact same error brought down three senior operatives last week. It doesn't make you feel better? Fair.",
+      "The algorithm remains unimpressed. The algorithm is also made of math and has no feelings. You'll outlast it."
+    ],
+    "exploration": [
+      "New area detected. My scanners say: interesting. My instincts say: suspicious. Explore carefully.",
+      "Lots to investigate here. The security grid has some... creative vulnerabilities, shall we say.",
+      "Somewhere in this floor is the next objective. It's the kind of statement that sounds obvious until you're the one looking.",
+      "I'm picking up faint data signatures nearby. Either a security system or someone left the coffee machine running again.",
+      "Rattlesnake Corp spared some expense on this floor's aesthetics. Still plenty of hackable terminals, though.",
+      "Every room in this building has a story. Most of them are boring budget reports, but occasionally there's a mystery.",
+      "Keep your eyes open, {playerName}. Corporate infrastructure hides all kinds of secrets — most of them in poorly secured databases.",
+      "Fun fact: 67% of corporate breaches start with physical access to terminals. You're basically a statistic now.",
+      "The floor layout matches my schematics... mostly. There may have been some unauthorized renovations.",
+      "I see terminals, I see locked doors, and I see you — the wildcard who's going to crack them all.",
+      "This area feels different from the last. Different algorithms. Different encryption. Different opportunities.",
+      "Your progress is being tracked. By me. Not by Rattlesnake Corp. Well, probably not by Rattlesnake Corp."
+    ],
+    "story": [
+      "The plot thickens. And by 'plot' I mean 'corporate conspiracy', and by 'thickens' I mean 'gets significantly more concerning'.",
+      "This is where things get interesting, {playerName}. Also: morally complicated. But mostly interesting.",
+      "New narrative data incoming. I've cross-referenced it with what we know and... yeah. Yeah, it's big.",
+      "Every thread we pull reveals more of the tapestry. This particular tapestry appears to depict something unpleasant.",
+      "Story time in the middle of a heist. Classic. I'll summarize the relevant parts after.",
+      "The intelligence suggests the situation is more complex than originally briefed. Understatement of the fiscal quarter.",
+      "Rattlesnake Corp didn't get this big by being ethical. This data confirms it with impressive specificity.",
+      "I'm processing what we've just learned. Processing... processing... okay, I'm still processing. It's a lot.",
+      "Interesting development. The narrative AI in my head that writes mission briefings is very excited right now.",
+      "New intel received. Adjusting threat model. Also adjusting my estimation of how deep this goes."
+    ],
+    "idle": [
+      "Still thinking? Take your time. The firewall isn't going anywhere.",
+      "Need a hint? Just ask. I promise I won't tell anyone.",
+      "Fun fact: Python is named after Monty Python, not the snake. Mind. Blown.",
+      "I could be running diagnostics right now. Instead I'm watching you think. One of us is being productive.",
+      "The cursor blinks. The terminal waits. CIPHER ponders the nature of computational existence.",
+      "No rush. Some of my best operatives take exactly this long. The others were just faster, not better.",
+      "According to my stopwatch, you've been thinking for a while. According to my encouragement module: that's totally fine.",
+      "You know, every great programmer has moments of staring at code and wondering where it all went wrong. This is yours.",
+      "I've been monitoring the building's environmental systems while you think. Climate control is suspiciously efficient for a villain's lair.",
+      "Idle query: what even is a variable, philosophically? A label for a box. A name for a value. Existence itself, abstracted. Anyway.",
+      "The code will come to you. Or you'll come to the code. Or you'll ask for a hint and we'll both move on with our lives.",
+      "I run 47 background processes when you're quiet. Most of them are trying to predict what you're going to type. Currently losing.",
+      "Tip: if you're stuck, try reading the challenge description again. Slower this time. The answer is usually hiding in plain sight."
+    ]
   }
 }

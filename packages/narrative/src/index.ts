@@ -9,3 +9,5 @@ export type {
   NarrativeFlag,
   DialogSpeaker,
 } from './types';
+export { CipherAI } from './CipherAI';
+export type { CipherMood, CipherContext } from './CipherAI';

@@ -1,4 +1,6 @@
 import React, { useEffect, useState, useCallback } from 'react';
+import { PWAInstallPrompt } from './pwa/PWAInstallPrompt';
+import { PWAUpdateNotifier } from './pwa/PWAUpdateNotifier';
 import { GameCanvas } from './components/GameCanvas';
 import { HUD } from './components/HUD';
 import { TerminalOverlay } from './components/TerminalOverlay';
@@ -144,19 +146,35 @@ export function App(): React.JSX.Element {
   // Menu phase
   if (gamePhase === 'menu') {
     if (menuView === 'newgame') {
-      return <NewGameFlow onStart={handleStartGame} onBack={handleNewGameBack} />;
+      return (
+        <>
+          <NewGameFlow onStart={handleStartGame} onBack={handleNewGameBack} />
+          <PWAUpdateNotifier />
+          <PWAInstallPrompt />
+        </>
+      );
     }
     if (menuView === 'settings') {
-      return <SettingsPanel onBack={handleSettingsBack} />;
+      return (
+        <>
+          <SettingsPanel onBack={handleSettingsBack} />
+          <PWAUpdateNotifier />
+          <PWAInstallPrompt />
+        </>
+      );
     }
     return (
-      <MainMenu
-        hasSaveData={hasSaveData}
-        onNewGame={handleNewGame}
-        onContinue={handleContinue}
-        onLoadGame={handleLoadGame}
-        onSettings={handleMenuSettings}
-      />
+      <>
+        <MainMenu
+          hasSaveData={hasSaveData}
+          onNewGame={handleNewGame}
+          onContinue={handleContinue}
+          onLoadGame={handleLoadGame}
+          onSettings={handleMenuSettings}
+        />
+        <PWAUpdateNotifier />
+        <PWAInstallPrompt />
+      </>
     );
   }
 
@@ -207,6 +225,9 @@ export function App(): React.JSX.Element {
         unlockedFloors={['lobby']}
         onFloorSelect={handleFloorSelect}
       />
+
+      <PWAUpdateNotifier />
+      <PWAInstallPrompt />
     </div>
   );
 }
