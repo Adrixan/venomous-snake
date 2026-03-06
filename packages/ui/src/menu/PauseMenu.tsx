@@ -79,7 +79,7 @@ export function PauseMenu({
     alignItems: 'center',
     justifyContent: 'center',
     fontFamily: FONT_FAMILY,
-    zIndex: 200,
+    zIndex: 300,
   };
 
   const panelStyle: React.CSSProperties = {

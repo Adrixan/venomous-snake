@@ -171,7 +171,7 @@ export function DialogOverlay({
         style={{
           position: 'fixed',
           inset: 0,
-          zIndex: 8000,
+          zIndex: 100,
           background: 'rgba(0,0,0,0.55)',
           transition: 'opacity 0.2s ease',
           opacity,
@@ -190,7 +190,7 @@ export function DialogOverlay({
           bottom: 0,
           left: 0,
           right: 0,
-          zIndex: 8001,
+          zIndex: 101,
           padding: '0 clamp(16px, 4vw, 60px) clamp(16px, 3vh, 40px)',
           fontFamily: FONT_FAMILY,
           transition: 'opacity 0.2s ease',

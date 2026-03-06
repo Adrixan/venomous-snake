@@ -17,7 +17,9 @@ const GameControllerContext = createContext<GameController | null>(null);
 
 export interface GameControllerProviderProps {
   interpreter: PythonInterpreter;
-  savedProgress?: CurriculumProgress;
+  savedProgress?: CurriculumProgress | undefined;
+  /** Optional ref to expose the controller instance to the parent. */
+  controllerRef?: React.MutableRefObject<GameController | null>;
   children: React.ReactNode;
 }
 
@@ -31,15 +33,21 @@ export interface GameControllerProviderProps {
 export function GameControllerProvider({
   interpreter,
   savedProgress,
+  controllerRef,
   children,
 }: GameControllerProviderProps): React.JSX.Element {
-  const controllerRef = useRef<GameController | null>(null);
+  const localRef = useRef<GameController | null>(null);
 
-  if (controllerRef.current === null) {
-    controllerRef.current =
+  if (localRef.current === null) {
+    localRef.current =
       savedProgress !== undefined
         ? new GameController(interpreter, savedProgress)
         : new GameController(interpreter);
+  }
+
+  // Expose the controller instance to the parent via the optional ref.
+  if (controllerRef !== undefined) {
+    controllerRef.current = localRef.current;
   }
 
   // Wire EventBus → Zustand store
@@ -104,7 +112,7 @@ export function GameControllerProvider({
 
   return React.createElement(
     GameControllerContext.Provider,
-    { value: controllerRef.current },
+    { value: localRef.current },
     children,
   );
 }

@@ -4,8 +4,10 @@ import { PWAUpdateNotifier } from './pwa/PWAUpdateNotifier';
 import { GameCanvas } from './components/GameCanvas';
 import { HUD } from './components/HUD';
 import { TerminalOverlay } from './components/TerminalOverlay';
+import { SaveSlotModal } from './components/SaveSlotModal';
 import { useGameStore } from './store/gameStore';
 import { GameControllerProvider } from './hooks/useGameController';
+import { useSaveSystem } from './hooks/useSaveSystem';
 import { MockInterpreter } from '@venomous-snake/python-runtime';
 import {
   MainMenu,
@@ -15,13 +17,16 @@ import {
   QuestLog,
   InventoryPanel,
   FloorMap,
+  DialogOverlay,
+  useDialog,
 } from '@venomous-snake/ui';
 import { chapters } from '@venomous-snake/challenges';
-import { saveManager } from '@venomous-snake/save-system';
 import type { CurriculumProgress } from '@venomous-snake/shared-types';
 import { EventBus } from '@venomous-snake/engine';
+import type { GameController } from './GameController';
 
-type MenuView = 'main' | 'newgame' | 'settings' | 'load';
+type MenuView = 'main' | 'newgame' | 'settings';
+type SaveModalMode = 'save' | 'load' | null;
 
 const defaultProgress: CurriculumProgress = {
   challenges: {},
@@ -34,6 +39,7 @@ const defaultProgress: CurriculumProgress = {
 export function App(): React.JSX.Element {
   const gamePhase = useGameStore((state) => state.gamePhase);
   const setGamePhase = useGameStore((state) => state.setGamePhase);
+  const resetGameState = useGameStore((state) => state.resetGameState);
   const activePanel = useGameStore((state) => state.activePanel);
   const setActivePanel = useGameStore((state) => state.setActivePanel);
   const setPlayerName = useGameStore((state) => state.setPlayerName);
@@ -45,20 +51,35 @@ export function App(): React.JSX.Element {
 
   const [menuView, setMenuView] = useState<MenuView>('main');
   const [hasSaveData, setHasSaveData] = useState(false);
+  const [saveModalMode, setSaveModalMode] = useState<SaveModalMode>(null);
+  // savedProgress and sessionKey allow loading a save into a fresh GameControllerProvider
+  const [savedProgress, setSavedProgress] = useState<CurriculumProgress | undefined>(undefined);
+  const [sessionKey, setSessionKey] = useState(0);
 
-  // Stable interpreter instance for the GameController — persists across
-  // playing/paused transitions but is recreated on a full new game.
+  // Stable interpreter — recreated on new game, persists across paused transitions
   const interpreterRef = useRef<MockInterpreter | null>(null);
   if (interpreterRef.current === null) {
     interpreterRef.current = new MockInterpreter();
   }
 
-  // Check for save data on mount
-  useEffect(() => {
-    void saveManager.getSaveSlots().then((slots) => {
+  // Ref exposed to GameControllerProvider so useSaveSystem can reach the controller
+  const controllerRef = useRef<GameController | null>(null);
+
+  const saveSystem = useSaveSystem(controllerRef);
+
+  // Dialog state driven by EventBus DIALOG_START / DIALOG_END
+  const dialogState = useDialog();
+
+  // Refresh "has save data" flag whenever the modal closes or on mount
+  const refreshHasSaveData = useCallback((): void => {
+    void saveSystem.listSaves().then((slots) => {
       setHasSaveData(slots.length > 0);
     });
-  }, []);
+  }, [saveSystem]);
+
+  useEffect(() => {
+    refreshHasSaveData();
+  }, [refreshHasSaveData]);
 
   // Escape key for pause
   useEffect(() => {
@@ -67,18 +88,26 @@ export function App(): React.JSX.Element {
         e.key === 'Escape' &&
         gamePhase === 'playing' &&
         activePanel === 'none' &&
-        !terminalOpen
+        !terminalOpen &&
+        saveModalMode === null &&
+        !dialogState.isOpen
       ) {
         setGamePhase('paused');
       }
       // T key for dev terminal
-      if (e.key === 't' && gamePhase === 'playing' && !terminalOpen && activePanel === 'none') {
+      if (
+        e.key === 't' &&
+        gamePhase === 'playing' &&
+        !terminalOpen &&
+        activePanel === 'none' &&
+        saveModalMode === null
+      ) {
         openTerminal('dev-terminal');
       }
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [gamePhase, activePanel, terminalOpen, setGamePhase, openTerminal]);
+  }, [gamePhase, activePanel, terminalOpen, saveModalMode, dialogState.isOpen, setGamePhase, openTerminal]);
 
   // Listen for TERMINAL_OPEN events from the Phaser game world
   useEffect(() => {
@@ -95,14 +124,31 @@ export function App(): React.JSX.Element {
     setMenuView('newgame');
   }, []);
 
+  // Continue: load the most recent auto-save (or just resume playing if none)
   const handleContinue = useCallback(() => {
-    setGamePhase('playing');
-  }, [setGamePhase]);
+    void saveSystem.listSaves().then((slots) => {
+      const autoSaves = slots
+        .filter((s) => s.isAutoSave)
+        .sort((a, b) => b.updatedAt.localeCompare(a.updatedAt));
+      const latest = autoSaves[0];
+      if (latest !== undefined) {
+        void saveSystem.load(latest.id).then((data) => {
+          if (data !== undefined) {
+            setSavedProgress(data.curriculumProgress);
+            setSessionKey((k) => k + 1);
+          }
+          setGamePhase('playing');
+        });
+      } else {
+        setGamePhase('playing');
+      }
+    });
+  }, [saveSystem, setGamePhase]);
 
+  // Load Game from main menu — opens the load slot picker
   const handleLoadGame = useCallback(() => {
-    // Load game placeholder — for now just start playing
-    setGamePhase('playing');
-  }, [setGamePhase]);
+    setSaveModalMode('load');
+  }, []);
 
   const handleMenuSettings = useCallback(() => {
     setMenuView('settings');
@@ -118,11 +164,18 @@ export function App(): React.JSX.Element {
 
   const handleStartGame = useCallback(
     (name: string, gender: 'male' | 'female' | 'nonbinary') => {
+      // Clear any stale state from a previous session
+      resetGameState();
+      setSavedProgress(undefined);
+      setSessionKey((k) => k + 1);
+      // Recreate interpreter for fresh execution environment
+      interpreterRef.current = new MockInterpreter();
+      controllerRef.current = null;
       setPlayerName(name);
       setPlayerGender(gender);
       setGamePhase('playing');
     },
-    [setPlayerName, setPlayerGender, setGamePhase],
+    [resetGameState, setPlayerName, setPlayerGender, setGamePhase],
   );
 
   const handleNewGameBack = useCallback(() => {
@@ -137,14 +190,15 @@ export function App(): React.JSX.Element {
     setGamePhase('menu');
     setMenuView('main');
     setActivePanel('none');
+    setSaveModalMode(null);
   }, [setGamePhase, setActivePanel]);
 
   const handlePauseSave = useCallback(() => {
-    // Save game placeholder
+    setSaveModalMode('save');
   }, []);
 
   const handlePauseLoad = useCallback(() => {
-    // Load from pause placeholder
+    setSaveModalMode('load');
   }, []);
 
   const handlePauseSettings = useCallback(() => {
@@ -163,6 +217,47 @@ export function App(): React.JSX.Element {
     },
     [setCurrentFloor, setActivePanel],
   );
+
+  // Save modal callbacks
+  const handleModalSave = useCallback(
+    async (slotId: string | undefined): Promise<void> => {
+      await saveSystem.save(slotId);
+      refreshHasSaveData();
+    },
+    [saveSystem, refreshHasSaveData],
+  );
+
+  const handleModalLoad = useCallback(
+    (slotId: string): void => {
+      void saveSystem.load(slotId).then((data) => {
+        setSaveModalMode(null);
+        if (data !== undefined) {
+          setSavedProgress(data.curriculumProgress);
+          setSessionKey((k) => k + 1);
+          controllerRef.current = null;
+          interpreterRef.current = new MockInterpreter();
+        }
+        setGamePhase('playing');
+      });
+    },
+    [saveSystem, setGamePhase],
+  );
+
+  const handleModalDelete = useCallback(
+    async (slotId: string): Promise<void> => {
+      await saveSystem.deleteSave(slotId);
+      refreshHasSaveData();
+    },
+    [saveSystem, refreshHasSaveData],
+  );
+
+  const handleModalClose = useCallback(() => {
+    setSaveModalMode(null);
+    // When closing the load modal from the main menu, stay on main menu
+    if (gamePhase === 'menu') return;
+    // When closing from pause, return to paused state
+    setGamePhase('paused');
+  }, [gamePhase, setGamePhase]);
 
   // Menu phase
   if (gamePhase === 'menu') {
@@ -193,6 +288,17 @@ export function App(): React.JSX.Element {
           onLoadGame={handleLoadGame}
           onSettings={handleMenuSettings}
         />
+        {/* Load-game slot picker shown over the main menu */}
+        {saveModalMode === 'load' && (
+          <SaveSlotModal
+            mode="load"
+            onClose={handleModalClose}
+            onSave={handleModalSave}
+            onLoad={handleModalLoad}
+            onDelete={handleModalDelete}
+            listSaves={saveSystem.listSaves}
+          />
+        )}
         <PWAUpdateNotifier />
         <PWAInstallPrompt />
       </>
@@ -201,7 +307,12 @@ export function App(): React.JSX.Element {
 
   // Playing / Paused phase — GameControllerProvider only mounts during the game session
   return (
-    <GameControllerProvider interpreter={interpreterRef.current}>
+    <GameControllerProvider
+      key={sessionKey}
+      interpreter={interpreterRef.current}
+      savedProgress={savedProgress}
+      controllerRef={controllerRef}
+    >
       <div
         style={{
           background: '#0a0a0f',
@@ -211,11 +322,17 @@ export function App(): React.JSX.Element {
           position: 'relative',
         }}
       >
+        {/* z-index: 0 — Phaser canvas */}
         <GameCanvas />
         <HUD />
+
+        {/* z-index: 100/101 — Dialog overlay (below terminal) */}
+        <DialogOverlay {...dialogState} />
+
+        {/* z-index: 200 — Terminal overlay */}
         <TerminalOverlay />
 
-        {/* Pause menu */}
+        {/* z-index: 300 — Pause menu */}
         {gamePhase === 'paused' && (
           <PauseMenu
             onResume={handleResume}
@@ -223,6 +340,18 @@ export function App(): React.JSX.Element {
             onLoadGame={handlePauseLoad}
             onSettings={handlePauseSettings}
             onQuitToMenu={handleQuitToMenu}
+          />
+        )}
+
+        {/* z-index: 400 — Save/Load slot modal (above pause menu) */}
+        {saveModalMode !== null && (
+          <SaveSlotModal
+            mode={saveModalMode}
+            onClose={handleModalClose}
+            onSave={handleModalSave}
+            onLoad={handleModalLoad}
+            onDelete={handleModalDelete}
+            listSaves={saveSystem.listSaves}
           />
         )}
 
@@ -258,3 +387,4 @@ export function App(): React.JSX.Element {
     </GameControllerProvider>
   );
 }
+
