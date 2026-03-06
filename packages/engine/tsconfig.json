@@ -1,8 +1,7 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "outDir": "../../dist/packages/engine",
-    "rootDir": "."
+    "outDir": "../../dist/packages/engine"
   },
   "include": [
     "src/**/*",
