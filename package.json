@@ -1,0 +1,63 @@
+{
+  "name": "venomous-snake",
+  "version": "0.0.1",
+  "private": true,
+  "description": "A stealth-action 2D Python tutorial RPG",
+  "license": "AGPL-3.0-or-later",
+  "packageManager": "pnpm@10.30.3",
+  "scripts": {
+    "dev": "nx serve game",
+    "build": "nx build game",
+    "test": "nx run-many --target=test --all",
+    "lint": "nx run-many --target=lint --all",
+    "type-check": "nx run-many --target=type-check --all",
+    "format": "prettier --check .",
+    "format:fix": "prettier --write .",
+    "prepare": "husky"
+  },
+  "devDependencies": {
+    "@nx/eslint": "^22.5.4",
+    "@nx/eslint-plugin": "^22.5.4",
+    "@nx/js": "^22.5.4",
+    "@nx/react": "^22.5.4",
+    "@nx/vite": "^22.5.4",
+    "@nx/workspace": "^22.5.4",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^4.7.0",
+    "@vitest/coverage-v8": "^4.0.18",
+    "eslint": "^10.0.2",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^7.0.1",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.3.2",
+    "nx": "^22.5.4",
+    "prettier": "^3.8.1",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.56.1",
+    "vite": "^6.4.1",
+    "vitest": "^2.1.9"
+  },
+  "engines": {
+    "node": ">=20.0.0",
+    "pnpm": ">=10.0.0"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild",
+      "nx"
+    ]
+  },
+  "lint-staged": {
+    "*.{ts,tsx,js,jsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,css,md,yml,yaml}": [
+      "prettier --write"
+    ]
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "name": "challenge-engine",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/challenge-engine/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/challenge-engine",
+        "tsConfig": "packages/challenge-engine/tsconfig.json",
+        "main": "packages/challenge-engine/src/index.ts"
+      }
+    },
+    "test": {
+      "executor": "@nx/vite:test",
+      "options": {
+        "config": "packages/challenge-engine/vitest.config.ts"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    },
+    "type-check": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "tsc --noEmit -p packages/challenge-engine/tsconfig.json"
+      }
+    }
+  }
+}

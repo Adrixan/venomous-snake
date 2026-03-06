@@ -1,0 +1,32 @@
+{
+  "name": "challenge-validator",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "tools/challenge-validator/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/tools/challenge-validator",
+        "tsConfig": "tools/challenge-validator/tsconfig.json",
+        "main": "tools/challenge-validator/src/index.ts"
+      }
+    },
+    "test": {
+      "executor": "@nx/vite:test",
+      "options": {
+        "config": "tools/challenge-validator/vitest.config.ts"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    },
+    "type-check": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "tsc --noEmit -p tools/challenge-validator/tsconfig.json"
+      }
+    }
+  }
+}
