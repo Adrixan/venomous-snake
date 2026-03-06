@@ -10,3 +10,5 @@ export {
   syntaxTheme,
   terminalColors,
 } from './terminalTheme';
+export { ChallengePanel } from './ChallengePanel';
+export type { ChallengePanelProps } from './ChallengePanel';

@@ -9,3 +9,4 @@ export { SkillTreeManager, SKILL_TREE } from './SkillTree';
 export type { SkillNode, SkillCategory } from './SkillTree';
 export { AchievementManager, ACHIEVEMENTS } from './Achievements';
 export type { Achievement, AchievementTrigger } from './Achievements';
+export { ChallengeTimer } from './ChallengeTimer';

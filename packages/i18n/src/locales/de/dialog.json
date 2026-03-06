@@ -229,5 +229,32 @@
       "Brauchst du einen Hinweis? Frag einfach. Ich versprechs, niemand erfährt es.",
       "Fun Fact: Python ist nach Monty Python benannt, nicht nach der Schlange. Krass."
     ]
+  },
+  "cutscene": {
+    "cipher": {
+      "name": "Cipher"
+    },
+    "intro": {
+      "1": "Initialisierung... Verbindung hergestellt. Kannst du mich hören, Operative? Mein Name ist Cipher. Ich habe deinen Fortschritt in dieser Einrichtung beobachtet.",
+      "2": "Dieser Ort ist nicht das, was er zu sein scheint. Die eigentliche Herausforderung sind nicht die Sicherheitssysteme — es geht darum, ihre Sprache zu sprechen. Python. Die Schlangensprache der Maschinen.",
+      "3": "Jedes Terminal, das du freischaltest, jede Tür, die du öffnest — du wirst zu mehr als einem Hacker. Du wirst zum Programmierer. Jetzt... fangen wir an."
+    },
+    "ch1_start": {
+      "1": "Die Lobby. Erdgeschoss. Hier beginnt jede Operative ihre Reise. Acht Terminals stehen zwischen dir und dem Aufzug zu Etage 2.",
+      "2": "Beherrsche hier die Grundlagen: print-Anweisungen, Variablen, Arithmetik. Einfache Werkzeuge — aber sie sind das Fundament von allem. Nicht hetzen. Lerne jeden einzelnen."
+    },
+    "ch1_complete": {
+      "1": "Beeindruckend. Du hast die Lobby schneller geleert als die meisten Rekruten. Acht Herausforderungen — acht Siege.",
+      "2": "Du hast die Grundlagen gemeistert: Ausgabe, Variablen, Arithmetik, Typen, Strings, Verkettung, mehrzeilige Ausgabe und Dokumentation. Kapitel 1 abgeschlossen.",
+      "3": "Der Aufzug ist entsperrt. Etage 2 wartet. Die Herausforderungen werden schwieriger — aber du auch."
+    },
+    "ch2_start": {
+      "1": "Etage 2: Operative Profile. Hier lernen wir, Text wie ein Profi zu manipulieren. String-Methoden, Indizierung, Slicing, f-Strings.",
+      "2": "Daten sind nur Text, bis du weißt, wie man sie formt. Jeder Zugangscode, jede abgefangene Nachricht — alles Strings. Meistere diese Etage und du liest Daten wie ein Einheimischer."
+    },
+    "ch2_complete": {
+      "1": "Du hast den String-Tresor geknackt. Textmanipulation: abgeschlossen. Die Personalakten der Einrichtung haben keine Geheimnisse mehr vor dir.",
+      "2": "String-Methoden, Indizierung, Slicing, f-Strings, split und join — alles in deinem Werkzeugkasten. Etage 3 wartet. Booleans und Logik kommen als nächstes. Denk sorgfältig nach."
+    }
   }
 }

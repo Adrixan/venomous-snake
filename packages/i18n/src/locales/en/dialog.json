@@ -229,5 +229,32 @@
       "Need a hint? Just ask. I promise I won’t tell anyone.",
       "Fun fact: Python is named after Monty Python, not the snake. Mind. Blown."
     ]
+  },
+  "cutscene": {
+    "cipher": {
+      "name": "Cipher"
+    },
+    "intro": {
+      "1": "Initiating... Connection established. Can you hear me, operative? My name is Cipher. I've been watching your progress through this facility.",
+      "2": "This place isn't what it seems. The real challenge isn't the security systems — it's learning to speak their language. Python. The serpent tongue of machines.",
+      "3": "Every terminal you unlock, every door you crack open — you're becoming something more than a hacker. You're becoming a programmer. Now... let's begin."
+    },
+    "ch1_start": {
+      "1": "The lobby. Ground floor. This is where every operative starts their journey. Eight terminals stand between you and the elevator to Floor 2.",
+      "2": "Master the basics here: print statements, variables, arithmetic. Simple tools — but they're the foundation of everything. Don't rush. Learn each one."
+    },
+    "ch1_complete": {
+      "1": "Impressive. You cleared the lobby faster than most recruits. Eight challenges — eight victories.",
+      "2": "You've mastered the fundamentals: output, variables, arithmetic, types, strings, concatenation, multiline output, and documentation. That's Chapter 1 complete.",
+      "3": "The elevator is unlocked. Floor 2 awaits. The challenges will be harder — but so will you."
+    },
+    "ch2_start": {
+      "1": "Floor 2: Operative Profiles. This is where we learn to manipulate text like a professional. String methods, indexing, slicing, f-strings.",
+      "2": "Data is just text until you know how to shape it. Every access code, every intercepted message — it's all strings. Master this floor and you'll read data like a native."
+    },
+    "ch2_complete": {
+      "1": "You've cracked the string vault. Text manipulation: complete. The facility's personnel records have no secrets from you now.",
+      "2": "String methods, indexing, slicing, f-strings, split and join — all in your toolkit. Floor 3 awaits. Booleans and logic are next. Think carefully."
+    }
   }
 }

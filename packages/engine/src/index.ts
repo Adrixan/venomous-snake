@@ -39,3 +39,7 @@ export {
   TILE,
 } from './tilemap/ProceduralRoom';
 export type { TileValue } from './tilemap/ProceduralRoom';
+
+// Maps
+export { LOBBY_MAP, MapRenderer } from './maps';
+export type { ProceduralMapConfig, ProceduralRoom } from './maps';

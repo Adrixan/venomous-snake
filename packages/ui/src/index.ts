@@ -14,3 +14,5 @@ export * from './panels/SkillTreePanel';
 export * from './notifications/AchievementToast';
 export * from './hud/XPBar';
 export * from './accessibility';
+export * from './narrative';
+export * from './i18n';
