@@ -20,6 +20,7 @@ import './terminal.css';
 
 export interface TerminalEditorHandle {
   insertAtCursor: (text: string) => void;
+  deleteAtCursor: () => void;
 }
 
 interface TerminalEditorProps {
@@ -29,6 +30,7 @@ interface TerminalEditorProps {
   onSubmit?: (code: string) => void;
   onChange?: (code: string) => void;
   disabled?: boolean;
+  isAndroid?: boolean;
 }
 
 function TerminalEditorInner(
@@ -39,6 +41,7 @@ function TerminalEditorInner(
     onSubmit,
     onChange,
     disabled = false,
+    isAndroid = false,
   }: TerminalEditorProps,
   ref: React.ForwardedRef<TerminalEditorHandle>,
 ): React.JSX.Element {
@@ -77,6 +80,16 @@ function TerminalEditorInner(
       });
       view.focus();
     },
+    deleteAtCursor: () => {
+      const view = viewRef.current;
+      if (!view) return;
+      const { from, to } = view.state.selection.main;
+      if (from !== to) {
+        view.dispatch({ changes: { from, to, insert: '' }, selection: { anchor: from } });
+      } else if (from > 0) {
+        view.dispatch({ changes: { from: from - 1, to: from } });
+      }
+    },
   }));
 
   useEffect(() => {
@@ -114,9 +127,9 @@ function TerminalEditorInner(
         }
       }),
       EditorState.readOnly.of(disabled),
-      // Android IME compatibility: ensure contentEditable works with virtual keyboards
+      // On Android with custom keyboard, suppress the system IME
       EditorView.contentAttributes.of({
-        inputmode: 'text',
+        inputmode: isAndroid ? 'none' : 'text',
         enterkeyhint: 'done',
         autocapitalize: 'off',
         autocorrect: 'off',
@@ -157,7 +170,7 @@ function TerminalEditorInner(
   }, []);
 
   return (
-    <div className="terminal-editor-wrapper">
+    <div className={`terminal-editor-wrapper${isAndroid ? ' android-custom-kb' : ''}`}>
       <div ref={containerRef} className="terminal-editor-cm" aria-label="Python code editor" />
       <div className="terminal-editor-toolbar">
         <button

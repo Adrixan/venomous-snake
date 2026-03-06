@@ -498,7 +498,12 @@
   }
 }
 
-/* ─── Reduce motion overrides ────────────────────────────────────────────── */
+/* ─── Android Custom Keyboard — suppress system caret ────────────────────── */
+
+.android-custom-kb .cm-content {
+  /* Hide system caret; CodeMirror's own cursor widget is used instead */
+  caret-color: transparent;
+}
 
 @media (prefers-reduced-motion: reduce) {
   .terminal-container .cm-cursor {

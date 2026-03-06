@@ -16,6 +16,13 @@ export interface GameSceneData {
   roomKey?: string;
 }
 
+interface LightSource {
+  x: number;
+  y: number;
+  color: number;
+  radius: number;
+}
+
 const GRID = 32;
 const ROOM_COLS = 25;
 const ROOM_ROWS = 19;
@@ -69,7 +76,12 @@ export class GameScene extends Phaser.Scene {
           playerY = playerStart.y;
         }
 
-        const validInteractiveTypes: InteractiveObjectType[] = ['terminal', 'door', 'item'];
+        const validInteractiveTypes: InteractiveObjectType[] = [
+          'terminal',
+          'door',
+          'item',
+          'elevator',
+        ];
         const isInteractiveType = (t: string): t is InteractiveObjectType =>
           (validInteractiveTypes as string[]).includes(t);
         const validNPCBehaviors = new Set<string>(['idle', 'patrol', 'wander', 'guard']);
@@ -144,6 +156,19 @@ export class GameScene extends Phaser.Scene {
         this.particleManager.addTerminalSparks(obj.x, obj.y);
       }
     }
+
+    // Ambient light pools around interactive objects (world-space glow)
+    this.createAmbientLighting([
+      ...this.interactiveObjects
+        .filter((o) => o.objectType === 'terminal')
+        .map((o) => ({ x: o.x, y: o.y, color: 0x00ff41 as number, radius: 48 })),
+      ...this.interactiveObjects
+        .filter((o) => o.objectType === 'door')
+        .map((o) => ({ x: o.x, y: o.y, color: 0x00e5ff as number, radius: 40 })),
+    ]);
+
+    // Vignette overlay fixed to the camera (drawn after world content)
+    this.createVignetteOverlay();
 
     this.setupEventBus();
 
@@ -309,6 +334,9 @@ export class GameScene extends Phaser.Scene {
         this.scene.pause();
       } else if (event.type === 'GAME_RESUME') {
         this.scene.resume();
+      } else if (event.type === 'ITEM_PICKUP') {
+        // Remove destroyed item objects from the tracked list
+        this.interactiveObjects = this.interactiveObjects.filter((obj) => obj.active);
       } else if (event.type === 'FLOOR_CHANGE') {
         const { targetFloor } = event.payload;
         this.player?.freeze();
@@ -331,5 +359,45 @@ export class GameScene extends Phaser.Scene {
         }
       }
     });
+  }
+
+  /** Draws semi-transparent light pools at world positions (depth 3, scrolls with map). */
+  private createAmbientLighting(lightSources: LightSource[]): void {
+    if (lightSources.length === 0) return;
+    const gfx = this.add.graphics();
+    gfx.setDepth(3);
+    for (const { x, y, color, radius } of lightSources) {
+      gfx.fillStyle(color, 0.04);
+      gfx.fillCircle(x, y, radius * 1.5);
+      gfx.fillStyle(color, 0.07);
+      gfx.fillCircle(x, y, radius);
+      gfx.fillStyle(color, 0.13);
+      gfx.fillCircle(x, y, radius * 0.5);
+    }
+  }
+
+  /** Creates a camera-fixed vignette texture and overlays it at the top of the stack. */
+  private createVignetteOverlay(): void {
+    const w = this.scale.width;
+    const h = this.scale.height;
+    const key = '__vignette__';
+    if (!this.textures.exists(key)) {
+      const ct = this.textures.createCanvas(key, w, h);
+      if (!ct) return;
+      const ctx = ct.getContext();
+      const cx = w / 2;
+      const cy = h / 2;
+      const radius = Math.sqrt(cx * cx + cy * cy);
+      const grad = ctx.createRadialGradient(cx, cy, radius * 0.3, cx, cy, radius * 1.1);
+      grad.addColorStop(0, 'rgba(0,0,0,0)');
+      grad.addColorStop(0.65, 'rgba(0,0,0,0.18)');
+      grad.addColorStop(1, 'rgba(0,0,0,0.62)');
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, w, h);
+      ct.refresh();
+    }
+    const img = this.add.image(w / 2, h / 2, key);
+    img.setScrollFactor(0);
+    img.setDepth(200);
   }
 }

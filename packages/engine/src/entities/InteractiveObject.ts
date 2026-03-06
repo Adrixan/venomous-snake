@@ -3,6 +3,16 @@ import { EventBus } from '../EventBus';
 
 export type InteractiveObjectType = 'terminal' | 'door' | 'item' | 'npc' | 'elevator';
 
+/** Parses a targetFloor value that may be a number (2) or a string ('floor2'). */
+function parseTargetFloor(raw: unknown): number {
+  if (typeof raw === 'number') return raw;
+  if (typeof raw === 'string') {
+    const match = /\d+/.exec(raw);
+    if (match) return parseInt(match[0], 10);
+  }
+  return 0;
+}
+
 function getObjectColor(type: InteractiveObjectType): number {
   switch (type) {
     case 'terminal':
@@ -113,9 +123,9 @@ export class InteractiveObject extends Phaser.Physics.Arcade.Sprite {
     } else if (this.objectType === 'item') {
       EventBus.emit({ type: 'ITEM_PICKUP', payload: { itemId: this.objectId } });
       this.destroy();
-    } else if (this.objectType === 'elevator') {
+    } else if (this.objectType === 'door' || this.objectType === 'elevator') {
       const rawFloor = this.objectProperties['targetFloor'];
-      const targetFloor = typeof rawFloor === 'number' ? rawFloor : 0;
+      const targetFloor = parseTargetFloor(rawFloor);
       EventBus.emit({ type: 'FLOOR_CHANGE', payload: { targetFloor } });
     }
   }

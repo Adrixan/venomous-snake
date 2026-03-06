@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback, useRef, useId } from 'react';
 import { useTranslation } from 'react-i18next';
 import { CipherPortrait } from '../cipher/CipherPortrait';
+import { NpcPortrait } from './portraits/NpcPortrait';
 import type { UseDialogReturn } from './useDialog';
 
 export type DialogOverlayProps = UseDialogReturn;
@@ -24,33 +25,6 @@ const KEYFRAMES = `
 }
 @keyframes dlg-fade-in { from { opacity: 0; } to { opacity: 1; } }
 `;
-
-/** Portrait placeholder for non-CIPHER NPCs. */
-function NpcPortrait({ portraitId, color }: { portraitId: string; color: string }) {
-  return (
-    <div
-      aria-hidden="true"
-      style={{
-        width: 80,
-        height: 80,
-        flexShrink: 0,
-        background: `${color}18`,
-        border: `2px solid ${color}`,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        color,
-        fontSize: 10,
-        fontFamily: FONT_FAMILY,
-        textTransform: 'uppercase',
-        letterSpacing: '0.12em',
-        boxShadow: `0 0 12px ${color}44`,
-      }}
-    >
-      {portraitId.slice(0, 3)}
-    </div>
-  );
-}
 
 export function DialogOverlay({
   isOpen,
@@ -220,7 +194,7 @@ export function DialogOverlay({
               {portraitId === 'cipher' ? (
                 <CipherPortrait mood="neutral" size={80} />
               ) : (
-                <NpcPortrait portraitId={portraitId} color={speakerColor} />
+                <NpcPortrait portraitId={portraitId} size={80} />
               )}
             </div>
           )}

@@ -8,12 +8,14 @@ export class CameraSystem {
     scene: Phaser.Scene,
     target: Phaser.GameObjects.Sprite,
     tilemap?: Phaser.Tilemaps.Tilemap,
+    zoom = 2.0,
   ): void {
     this.scene = scene;
     this.camera = scene.cameras.main;
+    this.camera.setZoom(zoom);
     this.camera.setBackgroundColor('#0a0a0f');
     this.camera.startFollow(target, true, 0.1, 0.1);
-    this.camera.setDeadzone(80, 60);
+    this.camera.setDeadzone(40, 30);
 
     if (tilemap) {
       this.camera.setBounds(0, 0, tilemap.widthInPixels, tilemap.heightInPixels);

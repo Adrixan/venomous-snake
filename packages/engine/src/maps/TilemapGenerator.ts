@@ -150,24 +150,34 @@ function getTile(layer: number[], x: number, y: number): number {
 
 // ─── Layer builders ───────────────────────────────────────────────────────────
 
-/** Fills the floor layer with dark/light checkerboard inside the map. */
+/** Fills the floor layer with textured tiles, checkerboard, and room-themed variants. */
 function buildFloorLayer(): number[] {
   const layer = newGrid();
 
   for (let y = 1; y < MAP_H - 1; y++) {
     for (let x = 1; x < MAP_W - 1; x++) {
-      // Elevator interior: uniform floor_dark
+      // Elevator interior: uniform dark metal
       if (x >= COL_ELEVATOR_W + 1 && x < MAP_W - 1) {
         setTile(layer, x, y, LOBBY_GID.FLOOR_DARK);
         continue;
       }
-      // Main hall: checkerboard pattern
+      // Main hall
       if (y > ROW_DIVIDER && x < COL_ELEVATOR_W) {
+        // Carpet area near reception desk (executive corner)
+        if (x >= 1 && x <= 10 && y >= 18 && y <= 26) {
+          setTile(layer, x, y, LOBBY_GID.CARPET);
+          continue;
+        }
         const gid = (x + y) % 2 === 0 ? LOBBY_GID.FLOOR_DARK : LOBBY_GID.FLOOR_LIGHT;
         setTile(layer, x, y, gid);
         continue;
       }
-      // Upper room interiors: dark metal
+      // Break room: occasional floor_variant for visual variety
+      if (x >= 1 && x < COL_BREAK_EAST && (x + y * 3) % 7 === 0) {
+        setTile(layer, x, y, LOBBY_GID.FLOOR_VARIANT);
+        continue;
+      }
+      // All other upper-room interiors: dark metal
       setTile(layer, x, y, LOBBY_GID.FLOOR_DARK);
     }
   }
@@ -249,7 +259,7 @@ function buildWallsLayer(): number[] {
   return layer;
 }
 
-/** Builds the furniture layer (desks, chairs, planters, reception desk). */
+/** Builds the furniture layer (desks, chairs, planters, racks, cabinets, screens). */
 function buildFurnitureLayer(): number[] {
   const layer = newGrid();
 
@@ -274,22 +284,74 @@ function buildFurnitureLayer(): number[] {
   setTile(layer, 4, 7, LOBBY_GID.DESK);
   setTile(layer, 5, 7, LOBBY_GID.CHAIR);
 
-  // ── Security: guard desk ─────────────────────────────────────────────────
+  // ── Security: guard desk + filing cabinets ────────────────────────────────
   setTile(layer, 14, 3, LOBBY_GID.DESK);
   setTile(layer, 15, 3, LOBBY_GID.DESK);
   setTile(layer, 20, 9, LOBBY_GID.DESK);
   setTile(layer, 21, 9, LOBBY_GID.CHAIR);
+  setTile(layer, 22, 5, LOBBY_GID.FILING_CABINET);
+  setTile(layer, 22, 6, LOBBY_GID.FILING_CABINET);
+  setTile(layer, 13, 8, LOBBY_GID.FILING_CABINET);
 
-  // ── Server closet: server racks ─────────────────────────────────────────
-  setTile(layer, 26, 2, LOBBY_GID.VENT);
-  setTile(layer, 27, 2, LOBBY_GID.VENT);
-  setTile(layer, 28, 2, LOBBY_GID.VENT);
-  setTile(layer, 26, 9, LOBBY_GID.CABLE);
-  setTile(layer, 27, 9, LOBBY_GID.CABLE);
+  // Security wall screens (mounted near north wall)
+  setTile(layer, 17, 2, LOBBY_GID.WALL_SCREEN);
+  setTile(layer, 21, 2, LOBBY_GID.WALL_SCREEN);
+
+  // ── Server closet: server racks + cable management ────────────────────────
+  setTile(layer, 26, 2, LOBBY_GID.SERVER_RACK);
+  setTile(layer, 27, 2, LOBBY_GID.SERVER_RACK);
+  setTile(layer, 28, 2, LOBBY_GID.SERVER_RACK);
+  setTile(layer, 26, 9, LOBBY_GID.SERVER_RACK);
+  setTile(layer, 27, 9, LOBBY_GID.SERVER_RACK);
+  setTile(layer, 29, 5, LOBBY_GID.CABLE);
+  setTile(layer, 30, 5, LOBBY_GID.CABLE);
+
+  // Pipe conduit along north wall of server closet (below ceiling)
+  for (let x = 25; x <= 32; x++) {
+    setTile(layer, x, 1, LOBBY_GID.PIPE_H);
+  }
 
   // Elevator: vent on wall
   setTile(layer, 34, 10, LOBBY_GID.VENT);
   setTile(layer, 38, 10, LOBBY_GID.VENT);
+
+  return layer;
+}
+
+/** Builds a decoration layer: floor-level ambiance tiles (grates, stripes, stains, lights). */
+function buildDecorationLayer(): number[] {
+  const layer = newGrid();
+
+  // ── Floor grates near terminals and server equipment ──────────────────────
+  setTile(layer, 8, 3, LOBBY_GID.FLOOR_GRATE); // near break room terminal
+  setTile(layer, 25, 3, LOBBY_GID.FLOOR_GRATE); // near server console
+  setTile(layer, 28, 4, LOBBY_GID.FLOOR_GRATE);
+  setTile(layer, 30, 8, LOBBY_GID.FLOOR_GRATE); // near diagnostic panel
+
+  // ── Caution stripes flanking every door passage ───────────────────────────
+  // Break room door (col 6, row 12)
+  setTile(layer, 5, 13, LOBBY_GID.CAUTION_STRIPE);
+  setTile(layer, 7, 13, LOBBY_GID.CAUTION_STRIPE);
+  // Security door (col 18, row 12)
+  setTile(layer, 17, 13, LOBBY_GID.CAUTION_STRIPE);
+  setTile(layer, 19, 13, LOBBY_GID.CAUTION_STRIPE);
+  // Server closet door (col 29, row 12)
+  setTile(layer, 28, 13, LOBBY_GID.CAUTION_STRIPE);
+  setTile(layer, 30, 13, LOBBY_GID.CAUTION_STRIPE);
+  // Elevator doorways
+  setTile(layer, COL_ELEVATOR_W + 1, DOOR_ELEV_UPPER_ROW, LOBBY_GID.CAUTION_STRIPE);
+  setTile(layer, COL_ELEVATOR_W + 1, DOOR_ELEV_LOWER_ROW, LOBBY_GID.CAUTION_STRIPE);
+
+  // ── Oil / coolant stains ──────────────────────────────────────────────────
+  setTile(layer, 29, 7, LOBBY_GID.OIL_STAIN); // server closet leakage
+  setTile(layer, 31, 6, LOBBY_GID.OIL_STAIN);
+  setTile(layer, 2, 9, LOBBY_GID.OIL_STAIN); // break room floor
+
+  // ── Ceiling-light reflection pools in main hall ───────────────────────────
+  for (let x = 6; x < COL_ELEVATOR_W; x += 8) {
+    setTile(layer, x, 16, LOBBY_GID.CEILING_LIGHT);
+    setTile(layer, x, 23, LOBBY_GID.CEILING_LIGHT);
+  }
 
   return layer;
 }
@@ -486,6 +548,7 @@ function buildObjectLayer(): TiledObject[] {
 /** Generates and returns a complete Tiled-format JSON map for the Lobby floor. */
 export function generateLobbyTilemap(): TiledMap {
   const floorLayer = buildFloorLayer();
+  const decorationLayer = buildDecorationLayer();
   const wallsLayer = buildWallsLayer();
   const furnitureLayer = buildFurnitureLayer();
   const interactiveLayer = buildInteractiveLayer();
@@ -523,6 +586,7 @@ export function generateLobbyTilemap(): TiledMap {
 
   const layers: TiledLayer[] = [
     tileLayer('floor', floorLayer),
+    tileLayer('decoration', decorationLayer),
     tileLayer('walls', wallsLayer),
     tileLayer('furniture', furnitureLayer),
     tileLayer('interactive', interactiveLayer),

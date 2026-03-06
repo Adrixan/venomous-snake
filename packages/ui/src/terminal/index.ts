@@ -4,6 +4,9 @@ export { OutputPanel } from './OutputPanel';
 export { HackingTerminal } from './HackingTerminal';
 export { MobileSymbolBar } from './MobileSymbolBar';
 export type { MobileSymbolBarProps } from './MobileSymbolBar';
+export { CodeKeyboard } from './CodeKeyboard';
+export type { CodeKeyboardProps } from './CodeKeyboard';
+export { useIsAndroid } from './useIsAndroid';
 export {
   terminalTheme,
   terminalHighlightStyle,

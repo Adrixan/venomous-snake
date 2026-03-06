@@ -8,9 +8,11 @@ import { TerminalEditor } from './TerminalEditor';
 import type { TerminalEditorHandle } from './TerminalEditor';
 import { OutputPanel } from './OutputPanel';
 import { MobileSymbolBar } from './MobileSymbolBar';
+import { CodeKeyboard } from './CodeKeyboard';
 import { ChallengeSuccessOverlay } from './ChallengeSuccessOverlay';
 import { useChallengeTerminal } from './useChallengeTerminal';
 import { useBreakpoint } from '../responsive/useBreakpoint';
+import { useIsAndroid } from './useIsAndroid';
 import './terminal.css';
 
 interface HackingTerminalProps {
@@ -62,6 +64,7 @@ function FreeModeTerminal({
   const [inputPrompt, setInputPrompt] = useState<string | undefined>(undefined);
   const editorRef = useRef<TerminalEditorHandle>(null);
   const breakpoint = useBreakpoint();
+  const isAndroid = useIsAndroid();
 
   useEffect(() => {
     const cleanups: Array<() => void> = [];
@@ -120,6 +123,7 @@ function FreeModeTerminal({
   );
   const handleClose = useCallback(() => onClose(), [onClose]);
   const handleSymbol = useCallback((sym: string) => editorRef.current?.insertAtCursor(sym), []);
+  const handleBackspace = useCallback(() => editorRef.current?.deleteAtCursor(), []);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -171,6 +175,7 @@ function FreeModeTerminal({
               initialCode={initialCode}
               onRun={handleRunSync}
               disabled={isDisabled}
+              {...(isAndroid ? { isAndroid } : {})}
               {...(readOnlyRanges ? { readOnlyRanges } : {})}
             />
           </div>
@@ -184,9 +189,13 @@ function FreeModeTerminal({
         </div>
       )}
 
-      {breakpoint === 'mobile' && status !== 'loading' && (
-        <MobileSymbolBar onSymbol={handleSymbol} />
-      )}
+      {breakpoint === 'mobile' &&
+        status !== 'loading' &&
+        (isAndroid ? (
+          <CodeKeyboard onInput={handleSymbol} onBackspace={handleBackspace} />
+        ) : (
+          <MobileSymbolBar onSymbol={handleSymbol} />
+        ))}
 
       <div className="terminal-status-bar">
         <span>{interpreter.getVersion()}</span>
@@ -229,6 +238,7 @@ function ChallengeModeTerminal({
   const [showSuccess, setShowSuccess] = useState(false);
   const editorRef = useRef<TerminalEditorHandle>(null);
   const breakpoint = useBreakpoint();
+  const isAndroid = useIsAndroid();
   const successTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // Force editor remount when challenge changes
@@ -267,6 +277,7 @@ function ChallengeModeTerminal({
   }, [resetState]);
 
   const handleSymbol = useCallback((sym: string) => editorRef.current?.insertAtCursor(sym), []);
+  const handleBackspace = useCallback(() => editorRef.current?.deleteAtCursor(), []);
 
   const handleClose = useCallback(() => {
     if (successTimerRef.current !== null) clearTimeout(successTimerRef.current);
@@ -353,6 +364,7 @@ function ChallengeModeTerminal({
             onRun={handleRun}
             onSubmit={handleSubmit}
             disabled={isDisabled}
+            {...(isAndroid ? { isAndroid } : {})}
             {...(readOnlyRanges ? { readOnlyRanges } : {})}
           />
         </div>
@@ -387,7 +399,12 @@ function ChallengeModeTerminal({
       )}
 
       {/* Mobile symbol bar */}
-      {breakpoint === 'mobile' && <MobileSymbolBar onSymbol={handleSymbol} />}
+      {breakpoint === 'mobile' &&
+        (isAndroid ? (
+          <CodeKeyboard onInput={handleSymbol} onBackspace={handleBackspace} />
+        ) : (
+          <MobileSymbolBar onSymbol={handleSymbol} />
+        ))}
 
       {/* Status bar */}
       <div className="terminal-status-bar">
