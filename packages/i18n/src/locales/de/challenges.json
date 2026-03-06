@@ -1,4 +1,8 @@
 {
+  "ch01_01": {
+    "title": "Erstkontakt",
+    "description": "Lass das Sicherheitsterminal die Nachricht 'Hello, World!' mit der print()-Funktion anzeigen."
+  },
   "ch01_02": {
     "title": "Deckidentität",
     "description": "Erstelle eine Variable namens 'codename' und weise ihr deinen Agentennamen als Zeichenkette zu. Gib sie dann aus."

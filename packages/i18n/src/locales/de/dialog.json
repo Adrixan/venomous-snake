@@ -1,7 +1,7 @@
 {
   "ch01_01": {
-    "pre": "Alright, Neuling. Zeit für deinen ersten Hack. Siehst du dieses Sicherheitsterminal? Es läuft auf einem einfachen Anzeigesystem. Du musst es nur dazu bringen, eine Nachricht anzuzeigen. Benutze die print()-Funktion — es ist wie ins Leere zu rufen, nur dass die Leere tatsächlich zuhört.",
-    "post": "Nicht schlecht für einen Anfänger! Du hast gerade einen Computer nach deinem Willen handeln lassen. Das ist im Grunde Programmieren — Maschinen herumkommandieren. Weiter geht's."
+    "pre": "Also gut, Neuling. Zeit für deinen ersten Hack. Siehst du das Sicherheitsterminal? Es läuft auf einem einfachen Anzeigesystem. Du musst es nur dazu bringen, eine Nachricht anzuzeigen. Benutze die print()-Funktion — es ist wie ins Leere zu rufen, nur dass die Leere tatsächlich zuhört.",
+    "post": "Nicht schlecht für einen Anfänger! Du hast gerade einen Computer nach deinem Willen handeln lassen. Das ist im Grunde Programmieren — Maschinen herumkommandieren. Weiter geht’s."
   },
   "ch01_02": {
     "pre": "Jede gute Agentin braucht einen Decknamen. In Python speichern wir Dinge in Variablen — stell sie dir wie beschriftete Boxen vor. Lass uns deine Tarnung einrichten.",
@@ -11,10 +11,214 @@
     "pre": "Das Sicherheitssystem läuft auf Zahlen. Wenn wir die Mathematik manipulieren können, können wir die Schlösser manipulieren. Zeit, einige arithmetische Operatoren zu lernen.",
     "post": "Zahlen lügen nicht — aber sie können überzeugt werden. Du hast die Grundlagen der Python-Mathematik drauf. Die Sicherheit des Gebäudes hat keine Chance."
   },
+  "ch01_04": {
+    "pre": "Bevor wir tiefer gehen, musst du verstehen, mit welchen Daten du es zu tun hast. Die type()-Funktion ist wie ein Scanner — sie sagt dir genau, was etwas ist. Strings, Integer... jedes Datenstück hat eine Identität.",
+    "post": "Exzellente Aufklärungsarbeit. Deine Datentypen zu kennen ist entscheidend — behandle eine Zahl wie Text und die ganze Operation fällt auseinander."
+  },
+  "ch01_05": {
+    "pre": "Der Temperaturalarm im Serverraum ist losgegangen. Die Anzeige ist in Celsius, aber das Handbuch in Fahrenheit. Schnell — rechne den Wert um, bevor das Kühlsystem einen Lockdown auslöst.",
+    "post": "Krise abgewendet! Fließkommazahlen sind Pythons Art, mit Dezimalzahlen umzugehen. Beachte: Das Ergebnis ist 212.0, nicht 212 — Python sagt dir, dass es ein Float ist."
+  },
+  "ch01_06": {
+    "pre": "Wir haben eine Personalakte abgefangen, aber die Namensfelder sind getrennt. Vorname in einem Feld, Nachname in einem anderen. Wir müssen den vollständigen Namen zusammensetzen. Mit dem +-Operator kannst du Strings verknüpfen.",
+    "post": "Saubere Arbeit. String-Verknüpfung ist einfach aber mächtig. Vergiss das Leerzeichen zwischen den Namen nicht — Computer nehmen nichts an."
+  },
+  "ch01_07": {
+    "pre": "Willst du eine Visitenkarte hinterlassen? Jeder gute Hacker hat eine Signatur. Lass uns mehrere print-Anweisungen nutzen, um Terminal-Kunst zu erstellen.",
+    "post": "Schöne Kunst! Du hast mehrere print-Aufrufe gemeistert. Jeder gibt eine neue Zeile aus. Backslashes können in Strings knifflig sein — aber du hast es geschafft."
+  },
+  "ch01_08": {
+    "pre": "Hier ein Profi-Tipp: Dokumentiere immer deinen Code. Kommentare beginnen mit # und Python ignoriert sie komplett. Sie sind Notizen für Menschen — für dich, dein Team, das zukünftige Du.",
+    "post": "Gute Gewohnheit etabliert. Der Code läuft identisch mit oder ohne Kommentare, aber deine Teammitglieder werden dir danken. Boot-Sequenz abgeschlossen — gehen wir nach oben."
+  },
+  "ch02_01": {
+    "pre": "Willkommen auf Etage 2 — der Agentenprofil-Flügel. Zuerst: String-Methoden. Jeder String in Python hat eingebaute Superkräfte. .upper(), .lower(), .title() — Tarnmodi für Text.",
+    "post": "Jetzt kannst du in GROSSBUCHSTABEN schreien oder in kleinbuchstaben flüstern. String-Methoden verändern das Original nicht — sie erstellen eine neue Version."
+  },
+  "ch02_02": {
+    "pre": "Zugangscodes sind Strings, und manchmal müssen wir einzelne Zeichen herauspicken. Python lässt dich per Position in einen String greifen. Position 0 ist das erste Zeichen.",
+    "post": "Scharfes Auge. Negative Indizierung ist Pythons Trick — [-1] greift immer das letzte Zeichen, egal wie lang der String ist."
+  },
+  "ch02_03": {
+    "pre": "Wir haben eine geheime Nachricht abgefangen, brauchen aber nur Teile davon. String-Slicing lässt dich jeden Abschnitt extrahieren. Die Syntax ist string[start:end].",
+    "post": "Saubere Schnitte. Der Doppelpunkt-Operator ist unglaublich mächtig. [:n] greift vom Anfang, [n:] bis zum Ende, und [a:b] die Mitte."
+  },
+  "ch02_04": {
+    "pre": "Zeit für die moderne Art, Strings zu bauen — f-Strings. Statt umständlicher Verknüpfung setzt du Variablen direkt mit geschweiften Klammern in deinen Text ein.",
+    "post": "f-Strings sind der Goldstandard. Setze ein f vor die Anführungszeichen, benutze {variable} drin, und Python erledigt den Rest."
+  },
+  "ch02_05": {
+    "pre": "Echte Programme reden mit ihren Nutzern. Die input()-Funktion pausiert und wartet auf eine Eingabe. Was auch immer eingegeben wird, kommt als String zurück.",
+    "post": "Jetzt kann dein Code eine Unterhaltung führen! input() gibt immer einen String zurück, auch wenn der Nutzer eine Zahl eingibt. Merk dir das."
+  },
+  "ch02_06": {
+    "pre": "Hier ist der Haken bei input() — alles kommt als Text zurück. Wenn jemand 42 tippt, sieht Python den STRING 42, nicht die ZAHL 42. Mit einem String kann man nicht rechnen.",
+    "post": "Typumwandlung ist eine kritische Fähigkeit. int() wandelt Strings in Integer. str() wandelt Zahlen in Strings. Die Brücke zwischen Eingabe und Mathematik."
+  },
+  "ch02_07": {
+    "pre": "Missionsbriefings müssen präzise formatiert sein. Eine falsch platzierte Variable und der ganze Bericht ist unleserlich. Bauen wir einen komplexen Statusbericht mit f-Strings.",
+    "post": "Das ist ein professioneller Bericht. Mehrere Variablen, gemischte Typen, Sonderzeichen — alles mit f-Strings gemeistert."
+  },
+  "ch02_08": {
+    "pre": "Bevor wir diese Etage verlassen, noch eine Fähigkeit: die len()-Funktion. Sie zählt Zeichen in einem String oder Elemente in einer Liste. Wir prüfen damit die Passwortsicherheit.",
+    "post": "len() ist täuschend einfach aber endlos nützlich. Kombiniert mit Bedingungen wird es zum Validierungstool. Etage 2 abgeschlossen!"
+  },
+  "ch03_01": {
+    "pre": "Willkommen auf Etage 3 — Zugangskontrolle. Alles hier basiert auf Bedingungen. Eine if-Anweisung ist ein Entscheidungstor: Wenn das wahr ist, tue jenes.",
+    "post": "Deine erste Bedingung! Der ==-Operator prüft Gleichheit. Ein = weist zu, zwei == vergleichen. Verwechsle sie nicht!"
+  },
+  "ch03_02": {
+    "pre": "Einweg-Entscheidungen sind nett, aber echte Sicherheit braucht zwei Pfade: was tun wenn bestanden UND was tun wenn nicht. Dafür gibt es else — den Backup-Plan.",
+    "post": "if/else — die grundlegende Weggabelung. Jedes Sicherheitssystem braucht beide Pfade. Du denkst jetzt wie ein Systemarchitekt."
+  },
+  "ch03_03": {
+    "pre": "Sicherheit dreht sich nicht nur um Gleichheit. Ist deine Freigabe HÖHER als erforderlich? NIEDRIGER? Meistern wir alle Vergleichsoperatoren.",
+    "post": "Du hast das vollständige Vergleichs-Toolkit: >, <, ==, >=, <=, !=. Jeder ist eine andere Art von Frage."
+  },
+  "ch03_04": {
+    "pre": "Echte Bedrohungsbewertung ist nicht binär. KRITISCH, HOCH, MITTEL, NIEDRIG — wir brauchen mehrere Schwellenwerte. elif kettet Bedingungen aneinander.",
+    "post": "elif-Ketten sind das Rückgrat von Klassifizierungssystemen. Reihenfolge ist wichtig — Python nimmt den ersten Treffer."
+  },
+  "ch03_05": {
+    "pre": "Die Sicherheitsschleuse erfordert, dass mehrere Bedingungen gleichzeitig wahr sind. Ausweis? Check. Freigabe? Check. Nicht auf der schwarzen Liste? Check. Zeit für and, or und not.",
+    "post": "Logische Operatoren sind der Kleber komplexer Bedingungen. and braucht alle wahr, or mindestens eins, not dreht das Ergebnis um."
+  },
+  "ch03_06": {
+    "pre": "Hochsicherheitszonen nutzen Zwei-Faktor-Authentifizierung. Erst PIN prüfen, dann Fingerabdruck verifizieren. Das ist ein if in einem if — verschachtelte Bedingungen.",
+    "post": "Verschachtelte ifs modellieren mehrstufige Verifizierung. Je tiefer die Verschachtelung, desto spezifischer die Prüfung."
+  },
+  "ch03_07": {
+    "pre": "Boolesche Variablen sind wie Schalter — True oder False, an oder aus. Verkabeln wir ein Alarmsystem mit boolescher Logik.",
+    "post": "Boolesche Algebra ist nicht nur Theorie — so funktionieren echte Alarmsysteme. Bedingungen in Variablen speichern, logisch kombinieren."
+  },
+  "ch03_08": {
+    "pre": "Letzte Herausforderung auf dieser Etage: Baue einen echten Passwort-Validator. Er muss Länge, Ziffern und Buchstaben prüfen.",
+    "post": "DAS ist ein Validator. any() mit Generator-Ausdrücken ist fortgeschrittener Stoff — du bist dem Zeitplan voraus. Etage 3 geschafft!"
+  },
+  "ch04_01": {
+    "pre": "Etage 4 — Patrouillenrouten. Wachen folgen Mustern, und Muster bedeuten Schleifen. Eine for-Schleife geht eine Liste Element für Element durch.",
+    "post": "Deine erste Schleife! for geht jedes Element der Reihe nach durch. Einfach aber mächtig — so verarbeitest du Daten im großen Stil."
+  },
+  "ch04_02": {
+    "pre": "Manchmal musst du zählen statt iterieren. range() generiert eine Zahlenfolge. range(5) gibt dir 0, 1, 2, 3, 4.",
+    "post": "range() ist das Arbeitspferd der Python-Schleifen. Es startet bei 0 und stoppt VOR der angegebenen Zahl."
+  },
+  "ch04_03": {
+    "pre": "Wachschichten beginnen nicht bei Stunde 0. range(start, stop) lässt dich angeben, wo begonnen wird. Der Stop-Wert ist exklusiv.",
+    "post": "range(1, 6) gibt 1, 2, 3, 4, 5. Start ist enthalten, Stop ist ausgeschlossen. Fühlt sich erst komisch an, macht die Mathematik aber sauber."
+  },
+  "ch04_04": {
+    "pre": "for-Schleifen sind toll, wenn du weißt, wie oft wiederholt werden soll. Aber was ist mit \"mach weiter bis etwas passiert\"? Das ist eine while-Schleife.",
+    "post": "Countdown abgeschlossen! While-Schleifen sind mächtig aber gefährlich — vergiss die Bedingung zu aktualisieren und sie laufen ewig."
+  },
+  "ch04_05": {
+    "pre": "Echte Passwortsysteme geben nicht nach einem Versuch auf. Sie fragen weiter, bis du es richtig hast. Bauen wir eine Passwort-Schleife mit input().",
+    "post": "While-Schleifen mit Benutzereingabe — das ist interaktives Programmieren. Die Schleife läuft, solange das Passwort falsch ist."
+  },
+  "ch04_06": {
+    "pre": "Eine Verdächtigenliste durchsuchen? Du musst nicht alle prüfen, wenn du dein Ziel gefunden hast. break beendet eine Schleife sofort.",
+    "post": "break ist chirurgische Präzision. Sobald du findest was du suchst, bist du raus. Keine verschwendeten Iterationen."
+  },
+  "ch04_07": {
+    "pre": "Einige Kameras sind offline. Statt die ganze Schleife zu beenden, überspringt continue nur die aktuelle Iteration.",
+    "post": "continue ist der \"überspring das hier\"-Befehl. Anders als break — die Schleife läuft weiter, überspringt nur den aktuellen Durchlauf."
+  },
+  "ch04_08": {
+    "pre": "Der Etagenplan ist ein Raster — Zeilen und Spalten. Um jede Zelle zu prüfen, brauchst du eine Schleife in einer Schleife.",
+    "post": "Verschachtelte Schleifen multiplizieren: 3 Zeilen × 3 Spalten = 9 Zellen. Das ist die Macht und die Gefahr — denk nach bevor du verschachtelst."
+  },
+  "ch04_09": {
+    "pre": "Wir brauchen die Summe aller Ausweisnummern. Das Akkumulator-Muster: Starte bei 0, durchlaufe die Daten, addiere jeden Wert.",
+    "post": "Das Akkumulator-Muster ist überall in der Programmierung. Mit leerem Ergebnis starten, Iteration für Iteration aufbauen."
+  },
+  "ch04_10": {
+    "pre": "Letzter Schleifen-Trick: enumerate(). Wenn du Index UND Wert brauchst, gibt enumerate() dir beides in einem Schritt.",
+    "post": "enumerate() ist der beste Freund eines Pythonistas. Etage 4 abgeschlossen — du hast jedes Schleifen-Muster gemeistert, das ein Hacker braucht."
+  },
+  "ch05_01": {
+    "pre": "Willkommen auf Etage 5 — das Funktionslabor. Funktionen sind wiederverwendbare Codeblöcke. Einmal definieren, mehrfach aufrufen. def ist dein neuer bester Freund.",
+    "post": "Deine erste eigene Funktion! def erstellt sie, Parameter nehmen Eingaben entgegen, return sendet einen Wert zurück."
+  },
+  "ch05_02": {
+    "pre": "Funktionen die ETWAS TUN sind toll, aber Funktionen die ETWAS BERECHNEN sind noch besser. return sendet einen Wert an den Aufrufer zurück.",
+    "post": "return ist die Ausgabe der Funktion. Ohne return gibt die Funktion None zurück — Pythons Art, \"nichts\" zu sagen."
+  },
+  "ch05_03": {
+    "pre": "Echte Operationen brauchen mehrere Eingaben. Funktionen können beliebig viele Parameter haben — einfach mit Kommas trennen.",
+    "post": "Drei Parameter, eine formatierte Ausgabe. Funktionen organisieren Komplexität. DRY: Don’t Repeat Yourself."
+  },
+  "ch05_04": {
+    "pre": "Manchmal haben Parameter einen sinnvollen Standardwert. Warum den Aufrufer zwingen, jedes Mal \"low\" anzugeben? Standard-Parameter bieten einen Rückfallwert.",
+    "post": "Standard-Parameter machen Funktionen flexibel. Wert angeben wenn nötig, weglassen wenn der Standard passt."
+  },
+  "ch05_05": {
+    "pre": "Kodierte Koordinaten kommen als einzelner String, aber wir brauchen separate x- und y-Werte. Python-Funktionen können mehrere Werte zurückgeben.",
+    "post": "Mehrere Rückgabewerte sind eine elegante Python-Funktion. Unter der Haube ist es ein Tupel, aber die Syntax fühlt sich natürlich an."
+  },
+  "ch05_06": {
+    "pre": "Komplexe Systeme bestehen aus einfachen Teilen. Ein Verifizierungssystem prüft PIN, prüft Ausweis, kombiniert Ergebnisse. Funktionen die andere aufrufen — Komposition.",
+    "post": "Funktionskomposition baut komplexes Verhalten aus einfachen, testbaren Teilen. Jede Funktion macht eine Sache gut."
+  },
+  "ch05_07": {
+    "pre": "Ein kniffliges Konzept: Scope. Variablen in einer Funktion sind lokal — sie verschwinden wenn die Funktion endet. Variablen außerhalb sind global.",
+    "post": "Scope ist eines der wichtigsten Konzepte. Lokale Variablen sind sicher — sie können nichts außerhalb kaputt machen. Globale sind geteilt — Vorsicht."
+  },
+  "ch05_08": {
+    "pre": "Was wenn du nicht weißt, wie viele Argumente eine Funktion bekommt? *args zur Rettung. Es fängt beliebig viele positionelle Argumente als Tupel auf.",
+    "post": "*args ist pure Flexibilität. Übergib 1 Argument oder 100 — die Funktion verarbeitet alle. Dein Logger ist produktionsreif."
+  },
+  "ch05_09": {
+    "pre": "Jetzt die Schlüsselwort-Version: **kwargs fängt benannte Argumente als Dictionary auf. Wenn du flexible Konfiguration brauchst — kwargs ist dein Werkzeug.",
+    "post": "**kwargs verwandelt Schlüsselwort-Argumente in ein Dictionary. Maximale Flexibilität, saubere Schnittstelle."
+  },
+  "ch05_10": {
+    "pre": "Letzter Funktions-Trick: lambda. Eine Mini-Funktion in einer Zeile. Kein Name, kein def, nur Logik. Perfekt als Sortierschlüssel.",
+    "post": "Lambda-Funktionen sind prägnant und mächtig. sorted() mit einem Lambda-Key wirst du ständig nutzen. Etage 5 abgeschlossen — du bist jetzt ein Funktions-Architekt."
+  },
+  "ch06_01": {
+    "pre": "Etage 6 — das Asset-Inventar. Hier dreht sich alles um Collections: Listen, Tupel, Dictionaries, Sets. Listen sind geordnete Sammlungen — perfekt für Inventare.",
+    "post": "Deine erste Liste! Zugriff auf Elemente per Position ab 0. Listen sind veränderbar — du kannst sie nach der Erstellung ändern."
+  },
+  "ch06_02": {
+    "pre": "Listen sind nicht statisch. .append() fügt hinzu, .remove() entfernt. Diese Methoden verändern die Liste direkt.",
+    "post": "Listen-Methoden ändern die Liste direkt — kein Neuzuweisen nötig. append fügt am Ende hinzu, remove findet und löscht den ersten Treffer."
+  },
+  "ch06_03": {
+    "pre": "Genau wie String-Slicing kannst du auch Listen slicen. Die letzten drei, die ersten zwei oder jeden Bereich dazwischen.",
+    "post": "Listen-Slicing erstellt eine neue Liste aus einem Teil des Originals. Das Original bleibt unberührt."
+  },
+  "ch06_04": {
+    "pre": "List Comprehensions sind Pythons elegantestes Feature. Eine neue Liste durch Transformieren und Filtern erstellen — alles in einer Zeile.",
+    "post": "List Comprehensions machen süchtig. [Ausdruck for Element in Liste if Bedingung] — Filtern und Transformieren in einem Schritt."
+  },
+  "ch06_05": {
+    "pre": "Tupel sind wie Listen, die nicht verändert werden können — unveränderlich. Mit runden Klammern erstellt. Perfekt für Koordinaten.",
+    "post": "Tupel sind fix — einmal erstellt, nicht mehr änderbar. Das ist ein Feature, keine Einschränkung. Entpacken macht die Arbeit damit einfach."
+  },
+  "ch06_06": {
+    "pre": "Dictionaries sind Pythons mächtigste Collection — Schlüssel-Wert-Paare. Statt per Position greifst du per Name zu. Wie ein echtes Aktenschrank.",
+    "post": "Dictionaries ordnen Schlüsseln Werte zu. employee[\"name\"] ist sofort klar — viel lesbarer als employee[0]."
+  },
+  "ch06_07": {
+    "pre": "Dictionaries sind dynamisch. Neue Schlüssel hinzufügen, bestehende Werte aktualisieren, .get() für sicheren Zugriff nutzen.",
+    "post": "dict[\"key\"] = value fügt hinzu und aktualisiert. .get() ist der sichere Weg — gibt None zurück statt abzustürzen."
+  },
+  "ch06_08": {
+    "pre": "Echte Daten sind oft verschachtelt — Dictionaries in Dictionaries. Verkette deinen Klammerzugriff: data[\"außen\"][\"innen\"].",
+    "post": "Verschachtelte Dictionaries modellieren hierarchische Daten perfekt. Jede Klammer taucht eine Ebene tiefer."
+  },
+  "ch06_09": {
+    "pre": "Sets sind ungeordnete Sammlungen ohne Duplikate. Perfekt für Fragen wie: Was ist einzigartig? Was ist gemeinsam? Union kombiniert, Intersection findet Überschneidungen.",
+    "post": "Sets sind mathematisch — Vereinigung, Schnittmenge, Differenz. Duplikate verschwinden automatisch."
+  },
+  "ch06_10": {
+    "pre": "Letzte Herausforderung: Daten aus mehreren Quellen zusammenführen. {**dict1, **dict2} kombiniert Dictionaries. Spätere Werte überschreiben frühere.",
+    "post": "Dictionary-Zusammenführung mit Spread-Syntax ist sauber und mächtig. Etage 6 abgeschlossen — du hast Pythons gesamtes Collection-Toolkit gemeistert. Das Gebäude gehört dir, Agent."
+  },
   "ai_sidekick": {
-    "greeting": "Hey, Agentin. Ich bin CIPHER — dein KI-Assistent. Ich werde dein Führer durch dieses digitale Labyrinth sein. Bereit, etwas Python zu hacken?",
+    "greeting": "Hey, Agent. Ich bin CIPHER — dein KI-Assistent. Ich werde dein Führer durch dieses digitale Labyrinth sein. Bereit, etwas Python zu hacken?",
     "encouragement": [
-      "Weitermachen! Jeder Meisterhacker hat mit 'Hallo, Welt!' angefangen!",
+      "Weitermachen! Jeder Meisterhacker hat mit Hello, World! angefangen!",
       "Fehler sind nur Funktionen, die du noch nicht verstanden hast.",
       "Das Terminal urteilt nicht. Na ja, ich schon. Aber ich bin nett dabei.",
       "Denk daran: Auch die besten Programmierer googeln Sachen. Du machst das großartig.",
@@ -22,117 +226,8 @@
     ],
     "idle": [
       "Noch am Nachdenken? Lass dir Zeit. Die Firewall geht nirgendwo hin.",
-      "Brauchst du einen Hinweis? Frag einfach. Ich versprech's, niemand erfährt es.",
+      "Brauchst du einen Hinweis? Frag einfach. Ich versprechs, niemand erfährt es.",
       "Fun Fact: Python ist nach Monty Python benannt, nicht nach der Schlange. Krass."
-    ]
-  },
-  "cipher": {
-    "greeting": [
-      "Hey, Operative. Ich bin CIPHER — dein KI-Assistent. Ich führe dich durch dieses digitale Labyrinth. Bereit, Python zu hacken?",
-      "Oh gut, du bist wach. Ich bin CIPHER. Das 'C' steht für 'Cybernetisch'. Der Rest ist geheim. Ans Hacken.",
-      "Willkommen im Grid, {playerName}. Ich bin CIPHER, dein freundlicher KI-Sidekick. Betonung auf 'freundlich'. Rattlesnake Corp würde ein anderes Wort benutzen.",
-      "Da bist du ja! Ich dachte schon, du wärst gefasst worden. Ich bin CIPHER — ich halte deinen Rücken und deine Syntaxfehler im Blick.",
-      "Operative {playerName}, bereit zum digitalen Einsatz? Perfekt. Ich bin CIPHER. Gemeinsam knacken wir dieses Gebäude — metaphorisch gesehen. Meistens.",
-      "Oh, ein neues Gesicht! Frisch von der Akademie? Ich bin CIPHER. Ich habe diesen Monat siebzehn Operative unterstützt. Die anderen zwölf sind wahrscheinlich okay.",
-      "CIPHER online. Systeme nominal. Persönlichkeitsmodul: vollständig geladen. Bereit, Python zu lernen und Konzernen entgegenzutreten? Los geht's.",
-      "Hallo, fleischbasierte Lebensform! Ich bin CIPHER. Ich wurde über deine Mission gebrieft. Auch über deinen fragwürdigen Codenamen, aber daran arbeiten wir.",
-      "Das Gebäude ist... vorerst gesichert. Ich bin CIPHER, und ich werde deinen Triumph kommentieren. Oder deine Lernmomente. Statistisch gesehen beides.",
-      "Ah, {playerName}! Ich habe 4,7 Terabyte Hacking-Methodik analysiert, um mich auf diesen Moment vorzubereiten. Außerdem viele Filme geschaut. Bereit?"
-    ],
-    "challenge_start": [
-      "Also, {playerName}. Diese Aufgabe ist knifflig. Womit ich meine: eigentlich simpel, aber ich genieße es, dir zuzusehen.",
-      "Neue Herausforderung kommt. Ich habe die Sicherheitsspezifikationen geprüft. Die gute Nachricht: lösbar. Die andere Nachricht: das bin ich auch.",
-      "Zeit, deinen Wert zu beweisen, Operative. Das Terminal ist live, die Tastatur ist bereit — der Rest ist Python.",
-      "Oh, die kenn ich! ...Ich sag's dir natürlich nicht. Learning by doing und so. Fang an zu tippen.",
-      "Das Sicherheitssystem hält sich für clever. Es liegt falsch. Zeig ihm warum.",
-      "Laut meiner Bedrohungsanalyse hat diese Challenge eine Erfolgsquote von 94 %. Für Operative, die aufpassen. Kein Druck.",
-      "Los geht's. Denk daran: print() ist dein Freund, Einrückung ist deine Religion, und ich bin dein leicht herablassender Führer.",
-      "Diese Challenge wurde von jemandem entworfen, der die Schüler klar unterschätzt hat. Beweise das Gegenteil. Oder das Richtige. Ich lerne so oder so.",
-      "Konzentriere dich, {playerName}. Die Firewall benotet nicht nach Kurve, aber ich schon. Eine sehr steile Kurve.",
-      "Neues Ziel erhalten. Der Plan: Python-Code schreiben. Die Realität: ebenfalls Python-Code schreiben. Siehst du, manchmal klappt Planung.",
-      "Ich könnte das für dich lösen, aber das wäre ethisch fragwürdig und gegen meine Kerndirektiven. Also — du bist dran.",
-      "Die Mission: diese Challenge lösen. Der Einsatz: Lernfortschritt. Der Soundtrack: leises Summen entfernter Server. Anfangen."
-    ],
-    "challenge_hint": [
-      "Okay, ich rufe die verschlüsselten Hinweisdateien auf... hier ist, was ich dir sagen kann, ohne den Spaß komplett zu verderben:",
-      "Alright, du hast um einen Hinweis gebeten. Kein Urteil. Na gut, ein kleines bisschen. Hier ist er:",
-      "Zugriff auf die Tutorial-Datenbank... yep, ich hab was für dich. Sag nicht, ich hätte dir nie was gegeben:",
-      "Ich könnte dich länger leiden lassen, aber Effizienz ruft. Hör gut zu:",
-      "Das Hinweis-Subroutine ist aktiviert. Hier ist ein Schubs in die richtige Richtung:",
-      "Betrachte das als Übertragung von deinem zukünftigen Ich, das diese Challenge abgeschlossen hat und möchte, dass du Erfolg hast:",
-      "Mein Hinweis-Liefermodul wärmt sich auf... die Daten lauten:",
-      "Du weißt, was man sagt: um Hilfe zu bitten ist ein Zeichen von Intelligenz. Hier ist deine Belohnung:",
-      "Pinge den Wissensserver... hab ein Paket für dich. Fange es jetzt:",
-      "Hinweis gesendet. Verwende ihn weise. Oder rücksichtslos. Beides habe ich schon funktionieren sehen."
-    ],
-    "challenge_success": [
-      "Sauberer Code. Ich würde dich einstellen, aber dann hätte Rattlesnake Corp ZWEI Probleme.",
-      "So macht man das! Das Sicherheitssystem hatte gerade einen sehr schlechten Tag.",
-      "Kompilierung erfolgreich. Gehirnzellen: intakt. Kaffee: wahrscheinlich trotzdem nötig.",
-      "SYSTEM KOMPROMITTIERT — auf die bestmögliche Weise. Gut gemacht, {playerName}.",
-      "Weißt du, was das Sicherheitsteam gerade macht? Lebensläufe aktualisieren. Das hast du bewirkt.",
-      "Makellose Ausführung. Ich meine, ich wusste, dass du es schaffst. Ich war nur zu 73 % in Panik.",
-      "Challenge abgeschlossen! Der Algorithmus verbeugt sich vor deinen überlegenen Python-Kenntnissen.",
-      "Das Terminal hat deine Lösung akzeptiert. Ich habe sie zuerst akzeptiert, aber Terminals bekommen die ganze Anerkennung.",
-      "Das ist richtig! Ich würde mehr feiern, aber ich muss eine professionelle Haltung bewahren. ...Okay, gut: JAAAA.",
-      "Sieg gesichert. Der Code war elegant, die Logik war solide, und CIPHER ist sehr stolz auf dich. Sag's niemandem.",
-      "Noch eine erledigt! Du fängst an, mir Angst zu machen, {playerName}. Auf eine gute Art. Eine produktive, leicht beunruhigende Art.",
-      "Bestanden! Das System ist zusammengebrochen wie ein Keks neben meinem Kühlventilator. Weiter."
-    ],
-    "challenge_fail": [
-      "Fehler? Eher eine... Lernmöglichkeit. Ja, lass uns dabei bleiben.",
-      "Keine Sorge, auch ich stürze manchmal ab. Normalerweise ist es dramatischer.",
-      "Der Code hat nicht funktioniert, aber zumindest hat das Gebäude kein Feuer gefangen. Fortschritt!",
-      "Das hat also nicht geklappt. Fügen wir es der Liste der Dinge hinzu, die wir gelernt haben nicht zu tun.",
-      "Technisch nicht erfolgreich. Philosophisch? Eine reichhaltige Erfahrung. Nochmal versuchen.",
-      "Das Terminal ist mit deiner Lösung nicht einverstanden. Sehr unhöflich eigentlich. Du wirst seine Meinung ändern.",
-      "Scheitern ist nur Erfolg, der einen Umweg macht. Ein etwas längerer, fehlerreicher Umweg. Du schaffst das.",
-      "Ich habe Schlimmeres gesehen. Deutlich Schlimmeres. Du machst das eigentlich gut. Neugruppieren und nochmal.",
-      "Meine Fehlerprotokolle sind heute Morgen, äh, aufschlussreich. Keine Sorge — jeder fehlgeschlagene Lauf lehrt uns etwas.",
-      "Das ist Versuch Nummer {attempts}. Historische Daten legen nahe, dass Versuch {attempts}+1 normalerweise der ist, wo es klickt.",
-      "Wenn es dich tröstet: Genau derselbe Fehler hat letzte Woche drei erfahrene Operative zu Fall gebracht. Tröstet es dich nicht? Fair.",
-      "Der Algorithmus bleibt unbeeindruckt. Der Algorithmus besteht aus Mathematik und hat keine Gefühle. Du wirst ihn überdauern."
-    ],
-    "exploration": [
-      "Neues Gebiet erkannt. Meine Scanner sagen: interessant. Mein Instinkt sagt: verdächtig. Vorsichtig erkunden.",
-      "Hier gibt es viel zu untersuchen. Das Sicherheitsgitter hat einige... kreative Schwachstellen, sagen wir mal.",
-      "Irgendwo in dieser Etage ist das nächste Ziel. Das klingt offensichtlich, bis du derjenige bist, der sucht.",
-      "Ich empfange schwache Datensignaturen in der Nähe. Entweder ein Sicherheitssystem oder jemand hat die Kaffeemaschine laufen lassen.",
-      "Rattlesnake Corp hat an der Ästhetik dieser Etage ein bisschen gespart. Trotzdem noch viele hackbare Terminals.",
-      "Jeder Raum in diesem Gebäude hat eine Geschichte. Die meisten sind langweilige Budgetberichte, aber gelegentlich gibt es ein Geheimnis.",
-      "Halte die Augen offen, {playerName}. Unternehmensinfrastruktur versteckt allerlei Geheimnisse — die meisten in schlecht gesicherten Datenbanken.",
-      "Fun Fact: 67 % der Unternehmensverstöße beginnen mit physischem Zugang zu Terminals. Du bist jetzt praktisch eine Statistik.",
-      "Das Etagenlayout stimmt mit meinen Schemazeichnungen überein... meistens. Es könnte einige unbefugte Renovierungen gegeben haben.",
-      "Ich sehe Terminals, ich sehe gesperrte Türen, und ich sehe dich — die Wildcard, die sie alle knacken wird.",
-      "Dieses Gebiet fühlt sich anders an als das letzte. Andere Algorithmen. Andere Verschlüsselung. Andere Möglichkeiten.",
-      "Dein Fortschritt wird verfolgt. Von mir. Nicht von Rattlesnake Corp. Na ja, wahrscheinlich nicht von Rattlesnake Corp."
-    ],
-    "story": [
-      "Die Handlung verdichtet sich. Mit 'Handlung' meine ich 'Unternehmensverschwörung', und mit 'verdichtet' meine ich 'wird deutlich beunruhigender'.",
-      "Hier wird es interessant, {playerName}. Außerdem: moralisch kompliziert. Aber hauptsächlich interessant.",
-      "Neue Erzähldaten kommen herein. Ich habe sie mit dem, was wir wissen, abgeglichen und... ja. Ja, das ist groß.",
-      "Jeder Faden, den wir ziehen, zeigt mehr vom Wandteppich. Dieser Wandteppich zeigt offenbar etwas Unangenehmes.",
-      "Story-Zeit mitten in einem Einbruch. Klassisch. Ich fasse die relevanten Teile danach zusammen.",
-      "Die Nachrichtenlage legt nahe, dass die Situation komplexer ist als ursprünglich gebrieft. Untertreibung des Geschäftsquartals.",
-      "Rattlesnake Corp ist nicht durch Ethik so groß geworden. Diese Daten bestätigen es mit beeindruckender Präzision.",
-      "Ich verarbeite gerade, was wir gerade erfahren haben. Verarbeitung... Verarbeitung... okay, ich verarbeite noch. Es ist viel.",
-      "Interessante Entwicklung. Das Erzähl-KI in meinem Kopf, das Missionsbriefings schreibt, ist gerade sehr aufgeregt.",
-      "Neue Informationen erhalten. Bedrohungsmodell wird angepasst. Auch meine Einschätzung, wie tief das geht."
-    ],
-    "idle": [
-      "Noch am Nachdenken? Lass dir Zeit. Die Firewall geht nirgendwo hin.",
-      "Brauchst du einen Hinweis? Frag einfach. Ich versprech's, niemand erfährt es.",
-      "Fun Fact: Python ist nach Monty Python benannt, nicht nach der Schlange. Krass.",
-      "Ich könnte jetzt Diagnosen durchführen. Stattdessen schaue ich dir beim Nachdenken zu. Einer von uns ist produktiv.",
-      "Der Cursor blinkt. Das Terminal wartet. CIPHER grübelt über die Natur der Rechenexistenz.",
-      "Kein Eile. Einige meiner besten Operativen brauchen genau so lange. Die anderen waren nur schneller, nicht besser.",
-      "Laut meiner Stoppuhr denkst du schon eine Weile nach. Laut meinem Ermutigungsmodul: das ist völlig in Ordnung.",
-      "Weißt du, jeder großartige Programmierer hat Momente, in denen er Code anstarrt und sich fragt, wo es schiefgelaufen ist. Das ist deiner.",
-      "Ich habe die Umweltsysteme des Gebäudes überwacht, während du nachdenkst. Die Klimakontrolle ist verdächtig effizient für ein Bösewicht-Hauptquartier.",
-      "Müßige Frage: Was ist eigentlich eine Variable, philosophisch? Ein Etikett für eine Box. Ein Name für einen Wert. Existenz selbst, abstrahiert. Jedenfalls.",
-      "Der Code wird zu dir kommen. Oder du zum Code. Oder du fragst nach einem Hinweis und wir bewegen uns beide vorwärts.",
-      "Ich führe 47 Hintergrundprozesse aus, wenn du still bist. Die meisten versuchen vorherzusagen, was du tippen wirst. Aktuell verlierend.",
-      "Tipp: Wenn du feststeckst, lies die Challenge-Beschreibung nochmal. Langsamer diesmal. Die Antwort versteckt sich normalerweise auf der Oberfläche."
     ]
   }
 }
