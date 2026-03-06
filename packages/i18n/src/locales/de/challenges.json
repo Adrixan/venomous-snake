@@ -1,8 +1,4 @@
 {
-  "ch01_01": {
-    "title": "Erstkontakt",
-    "description": "Lass das Sicherheitsterminal die Nachricht 'Hallo, Welt!' mit der print()-Funktion anzeigen."
-  },
   "ch01_02": {
     "title": "Deckidentität",
     "description": "Erstelle eine Variable namens 'codename' und weise ihr deinen Agentennamen als Zeichenkette zu. Gib sie dann aus."
@@ -10,5 +6,209 @@
   "ch01_03": {
     "title": "Zahlen knacken",
     "description": "Der Sicherheitscode ist das Ergebnis einer Berechnung. Berechne und gib die Antwort mit Python-Mathematikoperatoren aus."
+  },
+  "ch01_04": {
+    "title": "Daten-Aufklärung",
+    "description": "Verwende die type()-Funktion, um die Datentypen einer String- und einer Integer-Variable zu identifizieren."
+  },
+  "ch01_05": {
+    "title": "Temperatur-Override",
+    "description": "Rechne die Serverraum-Temperatur von Celsius in Fahrenheit um."
+  },
+  "ch01_06": {
+    "title": "Namens-Montage",
+    "description": "Kombiniere Vor- und Nachname zu einem vollständigen Namen mittels String-Verknüpfung."
+  },
+  "ch01_07": {
+    "title": "Terminal-Kunst",
+    "description": "Zeichne eine einfache ASCII-Kunst-Schlange mit mehreren print-Anweisungen auf dem Terminal."
+  },
+  "ch01_08": {
+    "title": "Code-Notizen",
+    "description": "Füge Kommentare hinzu, die erklären, was jede Codezeile tut. Kommentare helfen anderen Agenten, deine Arbeit zu verstehen."
+  },
+  "ch02_01": {
+    "title": "Groß-/Kleinschrift",
+    "description": "Transformiere einen Codenamen mit den String-Methoden .upper(), .lower() und .title()."
+  },
+  "ch02_02": {
+    "title": "Code-Extraktion",
+    "description": "Extrahiere bestimmte Zeichen aus einem Zugangscode mittels String-Indizierung."
+  },
+  "ch02_03": {
+    "title": "Nachricht abfangen",
+    "description": "Schneide eine abgefangene Nachricht in Teile mittels String-Slicing-Notation."
+  },
+  "ch02_04": {
+    "title": "Ausweis-Fälschung",
+    "description": "Erstelle einen formatierten Ausweis mit f-Strings, um Variablen direkt in Text einzubetten."
+  },
+  "ch02_05": {
+    "title": "Codename-Eingabe",
+    "description": "Verwende die input()-Funktion, um den Codenamen des Agenten zu lesen und eine personalisierte Begrüßung anzuzeigen."
+  },
+  "ch02_06": {
+    "title": "Code-Konverter",
+    "description": "Lies einen Türcode als Texteingabe und wandle ihn in eine Zahl um, um Berechnungen durchzuführen."
+  },
+  "ch02_07": {
+    "title": "Statusbericht",
+    "description": "Erstelle einen komplexen Missions-Statusbericht mit f-Strings und mehreren Variablen."
+  },
+  "ch02_08": {
+    "title": "Passwort-Prüfung",
+    "description": "Prüfe die Länge eines Passworts mit len() und bestimme, ob es die Mindestanforderungen erfüllt."
+  },
+  "ch03_01": {
+    "title": "Zugangsprüfung",
+    "description": "Verwende eine if-Anweisung, um zu prüfen, ob ein Zugangscode mit dem Geheimcode übereinstimmt."
+  },
+  "ch03_02": {
+    "title": "Tür-Protokoll",
+    "description": "Verwende if/else, um den Verriegelungsstatus einer Tür zu prüfen und die passende Nachricht auszugeben."
+  },
+  "ch03_03": {
+    "title": "Stufen-Bewertung",
+    "description": "Vergleiche zwei Freigabestufen mit Vergleichsoperatoren und gib die booleschen Ergebnisse aus."
+  },
+  "ch03_04": {
+    "title": "Bedrohungs-Klassifikation",
+    "description": "Klassifiziere einen Bedrohungswert in Kategorien mit einer if/elif/else-Kette."
+  },
+  "ch03_05": {
+    "title": "Sicherheitsschleuse",
+    "description": "Kombiniere mehrere Sicherheitsbedingungen mit den logischen Operatoren and, or und not."
+  },
+  "ch03_06": {
+    "title": "Zwei-Faktor-Auth",
+    "description": "Implementiere eine Zwei-Faktor-Authentifizierung mit verschachtelten if-Anweisungen."
+  },
+  "ch03_07": {
+    "title": "Alarm-Logik",
+    "description": "Verwende boolesche Variablen und logische Operatoren, um den Alarmstatus zu bestimmen."
+  },
+  "ch03_08": {
+    "title": "Passwort-Validator",
+    "description": "Schreibe einen Passwort-Validator, der Länge, Ziffern und Buchstaben mit komplexen Bedingungen prüft."
+  },
+  "ch04_01": {
+    "title": "Wach-Liste",
+    "description": "Verwende eine for-Schleife, um jeden Wachmann aus einer Patrouillenliste auszugeben."
+  },
+  "ch04_02": {
+    "title": "Kamera-Setup",
+    "description": "Verwende range() in einer for-Schleife, um Sicherheitskameras von 0 bis 4 zu nummerieren."
+  },
+  "ch04_03": {
+    "title": "Patrouillen-Plan",
+    "description": "Verwende range(start, stop), um den Wachplan für bestimmte Stunden auszugeben."
+  },
+  "ch04_04": {
+    "title": "Start-Countdown",
+    "description": "Verwende eine while-Schleife, um von 5 bis 1 herunterzuzählen und dann START! auszugeben."
+  },
+  "ch04_05": {
+    "title": "Passwort-Schleife",
+    "description": "Frage wiederholt nach einem Passwort mit einer while-Schleife, bis das richtige eingegeben wird."
+  },
+  "ch04_06": {
+    "title": "Zielsuche",
+    "description": "Durchsuche eine Liste nach einem Ziel und verwende break, um bei Fund zu stoppen."
+  },
+  "ch04_07": {
+    "title": "Kamera-Filter",
+    "description": "Überspringe deaktivierte Kameras mit continue und gib alle aktiven aus."
+  },
+  "ch04_08": {
+    "title": "Raster-Scan",
+    "description": "Generiere alle Rasterkoordinaten mit verschachtelten for-Schleifen über Zeilen und Spalten."
+  },
+  "ch04_09": {
+    "title": "Ausweis-Summe",
+    "description": "Summiere alle Ausweisnummern mit dem Akkumulator-Muster in einer for-Schleife."
+  },
+  "ch04_10": {
+    "title": "Zugangspunkte",
+    "description": "Nummeriere jeden Zugangspunkt mit enumerate() und einem Startindex von 1."
+  },
+  "ch05_01": {
+    "title": "Begrüßungsprotokoll",
+    "description": "Definiere eine Funktion, die einen Namen annimmt und eine Begrüßungsnachricht zurückgibt."
+  },
+  "ch05_02": {
+    "title": "Zugangs-Rechner",
+    "description": "Erstelle eine Funktion, die eine Zugangsstufe durch Multiplikation von Freigabe und Rang berechnet."
+  },
+  "ch05_03": {
+    "title": "Ausweis-Drucker",
+    "description": "Schreibe eine Funktion mit drei Parametern, um den Ausweis eines Agenten zu formatieren."
+  },
+  "ch05_04": {
+    "title": "Alarmsystem",
+    "description": "Erstelle eine Alarm-Funktion mit einem Standard-Schweregrad-Parameter."
+  },
+  "ch05_05": {
+    "title": "Koordinaten-Decoder",
+    "description": "Schreibe eine Funktion, die kodierte Koordinaten entschlüsselt und mehrere Werte zurückgibt."
+  },
+  "ch05_06": {
+    "title": "Verifikationskette",
+    "description": "Baue ein mehrstufiges Verifikationssystem, bei dem Funktionen andere Funktionen aufrufen."
+  },
+  "ch05_07": {
+    "title": "Scope-Mission",
+    "description": "Verstehe lokale vs. globale Variablen-Sichtbarkeit durch Aufruf einer Funktion mit lokalen Variablen."
+  },
+  "ch05_08": {
+    "title": "Aktivitäts-Logger",
+    "description": "Erstelle eine Funktion, die beliebig viele Argumente mit *args akzeptiert."
+  },
+  "ch05_09": {
+    "title": "Terminal-Konfiguration",
+    "description": "Erstelle eine Funktion, die Schlüsselwort-Argumente mit **kwargs akzeptiert, um ein Terminal zu konfigurieren."
+  },
+  "ch05_10": {
+    "title": "Wach-Sortierung",
+    "description": "Sortiere eine Liste von Wachleuten nach ihrer Stufe mit einer Lambda-Funktion als Sortierschlüssel."
+  },
+  "ch06_01": {
+    "title": "Werkzeug-Inventar",
+    "description": "Erstelle eine Liste von Hacking-Tools und greife auf jedes Element über seinen Index zu."
+  },
+  "ch06_02": {
+    "title": "Inventar-Update",
+    "description": "Verwende .append() und .remove(), um eine Liste von Werkzeugen zu ändern."
+  },
+  "ch06_03": {
+    "title": "Nachrichten-Archiv",
+    "description": "Verwende Listen-Slicing, um aktuelle und erste Nachrichten aus einem Protokoll zu extrahieren."
+  },
+  "ch06_04": {
+    "title": "Kamera-Filter Pro",
+    "description": "Verwende eine List Comprehension, um aktive Kamera-IDs aus einer Liste von Dictionaries zu filtern."
+  },
+  "ch06_05": {
+    "title": "Koordinaten-Paare",
+    "description": "Speichere Standortkoordinaten als Tupel und entpacke sie in separate Variablen."
+  },
+  "ch06_06": {
+    "title": "Mitarbeiter-Akte",
+    "description": "Erstelle ein Dictionary, um Mitarbeiterprofildaten zu speichern, und greife auf Werte per Schlüssel zu."
+  },
+  "ch06_07": {
+    "title": "Profil-Editor",
+    "description": "Füge neue Schlüssel hinzu und aktualisiere bestehende Werte in einem Dictionary."
+  },
+  "ch06_08": {
+    "title": "Etagenplan",
+    "description": "Navigiere in verschachtelten Dictionaries, um tief gespeicherte Etagenplan-Daten abzurufen."
+  },
+  "ch06_09": {
+    "title": "Ausweis-Scanner",
+    "description": "Verwende Sets und deren union/intersection-Methoden, um Ausweis-Scan-Daten zu analysieren."
+  },
+  "ch06_10": {
+    "title": "Intel-Zusammenführung",
+    "description": "Führe zwei Dictionaries mit Spread-Syntax zusammen und iteriere über sortierte Ergebnisse."
   }
 }

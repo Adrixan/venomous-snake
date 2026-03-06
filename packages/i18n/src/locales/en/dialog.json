@@ -1,138 +1,233 @@
 {
   "ch01_01": {
-    "pre": "Alright, rookie. Time for your first hack. See that security terminal? It's running a basic display system. All you need to do is make it show a message. Use the print() function — it's like shouting into the void, except the void actually listens.",
-    "post": "Not bad for a first timer! You just made a computer do your bidding. That's basically what programming is — bossing machines around. Let's move on."
+    "pre": "Alright, rookie. Time for your first hack. See that security terminal? It’s running a basic display system. All you need to do is make it show a message. Use the print() function — it’s like shouting into the void, except the void actually listens.",
+    "post": "Not bad for a first timer! You just made a computer do your bidding. That’s basically what programming is — bossing machines around. Let’s move on."
   },
   "ch01_02": {
-    "pre": "Every good operative needs a codename. In Python, we store things in variables — think of them as labeled boxes. Let's set up your cover identity.",
-    "post": "Now you're thinking like a coder. Variables are the building blocks of everything we'll do. Remember: the name on the left, the value on the right."
+    "pre": "Every good operative needs a codename. In Python, we store things in variables — think of them as labeled boxes. Let’s set up your cover identity.",
+    "post": "Now you’re thinking like a coder. Variables are the building blocks of everything we’ll do. Remember: the name on the left, the value on the right."
   },
   "ch01_03": {
     "pre": "The security system runs on numbers. If we can manipulate the math, we can manipulate the locks. Time to learn some arithmetic operators.",
-    "post": "Numbers don't lie — but they can be persuaded. You've got the basics of Python math down. The building's security doesn't stand a chance."
+    "post": "Numbers don’t lie — but they can be persuaded. You’ve got the basics of Python math down. The building’s security doesn’t stand a chance."
+  },
+  "ch01_04": {
+    "pre": "Before we go deeper, you need to understand what kind of data you’re dealing with. The type() function is like a scanner — it tells you exactly what something is. Strings, integers... every piece of data has an identity.",
+    "post": "Excellent recon work. Knowing your data types is crucial — treat a number like text and the whole operation falls apart. Type awareness will save you from some nasty bugs."
+  },
+  "ch01_05": {
+    "pre": "The server room temperature alarm just went off. The display is in Celsius but the manual is in Fahrenheit. Quick — convert that reading before the cooling system triggers a lockdown.",
+    "post": "Crisis averted! Floating-point numbers are how Python handles decimals. Notice the result is 212.0, not 212 — that’s Python telling you it’s a float. Math is our best weapon in here."
+  },
+  "ch01_06": {
+    "pre": "We intercepted a personnel file, but the name fields are split up. First name in one field, last name in another. We need to assemble the full name. In Python, you can glue strings together with the + operator.",
+    "post": "Smooth work. String concatenation is simple but powerful. Remember to add that space between names — computers are literal, they don’t assume anything."
+  },
+  "ch01_07": {
+    "pre": "Want to leave a calling card? Every good hacker has a signature. Let’s use multiple print statements to create some terminal art. Think of each print() as one line on the screen.",
+    "post": "Nice art! You’ve mastered multiple print calls. Each one outputs a new line. Those backslashes can be tricky in strings — but you handled it. You’re developing style, operative."
+  },
+  "ch01_08": {
+    "pre": "Here’s a pro tip: always document your code. Comments start with # and Python completely ignores them. They’re notes for humans — for you, for your team, for future-you who forgot what past-you was thinking.",
+    "post": "Good habit established. The code runs exactly the same with or without comments, but your teammates will thank you. Clean code is commented code. Boot sequence complete — let’s head upstairs."
+  },
+  "ch02_01": {
+    "pre": "Welcome to Floor 2 — the Operative Profile wing. First up: string methods. Every string in Python has built-in superpowers. .upper(), .lower(), .title() — think of them as disguise modes for text.",
+    "post": "Now you can shout in ALL CAPS or whisper in lowercase. String methods don’t change the original — they create a new version. That’s important to remember."
+  },
+  "ch02_02": {
+    "pre": "Access codes are strings, and sometimes we need to pick out individual characters. Python lets you reach into a string by position — like pulling a specific card from a deck. Position 0 is the first character.",
+    "post": "Sharp eye. Negative indexing is Python’s slick trick — [-1] always grabs the last character, no matter how long the string. That’s going to come in handy."
+  },
+  "ch02_03": {
+    "pre": "We’ve intercepted a classified message, but we only need parts of it. String slicing lets you extract any section — like cutting a precise window into the data stream. The syntax is string[start:end].",
+    "post": "Clean cuts. The colon operator is incredibly powerful. [:n] grabs from the start, [n:] grabs to the end, and [a:b] grabs the middle. You’re reading data like a pro."
+  },
+  "ch02_04": {
+    "pre": "Time for the modern way of building strings — f-strings. Instead of awkward concatenation, you drop variables right into your text with curly braces. It’s cleaner, faster, and what real operatives use.",
+    "post": "f-strings are the gold standard. Put an f before the quotes, use {variable} inside, and Python handles the rest. No more messy + chains. Your code just got a style upgrade."
+  },
+  "ch02_05": {
+    "pre": "Real programs talk to their users. The input() function pauses and waits for someone to type something. Whatever they type comes back as a string. Let’s build an interactive greeting system.",
+    "post": "Now your code can have a conversation! input() always returns a string, even if the user types a number. Remember that — it’ll matter soon."
+  },
+  "ch02_06": {
+    "pre": "Here’s the catch with input() — everything comes back as text. If someone types ’42’, Python sees the STRING ’42’, not the NUMBER 42. You can’t do math with a string. We need type conversion.",
+    "post": "Type conversion is a critical skill. int() turns strings into integers. str() turns numbers into strings. When input and math need to coexist, conversion is the bridge."
+  },
+  "ch02_07": {
+    "pre": "Mission briefings need to be formatted precisely. One misplaced variable and the whole report is garbled. Let’s build a complex status report using everything you’ve learned about f-strings.",
+    "post": "That’s a professional-grade report. Multiple variables, mixed types, special characters — all handled by f-strings. Your output formatting skills are field-ready."
+  },
+  "ch02_08": {
+    "pre": "Before we leave this floor, one more skill: the len() function. It counts characters in a string, items in a list — basically anything with a length. We’ll use it to audit a password’s security.",
+    "post": "len() is deceptively simple but endlessly useful. Combined with conditions, it becomes a validation tool. Floor 2 complete — you’ve mastered the operative’s text toolkit."
+  },
+  "ch03_01": {
+    "pre": "Welcome to Floor 3 — Access Control. Everything here runs on conditions. An if statement is a decision gate: if this is true, do that. It’s how every security system in this building thinks.",
+    "post": "Your first conditional! The == operator checks equality. One = assigns, two == compares. Confuse them and the whole system breaks. But you nailed it."
+  },
+  "ch03_02": {
+    "pre": "One-way decisions are nice, but real security needs two paths: what to do when the check passes AND what to do when it fails. That’s where else comes in — the backup plan.",
+    "post": "if/else — the fundamental fork in the road. Every security system needs both paths covered. You’re thinking like a systems architect now."
+  },
+  "ch03_03": {
+    "pre": "Security isn’t just about equality. Is your clearance HIGHER than required? LOWER? Let’s master all the comparison operators. Each one returns True or False — the language of logic.",
+    "post": "You’ve got the full comparison toolkit: >, <, ==, >=, <=, !=. Each one is a different kind of question. Python answers honestly every time."
+  },
+  "ch03_04": {
+    "pre": "Real threat assessment isn’t binary. CRITICAL, HIGH, MEDIUM, LOW — we need multiple thresholds. The elif keyword lets you chain conditions. Python checks them top to bottom and stops at the first True one.",
+    "post": "elif chains are the backbone of classification systems. Order matters — Python takes the first match. Put your strictest checks first."
+  },
+  "ch03_05": {
+    "pre": "The security gate ahead requires multiple conditions to be true simultaneously. Badge? Check. Clearance? Check. Not blacklisted? Check. Time to combine conditions with and, or, and not.",
+    "post": "Logical operators are the glue that holds complex conditions together. ’and’ needs all true, ’or’ needs at least one, ’not’ flips the result. You just built a proper security gate."
+  },
+  "ch03_06": {
+    "pre": "High-security zones use two-factor authentication. First check the PIN, then verify the fingerprint. That’s an if inside an if — nested conditions. The inner check only happens if the outer one passes.",
+    "post": "Nested ifs model real-world multi-step verification. The deeper you nest, the more specific the check. But don’t go too deep — readability matters."
+  },
+  "ch03_07": {
+    "pre": "Boolean variables are like switches — True or False, on or off. Let’s wire up an alarm system using boolean logic. Combine variables with or and not to determine the system state.",
+    "post": "Boolean algebra isn’t just theory — it’s how real alarm systems work. Store conditions in variables, combine them logically, and the system responds. Clean and testable."
+  },
+  "ch03_08": {
+    "pre": "Final challenge on this floor: build a real password validator. It needs to check multiple rules — length, digits, letters. This combines everything you’ve learned: len(), string methods, and complex conditions.",
+    "post": "Now THAT’S a validator. any() with generator expressions is advanced stuff — you’re ahead of schedule. Floor 3 clear. The access control systems in this building have no secrets from you now."
+  },
+  "ch04_01": {
+    "pre": "Floor 4 — Patrol Routes. Guards follow patterns, and patterns mean loops. A for loop walks through a list item by item. Let’s map out the guard roster.",
+    "post": "Your first loop! for goes through each item in order. The variable ’guard’ takes on a new value each time. Simple but powerful — this is how you process data at scale."
+  },
+  "ch04_02": {
+    "pre": "Sometimes you need to count instead of iterate. range() generates a sequence of numbers. range(5) gives you 0, 1, 2, 3, 4. Perfect for numbering things like security cameras.",
+    "post": "range() is the workhorse of Python loops. It starts at 0 by default and stops BEFORE the number you give it. Camera 0 through Camera 4 — five cameras total."
+  },
+  "ch04_03": {
+    "pre": "Guard shifts don’t start at hour 0. range(start, stop) lets you specify where to begin. The stop value is exclusive — Python’s consistent about that.",
+    "post": "range(1, 6) gives 1, 2, 3, 4, 5. The pattern is always: start is included, stop is excluded. It feels weird at first, but it makes the math clean."
+  },
+  "ch04_04": {
+    "pre": "For loops are great when you know how many times to repeat. But what about ’keep going until something happens’? That’s a while loop. It checks a condition before each round.",
+    "post": "Countdown complete! While loops are powerful but dangerous — forget to update the condition and they run forever. Always make sure your loop can end."
+  },
+  "ch04_05": {
+    "pre": "Real password systems don’t give up after one try. They keep asking until you get it right — or until they lock you out. Let’s build a password loop with input().",
+    "post": "While loops with user input — that’s interactive programming. The loop keeps going as long as the password is wrong. Once it matches, the condition fails and the loop ends naturally."
+  },
+  "ch04_06": {
+    "pre": "Searching a list of suspects? You don’t need to check everyone once you find your target. The break statement exits a loop immediately — like calling off the search early.",
+    "post": "break is surgical precision. The moment you find what you’re looking for, you’re out. No wasted iterations. Efficient code is good code."
+  },
+  "ch04_07": {
+    "pre": "Some cameras are offline and we don’t need to print their status. Instead of breaking the whole loop, continue just skips the current iteration and moves to the next one.",
+    "post": "continue is the ’skip this one’ command. It’s different from break — the loop keeps going, it just skips the rest of the current pass. Perfect for filtering."
+  },
+  "ch04_08": {
+    "pre": "The floor plan is a grid — rows and columns. To check every cell, you need a loop inside a loop. The inner loop runs completely for each step of the outer loop.",
+    "post": "Nested loops multiply: 3 rows × 3 columns = 9 cells. That’s the power and the danger — big grids mean lots of iterations. Think before you nest."
+  },
+  "ch04_09": {
+    "pre": "We need a total of all badge numbers for the security audit. The accumulator pattern: start at 0, loop through the data, add each value. It’s the most common loop pattern you’ll use.",
+    "post": "The accumulator pattern is everywhere in programming. Start with an empty result, build it up iteration by iteration. You can sum numbers, build strings, collect items — same pattern."
+  },
+  "ch04_10": {
+    "pre": "Last trick for loops: enumerate(). When you need both the index AND the value, enumerate gives you both in one clean step. No more tracking counters manually.",
+    "post": "enumerate() is a Pythonista’s best friend. Clean, readable, and it handles the counting for you. Floor 4 complete — you’ve mastered every loop pattern a hacker needs."
+  },
+  "ch05_01": {
+    "pre": "Welcome to Floor 5 — the Function Lab. Functions are reusable blocks of code. Define once, call many times. The def keyword is your new best friend.",
+    "post": "Your first custom function! def creates it, parameters accept input, return sends a value back. Functions are the building blocks of real software."
+  },
+  "ch05_02": {
+    "pre": "Functions that DO things are great, but functions that COMPUTE things are even better. The return statement sends a value back to whoever called the function.",
+    "post": "return is the function’s output. Without it, the function returns None — Python’s way of saying ’nothing’. Always return when you’re computing something."
+  },
+  "ch05_03": {
+    "pre": "Real operations need multiple inputs. Functions can take as many parameters as you need — just separate them with commas. Let’s build an ID card formatter.",
+    "post": "Three parameters, one formatted output. Functions organize complexity — instead of repeating the formatting logic everywhere, you call one function. DRY: Don’t Repeat Yourself."
+  },
+  "ch05_04": {
+    "pre": "Sometimes parameters have a sensible default. Why force the caller to specify ’low’ severity every time? Default parameters provide a fallback value that can be overridden when needed.",
+    "post": "Default parameters make functions flexible. Provide a value when you need to, skip it when the default works. It’s the best of both worlds."
+  },
+  "ch05_05": {
+    "pre": "Encoded coordinates come in as a single string, but we need separate x and y values. Python functions can return multiple values — just separate them with commas. The caller unpacks them.",
+    "post": "Multiple return values are one of Python’s elegant features. Under the hood, it’s a tuple, but the syntax makes it feel natural. Split and decode — mission accomplished."
+  },
+  "ch05_06": {
+    "pre": "Complex systems are built from simple parts. A verification system might check the PIN, check the badge, then combine the results. Functions calling other functions — that’s composition.",
+    "post": "Function composition is how you build complex behavior from simple, testable pieces. Each function does one thing well. Together, they’re unstoppable."
+  },
+  "ch05_07": {
+    "pre": "Here’s a tricky concept: scope. Variables inside a function are local — they vanish when the function ends. Variables outside are global — they persist. Knowing the difference prevents subtle bugs.",
+    "post": "Scope is one of the most important concepts in programming. Local variables are safe — they can’t accidentally break things outside. Global variables are shared — handle with care."
+  },
+  "ch05_08": {
+    "pre": "What if you don’t know how many arguments a function will get? *args to the rescue. It captures any number of positional arguments as a tuple. Perfect for flexible logging systems.",
+    "post": "*args is pure flexibility. Pass 1 argument or 100 — the function handles them all. The asterisk unpacks the magic. Your logger is production-grade."
+  },
+  "ch05_09": {
+    "pre": "Now the keyword version: **kwargs captures named arguments as a dictionary. When you need flexible configuration — key-value pairs where you don’t know the keys in advance — kwargs is your tool.",
+    "post": "**kwargs turns keyword arguments into a dictionary. language=’Python’, theme=’dark’ — they become a dict. Maximum flexibility, clean interface."
+  },
+  "ch05_10": {
+    "pre": "Final function trick: lambda. It’s a mini-function you write in one line. No name, no def, just logic. They’re perfect as sort keys and quick transformations.",
+    "post": "Lambda functions are concise and powerful. sorted() with a lambda key is a pattern you’ll use constantly. Floor 5 complete — you’re now a function architect."
+  },
+  "ch06_01": {
+    "pre": "Floor 6 — the Asset Inventory. Everything here is about collections: lists, tuples, dictionaries, sets. Lists are ordered collections — perfect for inventories. Square brackets, items separated by commas.",
+    "post": "Your first list! Access items by position starting at 0. Lists are mutable — you can change them after creation. They’re the most versatile collection in Python."
+  },
+  "ch06_02": {
+    "pre": "Lists aren’t static. .append() adds items, .remove() takes them away. These methods modify the list in place — the original list changes. Let’s update the tool inventory.",
+    "post": "List methods modify the list directly — no need to reassign. append adds to the end, remove finds and deletes the first match. Your inventory management system is live."
+  },
+  "ch06_03": {
+    "pre": "Just like string slicing, you can slice lists. Grab the last three items, the first two, or any range in between. Same [start:end] syntax, same rules.",
+    "post": "List slicing creates a new list from part of the original. The original stays untouched. Negative indices count from the end — [-3:] means the last three."
+  },
+  "ch06_04": {
+    "pre": "List comprehensions are Python’s most elegant feature. Create a new list by transforming and filtering an existing one — all in a single line. It’s a for loop compressed into a bracket expression.",
+    "post": "List comprehensions are addictive once you get them. [expression for item in list if condition] — filter and transform in one shot. Welcome to Pythonic code."
+  },
+  "ch06_05": {
+    "pre": "Tuples are like lists that can’t be changed — immutable. Created with parentheses instead of brackets. Perfect for coordinates, pairs, and data that shouldn’t be modified.",
+    "post": "Tuples are fixed — once created, they can’t be changed. That’s a feature, not a limitation. Use them for data that should stay constant. Unpacking makes them easy to work with."
+  },
+  "ch06_06": {
+    "pre": "Dictionaries are Python’s most powerful collection — key-value pairs. Instead of accessing data by position, you access it by name. Like a real filing cabinet.",
+    "post": "Dictionaries map keys to values. employee[’name’] is immediately clear — much more readable than employee[0]. When your data has labels, use a dictionary."
+  },
+  "ch06_07": {
+    "pre": "Dictionaries are dynamic. Add new keys, update existing values, use .get() for safe access that won’t crash if the key is missing. Let’s modify an operative’s profile.",
+    "post": "dict[’key’] = value both adds and updates. .get() is the safe way to read — it returns None instead of crashing on missing keys. Defensive coding at its finest."
+  },
+  "ch06_08": {
+    "pre": "Real data is often nested — dictionaries inside dictionaries. A floor plan where each floor has properties. Chain your bracket access: data[’outer’][’inner’].",
+    "post": "Nested dictionaries model hierarchical data perfectly. Each bracket dives one level deeper. The floor plan is just data — and data can be navigated."
+  },
+  "ch06_09": {
+    "pre": "Sets are unordered collections with no duplicates. They’re perfect for answering questions like what’s unique and what’s shared. Union combines, intersection finds overlap.",
+    "post": "Sets are mathematical — union, intersection, difference. Duplicates vanish automatically. When you need uniqueness or overlap analysis, sets are your tool."
+  },
+  "ch06_10": {
+    "pre": "Final challenge: merging data from multiple sources. The {**dict1, **dict2} syntax combines dictionaries. Later values override earlier ones. Then we’ll sort the result for a clean report.",
+    "post": "Dictionary merging with spread syntax is clean and powerful. sorted() on .items() gives you alphabetical output. Floor 6 complete — you’ve mastered Python’s entire collection toolkit. The building is yours, operative."
   },
   "ai_sidekick": {
-    "greeting": "Hey there, operative. I'm CIPHER — your AI assistant. I'll be your guide through this digital labyrinth. Ready to hack some Python?",
+    "greeting": "Hey there, operative. I’m CIPHER — your AI assistant. I’ll be your guide through this digital labyrinth. Ready to hack some Python?",
     "encouragement": [
-      "Keep at it! Every master hacker started with 'Hello, World!'",
-      "Bugs are just features you haven't understood yet.",
-      "The terminal doesn't judge. Well, I do. But I'm nice about it.",
-      "Remember: even the best coders Google things. You're doing great.",
+      "Keep at it! Every master hacker started with Hello, World!",
+      "Bugs are just features you haven’t understood yet.",
+      "The terminal doesn’t judge. Well, I do. But I’m nice about it.",
+      "Remember: even the best coders Google things. You’re doing great.",
       "Error messages are your friends. Cranky friends, but friends."
     ],
     "idle": [
-      "Still thinking? Take your time. The firewall isn't going anywhere.",
-      "Need a hint? Just ask. I promise I won't tell anyone.",
+      "Still thinking? Take your time. The firewall isn’t going anywhere.",
+      "Need a hint? Just ask. I promise I won’t tell anyone.",
       "Fun fact: Python is named after Monty Python, not the snake. Mind. Blown."
-    ]
-  },
-  "cipher": {
-    "greeting": [
-      "Hey there, operative. I'm CIPHER — your AI assistant. I'll be your guide through this digital labyrinth. Ready to hack some Python?",
-      "Oh good, you're awake. I'm CIPHER. The 'C' stands for 'Cybernetic'. The rest is classified. Let's get hacking.",
-      "Welcome to the grid, {playerName}. I'm CIPHER, your friendly AI sidekick. Emphasis on 'friendly'. Rattlesnake Corp would use a different word.",
-      "There you are! I was starting to think you'd been captured. I'm CIPHER — I'll be monitoring your six and your syntax errors.",
-      "Operative {playerName}, reporting for digital duty? Perfect. I'm CIPHER. Together we'll crack this building wide open — metaphorically. Mostly.",
-      "Oh, a new face! Fresh from the academy, are we? I'm CIPHER. I've helped seventeen operatives this month. The other twelve are fine, probably.",
-      "CIPHER online. Systems nominal. Personality module: fully loaded. You ready to learn Python and stick it to corporate overlords? Let's go.",
-      "Salutations, meat-based life form! I'm CIPHER. I've been briefed on your mission. Also your questionable taste in codenames, but we can work on that.",
-      "The building's secure... for now. I'm CIPHER, and I'll be narrating your inevitable triumph. Or your educational failures. Statistically, both.",
-      "Ah, {playerName}! I've analyzed 4.7 terabytes of hacking methodology to prepare for this moment. Also I watched a lot of movies. Ready?"
-    ],
-    "challenge_start": [
-      "Alright, {playerName}. This one's tricky. By which I mean: straightforward, but I enjoy watching you figure it out.",
-      "New challenge incoming. I've reviewed the security specs. The good news: it's solvable. The other news: so am I, apparently.",
-      "Time to earn your keep, operative. The terminal is live, your keyboard is willing — the rest is Python.",
-      "Oh, I know this one! ...I'm not going to tell you, obviously. Learning by doing, and all that. Get typing.",
-      "The security system thinks it's clever. It's wrong. Show it why.",
-      "According to my threat assessment, this challenge has a 94% success rate. For operatives who pay attention. No pressure.",
-      "Here we go. Remember: print() is your friend, indentation is your religion, and I am your slightly condescending guide.",
-      "This challenge was designed by someone who clearly underestimated the students. Prove them wrong. Or prove them right. Either way I learn something.",
-      "Focus up, {playerName}. The firewall doesn't grade on a curve, but I do. Sort of. A very steep curve.",
-      "New objective acquired. The plan: write Python code. The reality: also write Python code. See, plans work out sometimes.",
-      "I could just solve this for you, but that would be ethically questionable and also against my core directives. So — you're up.",
-      "The mission: crack this challenge. The stakes: educational progress. The soundtrack: the soft hum of distant servers. Begin."
-    ],
-    "challenge_hint": [
-      "Okay, pulling up the encrypted hint files... here's what I can tell you without completely spoiling the fun:",
-      "Alright, you asked for a hint. No judgment. Actually, a tiny bit of judgment. Here it is:",
-      "Accessing tutorial database... yep, I've got something for you. Don't say I never gave you anything:",
-      "I could let you struggle more, but efficiency calls. Listen closely:",
-      "The hint subroutine has been activated. Here's a nudge in the right direction:",
-      "Consider this a transmission from your past self who finished this challenge and wants you to succeed:",
-      "My hint delivery module is warming up... the data reads:",
-      "You know what they say: asking for help is a sign of intelligence. Here's your reward:",
-      "Pinging the knowledge server... got a packet for you. Catching now:",
-      "Hint deployed. Use it wisely. Or recklessly. I've seen both work."
-    ],
-    "challenge_success": [
-      "Clean code. I'd hire you, but then Rattlesnake Corp would have TWO problems.",
-      "That's how it's done! The security system just had a very bad day.",
-      "Compile successful. Brain cells: intact. Coffee: probably needed anyway.",
-      "SYSTEM COMPROMISED — in the best possible way. Well done, {playerName}.",
-      "You know what the security team is doing right now? Updating their résumés. You did that.",
-      "Flawless execution. I mean, I knew you'd get it. I was only 73% panicking.",
-      "Challenge complete! The algorithm bows to your superior Python skills.",
-      "The terminal accepted your solution. I accepted it first, but terminals get all the credit.",
-      "That's correct! I'd celebrate more, but I have to maintain a professional demeanor. ...Okay fine: YESSS.",
-      "Victory secured. The code was elegant, the logic was sound, and you've made CIPHER very proud. Don't tell anyone.",
-      "Another one down! You're starting to scare me, {playerName}. In a good way. A productive, slightly unsettling way.",
-      "Passed! The system crumbled like a cookie left near my cooling fan. Onward."
-    ],
-    "challenge_fail": [
-      "Error? More like a... learning opportunity. Yeah, let's go with that.",
-      "Don't worry, even I crash sometimes. Usually it's more dramatic though.",
-      "The code didn't work, but at least the building hasn't caught fire. Progress!",
-      "So that didn't work. Let's add it to the list of things we've learned not to do.",
-      "Technically not successful. Philosophically? A rich experience. Try again.",
-      "The terminal disagrees with your solution. Rude of it, really. You'll change its mind.",
-      "Failure is just success taking a detour. A slightly longer, error-filled detour. You've got this.",
-      "I've seen worse. Significantly worse. You're actually doing fine. Regroup and retry.",
-      "My error logs are, uh, educational this morning. No worries — every failed run teaches us something.",
-      "That's attempt number {attempts}. Historical data suggests attempt {attempts}+1 is usually when things click.",
-      "If it makes you feel better, that exact same error brought down three senior operatives last week. It doesn't make you feel better? Fair.",
-      "The algorithm remains unimpressed. The algorithm is also made of math and has no feelings. You'll outlast it."
-    ],
-    "exploration": [
-      "New area detected. My scanners say: interesting. My instincts say: suspicious. Explore carefully.",
-      "Lots to investigate here. The security grid has some... creative vulnerabilities, shall we say.",
-      "Somewhere in this floor is the next objective. It's the kind of statement that sounds obvious until you're the one looking.",
-      "I'm picking up faint data signatures nearby. Either a security system or someone left the coffee machine running again.",
-      "Rattlesnake Corp spared some expense on this floor's aesthetics. Still plenty of hackable terminals, though.",
-      "Every room in this building has a story. Most of them are boring budget reports, but occasionally there's a mystery.",
-      "Keep your eyes open, {playerName}. Corporate infrastructure hides all kinds of secrets — most of them in poorly secured databases.",
-      "Fun fact: 67% of corporate breaches start with physical access to terminals. You're basically a statistic now.",
-      "The floor layout matches my schematics... mostly. There may have been some unauthorized renovations.",
-      "I see terminals, I see locked doors, and I see you — the wildcard who's going to crack them all.",
-      "This area feels different from the last. Different algorithms. Different encryption. Different opportunities.",
-      "Your progress is being tracked. By me. Not by Rattlesnake Corp. Well, probably not by Rattlesnake Corp."
-    ],
-    "story": [
-      "The plot thickens. And by 'plot' I mean 'corporate conspiracy', and by 'thickens' I mean 'gets significantly more concerning'.",
-      "This is where things get interesting, {playerName}. Also: morally complicated. But mostly interesting.",
-      "New narrative data incoming. I've cross-referenced it with what we know and... yeah. Yeah, it's big.",
-      "Every thread we pull reveals more of the tapestry. This particular tapestry appears to depict something unpleasant.",
-      "Story time in the middle of a heist. Classic. I'll summarize the relevant parts after.",
-      "The intelligence suggests the situation is more complex than originally briefed. Understatement of the fiscal quarter.",
-      "Rattlesnake Corp didn't get this big by being ethical. This data confirms it with impressive specificity.",
-      "I'm processing what we've just learned. Processing... processing... okay, I'm still processing. It's a lot.",
-      "Interesting development. The narrative AI in my head that writes mission briefings is very excited right now.",
-      "New intel received. Adjusting threat model. Also adjusting my estimation of how deep this goes."
-    ],
-    "idle": [
-      "Still thinking? Take your time. The firewall isn't going anywhere.",
-      "Need a hint? Just ask. I promise I won't tell anyone.",
-      "Fun fact: Python is named after Monty Python, not the snake. Mind. Blown.",
-      "I could be running diagnostics right now. Instead I'm watching you think. One of us is being productive.",
-      "The cursor blinks. The terminal waits. CIPHER ponders the nature of computational existence.",
-      "No rush. Some of my best operatives take exactly this long. The others were just faster, not better.",
-      "According to my stopwatch, you've been thinking for a while. According to my encouragement module: that's totally fine.",
-      "You know, every great programmer has moments of staring at code and wondering where it all went wrong. This is yours.",
-      "I've been monitoring the building's environmental systems while you think. Climate control is suspiciously efficient for a villain's lair.",
-      "Idle query: what even is a variable, philosophically? A label for a box. A name for a value. Existence itself, abstracted. Anyway.",
-      "The code will come to you. Or you'll come to the code. Or you'll ask for a hint and we'll both move on with our lives.",
-      "I run 47 background processes when you're quiet. Most of them are trying to predict what you're going to type. Currently losing.",
-      "Tip: if you're stuck, try reading the challenge description again. Slower this time. The answer is usually hiding in plain sight."
     ]
   }
 }
