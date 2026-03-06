@@ -87,13 +87,15 @@ export class VirtualJoystick {
     // Activate for left 60% of screen
     if (pointer.x > this.scene.scale.width * 0.6) return;
 
+    const zoom = this.scene.cameras.main.zoom || 1;
     const margin = this.outerRadius + 10;
-    const { width, height } = this.scene.scale;
+    const vpWidth = this.scene.scale.width / zoom;
+    const vpHeight = this.scene.scale.height / zoom;
 
     this.active = true;
     this.pointerId = pointer.id;
-    this.baseX = Phaser.Math.Clamp(pointer.x, margin, width - margin);
-    this.baseY = Phaser.Math.Clamp(pointer.y, margin, height - margin);
+    this.baseX = Phaser.Math.Clamp(pointer.x / zoom, margin, vpWidth - margin);
+    this.baseY = Phaser.Math.Clamp(pointer.y / zoom, margin, vpHeight - margin);
     this.outputX = 0;
     this.outputY = 0;
 
@@ -107,8 +109,9 @@ export class VirtualJoystick {
   private onPointerMove(pointer: Phaser.Input.Pointer): void {
     if (!this.active || pointer.id !== this.pointerId) return;
 
-    const dx = pointer.x - this.baseX;
-    const dy = pointer.y - this.baseY;
+    const zoom = this.scene.cameras.main.zoom || 1;
+    const dx = pointer.x / zoom - this.baseX;
+    const dy = pointer.y / zoom - this.baseY;
     const dist = Math.sqrt(dx * dx + dy * dy);
     const maxDist = this.outerRadius - this.thumbRadius;
     const clampedDist = Math.min(dist, maxDist);
@@ -141,25 +144,143 @@ export class VirtualJoystick {
 
   private redrawOuter(x: number, y: number): void {
     this.outer.clear();
+
+    // Background fill
     this.outer.fillStyle(OUTER_COLOR, OUTER_ALPHA);
     this.outer.fillCircle(x, y, this.outerRadius);
+
+    // Outer ring border
     this.outer.lineStyle(2, OUTER_COLOR, RING_ALPHA);
     this.outer.strokeCircle(x, y, this.outerRadius);
+
+    // Inner concentric ring (HUD depth)
+    this.outer.lineStyle(1, OUTER_COLOR, RING_ALPHA * 0.35);
+    this.outer.strokeCircle(x, y, this.outerRadius * 0.55);
+
+    // Tick marks — 12 positions like a compass
+    const numTicks = 12;
+    for (let i = 0; i < numTicks; i++) {
+      const angle = (i / numTicks) * Math.PI * 2;
+      const isCardinal = i % 3 === 0;
+      const tickLen = isCardinal ? 10 : 5;
+      const tickAlpha = isCardinal ? RING_ALPHA : RING_ALPHA * 0.55;
+      const tickWidth = isCardinal ? 2 : 1;
+      const innerR = this.outerRadius - tickLen;
+      this.outer.lineStyle(tickWidth, OUTER_COLOR, tickAlpha);
+      this.outer.lineBetween(
+        x + Math.cos(angle) * innerR,
+        y + Math.sin(angle) * innerR,
+        x + Math.cos(angle) * this.outerRadius,
+        y + Math.sin(angle) * this.outerRadius,
+      );
+    }
+
+    // Crosshair through centre
+    const crossR = 10;
+    this.outer.lineStyle(1, OUTER_COLOR, RING_ALPHA * 0.5);
+    this.outer.lineBetween(x - crossR, y, x + crossR, y);
+    this.outer.lineBetween(x, y - crossR, x, y + crossR);
   }
 
   private redrawThumb(x: number, y: number): void {
     this.thumb.clear();
-    this.thumb.fillStyle(THUMB_COLOR, THUMB_ALPHA);
+
+    // Glow circle behind diamond
+    this.thumb.fillStyle(THUMB_COLOR, THUMB_ALPHA * 0.4);
     this.thumb.fillCircle(x, y, this.thumbRadius);
+
+    // Diamond shape (two triangles)
+    const d = this.thumbRadius * 0.72;
+    this.thumb.fillStyle(THUMB_COLOR, THUMB_ALPHA);
+    this.thumb.fillTriangle(x, y - d, x + d, y, x - d, y); // upper half
+    this.thumb.fillTriangle(x, y + d, x - d, y, x + d, y); // lower half
+
+    // Diamond outline
+    this.thumb.lineStyle(2, THUMB_COLOR, 1.0);
+    this.thumb.beginPath();
+    this.thumb.moveTo(x, y - d);
+    this.thumb.lineTo(x + d, y);
+    this.thumb.lineTo(x, y + d);
+    this.thumb.lineTo(x - d, y);
+    this.thumb.closePath();
+    this.thumb.strokePath();
+
+    // Centre dot
+    this.thumb.fillStyle(0xffffff, 0.9);
+    this.thumb.fillCircle(x, y, 3);
   }
 
   private drawGhost(): void {
-    const { height } = this.scene.scale;
+    const zoom = this.scene.cameras.main.zoom || 1;
+    const vpHeight = this.scene.scale.height / zoom;
     const gx = this.outerRadius + 20;
-    const gy = height - this.outerRadius - 20;
+    const gy = vpHeight - this.outerRadius - 20;
     this.ghost.clear();
+
+    // Main ring
     this.ghost.lineStyle(2, OUTER_COLOR, GHOST_ALPHA);
     this.ghost.strokeCircle(gx, gy, this.outerRadius);
+
+    // Inner ring
+    this.ghost.lineStyle(1, OUTER_COLOR, GHOST_ALPHA * 0.5);
+    this.ghost.strokeCircle(gx, gy, this.outerRadius * 0.55);
+
+    // Tick marks (ghost — slightly more transparent)
+    const numTicks = 12;
+    for (let i = 0; i < numTicks; i++) {
+      const angle = (i / numTicks) * Math.PI * 2;
+      const isCardinal = i % 3 === 0;
+      const tickLen = isCardinal ? 8 : 4;
+      const tickAlpha = Math.min(isCardinal ? GHOST_ALPHA * 1.4 : GHOST_ALPHA * 0.8, 1);
+      const innerR = this.outerRadius - tickLen;
+      this.ghost.lineStyle(isCardinal ? 2 : 1, OUTER_COLOR, tickAlpha);
+      this.ghost.lineBetween(
+        gx + Math.cos(angle) * innerR,
+        gy + Math.sin(angle) * innerR,
+        gx + Math.cos(angle) * this.outerRadius,
+        gy + Math.sin(angle) * this.outerRadius,
+      );
+    }
+
+    // Corner HUD bracket decorations
+    const br = this.outerRadius + 6;
+    const bLen = 10;
+    this.ghost.lineStyle(2, OUTER_COLOR, Math.min(GHOST_ALPHA * 1.6, 1));
+
+    // Top-left
+    this.ghost.beginPath();
+    this.ghost.moveTo(gx - br, gy - br + bLen);
+    this.ghost.lineTo(gx - br, gy - br);
+    this.ghost.lineTo(gx - br + bLen, gy - br);
+    this.ghost.strokePath();
+
+    // Top-right
+    this.ghost.beginPath();
+    this.ghost.moveTo(gx + br - bLen, gy - br);
+    this.ghost.lineTo(gx + br, gy - br);
+    this.ghost.lineTo(gx + br, gy - br + bLen);
+    this.ghost.strokePath();
+
+    // Bottom-right
+    this.ghost.beginPath();
+    this.ghost.moveTo(gx + br, gy + br - bLen);
+    this.ghost.lineTo(gx + br, gy + br);
+    this.ghost.lineTo(gx + br - bLen, gy + br);
+    this.ghost.strokePath();
+
+    // Bottom-left
+    this.ghost.beginPath();
+    this.ghost.moveTo(gx - br + bLen, gy + br);
+    this.ghost.lineTo(gx - br, gy + br);
+    this.ghost.lineTo(gx - br, gy + br - bLen);
+    this.ghost.strokePath();
+
+    // Centre crosshair
+    const crossR = 8;
+    this.ghost.lineStyle(1, OUTER_COLOR, GHOST_ALPHA * 0.8);
+    this.ghost.lineBetween(gx - crossR, gy, gx + crossR, gy);
+    this.ghost.lineBetween(gx, gy - crossR, gx, gy + crossR);
+
     this.ghost.setAlpha(1);
   }
 }

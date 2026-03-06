@@ -10,6 +10,7 @@ import { GameControllerProvider } from './hooks/useGameController';
 import { useSaveSystem } from './hooks/useSaveSystem';
 import { useGameAudio } from './hooks/useGameAudio';
 import { useStoryFlow } from './hooks/useStoryFlow';
+import { RotateDeviceOverlay } from './components/RotateDeviceOverlay';
 import { MockInterpreter } from '@venomous-snake/python-runtime';
 import {
   MainMenu,
@@ -73,6 +74,20 @@ export function App(): React.JSX.Element {
 
   // Wire audio to game events (always active once the component mounts)
   useGameAudio();
+
+  // Request landscape orientation lock (progressive enhancement)
+  useEffect(() => {
+    void (async () => {
+      try {
+        const orientation = screen.orientation as ScreenOrientation & {
+          lock?: (orientation: string) => Promise<void>;
+        };
+        await orientation.lock?.('landscape');
+      } catch {
+        // Silently fail — not all browsers support this
+      }
+    })();
+  }, []);
 
   const audioSettings: AudioSettingsPanelProps = {
     masterVolume,
@@ -316,6 +331,7 @@ export function App(): React.JSX.Element {
           <NewGameFlow onStart={handleStartGame} onBack={handleNewGameBack} />
           <PWAUpdateNotifier />
           <PWAInstallPrompt />
+          <RotateDeviceOverlay />
         </>
       );
     }
@@ -325,6 +341,7 @@ export function App(): React.JSX.Element {
           <SettingsPanel onBack={handleSettingsBack} audioSettings={audioSettings} />
           <PWAUpdateNotifier />
           <PWAInstallPrompt />
+          <RotateDeviceOverlay />
         </>
       );
     }
@@ -350,6 +367,7 @@ export function App(): React.JSX.Element {
         )}
         <PWAUpdateNotifier />
         <PWAInstallPrompt />
+        <RotateDeviceOverlay />
       </>
     );
   }
@@ -473,6 +491,7 @@ export function App(): React.JSX.Element {
           )}
         </div>
       </CRTEffect>
+      <RotateDeviceOverlay />
     </GameControllerProvider>
   );
 }

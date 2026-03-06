@@ -2,9 +2,8 @@ import Phaser from 'phaser';
 
 const BUTTON_COLOR = 0x00b4d8;
 const BUTTON_ALPHA = 0.8;
-const BUTTON_DEPTH = 100;
+const BUTTON_DEPTH = 300;
 const MARGIN = 24;
-const CORNER_RADIUS = 12;
 
 export class InteractButton {
   private readonly scene: Phaser.Scene;
@@ -24,8 +23,9 @@ export class InteractButton {
     this.scene = scene;
     this.size = size;
 
-    this.buttonX = scene.scale.width - MARGIN - size / 2;
-    this.buttonY = scene.scale.height - MARGIN - size / 2;
+    const zoom = scene.cameras.main.zoom || 1;
+    this.buttonX = scene.scale.width / zoom - MARGIN - size / 2;
+    this.buttonY = scene.scale.height / zoom - MARGIN - size / 2;
 
     this.bg = scene.add.graphics();
     this.bg.setScrollFactor(0);
@@ -37,6 +37,8 @@ export class InteractButton {
       fontFamily: 'monospace',
       fontSize: '28px',
       color: '#ffffff',
+      stroke: '#00b4d8',
+      strokeThickness: 4,
     });
     this.label.setOrigin(0.5, 0.5);
     this.label.setScrollFactor(0);
@@ -74,8 +76,11 @@ export class InteractButton {
   private onPointerDown(pointer: Phaser.Input.Pointer): void {
     if (!this.available) return;
     const half = this.size / 2;
-    const inX = pointer.x >= this.buttonX - half && pointer.x <= this.buttonX + half;
-    const inY = pointer.y >= this.buttonY - half && pointer.y <= this.buttonY + half;
+    const zoom = this.scene.cameras.main.zoom || 1;
+    const px = pointer.x / zoom;
+    const py = pointer.y / zoom;
+    const inX = px >= this.buttonX - half && px <= this.buttonX + half;
+    const inY = py >= this.buttonY - half && py <= this.buttonY + half;
     if (inX && inY) {
       this.justPressed = true;
     }
@@ -83,21 +88,70 @@ export class InteractButton {
 
   private drawBackground(): void {
     const half = this.size / 2;
-    this.bg.fillStyle(BUTTON_COLOR, 1);
-    this.bg.fillRoundedRect(
-      this.buttonX - half,
-      this.buttonY - half,
-      this.size,
-      this.size,
-      CORNER_RADIUS,
-    );
-    this.bg.lineStyle(2, 0xffffff, 0.3);
-    this.bg.strokeRoundedRect(
-      this.buttonX - half,
-      this.buttonY - half,
-      this.size,
-      this.size,
-      CORNER_RADIUS,
-    );
+    const x = this.buttonX;
+    const y = this.buttonY;
+    const cut = 12; // diagonal corner cut for octagonal silhouette
+
+    const pts = [
+      { x: x - half + cut, y: y - half },
+      { x: x + half - cut, y: y - half },
+      { x: x + half, y: y - half + cut },
+      { x: x + half, y: y + half - cut },
+      { x: x + half - cut, y: y + half },
+      { x: x - half + cut, y: y + half },
+      { x: x - half, y: y + half - cut },
+      { x: x - half, y: y - half + cut },
+    ];
+
+    // Dark fill
+    this.bg.fillStyle(0x0a0a1a, 0.92);
+    this.bg.fillPoints(pts, true);
+
+    // Scanline pattern (very faint)
+    this.bg.fillStyle(BUTTON_COLOR, 0.04);
+    for (let i = -half; i <= half; i += 5) {
+      this.bg.fillRect(x - half, y + i, this.size, 2);
+    }
+
+    // Outer faded glow border
+    this.bg.lineStyle(5, BUTTON_COLOR, 0.2);
+    this.bg.strokePoints(pts, true);
+
+    // Inner bright border
+    this.bg.lineStyle(2, BUTTON_COLOR, 0.9);
+    this.bg.strokePoints(pts, true);
+
+    // Corner HUD bracket accents (inside each corner)
+    const bi = 8; // inset from edge
+    const bLen = 9; // bracket arm length
+    this.bg.lineStyle(2, BUTTON_COLOR, 0.75);
+
+    // Top-left
+    this.bg.beginPath();
+    this.bg.moveTo(x - half + bi + bLen, y - half + bi);
+    this.bg.lineTo(x - half + bi, y - half + bi);
+    this.bg.lineTo(x - half + bi, y - half + bi + bLen);
+    this.bg.strokePath();
+
+    // Top-right
+    this.bg.beginPath();
+    this.bg.moveTo(x + half - bi - bLen, y - half + bi);
+    this.bg.lineTo(x + half - bi, y - half + bi);
+    this.bg.lineTo(x + half - bi, y - half + bi + bLen);
+    this.bg.strokePath();
+
+    // Bottom-right
+    this.bg.beginPath();
+    this.bg.moveTo(x + half - bi, y + half - bi - bLen);
+    this.bg.lineTo(x + half - bi, y + half - bi);
+    this.bg.lineTo(x + half - bi - bLen, y + half - bi);
+    this.bg.strokePath();
+
+    // Bottom-left
+    this.bg.beginPath();
+    this.bg.moveTo(x - half + bi + bLen, y + half - bi);
+    this.bg.lineTo(x - half + bi, y + half - bi);
+    this.bg.lineTo(x - half + bi, y + half - bi - bLen);
+    this.bg.strokePath();
   }
 }
