@@ -472,5 +472,41 @@
   "ch12_10": {
     "pre": "FINALER SHOWDOWN. Jede erlernte Fähigkeit konvergiert hier — Regex, Dataclasses, Typing, Comprehensions, Sortierung, Lambdas, Walross-Operator. Parse Schwachstellenprotokolle, filtere kritische Bedrohungen. Das ist es, Agent.",
     "post": "Du hast jedes Werkzeug in deinem Arsenal kombiniert. Von print('Hello, World!') bis zur fortgeschrittenen Schwachstellenanalyse. Etage 12 — geräumt. Das Gebäude gehört dir. Willkommen auf der Chefetage, Agent. Mission abgeschlossen."
+  },
+  "npc": {
+    "guard": {
+      "speaker": "Wache",
+      "n1": "Halt. Eingeschränkter Bereich. Nennen Sie Ihr Anliegen, Agent.",
+      "n1_choice_show_id": "Ich habe Genehmigung. [Ausweis zeigen]",
+      "n1_choice_sneak": "Ich gehe nur… durch.",
+      "n1_choice_ask": "Warum ist hier so viel Sicherheit?",
+      "n2": "Ausweis bestätigt. Weiter — und wissen Sie, dass ich jeden Zugriff auf diesem Stockwerk protokolliere.",
+      "n3": "Nur durchgehen? Mit dem Aussehen? Versuchen Sie es nochmal.",
+      "n3_choice_apologize": "Entschuldigung. Falsche Tür.",
+      "n3_choice_bluff": "Wartung. Ich repariere die Lüftungsanlage.",
+      "n4": "Gut. Bleiben Sie in den öffentlichen Bereichen und berühren Sie nichts, das Ihnen nicht gehört.",
+      "n5": "Kameras auf jeder Etage. Zugriffsprotokolle für jedes Terminal. Was auch immer Sie planen — lassen Sie es.",
+      "n6": "Wartung… sicher. Ich prüfe Ihre Zugangsdaten in fünf Minuten erneut. Gehen Sie nirgendwo hin."
+    },
+    "silva": {
+      "speaker": "Dr. Silva",
+      "n1": "Oh! Ein neues Gesicht. Willkommen im Labor. Ich bin Dr. Silva. Sie sehen aus, als könnten Sie Orientierung gebrauchen.",
+      "n1_choice_terminal": "Was ist das für ein Terminal dort drüben?",
+      "n1_choice_project": "Woran arbeiten Sie?",
+      "n1_choice_hi": "Hallo. Ich erkunde nur.",
+      "n2": "Ah, das? Das ist der Sicherheitsknoten für diesen Flügel. Ältere Schnittstelle — Sie bräuchten print-Anweisungen und Variablen, nur um damit zu kommunizieren. Viel Erfolg.",
+      "n3": "Geheim. Offiziell. Aber unter uns — es ist ein Experiment zur automatisierten Code-Überprüfung. Maschinen beibringen, schlechtes Python zu erkennen. Ironisch, nicht wahr?",
+      "n4": "Klug! Der beste Weg, diesen Ort kennenzulernen, ist herumzustöbern. Vermeiden Sie nur die roten Terminals — die tun tatsächlich etwas."
+    },
+    "cipher": {
+      "speaker": "CIPHER",
+      "intro_n1": "Hallo. Ich bin CIPHER — Ihr Covert Intelligence Program for Heuristic Encoding and Reconnaissance. Etwas viel auf einmal, ich weiß.",
+      "intro_n2": "Ich sehe das gesamte Netzwerk: Kameras, Terminals, Türcodes. Alles außer der Kaffeemaschine auf Etage 3. Sie ist offline. Eine Tragödie.",
+      "intro_n3": "Hier ist die Mission: Infiltrieren Sie NeoCorp's Serverzentrale und extrahieren Sie die Überwachungsdateien. Jede Tür, jedes Terminal läuft auf Python. Also — Sie müssen es lernen.",
+      "intro_n3_choice_ready": "Ich bin bereit. Lass uns das angehen.",
+      "intro_n3_choice_info": "Warte — womit habe ich es hier genau zu tun?",
+      "intro_n4": "NeoCorp steuert Zugang, Protokollierung und ihre KI-Systeme vollständig durch Python-Skripte. Wenn Sie den Code schreiben können, können Sie ihr Netzwerk übernehmen. Ich führe Sie durch — ein Terminal nach dem anderen.",
+      "intro_n5": "Das ist der richtige Geist. Erstes Ziel: Finden Sie das Sicherheitsterminal auf dieser Etage und interagieren Sie damit. Ich führe Sie durch den Code. Vertrauen Sie mir — ich bin buchstäblich eine KI."
+    }
   }
 }

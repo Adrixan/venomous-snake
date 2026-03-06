@@ -472,5 +472,41 @@
   "ch12_10": {
     "pre": "FINAL SHOWDOWN. Every skill you've learned converges here — regex, dataclasses, typing, comprehensions, sorting, lambdas, walrus operator. Parse vulnerability logs, filter critical threats, display results. This is it, operative.",
     "post": "You've combined every tool in your arsenal. From print('Hello, World!') to advanced vulnerability analysis. Floor 12 — cleared. The building is yours. Welcome to the executive level, operative. Mission complete."
+  },
+  "npc": {
+    "guard": {
+      "speaker": "Guard",
+      "n1": "Halt. This is a restricted area. State your business, operative.",
+      "n1_choice_show_id": "I have clearance. [Show ID]",
+      "n1_choice_sneak": "I'm just… passing through.",
+      "n1_choice_ask": "What's with all the security around here?",
+      "n2": "ID checks out. Move along — and know that I log every access on this floor.",
+      "n3": "Passing through? With that look? Try again.",
+      "n3_choice_apologize": "Sorry. Wrong door.",
+      "n3_choice_bluff": "Maintenance. Here to fix the ventilation unit.",
+      "n4": "Right. Stay in the public zones and don't touch anything that isn't yours.",
+      "n5": "Cameras on every floor. Access logs for every terminal. Whatever you're planning — don't.",
+      "n6": "Maintenance… sure. I'll be running your credentials again in five minutes. Don't go anywhere."
+    },
+    "silva": {
+      "speaker": "Dr. Silva",
+      "n1": "Oh! A new face. Welcome to the lab. I'm Dr. Silva. You look like you could use some directions.",
+      "n1_choice_terminal": "What's that terminal over there?",
+      "n1_choice_project": "What are you working on?",
+      "n1_choice_hi": "Hey. Just exploring.",
+      "n2": "Ah, that one? It's the security node for this wing. Legacy interface — you'd need to know your print statements and variables just to talk to it. Good luck.",
+      "n3": "Classified. Officially. But between us — it's an experiment in automated code review. Teaching machines to spot bad Python. Ironic, isn't it?",
+      "n4": "Smart! The best way to learn this place is to poke around. Just avoid the red terminals — those actually do something."
+    },
+    "cipher": {
+      "speaker": "CIPHER",
+      "intro_n1": "Hello. I'm CIPHER — your Covert Intelligence Program for Heuristic Encoding and Reconnaissance. Bit of a mouthful, I know.",
+      "intro_n2": "I can see the entire network from here: cameras, terminals, door codes. Everything except the coffee machine on Floor 3. It's offline. A tragedy.",
+      "intro_n3": "Here's the mission: infiltrate NeoCorp's server complex and extract the surveillance files. Every door, every terminal runs on Python. So — you'll need to learn it.",
+      "intro_n3_choice_ready": "I'm ready. Let's do this.",
+      "intro_n3_choice_info": "Wait — what exactly am I dealing with here?",
+      "intro_n4": "NeoCorp controls access, logging, and their AI systems entirely through Python scripts. If you can write the code, you can own their network. I'll walk you through it — one terminal at a time.",
+      "intro_n5": "That's the spirit. First objective: find the security terminal on this floor and interact with it. I'll guide you through the code. Trust me — I'm literally an AI."
+    }
   }
 }

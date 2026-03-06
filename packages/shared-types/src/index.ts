@@ -6,10 +6,24 @@ export type Maybe<T> = T | null | undefined;
 
 export const SHARED_TYPES_VERSION = '0.0.1';
 
+/** Dialog content shown during NPC/narrative sequences */
+export interface DialogContent {
+  speaker: string;
+  text: string;
+  choices?: { text: string; id: string }[];
+}
+
+/** Last challenge submission result stored in the game state */
+export interface ChallengeResultState {
+  passed: boolean;
+  output: string;
+  error?: string;
+}
+
 /** Event bus event types for Phaser↔React communication */
 export type GameEvent =
   // Existing events — kept for backwards compatibility
-  | { type: 'TERMINAL_OPEN'; payload: { terminalId: string } }
+  | { type: 'TERMINAL_OPEN'; payload: { terminalId: string; challengeId?: string } }
   | { type: 'TERMINAL_CLOSE' }
   | { type: 'DIALOG_OPEN'; payload: { dialogId: string; npcId: string } }
   | { type: 'DIALOG_CLOSE' }
@@ -18,14 +32,24 @@ export type GameEvent =
   | { type: 'PLAYER_MOVE'; payload: { x: number; y: number; direction: Direction } }
   | { type: 'SCENE_CHANGE'; payload: { sceneKey: string } }
   | { type: 'INTERACTION_PROMPT'; payload: { objectId: string; promptText: string } | null }
-  // New events
+  // Existing new events
   | { type: 'PLAYER_INTERACT'; payload: { objectId: string; objectType: string } }
-  | { type: 'DIALOG_START'; payload: { npcId: string } }
+  | { type: 'DIALOG_START'; payload: { npcId: string; dialogId?: string } }
   | { type: 'DIALOG_END' }
   | { type: 'ROOM_TRANSITION'; payload: { from: string; to: string } }
   | { type: 'ITEM_PICKUP'; payload: { itemId: string } }
   | { type: 'SCENE_READY' }
-  | { type: 'OVERLAY_CHANGE'; payload: OverlayState };
+  | { type: 'OVERLAY_CHANGE'; payload: OverlayState }
+  // GameController challenge events
+  | { type: 'CHALLENGE_STARTED'; payload: { challengeId: string; cipherIntro: string } }
+  | { type: 'CHALLENGE_RESULT'; payload: ChallengeResultState & { xpEarned: number } }
+  | { type: 'CHALLENGE_COMPLETED'; payload: { challengeId: string } }
+  | { type: 'CHALLENGE_ABANDONED' }
+  | { type: 'XP_CHANGED'; payload: { xp: number; level: number } }
+  | { type: 'ACHIEVEMENT_UNLOCKED'; payload: { id: string; nameKey: string } }
+  | { type: 'FLOOR_UNLOCKED'; payload: { floor: number } }
+  | { type: 'DIALOG_TRIGGERED'; payload: DialogContent }
+  | { type: 'DIALOG_DISMISSED' };
 
 /** Player facing direction */
 export type Direction = 'up' | 'down' | 'left' | 'right';
@@ -64,11 +88,22 @@ export interface GameStoreState {
   level: number;
   currentFloor: string;
 
+  // Challenge state
+  activeChallengeId: string | null;
+  challengeResult: ChallengeResultState | null;
+  completedChallenges: string[];
+  unlockedFloors: number[];
+  dialogActive: boolean;
+  dialogContent: DialogContent | null;
+
+  // Terminal challenge tracking
+  currentChallengeId: string | null;
+
   // Actions
   setPlayerPosition: (x: number, y: number) => void;
   setPlayerDirection: (direction: Direction) => void;
   setCurrentRoom: (room: string) => void;
-  openTerminal: (terminalId: string) => void;
+  openTerminal: (terminalId: string, challengeId?: string) => void;
   closeTerminal: () => void;
   openDialog: (dialogId: string, npcId: string) => void;
   closeDialog: () => void;
@@ -89,6 +124,15 @@ export interface GameStoreState {
   addXp: (amount: number) => void;
   setLevel: (level: number) => void;
   setCurrentFloor: (floor: string) => void;
+
+  // Challenge actions
+  setActiveChallenge: (id: string | null) => void;
+  setChallengeResult: (result: ChallengeResultState | null) => void;
+  addCompletedChallenge: (id: string) => void;
+  unlockFloor: (n: number) => void;
+  setDialog: (content: DialogContent) => void;
+  clearDialog: () => void;
+  resetGameState: () => void;
 }
 
 // ─── Python Runtime Interfaces ──────────────────────────────────────────────

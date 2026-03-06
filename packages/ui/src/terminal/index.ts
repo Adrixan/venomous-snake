@@ -12,3 +12,7 @@ export {
 } from './terminalTheme';
 export { ChallengePanel } from './ChallengePanel';
 export type { ChallengePanelProps } from './ChallengePanel';
+export { useChallengeTerminal } from './useChallengeTerminal';
+export type { UseChallengeTerminalReturn, SubmitResult } from './useChallengeTerminal';
+export { ChallengeSuccessOverlay } from './ChallengeSuccessOverlay';
+export type { ChallengeSuccessOverlayProps } from './ChallengeSuccessOverlay';

@@ -2,6 +2,8 @@ import Phaser from 'phaser';
 
 export interface SpawnPoint {
   type: string;
+  /** Object name from the Tiled layer (e.g. NPC display name). */
+  name: string;
   x: number;
   y: number;
   properties?: Record<string, unknown>;
@@ -20,7 +22,16 @@ export class TilemapManager {
       throw new Error(`Tileset '${tilesetKey}' not found in map '${key}'`);
     }
 
-    const layerNames = ['ground', 'walls', 'decorations', 'collision'];
+    // Accept both legacy names (ground, decorations) and new names (floor, furniture, interactive)
+    const layerNames = [
+      'floor',
+      'ground',
+      'walls',
+      'furniture',
+      'interactive',
+      'decorations',
+      'collision',
+    ];
     for (const layerName of layerNames) {
       const layer = this.tilemap.createLayer(layerName, tileset, 0, 0);
       if (layer) {
@@ -59,6 +70,7 @@ export class TilemapManager {
 
       const spawnPoint: SpawnPoint = {
         type: spawnType,
+        name: obj.name ?? '',
         x: obj.x ?? 0,
         y: obj.y ?? 0,
       };

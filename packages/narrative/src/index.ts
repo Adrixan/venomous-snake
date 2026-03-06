@@ -13,3 +13,4 @@ export { CipherAI } from './CipherAI';
 export type { CipherMood, CipherContext } from './CipherAI';
 export { CUTSCENES } from './CutsceneData';
 export type { Cutscene, CutsceneScene } from './CutsceneData';
+export { lobbyGuardDialog, drSilvaDialog, cipherIntroDialog } from './dialogs';

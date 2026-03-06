@@ -74,6 +74,26 @@ export class DialogEngine {
     }
   }
 
+  /**
+   * Advance from the current node to its `nextNodeId`.
+   * If the current node has no `nextNodeId` (and no choices), the dialog completes.
+   * Call this when the player clicks "continue" on a non-choice node.
+   */
+  advanceToNext(): void {
+    const node = this.getCurrentNode();
+    if (!node) {
+      this.completeDialog();
+      return;
+    }
+    if (node.nextNodeId) {
+      this.state.currentNode = node.nextNodeId;
+      this.advance();
+    } else if (!node.choices || node.choices.length === 0) {
+      this.completeDialog();
+    }
+    // If the node has choices, the caller must use selectChoice() instead.
+  }
+
   setPlayerIdentity(name: string, gender: 'male' | 'female' | 'nonbinary'): void {
     this.state.playerName = name;
     this.state.playerGender = gender;

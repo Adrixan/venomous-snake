@@ -1,6 +1,6 @@
 # Venomous Snake — Project State
 
-> Last updated: 2026-03-06
+> Last updated: 2026-03-06 → final completion update
 
 ## User Profile
 
@@ -147,12 +147,53 @@ See `plan.md` in session workspace for full backlog. 15 epics, ~90 user stories,
 
 Top-priority epics (Must): Foundation, Core Engine, Hacking Terminal, Challenge Engine, Narrative, Game World, UI Shell, Progression, AI Sidekick, Curriculum, i18n, PWA, Accessibility.
 
+## Project Status
+
+**All 15 epics substantially complete.**
+
+- **81 user stories completed**
+- **2 stories deferred**: US-152 (cross-browser testing), US-153 (mobile device testing) — require real browser/device infrastructure not available in dev environment
+- All 12 Nx projects pass type-check
+- All tests pass (75 real unit tests + `passWithNoTests` for packages without tests yet)
+- Production build succeeds with 6 code-split chunks + gzip/brotli compression
+
+## What's Built
+
+| Layer | Details |
+|-------|---------|
+| **Monorepo** | Nx: 1 app + 10 library packages + 1 tool |
+| **Game engine** | Phaser 3: player, NPCs, tilemap, camera, interactive objects |
+| **UI shell** | React 19: menus, panels, HUD, quest log, inventory, skill tree, floor map |
+| **Hacking terminal** | CodeMirror 6 with cyberpunk theme |
+| **Python runtime** | Pyodide integration: abstraction layer + mock for testing |
+| **Challenge engine** | Runner, hint engine (10 error patterns), progression manager, timer |
+| **Curriculum** | 105 Python challenges across 12 chapters (beginner → advanced) |
+| **AI sidekick** | CIPHER: 8 context modes, SVG portrait with moods |
+| **Narrative** | Dialog engine with branching, story manager with pronouns |
+| **Progression** | XP system (10 levels), skill tree (30 nodes), achievements (31 badges) |
+| **Save system** | IndexedDB: 20+3 auto-save slots, JSON export/import |
+| **Audio** | Howler.js manager, SFX, ambient music stubs |
+| **i18n** | English + German, 5 namespaces, locale switcher |
+| **PWA** | Service worker (3-cache strategy), install/update prompts |
+| **Accessibility** | Reduced motion, skip links, focus traps, arrow nav, announcer |
+| **CI/CD** | GitHub Actions pipeline, manual deploy workflow |
+| **Tests** | 75 unit tests passing |
+| **Performance** | Code splitting: phaser/codemirror/react/pyodide/i18n chunks |
+| **Mobile** | Symbol bar, virtual joystick, breakpoint system |
+
+## Known Limitations / Future Work
+
+1. **No actual art assets** (procedural placeholders) — needs pixel art sprites, tilesets, portraits
+2. **No actual audio files** — needs cyberpunk music + SFX; stubs are wired up but silent
+3. **No tilemap files from Tiled/LDtk** — architecture ready but needs level design work
+4. **Pyodide mock mode in tests** — real Web Worker integration needs browser testing environment
+5. **USB distribution deferred** — Pyodide can't run from `file://`; Brython identified as fallback if revisited
+6. **Cross-browser & mobile testing deferred** — US-152, US-153 require real browser/device infrastructure
+7. **`@nx/vite:test` executor deprecated** — should migrate to `@nx/vitest:test` in Nx 23
+
 ## Current Sprint
 
-**Sprint 5 — "Content & Polish"**
-- **Goal**: Curriculum chapters 1-6, NPC entities, mobile controls, audio system, remaining UI panels
-- **Stories**: US-015, US-016, US-041, US-060-066, US-070-075, US-080-084, US-090-094, US-100-105
-- **Status**: In progress — parallel agent execution
+**COMPLETE — Final state reached.**
 
 ## Sprint History
 
@@ -191,10 +232,12 @@ Top-priority epics (Must): Foundation, Core Engine, Hacking Terminal, Challenge 
 - US-121: English string extraction (3pts) — DONE
 - US-122: German translation (8pts) — DONE
 
+### Sprint 8 — "Final Curriculum" ✅
+- agent-13 completed chapters 7–12: 54 challenges, 10 chapter files + index files + full EN/DE i18n
+- Total curriculum: **105 challenges across 12 chapters**
+- All type-checks pass, all tests pass, build succeeds
+- Commit: 4516ea0
+
 ## Open Items
 
-1. **USB deployment (backlog)**: Pyodide requires HTTP; Brython identified as file://-safe alternative (90% curriculum). Deprioritized.
-2. **Asset pipeline**: Using procedural placeholder graphics. Need sprite/tilemap art (open-source or AI-generated).
-3. **Mobile coding UX**: Symbol toolbar for Python on mobile keyboards — being built in current sprint.
-4. **Code splitting**: Vite warns about large chunks (2MB+ with Phaser + CodeMirror). Need manual chunks config.
-5. **Pyodide node:path warning**: Pyodide imports node:path/url which Vite externalizes — works but logs warnings.
+> Superseded by **Known Limitations / Future Work** above. All open items have been resolved or explicitly deferred.

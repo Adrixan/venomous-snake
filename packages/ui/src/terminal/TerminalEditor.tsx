@@ -26,26 +26,43 @@ interface TerminalEditorProps {
   initialCode?: string;
   readOnlyRanges?: Array<{ from: number; to: number }>;
   onRun: (code: string) => void;
+  onSubmit?: (code: string) => void;
   onChange?: (code: string) => void;
   disabled?: boolean;
 }
 
 function TerminalEditorInner(
-  { initialCode = '', readOnlyRanges, onRun, onChange, disabled = false }: TerminalEditorProps,
+  {
+    initialCode = '',
+    readOnlyRanges,
+    onRun,
+    onSubmit,
+    onChange,
+    disabled = false,
+  }: TerminalEditorProps,
   ref: React.ForwardedRef<TerminalEditorHandle>,
 ): React.JSX.Element {
   const containerRef = useRef<HTMLDivElement>(null);
   const viewRef = useRef<EditorView | null>(null);
   const onRunRef = useRef(onRun);
+  const onSubmitRef = useRef(onSubmit);
   const onChangeRef = useRef(onChange);
 
   onRunRef.current = onRun;
+  onSubmitRef.current = onSubmit;
   onChangeRef.current = onChange;
 
   const handleRunClick = useCallback(() => {
     const view = viewRef.current;
     if (view) {
       onRunRef.current(view.state.doc.toString());
+    }
+  }, []);
+
+  const handleSubmitClick = useCallback(() => {
+    const view = viewRef.current;
+    if (view) {
+      onSubmitRef.current?.(view.state.doc.toString());
     }
   }, []);
 
@@ -143,6 +160,16 @@ function TerminalEditorInner(
         >
           Run ▶
         </button>
+        {onSubmit !== undefined && (
+          <button
+            className="terminal-btn terminal-btn-submit"
+            onClick={handleSubmitClick}
+            disabled={disabled}
+            aria-label="Submit solution"
+          >
+            Submit ✓
+          </button>
+        )}
         <span style={{ fontSize: '11px', color: '#3d4752' }}>Ctrl+Enter</span>
       </div>
     </div>

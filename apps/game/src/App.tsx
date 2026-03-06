@@ -1,10 +1,12 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { PWAInstallPrompt } from './pwa/PWAInstallPrompt';
 import { PWAUpdateNotifier } from './pwa/PWAUpdateNotifier';
 import { GameCanvas } from './components/GameCanvas';
 import { HUD } from './components/HUD';
 import { TerminalOverlay } from './components/TerminalOverlay';
 import { useGameStore } from './store/gameStore';
+import { GameControllerProvider } from './hooks/useGameController';
+import { MockInterpreter } from '@venomous-snake/python-runtime';
 import {
   MainMenu,
   NewGameFlow,
@@ -17,6 +19,7 @@ import {
 import { chapters } from '@venomous-snake/challenges';
 import { saveManager } from '@venomous-snake/save-system';
 import type { CurriculumProgress } from '@venomous-snake/shared-types';
+import { EventBus } from '@venomous-snake/engine';
 
 type MenuView = 'main' | 'newgame' | 'settings' | 'load';
 
@@ -42,6 +45,13 @@ export function App(): React.JSX.Element {
 
   const [menuView, setMenuView] = useState<MenuView>('main');
   const [hasSaveData, setHasSaveData] = useState(false);
+
+  // Stable interpreter instance for the GameController — persists across
+  // playing/paused transitions but is recreated on a full new game.
+  const interpreterRef = useRef<MockInterpreter | null>(null);
+  if (interpreterRef.current === null) {
+    interpreterRef.current = new MockInterpreter();
+  }
 
   // Check for save data on mount
   useEffect(() => {
@@ -69,6 +79,17 @@ export function App(): React.JSX.Element {
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [gamePhase, activePanel, terminalOpen, setGamePhase, openTerminal]);
+
+  // Listen for TERMINAL_OPEN events from the Phaser game world
+  useEffect(() => {
+    const unsub = EventBus.on((event) => {
+      if (event.type === 'TERMINAL_OPEN') {
+        const { terminalId, challengeId } = event.payload;
+        openTerminal(terminalId, challengeId);
+      }
+    });
+    return unsub;
+  }, [openTerminal]);
 
   const handleNewGame = useCallback(() => {
     setMenuView('newgame');
@@ -178,56 +199,62 @@ export function App(): React.JSX.Element {
     );
   }
 
-  // Playing / Paused phase
+  // Playing / Paused phase — GameControllerProvider only mounts during the game session
   return (
-    <div
-      style={{
-        background: '#0a0a0f',
-        width: '100vw',
-        height: '100vh',
-        overflow: 'hidden',
-        position: 'relative',
-      }}
-    >
-      <GameCanvas />
-      <HUD />
-      <TerminalOverlay />
+    <GameControllerProvider interpreter={interpreterRef.current}>
+      <div
+        style={{
+          background: '#0a0a0f',
+          width: '100vw',
+          height: '100vh',
+          overflow: 'hidden',
+          position: 'relative',
+        }}
+      >
+        <GameCanvas />
+        <HUD />
+        <TerminalOverlay />
 
-      {/* Pause menu */}
-      {gamePhase === 'paused' && (
-        <PauseMenu
-          onResume={handleResume}
-          onSaveGame={handlePauseSave}
-          onLoadGame={handlePauseLoad}
-          onSettings={handlePauseSettings}
-          onQuitToMenu={handleQuitToMenu}
+        {/* Pause menu */}
+        {gamePhase === 'paused' && (
+          <PauseMenu
+            onResume={handleResume}
+            onSaveGame={handlePauseSave}
+            onLoadGame={handlePauseLoad}
+            onSettings={handlePauseSettings}
+            onQuitToMenu={handleQuitToMenu}
+          />
+        )}
+
+        {/* Settings panel during gameplay */}
+        {activePanel === 'settings' && gamePhase === 'playing' && (
+          <SettingsPanel onBack={handleClosePanel} />
+        )}
+
+        {/* Side panels */}
+        <QuestLog
+          isOpen={activePanel === 'questlog'}
+          onClose={handleClosePanel}
+          curriculumProgress={defaultProgress}
+          chapters={chapters}
+          currentFloor={currentFloor}
         />
-      )}
+        <InventoryPanel
+          isOpen={activePanel === 'inventory'}
+          onClose={handleClosePanel}
+          items={[]}
+        />
+        <FloorMap
+          isOpen={activePanel === 'map'}
+          onClose={handleClosePanel}
+          currentFloor={currentFloor}
+          unlockedFloors={['lobby']}
+          onFloorSelect={handleFloorSelect}
+        />
 
-      {/* Settings panel during gameplay */}
-      {activePanel === 'settings' && gamePhase === 'playing' && (
-        <SettingsPanel onBack={handleClosePanel} />
-      )}
-
-      {/* Side panels */}
-      <QuestLog
-        isOpen={activePanel === 'questlog'}
-        onClose={handleClosePanel}
-        curriculumProgress={defaultProgress}
-        chapters={chapters}
-        currentFloor={currentFloor}
-      />
-      <InventoryPanel isOpen={activePanel === 'inventory'} onClose={handleClosePanel} items={[]} />
-      <FloorMap
-        isOpen={activePanel === 'map'}
-        onClose={handleClosePanel}
-        currentFloor={currentFloor}
-        unlockedFloors={['lobby']}
-        onFloorSelect={handleFloorSelect}
-      />
-
-      <PWAUpdateNotifier />
-      <PWAInstallPrompt />
-    </div>
+        <PWAUpdateNotifier />
+        <PWAInstallPrompt />
+      </div>
+    </GameControllerProvider>
   );
 }

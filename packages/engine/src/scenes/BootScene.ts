@@ -1,4 +1,6 @@
 import Phaser from 'phaser';
+import { generateTilesetTexture } from '../maps/TilesetGenerator';
+import { generateLobbyTilemap, LOBBY_MAP_KEY } from '../maps/TilemapGenerator';
 
 export class BootScene extends Phaser.Scene {
   constructor() {
@@ -35,6 +37,18 @@ export class BootScene extends Phaser.Scene {
   }
 
   create(): void {
-    this.scene.start('GameScene');
+    // Generate the lobby tileset texture and register it in Phaser's TextureManager
+    generateTilesetTexture(this);
+
+    // Generate the Tiled-format lobby tilemap and add it to the tilemap cache
+    if (!this.cache.tilemap.has(LOBBY_MAP_KEY)) {
+      const lobbyJson = generateLobbyTilemap();
+      this.cache.tilemap.add(LOBBY_MAP_KEY, {
+        format: Phaser.Tilemaps.Formats.TILED_JSON,
+        data: lobbyJson,
+      });
+    }
+
+    this.scene.start('GameScene', { roomKey: LOBBY_MAP_KEY });
   }
 }

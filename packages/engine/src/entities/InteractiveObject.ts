@@ -97,7 +97,15 @@ export class InteractiveObject extends Phaser.Physics.Arcade.Sprite {
     });
 
     if (this.objectType === 'terminal') {
-      EventBus.emit({ type: 'TERMINAL_OPEN', payload: { terminalId: this.objectId } });
+      const challengeIdProp = this.objectProperties['challengeId'];
+      const challengeId = typeof challengeIdProp === 'string' ? challengeIdProp : undefined;
+      EventBus.emit({
+        type: 'TERMINAL_OPEN',
+        payload: {
+          terminalId: this.objectId,
+          ...(challengeId !== undefined ? { challengeId } : {}),
+        },
+      });
     } else if (this.objectType === 'npc') {
       EventBus.emit({ type: 'DIALOG_START', payload: { npcId: this.objectId } });
     } else if (this.objectType === 'item') {

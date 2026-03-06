@@ -151,7 +151,11 @@ export class NPC extends Phaser.Physics.Arcade.Sprite {
   }
 
   interact(): void {
-    EventBus.emit({ type: 'DIALOG_START', payload: { npcId: this.npcId } });
+    const payload: { npcId: string; dialogId?: string } = { npcId: this.npcId };
+    if (this.dialogId !== undefined) {
+      payload.dialogId = this.dialogId;
+    }
+    EventBus.emit({ type: 'DIALOG_START', payload });
   }
 
   isPlayerInRange(): boolean {

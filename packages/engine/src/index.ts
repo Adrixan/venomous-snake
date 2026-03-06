@@ -41,5 +41,24 @@ export {
 export type { TileValue } from './tilemap/ProceduralRoom';
 
 // Maps
-export { LOBBY_MAP, MapRenderer } from './maps';
-export type { ProceduralMapConfig, ProceduralRoom } from './maps';
+export {
+  LOBBY_MAP,
+  MapRenderer,
+  generateTilesetTexture,
+  LOBBY_TILESET_KEY,
+  LOBBY_GID,
+  TILE_IDX,
+  generateLobbyTilemap,
+  LOBBY_MAP_KEY,
+  LOBBY_TILESET_NAME,
+  getFloorTilemap,
+  getRegisteredFloors,
+} from './maps';
+export type {
+  ProceduralMapConfig,
+  ProceduralRoom,
+  TiledMap,
+  TiledObject,
+  TiledProperty,
+  FloorTilemapDef,
+} from './maps';

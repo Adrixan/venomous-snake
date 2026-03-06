@@ -4,6 +4,7 @@ import { Player } from '../entities/Player';
 import { InteractiveObject } from '../entities/InteractiveObject';
 import type { InteractiveObjectType } from '../entities/InteractiveObject';
 import { NPC } from '../entities/NPC';
+import type { NPCBehavior } from '../entities/NPC';
 import { InputManager } from '../input/InputManager';
 import { TilemapManager } from '../systems/TilemapManager';
 import { CameraSystem } from '../systems/CameraSystem';
@@ -63,13 +64,33 @@ export class GameScene extends Phaser.Scene {
           playerY = playerStart.y;
         }
 
-        // Spawn interactive objects from tilemap
-        for (const sp of spawnPoints) {
-          const validTypes: InteractiveObjectType[] = ['terminal', 'door', 'item', 'npc'];
-          const isInteractive = (t: string): t is InteractiveObjectType =>
-            (validTypes as string[]).includes(t);
+        const validInteractiveTypes: InteractiveObjectType[] = ['terminal', 'door', 'item'];
+        const isInteractiveType = (t: string): t is InteractiveObjectType =>
+          (validInteractiveTypes as string[]).includes(t);
+        const validNPCBehaviors = new Set<string>(['idle', 'patrol', 'wander', 'guard']);
+        const isNPCBehavior = (s: unknown): s is NPCBehavior =>
+          typeof s === 'string' && validNPCBehaviors.has(s);
 
-          if (isInteractive(sp.type)) {
+        // Spawn entities from tilemap object layer
+        for (const sp of spawnPoints) {
+          if (sp.type === 'npc') {
+            const props = sp.properties ?? {};
+            const rawBehavior = props['behavior'];
+            const behavior: NPCBehavior = isNPCBehavior(rawBehavior) ? rawBehavior : 'idle';
+            const npcId =
+              typeof props['npcId'] === 'string' ? props['npcId'] : sp.name || `npc_${sp.x}`;
+            const rawDialog = props['dialogId'];
+            const dialogId = typeof rawDialog === 'string' ? rawDialog : undefined;
+            const npcName = sp.name || npcId;
+            const npcConfig =
+              dialogId !== undefined
+                ? { id: npcId, name: npcName, behavior, dialogId }
+                : { id: npcId, name: npcName, behavior };
+            this.npcs.push(new NPC(this, sp.x, sp.y, npcConfig));
+            continue;
+          }
+
+          if (isInteractiveType(sp.type)) {
             this.interactiveObjects.push(
               new InteractiveObject(this, sp.x, sp.y, sp.type, sp.properties),
             );

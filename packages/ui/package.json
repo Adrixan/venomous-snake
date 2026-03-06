@@ -22,6 +22,8 @@
     "@codemirror/view": "^6.39.16",
     "@lezer/highlight": "^1.2.3",
     "@venomous-snake/challenge-engine": "workspace:*",
+    "@venomous-snake/challenges": "workspace:*",
+    "@venomous-snake/python-runtime": "workspace:*",
     "codemirror": "^6.0.2",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
