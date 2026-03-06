@@ -1,0 +1,14 @@
+{
+  "app_title": "Venomous Snake",
+  "app_subtitle": "Python Hacking RPG",
+  "loading": "Loading...",
+  "loading_interpreter": "Initializing hacking terminal...",
+  "error": "Error",
+  "close": "Close",
+  "cancel": "Cancel",
+  "confirm": "Confirm",
+  "save": "Save",
+  "back": "Back",
+  "continue": "Continue",
+  "retry": "Retry"
+}

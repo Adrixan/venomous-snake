@@ -1,0 +1,50 @@
+{
+  "ch01": {
+    "title": "Bootsequenz",
+    "description": "Lerne die Grundlagen: print(), Variablen und Datentypen. Jeder Hack beginnt mit einem einzigen print-Befehl."
+  },
+  "ch02": {
+    "title": "Agentenprofil",
+    "description": "Meistere Strings, f-Strings und Benutzereingaben. Baue deine digitale Identität auf."
+  },
+  "ch03": {
+    "title": "Zugangskontrolle",
+    "description": "Knacke die Bedingungs-Logik: if, elif, else. Die Sicherheit des Gebäudes basiert auf Entscheidungen."
+  },
+  "ch04": {
+    "title": "Patrouillenrouten",
+    "description": "Durchlaufe die Muster der Wachen mit for- und while-Schleifen."
+  },
+  "ch05": {
+    "title": "Agentenfunktionen",
+    "description": "Definiere wiederverwendbare Hacking-Werkzeuge mit Funktionen."
+  },
+  "ch06": {
+    "title": "Ressourcenverzeichnis",
+    "description": "Organisiere Daten mit Listen, Tupeln, Wörterbüchern und Mengen."
+  },
+  "ch07": {
+    "title": "Geheimdienstakten",
+    "description": "Lese und schreibe Datendateien. Information ist Macht."
+  },
+  "ch08": {
+    "title": "Missionsdossiers",
+    "description": "Behandle Fehler elegant mit try/except. Ein guter Agent hat immer einen Reserveplan."
+  },
+  "ch09": {
+    "title": "Feldhandbuch",
+    "description": "Erweiterte Werkzeuge: Module, Lambda, map/filter, Regex."
+  },
+  "ch10": {
+    "title": "Agentenklassen",
+    "description": "Objektorientierte Programmierung: Klassen, Vererbung, Kapselung."
+  },
+  "ch11": {
+    "title": "Qualitätssicherung",
+    "description": "Tests, Typhinweise und Datenklassen. Professioneller Code."
+  },
+  "ch12": {
+    "title": "Tarnoperation",
+    "description": "Fortgeschrittenes Python: Generatoren, Dekoratoren, Kontextmanager, async, Pattern Matching."
+  }
+}

@@ -1,61 +1,55 @@
-import React, { useEffect, useRef } from 'react';
-import type { PythonOutput } from '@venomous-snake/python-runtime';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
+import type { PythonOutput } from '@venomous-snake/shared-types';
+import './terminal.css';
 
 interface OutputPanelProps {
-  output: PythonOutput[];
+  outputs: PythonOutput[];
   onClear: () => void;
+  inputPrompt?: string;
+  onInputSubmit?: (value: string) => void;
 }
 
-export function OutputPanel({ output, onClear }: OutputPanelProps): React.JSX.Element {
+function OutputPanelInner({
+  outputs,
+  onClear,
+  inputPrompt,
+  onInputSubmit,
+}: OutputPanelProps): React.JSX.Element {
   const bottomRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const [inputValue, setInputValue] = useState('');
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [output]);
+  }, [outputs]);
+
+  useEffect(() => {
+    if (inputPrompt !== undefined) {
+      inputRef.current?.focus();
+    }
+  }, [inputPrompt]);
+
+  const handleInputKeyDown = useCallback(
+    (e: React.KeyboardEvent<HTMLInputElement>) => {
+      if (e.key === 'Enter') {
+        onInputSubmit?.(inputValue);
+        setInputValue('');
+      }
+    },
+    [inputValue, onInputSubmit],
+  );
+
+  const handleInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(e.target.value);
+  }, []);
 
   return (
-    <div
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        height: '100%',
-        backgroundColor: '#06060a',
-        fontFamily: '"JetBrains Mono", "Fira Code", "Cascadia Code", monospace',
-        fontSize: '13px',
-      }}
-    >
-      <div
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          padding: '4px 12px',
-          backgroundColor: '#0d0d14',
-          borderBottom: '1px solid #1a1a2e',
-          flexShrink: 0,
-        }}
-      >
-        <span
-          style={{
-            color: '#4a4a6a',
-            fontSize: '11px',
-            textTransform: 'uppercase',
-            letterSpacing: '0.1em',
-          }}
-        >
-          Output
-        </span>
+    <div className="terminal-output-area">
+      <div className="terminal-output-header">
+        <span className="terminal-output-label">Output</span>
         <button
+          className="terminal-btn terminal-btn-clear"
           onClick={onClear}
-          style={{
-            background: 'none',
-            border: '1px solid #1a1a2e',
-            color: '#4a4a6a',
-            cursor: 'pointer',
-            fontSize: '11px',
-            padding: '2px 8px',
-            fontFamily: 'inherit',
-          }}
           aria-label="Clear output"
         >
           Clear
@@ -65,27 +59,19 @@ export function OutputPanel({ output, onClear }: OutputPanelProps): React.JSX.El
         role="log"
         aria-live="polite"
         aria-label="Program output"
-        style={{
-          flex: 1,
-          overflowY: 'auto',
-          padding: '8px 12px',
-        }}
+        className="terminal-output-log"
       >
-        {output.length === 0 ? (
-          <span style={{ color: '#4a4a6a', fontStyle: 'italic' }}>
+        {outputs.length === 0 ? (
+          <span className="terminal-output-empty">
             No output yet. Run your code with Ctrl+Enter.
           </span>
         ) : (
-          output.map((item, index) => (
+          outputs.map((item, index) => (
             <pre
               key={index}
-              style={{
-                margin: 0,
-                whiteSpace: 'pre-wrap',
-                wordBreak: 'break-word',
-                color: item.type === 'stderr' ? '#ff3366' : '#c0ffc0',
-                lineHeight: '1.5',
-              }}
+              className={
+                item.type === 'stderr' ? 'terminal-output-stderr' : 'terminal-output-stdout'
+              }
             >
               {item.text}
             </pre>
@@ -93,6 +79,22 @@ export function OutputPanel({ output, onClear }: OutputPanelProps): React.JSX.El
         )}
         <div ref={bottomRef} />
       </div>
+      {inputPrompt !== undefined && (
+        <div className="terminal-input-area">
+          <span className="terminal-input-prompt">{inputPrompt}</span>
+          <input
+            ref={inputRef}
+            className="terminal-input-field"
+            type="text"
+            value={inputValue}
+            onChange={handleInputChange}
+            onKeyDown={handleInputKeyDown}
+            aria-label="Program input"
+          />
+        </div>
+      )}
     </div>
   );
 }
+
+export const OutputPanel = React.memo(OutputPanelInner);

@@ -1,0 +1,65 @@
+{
+  "terminal": {
+    "title": "Hacking Terminal",
+    "run": "Run Code",
+    "run_shortcut": "Ctrl+Enter",
+    "clear": "Clear Output",
+    "submit": "Submit Solution",
+    "hint": "Get Hint",
+    "reset": "Reset Code",
+    "output_label": "Terminal Output",
+    "input_placeholder": "Type your input here...",
+    "status": {
+      "ready": "Terminal Ready",
+      "loading": "Loading Python Runtime...",
+      "executing": "Executing...",
+      "error": "Terminal Error"
+    },
+    "line": "Ln",
+    "column": "Col"
+  },
+  "menu": {
+    "new_game": "New Game",
+    "continue_game": "Continue",
+    "load_game": "Load Game",
+    "save_game": "Save Game",
+    "settings": "Settings",
+    "quit": "Quit to Menu"
+  },
+  "settings": {
+    "title": "Settings",
+    "language": "Language",
+    "volume_master": "Master Volume",
+    "volume_music": "Music",
+    "volume_sfx": "Sound Effects",
+    "fullscreen": "Fullscreen",
+    "reduced_motion": "Reduced Motion"
+  },
+  "hud": {
+    "xp": "XP",
+    "level": "Level",
+    "floor": "Floor",
+    "interact": "Press E to interact",
+    "interact_mobile": "Tap to interact"
+  },
+  "challenge": {
+    "title": "Challenge",
+    "description": "Description",
+    "hints_used": "Hints Used",
+    "attempts": "Attempts",
+    "time_spent": "Time Spent",
+    "success": "Challenge Complete!",
+    "xp_earned": "+{{xp}} XP",
+    "try_again": "Not quite right. Try again!",
+    "tests_passed": "{{passed}}/{{total}} tests passed",
+    "locked": "Locked — Complete prerequisites first",
+    "test_results": "Test Results"
+  },
+  "progress": {
+    "title": "Progress",
+    "chapter": "Chapter {{num}}",
+    "completed": "{{count}} Completed",
+    "total_xp": "Total XP: {{xp}}",
+    "completion": "{{percent}}% Complete"
+  }
+}

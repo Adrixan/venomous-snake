@@ -1,0 +1,29 @@
+{
+  "ch01_01": {
+    "pre": "Alright, rookie. Time for your first hack. See that security terminal? It's running a basic display system. All you need to do is make it show a message. Use the print() function — it's like shouting into the void, except the void actually listens.",
+    "post": "Not bad for a first timer! You just made a computer do your bidding. That's basically what programming is — bossing machines around. Let's move on."
+  },
+  "ch01_02": {
+    "pre": "Every good operative needs a codename. In Python, we store things in variables — think of them as labeled boxes. Let's set up your cover identity.",
+    "post": "Now you're thinking like a coder. Variables are the building blocks of everything we'll do. Remember: the name on the left, the value on the right."
+  },
+  "ch01_03": {
+    "pre": "The security system runs on numbers. If we can manipulate the math, we can manipulate the locks. Time to learn some arithmetic operators.",
+    "post": "Numbers don't lie — but they can be persuaded. You've got the basics of Python math down. The building's security doesn't stand a chance."
+  },
+  "ai_sidekick": {
+    "greeting": "Hey there, operative. I'm CIPHER — your AI assistant. I'll be your guide through this digital labyrinth. Ready to hack some Python?",
+    "encouragement": [
+      "Keep at it! Every master hacker started with 'Hello, World!'",
+      "Bugs are just features you haven't understood yet.",
+      "The terminal doesn't judge. Well, I do. But I'm nice about it.",
+      "Remember: even the best coders Google things. You're doing great.",
+      "Error messages are your friends. Cranky friends, but friends."
+    ],
+    "idle": [
+      "Still thinking? Take your time. The firewall isn't going anywhere.",
+      "Need a hint? Just ask. I promise I won't tell anyone.",
+      "Fun fact: Python is named after Monty Python, not the snake. Mind. Blown."
+    ]
+  }
+}

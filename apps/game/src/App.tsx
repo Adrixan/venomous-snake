@@ -1,13 +1,12 @@
 import React, { useEffect } from 'react';
 import { GameCanvas } from './components/GameCanvas';
 import { HUD } from './components/HUD';
-import { HackingTerminal } from '@venomous-snake/ui';
+import { TerminalOverlay } from './components/TerminalOverlay';
 import { useGameStore } from './store/gameStore';
 
 export function App(): React.JSX.Element {
   const terminalOpen = useGameStore((state) => state.overlay.terminalOpen);
   const openTerminal = useGameStore((state) => state.openTerminal);
-  const closeTerminal = useGameStore((state) => state.closeTerminal);
 
   // Open terminal with T key for development testing
   useEffect(() => {
@@ -32,7 +31,7 @@ export function App(): React.JSX.Element {
     >
       <GameCanvas />
       <HUD />
-      <HackingTerminal isOpen={terminalOpen} onClose={closeTerminal} />
+      <TerminalOverlay />
     </div>
   );
 }

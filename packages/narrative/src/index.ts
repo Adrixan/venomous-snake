@@ -1,3 +1,11 @@
-// @venomous-snake/narrative
-// Story script, dialog system, and cutscene management — implementation pending
-export const NARRATIVE_VERSION = '0.0.1';
+export { DialogEngine } from './DialogEngine';
+export type { DialogEvent, DialogEventHandler } from './DialogEngine';
+export { StoryManager } from './StoryManager';
+export type {
+  DialogTree,
+  DialogNode,
+  DialogChoice,
+  NarrativeState,
+  NarrativeFlag,
+  DialogSpeaker,
+} from './types';

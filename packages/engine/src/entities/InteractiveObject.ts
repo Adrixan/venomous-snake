@@ -1,106 +1,127 @@
 import Phaser from 'phaser';
 import { EventBus } from '../EventBus';
 
-export interface InteractiveObjectConfig {
-  id: string;
-  x: number;
-  y: number;
-  width: number;
-  height: number;
-  promptText: string;
-  color: number;
-  interactionRadius: number;
-  /** Optional callback invoked when the player presses E near this object. */
-  onInteract?: () => void;
+export type InteractiveObjectType = 'terminal' | 'door' | 'item' | 'npc';
+
+function getObjectColor(type: InteractiveObjectType): number {
+  switch (type) {
+    case 'terminal':
+      return 0x00b4d8;
+    case 'door':
+      return 0xffd60a;
+    case 'item':
+      return 0xfb8500;
+    case 'npc':
+      return 0xc77dff;
+  }
 }
 
-export class InteractiveObject extends Phaser.GameObjects.Container {
+function getTextureKey(type: InteractiveObjectType): string {
+  return `obj_${type}`;
+}
+
+export class InteractiveObject extends Phaser.Physics.Arcade.Sprite {
   private readonly objectId: string;
-  private readonly promptText: string;
-  private readonly interactionRadius: number;
-  private readonly onInteractCb: (() => void) | undefined;
-  private eKey: Phaser.Input.Keyboard.Key | undefined;
-  private isPlayerNearby = false;
+  private readonly objectType: InteractiveObjectType;
+  private readonly objectProperties: Record<string, unknown>;
+  private promptLabel: Phaser.GameObjects.Text | null = null;
+  private inRange = false;
 
-  constructor(scene: Phaser.Scene, config: InteractiveObjectConfig) {
-    super(scene, config.x, config.y);
+  /** Pre-generate colored rectangle placeholder textures for all object types. */
+  static createPlaceholderTextures(scene: Phaser.Scene): void {
+    const types: InteractiveObjectType[] = ['terminal', 'door', 'item', 'npc'];
+    for (const type of types) {
+      const key = getTextureKey(type);
+      if (scene.textures.exists(key)) continue;
 
-    this.objectId = config.id;
-    this.promptText = config.promptText;
-    this.interactionRadius = config.interactionRadius;
-    this.onInteractCb = config.onInteract;
+      const gfx = scene.make.graphics({}, false);
+      gfx.fillStyle(getObjectColor(type), 1);
+      gfx.fillRect(0, 0, 32, 32);
+      gfx.lineStyle(1, 0xffffff, 0.3);
+      gfx.strokeRect(0, 0, 32, 32);
+      gfx.generateTexture(key, 32, 32);
+      gfx.destroy();
+    }
+  }
 
-    // Visual body
-    const rect = scene.add.rectangle(0, 0, config.width, config.height, config.color);
-    this.add(rect);
+  constructor(
+    scene: Phaser.Scene,
+    x: number,
+    y: number,
+    type: InteractiveObjectType,
+    properties?: Record<string, unknown>,
+  ) {
+    super(scene, x, y, getTextureKey(type));
 
-    // Label
-    const label = scene.add.text(0, -config.height / 2 - 10, this.promptText, {
-      fontFamily: 'monospace',
-      fontSize: '9px',
-      color: '#ffffff',
-    });
-    label.setOrigin(0.5, 1);
-    label.setVisible(false);
-    this.add(label);
-    this._promptLabel = label;
+    this.objectType = type;
+    this.objectProperties = properties ?? {};
+
+    const idFromProps = this.objectProperties['id'];
+    this.objectId =
+      typeof idFromProps === 'string' ? idFromProps : `${type}_${Math.round(x)}_${Math.round(y)}`;
 
     scene.add.existing(this);
+    scene.physics.add.existing(this);
 
-    if (scene.input.keyboard) {
-      this.eKey = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
+    const body = this.body as Phaser.Physics.Arcade.Body;
+    body.setImmovable(true);
+    // Expand interaction zone beyond the visual footprint
+    body.setSize(56, 56, true);
+
+    this.promptLabel = scene.add.text(x, y - 28, '[E] interact', {
+      fontFamily: 'monospace',
+      fontSize: '10px',
+      color: '#ffffff',
+      backgroundColor: '#000000cc',
+      padding: { x: 4, y: 2 },
+    });
+    this.promptLabel.setOrigin(0.5, 1);
+    this.promptLabel.setVisible(false);
+    this.promptLabel.setDepth(10);
+  }
+
+  setPlayerInRange(inRange: boolean): void {
+    if (inRange === this.inRange) return;
+    this.inRange = inRange;
+    if (inRange) {
+      this.showPrompt();
+    } else {
+      this.hidePrompt();
     }
   }
 
-  /** Cached reference to the prompt text label child. */
-  private _promptLabel: Phaser.GameObjects.Text;
+  interact(): void {
+    EventBus.emit({
+      type: 'PLAYER_INTERACT',
+      payload: { objectId: this.objectId, objectType: this.objectType },
+    });
 
-  /**
-   * Call this every update tick, passing the player's world position.
-   * Handles proximity detection and E-key interaction.
-   */
-  checkProximity(player: { x: number; y: number }): void {
-    const dx = player.x - this.x;
-    const dy = player.y - this.y;
-    const distSq = dx * dx + dy * dy;
-    const radiusSq = this.interactionRadius * this.interactionRadius;
-
-    const wasNearby = this.isPlayerNearby;
-    this.isPlayerNearby = distSq <= radiusSq;
-
-    if (this.isPlayerNearby !== wasNearby) {
-      this._promptLabel.setVisible(this.isPlayerNearby);
-      if (this.isPlayerNearby) {
-        EventBus.emit({
-          type: 'INTERACTION_PROMPT',
-          payload: { objectId: this.objectId, promptText: this.promptText },
-        });
-      } else {
-        EventBus.emit({ type: 'INTERACTION_PROMPT', payload: null });
-      }
-    }
-
-    if (
-      this.isPlayerNearby &&
-      this.eKey !== undefined &&
-      Phaser.Input.Keyboard.JustDown(this.eKey)
-    ) {
-      this.interact();
-    }
-  }
-
-  getId(): string {
-    return this.objectId;
-  }
-
-  private interact(): void {
-    if (this.onInteractCb !== undefined) {
-      this.onInteractCb();
-      return;
-    }
-
-    if (this.objectId.startsWith('terminal')) {
+    if (this.objectType === 'terminal') {
       EventBus.emit({ type: 'TERMINAL_OPEN', payload: { terminalId: this.objectId } });
+    } else if (this.objectType === 'npc') {
+      EventBus.emit({ type: 'DIALOG_START', payload: { npcId: this.objectId } });
+    } else if (this.objectType === 'item') {
+      EventBus.emit({ type: 'ITEM_PICKUP', payload: { itemId: this.objectId } });
+      this.destroy();
     }
+  }
+
+  showPrompt(): void {
+    this.promptLabel?.setVisible(true);
+    EventBus.emit({
+      type: 'INTERACTION_PROMPT',
+      payload: { objectId: this.objectId, promptText: `[E] ${this.objectType}` },
+    });
+  }
+
+  hidePrompt(): void {
+    this.promptLabel?.setVisible(false);
+    EventBus.emit({ type: 'INTERACTION_PROMPT', payload: null });
+  }
+
+  override destroy(fromScene?: boolean): void {
+    this.promptLabel?.destroy();
+    this.promptLabel = null;
+    super.destroy(fromScene);
   }
 }

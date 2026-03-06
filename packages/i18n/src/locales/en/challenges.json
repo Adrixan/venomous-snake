@@ -1,0 +1,14 @@
+{
+  "ch01_01": {
+    "title": "First Contact",
+    "description": "Make the security terminal display the message 'Hello, World!' using the print() function."
+  },
+  "ch01_02": {
+    "title": "Cover Identity",
+    "description": "Create a variable called 'codename' and assign it your operative name as a string. Then print it."
+  },
+  "ch01_03": {
+    "title": "Cracking Numbers",
+    "description": "The security lock code is the result of a calculation. Compute and print the answer using Python math operators."
+  }
+}

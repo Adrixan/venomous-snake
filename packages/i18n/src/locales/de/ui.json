@@ -1,0 +1,65 @@
+{
+  "terminal": {
+    "title": "Hacking-Terminal",
+    "run": "Code ausführen",
+    "run_shortcut": "Strg+Eingabe",
+    "clear": "Ausgabe löschen",
+    "submit": "Lösung einreichen",
+    "hint": "Hinweis holen",
+    "reset": "Code zurücksetzen",
+    "output_label": "Terminal-Ausgabe",
+    "input_placeholder": "Eingabe hier tippen...",
+    "status": {
+      "ready": "Terminal bereit",
+      "loading": "Python-Laufzeit wird geladen...",
+      "executing": "Wird ausgeführt...",
+      "error": "Terminal-Fehler"
+    },
+    "line": "Zeile",
+    "column": "Spalte"
+  },
+  "menu": {
+    "new_game": "Neues Spiel",
+    "continue_game": "Weiterspielen",
+    "load_game": "Spiel laden",
+    "save_game": "Spiel speichern",
+    "settings": "Einstellungen",
+    "quit": "Zum Menü"
+  },
+  "settings": {
+    "title": "Einstellungen",
+    "language": "Sprache",
+    "volume_master": "Gesamtlautstärke",
+    "volume_music": "Musik",
+    "volume_sfx": "Soundeffekte",
+    "fullscreen": "Vollbild",
+    "reduced_motion": "Reduzierte Bewegung"
+  },
+  "hud": {
+    "xp": "EP",
+    "level": "Level",
+    "floor": "Etage",
+    "interact": "E drücken zum Interagieren",
+    "interact_mobile": "Tippen zum Interagieren"
+  },
+  "challenge": {
+    "title": "Aufgabe",
+    "description": "Beschreibung",
+    "hints_used": "Verwendete Hinweise",
+    "attempts": "Versuche",
+    "time_spent": "Benötigte Zeit",
+    "success": "Aufgabe abgeschlossen!",
+    "xp_earned": "+{{xp}} EP",
+    "try_again": "Nicht ganz richtig. Versuch es nochmal!",
+    "tests_passed": "{{passed}}/{{total}} Tests bestanden",
+    "locked": "Gesperrt — Zuerst Voraussetzungen erfüllen",
+    "test_results": "Testergebnisse"
+  },
+  "progress": {
+    "title": "Fortschritt",
+    "chapter": "Kapitel {{num}}",
+    "completed": "{{count}} Abgeschlossen",
+    "total_xp": "Gesamt-EP: {{xp}}",
+    "completion": "{{percent}}% Abgeschlossen"
+  }
+}

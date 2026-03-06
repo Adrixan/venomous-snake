@@ -1,0 +1,29 @@
+{
+  "ch01_01": {
+    "pre": "Alright, Neuling. Zeit für deinen ersten Hack. Siehst du dieses Sicherheitsterminal? Es läuft auf einem einfachen Anzeigesystem. Du musst es nur dazu bringen, eine Nachricht anzuzeigen. Benutze die print()-Funktion — es ist wie ins Leere zu rufen, nur dass die Leere tatsächlich zuhört.",
+    "post": "Nicht schlecht für einen Anfänger! Du hast gerade einen Computer nach deinem Willen handeln lassen. Das ist im Grunde Programmieren — Maschinen herumkommandieren. Weiter geht's."
+  },
+  "ch01_02": {
+    "pre": "Jede gute Agentin braucht einen Decknamen. In Python speichern wir Dinge in Variablen — stell sie dir wie beschriftete Boxen vor. Lass uns deine Tarnung einrichten.",
+    "post": "Jetzt denkst du wie ein Coder. Variablen sind die Bausteine von allem, was wir tun werden. Merke: Der Name steht links, der Wert rechts."
+  },
+  "ch01_03": {
+    "pre": "Das Sicherheitssystem läuft auf Zahlen. Wenn wir die Mathematik manipulieren können, können wir die Schlösser manipulieren. Zeit, einige arithmetische Operatoren zu lernen.",
+    "post": "Zahlen lügen nicht — aber sie können überzeugt werden. Du hast die Grundlagen der Python-Mathematik drauf. Die Sicherheit des Gebäudes hat keine Chance."
+  },
+  "ai_sidekick": {
+    "greeting": "Hey, Agentin. Ich bin CIPHER — dein KI-Assistent. Ich werde dein Führer durch dieses digitale Labyrinth sein. Bereit, etwas Python zu hacken?",
+    "encouragement": [
+      "Weitermachen! Jeder Meisterhacker hat mit 'Hallo, Welt!' angefangen!",
+      "Fehler sind nur Funktionen, die du noch nicht verstanden hast.",
+      "Das Terminal urteilt nicht. Na ja, ich schon. Aber ich bin nett dabei.",
+      "Denk daran: Auch die besten Programmierer googeln Sachen. Du machst das großartig.",
+      "Fehlermeldungen sind deine Freunde. Mürrische Freunde, aber Freunde."
+    ],
+    "idle": [
+      "Noch am Nachdenken? Lass dir Zeit. Die Firewall geht nirgendwo hin.",
+      "Brauchst du einen Hinweis? Frag einfach. Ich versprech's, niemand erfährt es.",
+      "Fun Fact: Python ist nach Monty Python benannt, nicht nach der Schlange. Krass."
+    ]
+  }
+}

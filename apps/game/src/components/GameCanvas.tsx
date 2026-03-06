@@ -8,6 +8,7 @@ export function GameCanvas(): React.JSX.Element {
   const containerRef = useRef<HTMLDivElement>(null);
   const isPaused = useGameStore((state) => state.isPaused);
   const setPlayerPosition = useGameStore((state) => state.setPlayerPosition);
+  const setPlayerDirection = useGameStore((state) => state.setPlayerDirection);
 
   useEffect(() => {
     if (!containerRef.current || gameRef.current) return;
@@ -18,6 +19,7 @@ export function GameCanvas(): React.JSX.Element {
     const unsubscribe = EventBus.on((event) => {
       if (event.type === 'PLAYER_MOVE') {
         setPlayerPosition(event.payload.x, event.payload.y);
+        setPlayerDirection(event.payload.direction);
       }
     });
 
@@ -28,7 +30,7 @@ export function GameCanvas(): React.JSX.Element {
         gameRef.current = null;
       }
     };
-  }, [setPlayerPosition]);
+  }, [setPlayerPosition, setPlayerDirection]);
 
   useEffect(() => {
     if (isPaused) {

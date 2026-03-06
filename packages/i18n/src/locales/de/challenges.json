@@ -1,0 +1,14 @@
+{
+  "ch01_01": {
+    "title": "Erstkontakt",
+    "description": "Lass das Sicherheitsterminal die Nachricht 'Hallo, Welt!' mit der print()-Funktion anzeigen."
+  },
+  "ch01_02": {
+    "title": "Deckidentität",
+    "description": "Erstelle eine Variable namens 'codename' und weise ihr deinen Agentennamen als Zeichenkette zu. Gib sie dann aus."
+  },
+  "ch01_03": {
+    "title": "Zahlen knacken",
+    "description": "Der Sicherheitscode ist das Ergebnis einer Berechnung. Berechne und gib die Antwort mit Python-Mathematikoperatoren aus."
+  }
+}

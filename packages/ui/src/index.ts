@@ -1,3 +1,2 @@
-export { PythonEditor } from './terminal/PythonEditor';
-export { OutputPanel } from './terminal/OutputPanel';
-export { HackingTerminal } from './terminal/HackingTerminal';
+export * from './terminal';
+export const UI_VERSION = '0.0.1';

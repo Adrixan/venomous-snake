@@ -8,15 +8,24 @@ export const SHARED_TYPES_VERSION = '0.0.1';
 
 /** Event bus event types for Phaser↔React communication */
 export type GameEvent =
+  // Existing events — kept for backwards compatibility
   | { type: 'TERMINAL_OPEN'; payload: { terminalId: string } }
   | { type: 'TERMINAL_CLOSE' }
   | { type: 'DIALOG_OPEN'; payload: { dialogId: string; npcId: string } }
   | { type: 'DIALOG_CLOSE' }
   | { type: 'GAME_PAUSE' }
   | { type: 'GAME_RESUME' }
-  | { type: 'PLAYER_MOVE'; payload: { x: number; y: number } }
+  | { type: 'PLAYER_MOVE'; payload: { x: number; y: number; direction: Direction } }
   | { type: 'SCENE_CHANGE'; payload: { sceneKey: string } }
-  | { type: 'INTERACTION_PROMPT'; payload: { objectId: string; promptText: string } | null };
+  | { type: 'INTERACTION_PROMPT'; payload: { objectId: string; promptText: string } | null }
+  // New events
+  | { type: 'PLAYER_INTERACT'; payload: { objectId: string; objectType: string } }
+  | { type: 'DIALOG_START'; payload: { npcId: string } }
+  | { type: 'DIALOG_END' }
+  | { type: 'ROOM_TRANSITION'; payload: { from: string; to: string } }
+  | { type: 'ITEM_PICKUP'; payload: { itemId: string } }
+  | { type: 'SCENE_READY' }
+  | { type: 'OVERLAY_CHANGE'; payload: OverlayState };
 
 /** Player facing direction */
 export type Direction = 'up' | 'down' | 'left' | 'right';

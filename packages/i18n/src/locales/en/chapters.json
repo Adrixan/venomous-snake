@@ -1,0 +1,50 @@
+{
+  "ch01": {
+    "title": "Boot Sequence",
+    "description": "Learn the basics: print(), variables, and data types. Every hack starts with a single print statement."
+  },
+  "ch02": {
+    "title": "Operative Profile",
+    "description": "Master strings, f-strings, and user input. Build your digital identity."
+  },
+  "ch03": {
+    "title": "Access Control",
+    "description": "Crack conditional logic: if, elif, else. The building's security runs on decisions."
+  },
+  "ch04": {
+    "title": "Patrol Routes",
+    "description": "Loop through the guards' patterns with for and while loops."
+  },
+  "ch05": {
+    "title": "Operative Functions",
+    "description": "Define reusable hacking tools with functions."
+  },
+  "ch06": {
+    "title": "Asset Inventory",
+    "description": "Organize data with lists, tuples, dictionaries, and sets."
+  },
+  "ch07": {
+    "title": "Intel Files",
+    "description": "Read and write data files. Information is power."
+  },
+  "ch08": {
+    "title": "Mission Dossiers",
+    "description": "Handle errors gracefully with try/except. A good operative always has a backup plan."
+  },
+  "ch09": {
+    "title": "Field Manual",
+    "description": "Advanced tools: modules, lambda, map/filter, regex."
+  },
+  "ch10": {
+    "title": "Operative Classes",
+    "description": "Object-oriented programming: classes, inheritance, encapsulation."
+  },
+  "ch11": {
+    "title": "Quality Assurance",
+    "description": "Testing, type hints, and dataclasses. Professional-grade code."
+  },
+  "ch12": {
+    "title": "Deep Cover",
+    "description": "Advanced Python: generators, decorators, context managers, async, pattern matching."
+  }
+}

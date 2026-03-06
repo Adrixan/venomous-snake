@@ -7,10 +7,15 @@ export type { GameSceneData } from './scenes/GameScene';
 // Entities
 export { Player } from './entities/Player';
 export { InteractiveObject } from './entities/InteractiveObject';
-export type { InteractiveObjectConfig } from './entities/InteractiveObject';
+export type { InteractiveObjectType } from './entities/InteractiveObject';
 
-// Tilemap
-export { TilemapManager } from './tilemap/TilemapManager';
+// Systems
+export { TilemapManager } from './systems/TilemapManager';
+export type { SpawnPoint } from './systems/TilemapManager';
+export { CameraSystem } from './systems/CameraSystem';
+
+// Procedural tilemap utilities (exported under distinct name to avoid collision)
+export { TilemapManager as ProceduralRoomManager } from './tilemap/TilemapManager';
 export type {
   RoomConfig,
   InteractiveObjectData,
@@ -18,7 +23,10 @@ export type {
   ObjectConfig,
   TilemapResult,
 } from './tilemap/TilemapManager';
-
-// Systems
-export { CameraSystem } from './systems/CameraSystem';
-export type { CameraConfig } from './systems/CameraSystem';
+export {
+  generateRoomLayout,
+  createTilesetTexture,
+  TILESET_KEY,
+  TILE,
+} from './tilemap/ProceduralRoom';
+export type { TileValue } from './tilemap/ProceduralRoom';
