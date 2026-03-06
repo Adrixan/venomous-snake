@@ -19,12 +19,19 @@ export const useGameStore = create<GameStoreState>((set) => ({
   isPaused: false,
   interactionPrompt: null,
 
-  setPlayerPosition: (x, y) =>
-    set((state) => ({ player: { ...state.player, x, y } })),
-  setPlayerDirection: (direction) =>
-    set((state) => ({ player: { ...state.player, direction } })),
-  setCurrentRoom: (room) =>
-    set((state) => ({ player: { ...state.player, currentRoom: room } })),
+  // UI shell state
+  gamePhase: 'menu',
+  activePanel: 'none',
+  playerName: '',
+  playerGender: 'nonbinary',
+  xp: 0,
+  level: 1,
+  currentFloor: 'lobby',
+
+  // Existing actions
+  setPlayerPosition: (x, y) => set((state) => ({ player: { ...state.player, x, y } })),
+  setPlayerDirection: (direction) => set((state) => ({ player: { ...state.player, direction } })),
+  setCurrentRoom: (room) => set((state) => ({ player: { ...state.player, currentRoom: room } })),
   openTerminal: (_terminalId) =>
     set((state) => ({
       overlay: { ...state.overlay, terminalOpen: true },
@@ -64,4 +71,13 @@ export const useGameStore = create<GameStoreState>((set) => ({
     })),
   setPaused: (paused) => set({ isPaused: paused }),
   setInteractionPrompt: (prompt) => set({ interactionPrompt: prompt }),
+
+  // UI shell actions
+  setGamePhase: (phase) => set({ gamePhase: phase }),
+  setActivePanel: (panel) => set({ activePanel: panel }),
+  setPlayerName: (name) => set({ playerName: name }),
+  setPlayerGender: (gender) => set({ playerGender: gender }),
+  addXp: (amount) => set((state) => ({ xp: state.xp + amount })),
+  setLevel: (level) => set({ level }),
+  setCurrentFloor: (floor) => set({ currentFloor: floor }),
 }));

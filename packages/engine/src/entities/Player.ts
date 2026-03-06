@@ -1,22 +1,15 @@
 import Phaser from 'phaser';
 import type { Direction } from '@venomous-snake/shared-types';
 import { EventBus } from '../EventBus';
-
-interface WASDKeys {
-  W: Phaser.Input.Keyboard.Key;
-  A: Phaser.Input.Keyboard.Key;
-  S: Phaser.Input.Keyboard.Key;
-  D: Phaser.Input.Keyboard.Key;
-}
+import type { InputManager } from '../input/InputManager';
 
 export class Player extends Phaser.Physics.Arcade.Sprite {
   static readonly TEXTURE_KEY = 'player_placeholder';
 
   private readonly speed = 160;
   private frozen = false;
-  private cursors: Phaser.Types.Input.Keyboard.CursorKeys | null = null;
-  private wasdKeys: WASDKeys | null = null;
   private direction: Direction = 'down';
+  private readonly inputManager: InputManager;
 
   /** Generate a placeholder texture (call during scene preload or before first use). */
   static createPlaceholderTexture(scene: Phaser.Scene): void {
@@ -32,7 +25,7 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
     gfx.destroy();
   }
 
-  constructor(scene: Phaser.Scene, x: number, y: number) {
+  constructor(scene: Phaser.Scene, x: number, y: number, inputManager: InputManager) {
     super(scene, x, y, Player.TEXTURE_KEY);
 
     scene.add.existing(this);
@@ -42,55 +35,22 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
     body.setCollideWorldBounds(true);
     body.setSize(20, 28);
 
-    const kb = scene.input.keyboard;
-    if (kb) {
-      this.cursors = kb.createCursorKeys();
-      this.wasdKeys = {
-        W: kb.addKey(Phaser.Input.Keyboard.KeyCodes.W),
-        A: kb.addKey(Phaser.Input.Keyboard.KeyCodes.A),
-        S: kb.addKey(Phaser.Input.Keyboard.KeyCodes.S),
-        D: kb.addKey(Phaser.Input.Keyboard.KeyCodes.D),
-      };
-    }
+    this.inputManager = inputManager;
   }
 
   update(): void {
-    if (this.frozen || !this.cursors || !this.wasdKeys) return;
+    if (this.frozen) return;
 
     const body = this.body as Phaser.Physics.Arcade.Body;
+    const movement = this.inputManager.getMovement();
 
-    let vx = 0;
-    let vy = 0;
+    body.setVelocity(movement.x * this.speed, movement.y * this.speed);
 
-    const left = this.cursors.left.isDown || this.wasdKeys.A.isDown;
-    const right = this.cursors.right.isDown || this.wasdKeys.D.isDown;
-    const up = this.cursors.up.isDown || this.wasdKeys.W.isDown;
-    const down = this.cursors.down.isDown || this.wasdKeys.S.isDown;
-
-    if (left) {
-      vx = -1;
-      this.direction = 'left';
-    } else if (right) {
-      vx = 1;
-      this.direction = 'right';
-    }
-
-    if (up) {
-      vy = -1;
-      this.direction = 'up';
-    } else if (down) {
-      vy = 1;
-      this.direction = 'down';
-    }
-
-    // Normalize diagonal movement to avoid faster diagonal speed
-    if (vx !== 0 && vy !== 0) {
-      const invSqrt2 = 0.7071067811865476;
-      vx *= invSqrt2;
-      vy *= invSqrt2;
-    }
-
-    body.setVelocity(vx * this.speed, vy * this.speed);
+    // Update facing direction; vertical overrides horizontal when moving diagonally
+    if (movement.x < -0.1) this.direction = 'left';
+    else if (movement.x > 0.1) this.direction = 'right';
+    if (movement.y < -0.1) this.direction = 'up';
+    else if (movement.y > 0.1) this.direction = 'down';
 
     EventBus.emit({
       type: 'PLAYER_MOVE',

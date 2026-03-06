@@ -3,6 +3,8 @@ import { EventBus } from '../EventBus';
 import { Player } from '../entities/Player';
 import { InteractiveObject } from '../entities/InteractiveObject';
 import type { InteractiveObjectType } from '../entities/InteractiveObject';
+import { NPC } from '../entities/NPC';
+import { InputManager } from '../input/InputManager';
 import { TilemapManager } from '../systems/TilemapManager';
 import { CameraSystem } from '../systems/CameraSystem';
 
@@ -19,9 +21,11 @@ export class GameScene extends Phaser.Scene {
   private tilemapManager: TilemapManager | null = null;
   private cameraSystem: CameraSystem | null = null;
   private interactiveObjects: InteractiveObject[] = [];
-  private interactKey: Phaser.Input.Keyboard.Key | null = null;
+  private npcs: NPC[] = [];
+  private inputManager: InputManager | null = null;
   private walls: Phaser.Physics.Arcade.StaticGroup | null = null;
   private nearestInteractive: InteractiveObject | null = null;
+  private nearestNPC: NPC | null = null;
   private unsubscribeEventBus: (() => void) | null = null;
 
   constructor() {
@@ -31,11 +35,15 @@ export class GameScene extends Phaser.Scene {
   preload(): void {
     Player.createPlaceholderTexture(this);
     InteractiveObject.createPlaceholderTextures(this);
+    NPC.createPlaceholderTexture(this);
   }
 
   create(data: GameSceneData): void {
     let playerX = Math.floor((ROOM_COLS / 2) * GRID);
     let playerY = Math.floor((ROOM_ROWS / 2) * GRID);
+
+    // Create InputManager before Player (Player depends on it)
+    this.inputManager = new InputManager(this);
 
     // Attempt to load a Tiled map when a room key is provided
     const roomKey = data.roomKey;
@@ -68,7 +76,7 @@ export class GameScene extends Phaser.Scene {
           }
         }
 
-        this.player = new Player(this, playerX, playerY);
+        this.player = new Player(this, playerX, playerY, this.inputManager);
 
         if (collisionLayer) {
           this.physics.add.collider(this.player, collisionLayer);
@@ -83,9 +91,10 @@ export class GameScene extends Phaser.Scene {
     // Fall back to procedural test room if no tilemap was loaded
     if (!loadedTilemap) {
       this.walls = this.createTestRoom();
-      this.player = new Player(this, playerX, playerY);
+      this.player = new Player(this, playerX, playerY, this.inputManager);
       this.physics.add.collider(this.player, this.walls);
       this.spawnTestInteractives();
+      this.spawnTestNPCs();
     }
 
     // Camera — player is guaranteed non-null here (created in both branches above)
@@ -95,20 +104,19 @@ export class GameScene extends Phaser.Scene {
       this.cameraSystem.setup(this, player, loadedTilemap ?? undefined);
     }
 
-    // Interaction key
-    if (this.input.keyboard) {
-      this.interactKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
-    }
-
     this.setupEventBus();
 
     EventBus.emit({ type: 'SCENE_READY' });
     EventBus.emit({ type: 'SCENE_CHANGE', payload: { sceneKey: 'GameScene' } });
   }
 
-  update(_time: number, _delta: number): void {
+  update(_time: number, delta: number): void {
     this.player?.update();
     this.updateInteractiveObjects();
+    this.updateNPCs(delta);
+    this.inputManager?.setInteractAvailable(
+      this.nearestInteractive !== null || this.nearestNPC !== null,
+    );
     this.checkInteractKey();
   }
 
@@ -117,8 +125,15 @@ export class GameScene extends Phaser.Scene {
     this.unsubscribeEventBus = null;
     this.tilemapManager?.destroy();
     this.tilemapManager = null;
+    this.inputManager?.destroy();
+    this.inputManager = null;
     this.interactiveObjects = [];
     this.nearestInteractive = null;
+    for (const npc of this.npcs) {
+      npc.destroy();
+    }
+    this.npcs = [];
+    this.nearestNPC = null;
   }
 
   // ---------------------------------------------------------------------------
@@ -156,7 +171,6 @@ export class GameScene extends Phaser.Scene {
 
     const spawns: Array<[InteractiveObjectType, number, number]> = [
       ['terminal', cx - 3, cy - 3],
-      ['npc', cx + 3, cy - 3],
       ['door', cx, cy + 4],
       ['item', cx + 3, cy + 3],
     ];
@@ -165,6 +179,37 @@ export class GameScene extends Phaser.Scene {
       const obj = new InteractiveObject(this, col * GRID + GRID / 2, row * GRID + GRID / 2, type);
       this.interactiveObjects.push(obj);
     }
+  }
+
+  private spawnTestNPCs(): void {
+    const cx = Math.floor(ROOM_COLS / 2);
+    const cy = Math.floor(ROOM_ROWS / 2);
+
+    // Idle NPC — stands near the top-right
+    this.npcs.push(
+      new NPC(this, (cx + 3) * GRID + GRID / 2, (cy - 3) * GRID + GRID / 2, {
+        id: 'guard_01',
+        name: 'Guard',
+        behavior: 'idle',
+        dialogId: 'dialog_guard',
+        blocksPath: true,
+      }),
+    );
+
+    // Patrolling NPC — walks left/right near the bottom
+    this.npcs.push(
+      new NPC(this, (cx - 3) * GRID + GRID / 2, (cy + 3) * GRID + GRID / 2, {
+        id: 'scientist_01',
+        name: 'Dr. Silva',
+        behavior: 'patrol',
+        dialogId: 'dialog_scientist',
+        patrolPath: [
+          { x: (cx - 5) * GRID + GRID / 2, y: (cy + 3) * GRID + GRID / 2 },
+          { x: (cx - 1) * GRID + GRID / 2, y: (cy + 3) * GRID + GRID / 2 },
+        ],
+        tint: 0x90e0ef,
+      }),
+    );
   }
 
   private updateInteractiveObjects(): void {
@@ -182,13 +227,27 @@ export class GameScene extends Phaser.Scene {
     }
   }
 
+  private updateNPCs(delta: number): void {
+    if (!this.player) return;
+    const player = this.player;
+
+    this.nearestNPC = null;
+
+    for (const npc of this.npcs) {
+      npc.update(delta, player.x, player.y);
+      if (npc.isPlayerInRange() && this.nearestNPC === null) {
+        this.nearestNPC = npc;
+      }
+    }
+  }
+
   private checkInteractKey(): void {
-    if (
-      this.interactKey &&
-      Phaser.Input.Keyboard.JustDown(this.interactKey) &&
-      this.nearestInteractive
-    ) {
+    if (!this.inputManager?.isInteracting()) return;
+
+    if (this.nearestInteractive) {
       this.nearestInteractive.interact();
+    } else if (this.nearestNPC) {
+      this.nearestNPC.interact();
     }
   }
 

@@ -55,6 +55,15 @@ export interface GameStoreState {
   isPaused: boolean;
   interactionPrompt: { objectId: string; promptText: string } | null;
 
+  // UI shell state
+  gamePhase: 'menu' | 'playing' | 'paused';
+  activePanel: 'none' | 'inventory' | 'questlog' | 'map' | 'settings' | 'terminal';
+  playerName: string;
+  playerGender: 'male' | 'female' | 'nonbinary';
+  xp: number;
+  level: number;
+  currentFloor: string;
+
   // Actions
   setPlayerPosition: (x: number, y: number) => void;
   setPlayerDirection: (direction: Direction) => void;
@@ -69,6 +78,17 @@ export interface GameStoreState {
   toggleSkillTree: () => void;
   setPaused: (paused: boolean) => void;
   setInteractionPrompt: (prompt: { objectId: string; promptText: string } | null) => void;
+
+  // UI shell actions
+  setGamePhase: (phase: 'menu' | 'playing' | 'paused') => void;
+  setActivePanel: (
+    panel: 'none' | 'inventory' | 'questlog' | 'map' | 'settings' | 'terminal',
+  ) => void;
+  setPlayerName: (name: string) => void;
+  setPlayerGender: (gender: 'male' | 'female' | 'nonbinary') => void;
+  addXp: (amount: number) => void;
+  setLevel: (level: number) => void;
+  setCurrentFloor: (floor: string) => void;
 }
 
 // ─── Python Runtime Interfaces ──────────────────────────────────────────────

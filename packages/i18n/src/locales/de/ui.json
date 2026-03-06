@@ -24,7 +24,24 @@
     "load_game": "Spiel laden",
     "save_game": "Spiel speichern",
     "settings": "Einstellungen",
-    "quit": "Zum Menü"
+    "quit": "Zum Menü",
+    "resume": "Fortsetzen"
+  },
+  "new_game": {
+    "step_gender": "Wähle deine Identität",
+    "step_codename": "Gib deinen Codenamen ein",
+    "step_intro": "Einweisung",
+    "gender_male": "Männlich",
+    "gender_female": "Weiblich",
+    "gender_nonbinary": "Nicht-Binär",
+    "codename_label": "Codename",
+    "codename_placeholder": "Codename eingeben...",
+    "codename_hint": "2–20 Zeichen, Buchstaben, Zahlen und Leerzeichen",
+    "codename_error": "Ungültiger Codename. Verwende 2–20 alphanumerische Zeichen.",
+    "cipher_intro": "Willkommen im Grid, {{name}}. Ich bin CIPHER — dein KI-Begleiter. Zusammen hacken wir uns nach oben.",
+    "back": "Zurück",
+    "next": "Weiter",
+    "start_game": "Mission starten"
   },
   "settings": {
     "title": "Einstellungen",
@@ -61,5 +78,30 @@
     "completed": "{{count}} Abgeschlossen",
     "total_xp": "Gesamt-EP: {{xp}}",
     "completion": "{{percent}}% Abgeschlossen"
+  },
+  "quest_log": {
+    "title": "Auftragsprotokoll",
+    "chapter": "Kapitel {{num}}",
+    "floor": "Etage: {{floor}}",
+    "progress": "Fortschritt",
+    "no_quests": "Keine aktiven Missionen",
+    "status_locked": "Gesperrt",
+    "status_available": "Verfügbar",
+    "status_in_progress": "In Bearbeitung",
+    "status_completed": "Abgeschlossen"
+  },
+  "inventory": {
+    "title": "Inventar",
+    "empty": "Keine Gegenstände gesammelt",
+    "category_tools": "Werkzeuge",
+    "category_keycards": "Schlüsselkarten",
+    "category_datafiles": "Datendateien"
+  },
+  "floor_map": {
+    "title": "Gebäudeplan",
+    "floor": "Etage {{num}}",
+    "locked": "Gesperrt",
+    "current": "Aktuell",
+    "fast_travel": "Schnellreise"
   }
 }

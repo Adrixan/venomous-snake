@@ -24,7 +24,24 @@
     "load_game": "Load Game",
     "save_game": "Save Game",
     "settings": "Settings",
-    "quit": "Quit to Menu"
+    "quit": "Quit to Menu",
+    "resume": "Resume"
+  },
+  "new_game": {
+    "step_gender": "Choose Your Identity",
+    "step_codename": "Enter Your Codename",
+    "step_intro": "Briefing",
+    "gender_male": "Male",
+    "gender_female": "Female",
+    "gender_nonbinary": "Non-Binary",
+    "codename_label": "Codename",
+    "codename_placeholder": "Enter codename...",
+    "codename_hint": "2–20 characters, letters, numbers and spaces",
+    "codename_error": "Invalid codename. Use 2–20 alphanumeric characters.",
+    "cipher_intro": "Welcome to the Grid, {{name}}. I'm CIPHER — your AI sidekick. Together we'll hack our way to the top.",
+    "back": "Back",
+    "next": "Next",
+    "start_game": "Start Mission"
   },
   "settings": {
     "title": "Settings",
@@ -61,5 +78,30 @@
     "completed": "{{count}} Completed",
     "total_xp": "Total XP: {{xp}}",
     "completion": "{{percent}}% Complete"
+  },
+  "quest_log": {
+    "title": "Quest Log",
+    "chapter": "Chapter {{num}}",
+    "floor": "Floor: {{floor}}",
+    "progress": "Progress",
+    "no_quests": "No active missions",
+    "status_locked": "Locked",
+    "status_available": "Available",
+    "status_in_progress": "In Progress",
+    "status_completed": "Completed"
+  },
+  "inventory": {
+    "title": "Inventory",
+    "empty": "No items collected",
+    "category_tools": "Tools",
+    "category_keycards": "Keycards",
+    "category_datafiles": "Data Files"
+  },
+  "floor_map": {
+    "title": "Building Map",
+    "floor": "Floor {{num}}",
+    "locked": "Locked",
+    "current": "Current",
+    "fast_travel": "Fast Travel"
   }
 }

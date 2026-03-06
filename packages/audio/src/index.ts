@@ -1,3 +1,5 @@
 // @venomous-snake/audio
-// Audio management: music, SFX, and spatial audio — implementation pending
-export const AUDIO_VERSION = '0.0.1';
+export { AudioManager } from './AudioManager';
+export type { AudioCategory, AudioTrack } from './AudioManager';
+export { SFX, MUSIC } from './SoundEffects';
+export type { SFXKey, MusicKey } from './SoundEffects';

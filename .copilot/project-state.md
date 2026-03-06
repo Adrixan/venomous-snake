@@ -149,19 +149,52 @@ Top-priority epics (Must): Foundation, Core Engine, Hacking Terminal, Challenge 
 
 ## Current Sprint
 
-**Sprint 1 — "Foundation"**
-- **Goal**: Working Nx monorepo with Phaser + React rendering a test scene in the browser.
-- **Points**: 8
-- **Stories**: US-001 (3pts), US-003 (2pts), US-010 partial (3pts)
-- **Status**: Not started — awaiting user confirmation of backlog
+**Sprint 5 — "Content & Polish"**
+- **Goal**: Curriculum chapters 1-6, NPC entities, mobile controls, audio system, remaining UI panels
+- **Stories**: US-015, US-016, US-041, US-060-066, US-070-075, US-080-084, US-090-094, US-100-105
+- **Status**: In progress — parallel agent execution
 
 ## Sprint History
 
-*None yet*
+### Sprint 1 — "Foundation" ✅
+- US-001: Nx monorepo scaffold (3pts) — DONE
+- US-003: Dev environment & tooling (2pts) — DONE
+- US-010: Phaser 3 + React integration (5pts) — DONE
+- Commit: 7bed87a, f48dccd
+
+### Sprint 2 — "Game World Engine" ✅
+- US-011: Tilemap rendering (5pts) — DONE
+- US-012: Player character movement (5pts) — DONE
+- US-013: Camera system (3pts) — DONE
+- US-014: Interactive objects (3pts) — DONE
+
+### Sprint 3 — "Hacking Terminal" ✅
+- US-020: CodeMirror editor with terminal theme (5pts) — DONE
+- US-021: Pyodide integration (8pts) — DONE
+- US-022: Output panel (3pts) — DONE
+- US-023: Input() handling (5pts) — DONE
+- US-024: Error feedback (3pts) — DONE
+- US-026: Interpreter abstraction layer (3pts) — DONE
+
+### Sprint 4 — "Challenge Engine + Narrative + i18n" ✅
+- US-002: CI/CD pipeline (3pts) — DONE
+- US-004: PWA manifest & service worker (2pts) — DONE
+- US-030: Challenge definition schema (3pts) — DONE
+- US-031: Challenge validation & test runner (5pts) — DONE
+- US-032: Progressive scaffolding system (5pts) — DONE
+- US-033: Procedural hint generation engine (8pts) — DONE
+- US-034: Challenge progression & unlock gating (3pts) — DONE
+- US-040: Dialog engine (5pts) — DONE
+- US-043: Player gender choice & pronouns (2pts) — DONE
+- US-044: Story state tracking (3pts) — DONE
+- US-120: i18n framework setup (3pts) — DONE
+- US-121: English string extraction (3pts) — DONE
+- US-122: German translation (8pts) — DONE
 
 ## Open Items
 
-1. **USB deployment (backlog)**: Pyodide requires HTTP; Brython identified as file://-safe alternative (90% curriculum). Deprioritized — focus on PWA. See `CURRICULUM_RESEARCH.md` sections B–I for full analysis.
-2. **Python curriculum design**: Research complete — see `CURRICULUM_RESEARCH.md`. 12-chapter progression with ~100+ challenges designed.
-3. **Asset pipeline**: Need to determine sprite/tilemap art source (custom art, open-source assets, commissioned, AI-generated).
-4. **Mobile coding UX**: On-screen keyboard for Python coding on mobile/tablet needs UX research — standard mobile keyboards lack symbols needed for coding.
+1. **USB deployment (backlog)**: Pyodide requires HTTP; Brython identified as file://-safe alternative (90% curriculum). Deprioritized.
+2. **Asset pipeline**: Using procedural placeholder graphics. Need sprite/tilemap art (open-source or AI-generated).
+3. **Mobile coding UX**: Symbol toolbar for Python on mobile keyboards — being built in current sprint.
+4. **Code splitting**: Vite warns about large chunks (2MB+ with Phaser + CodeMirror). Need manual chunks config.
+5. **Pyodide node:path warning**: Pyodide imports node:path/url which Vite externalizes — works but logs warnings.
