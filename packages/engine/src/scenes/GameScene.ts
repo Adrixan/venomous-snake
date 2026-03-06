@@ -1,36 +1,86 @@
 import Phaser from 'phaser';
 import { EventBus } from '../EventBus';
+import { Player } from '../entities/Player';
+import { InteractiveObject } from '../entities/InteractiveObject';
+import { TilemapManager } from '../tilemap/TilemapManager';
+import { CameraSystem } from '../systems/CameraSystem';
+import type { RoomConfig } from '../tilemap/ProceduralRoom';
 
 export interface GameSceneData {
   roomKey?: string;
 }
 
+const LOBBY_CONFIG: RoomConfig = {
+  name: 'lobby',
+  width: 25,
+  height: 19,
+  tileSize: 32,
+  doors: [{ side: 'east', position: 9, targetRoom: 'office' }],
+  objects: [
+    { type: 'terminal', tileX: 12, tileY: 5, id: 'terminal_lobby_01' },
+    { type: 'terminal', tileX: 6, tileY: 8, id: 'terminal_lobby_02' },
+  ],
+};
+
 export class GameScene extends Phaser.Scene {
-  private cursors: Phaser.Types.Input.Keyboard.CursorKeys | undefined;
-  private playerSprite: Phaser.GameObjects.Rectangle | undefined;
-  private readonly gridSize = 32;
+  private player: Player | undefined;
+  private cameraSystem: CameraSystem | undefined;
+  private interactiveObjects: InteractiveObject[] = [];
+  private unsubscribeEventBus: (() => void) | undefined;
 
   constructor() {
     super({ key: 'GameScene' });
   }
 
   create(_data: GameSceneData): void {
-    this.createTestRoom();
+    const { map, collisionLayer, interactiveObjects: objData } =
+      TilemapManager.createTestRoom(this, LOBBY_CONFIG);
 
-    this.playerSprite = this.add.rectangle(400, 300, 24, 32, 0x00ff9d);
-    this.physics.add.existing(this.playerSprite);
+    this.physics.world.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
 
-    const body = this.playerSprite.body as Phaser.Physics.Arcade.Body;
-    body.setCollideWorldBounds(true);
+    // Player
+    Player.createPlaceholderTexture(this);
+    this.player = new Player(this, 5 * 32 + 16, 9 * 32 + 16);
+    this.physics.add.collider(this.player, collisionLayer);
 
-    this.cameras.main.startFollow(this.playerSprite, true, 0.1, 0.1);
-    this.cameras.main.setBackgroundColor('#0a0a0f');
+    // Camera
+    this.cameraSystem = new CameraSystem(this);
+    this.cameraSystem.followPlayer(this.player, { lerpX: 0.1, lerpY: 0.1 });
+    this.cameraSystem.setBoundsFromMap(map);
 
-    if (this.input.keyboard) {
-      this.cursors = this.input.keyboard.createCursorKeys();
+    // Interactive objects
+    for (const obj of objData) {
+      const color =
+        obj.type === 'terminal' ? 0x00b4d8 : obj.type === 'door' ? 0x2d6a4f : 0xffaa00;
+      const prompt =
+        obj.type === 'terminal' ? 'Press [E] to use terminal' : 'Press [E] to enter';
+
+      const onInteract: (() => void) | undefined =
+        obj.type === 'door' && obj.targetRoom !== undefined
+          ? () => {
+              const targetRoom = obj.targetRoom;
+              if (targetRoom !== undefined) {
+                this.cameraSystem?.transitionToRoom(targetRoom);
+              }
+            }
+          : undefined;
+
+      const interactObj = new InteractiveObject(this, {
+        id: obj.id,
+        x: obj.x,
+        y: obj.y,
+        width: 28,
+        height: 28,
+        promptText: prompt,
+        color,
+        interactionRadius: 64,
+        ...(onInteract !== undefined ? { onInteract } : {}),
+      });
+      this.interactiveObjects.push(interactObj);
     }
 
-    EventBus.on((event) => {
+    // EventBus subscriptions – unsubscribe when the scene shuts down
+    this.unsubscribeEventBus = EventBus.on((event) => {
       if (event.type === 'GAME_PAUSE') {
         this.scene.pause();
       } else if (event.type === 'GAME_RESUME') {
@@ -38,71 +88,28 @@ export class GameScene extends Phaser.Scene {
       }
     });
 
+    this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
+      this.unsubscribeEventBus?.();
+    });
+
     EventBus.emit({ type: 'SCENE_CHANGE', payload: { sceneKey: 'GameScene' } });
   }
 
   update(): void {
-    if (!this.playerSprite || !this.cursors) return;
+    if (!this.player) return;
 
-    const body = this.playerSprite.body as Phaser.Physics.Arcade.Body;
-    const speed = 160;
+    this.player.handleInput();
 
-    body.setVelocity(0);
+    const px = this.player.x;
+    const py = this.player.y;
 
-    let movingX = false;
-    let movingY = false;
-
-    if (this.cursors.left.isDown) {
-      body.setVelocityX(-speed);
-      movingX = true;
-    } else if (this.cursors.right.isDown) {
-      body.setVelocityX(speed);
-      movingX = true;
-    }
-
-    if (this.cursors.up.isDown) {
-      body.setVelocityY(-speed);
-      movingY = true;
-    } else if (this.cursors.down.isDown) {
-      body.setVelocityY(speed);
-      movingY = true;
-    }
-
-    if (movingX && movingY) {
-      body.velocity.normalize().scale(speed);
+    for (const obj of this.interactiveObjects) {
+      obj.checkProximity({ x: px, y: py });
     }
 
     EventBus.emit({
       type: 'PLAYER_MOVE',
-      payload: { x: this.playerSprite.x, y: this.playerSprite.y },
-    });
-  }
-
-  private createTestRoom(): void {
-    const g = this.gridSize;
-    const roomWidth = 25;
-    const roomHeight = 19;
-
-    this.physics.world.setBounds(0, 0, roomWidth * g, roomHeight * g);
-
-    for (let x = 0; x < roomWidth; x++) {
-      for (let y = 0; y < roomHeight; y++) {
-        const isWall = x === 0 || x === roomWidth - 1 || y === 0 || y === roomHeight - 1;
-        const color = isWall ? 0x1a1a2e : 0x16213e;
-        this.add.rectangle(x * g + g / 2, y * g + g / 2, g - 1, g - 1, color);
-      }
-    }
-
-    const terminal = this.add.rectangle(12 * g + g / 2, 5 * g + g / 2, g, g, 0x00b4d8);
-    this.physics.add.existing(terminal, true);
-
-    const terminalZone = this.add.zone(12 * g + g / 2, 5 * g + g / 2, g * 3, g * 3);
-    this.physics.add.existing(terminalZone, true);
-
-    this.add.text(12 * g, 4 * g - 8, '[TERMINAL]', {
-      fontFamily: 'monospace',
-      fontSize: '10px',
-      color: '#00b4d8',
+      payload: { x: px, y: py },
     });
   }
 }

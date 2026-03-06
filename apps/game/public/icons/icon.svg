@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" fill="#0a0a0f"/>
+  <text x="256" y="200" text-anchor="middle" fill="#00ff9d" font-family="monospace" font-size="120" font-weight="bold">VS</text>
+  <text x="256" y="340" text-anchor="middle" fill="#00b4d8" font-family="monospace" font-size="40">VENOMOUS</text>
+  <text x="256" y="390" text-anchor="middle" fill="#00b4d8" font-family="monospace" font-size="40">SNAKE</text>
+</svg>

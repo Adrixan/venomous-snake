@@ -2,7 +2,7 @@
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "outDir": "../../dist/packages/challenges",
-    "rootDir": "."
+    "rootDir": "../.."
   },
   "include": [
     "src/**/*",

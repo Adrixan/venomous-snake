@@ -1,8 +1,25 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { GameCanvas } from './components/GameCanvas';
 import { HUD } from './components/HUD';
+import { HackingTerminal } from '@venomous-snake/ui';
+import { useGameStore } from './store/gameStore';
 
 export function App(): React.JSX.Element {
+  const terminalOpen = useGameStore((state) => state.overlay.terminalOpen);
+  const openTerminal = useGameStore((state) => state.openTerminal);
+  const closeTerminal = useGameStore((state) => state.closeTerminal);
+
+  // Open terminal with T key for development testing
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 't' && !terminalOpen) {
+        openTerminal('dev-terminal');
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [terminalOpen, openTerminal]);
+
   return (
     <div
       style={{
@@ -15,6 +32,7 @@ export function App(): React.JSX.Element {
     >
       <GameCanvas />
       <HUD />
+      <HackingTerminal isOpen={terminalOpen} onClose={closeTerminal} />
     </div>
   );
 }
