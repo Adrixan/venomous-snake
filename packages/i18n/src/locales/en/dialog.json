@@ -256,5 +256,221 @@
       "1": "You've cracked the string vault. Text manipulation: complete. The facility's personnel records have no secrets from you now.",
       "2": "String methods, indexing, slicing, f-strings, split and join — all in your toolkit. Floor 3 awaits. Booleans and logic are next. Think carefully."
     }
+  },
+  "ch07_01": {
+    "pre": "Floor 7 — Intel Files. Real operatives need to read data from files. Since we're in a browser, we'll simulate file I/O with Python's io.StringIO. Think of it as a file that lives in memory.",
+    "post": "io.StringIO gives you a file-like object you can read() from. Same interface as a real file, zero disk access required. Clean and portable."
+  },
+  "ch07_02": {
+    "pre": "Reading files is half the battle. Now let's write data to a simulated file. io.StringIO() creates an empty buffer you can write to, then retrieve everything with getvalue().",
+    "post": "write() adds content, getvalue() retrieves it all. In the real world, you'd use open('file', 'w') — but the concept is identical."
+  },
+  "ch07_03": {
+    "pre": "Raw data is messy — extra spaces, blank lines, inconsistent formatting. A good operative cleans their data before using it. strip() and list comprehensions are your best friends here.",
+    "post": "strip() removes whitespace from both ends. Filtering in a comprehension removes empty lines. Always clean your data before processing — garbage in, garbage out."
+  },
+  "ch07_04": {
+    "pre": "CSV — Comma-Separated Values. The simplest data format in existence, and one of the most common. split(',') is all you need for basic parsing.",
+    "post": "split() turns a string into a list. Simple, effective, battle-tested. For complex CSV with quotes and escaping, there's the csv module — but for clean data, split() does the job."
+  },
+  "ch07_05": {
+    "pre": "Messages often use delimiters to separate data fields. Splitting and rejoining lets you reformat data on the fly. split() breaks apart, join() puts back together.",
+    "post": "split(':') breaks on colons. ' | '.join(parts) reassembles with pipes. This split-transform-join pattern is everywhere in data processing."
+  },
+  "ch07_06": {
+    "pre": "The with statement is Python's context manager — it automatically handles resource cleanup. No more forgetting to close files. It's not just good practice, it's the Python way.",
+    "post": "with guarantees cleanup even if an error occurs. For files, databases, network connections — always use with when possible. Your future self will thank you."
+  },
+  "ch07_07": {
+    "pre": "JSON is the lingua franca of data exchange. APIs speak it, configs use it, and Python's json module makes parsing it trivial. json.loads() turns a JSON string into a dictionary.",
+    "post": "json.loads() for strings, json.load() for files. JSON types map to Python: object→dict, array→list, true→True, null→None. You'll use this constantly."
+  },
+  "ch07_08": {
+    "pre": "Final intel challenge: combine JSON parsing with data transformation. Parse structured data, extract what you need, transform it. This is the core of data processing.",
+    "post": "Parse, extract, transform, output. You've completed Floor 7 and mastered Python's data handling toolkit. Your intel processing skills are now operational, agent."
+  },
+  "ch08_01": {
+    "pre": "Floor 8 — Mission Dossiers. In the real world, things go wrong. try/except is how Python handles errors gracefully — catching problems before they crash your program.",
+    "post": "try/except catches errors without crashing. ValueError fires when int() gets a non-number. Always anticipate what could go wrong."
+  },
+  "ch08_02": {
+    "pre": "Different errors need different responses. Multiple except blocks let you handle KeyError, TypeError, and other exceptions with targeted recovery logic.",
+    "post": "Multiple except blocks — like multiple escape routes. Each catches a specific error type. Order matters: put specific exceptions before general ones."
+  },
+  "ch08_03": {
+    "pre": "The full error handling pattern: try the risky code, except catches errors, else runs on success, finally runs no matter what. It's the complete protocol.",
+    "post": "try → except → else → finally. The else block is often overlooked but incredibly useful — it only runs when no exception occurred. finally always runs. Always."
+  },
+  "ch08_04": {
+    "pre": "Sometimes YOU need to signal an error. The raise keyword creates an exception on demand. Combined with custom messages, it makes your code self-documenting.",
+    "post": "raise ValueError('message') creates a new exception and throws it up the call stack. Validate inputs early, fail loudly, fail clearly."
+  },
+  "ch08_05": {
+    "pre": "Built-in exceptions are great, but custom exceptions tell a better story. class MissionError(Exception): — now your errors carry mission-specific data.",
+    "post": "Custom exceptions inherit from Exception. They can carry extra data (like mission_id) and make error handling more precise. Name them well — they're documentation."
+  },
+  "ch08_06": {
+    "pre": "Input validation is your first line of defense. Check everything, trust nothing. If input doesn't meet requirements, raise an error with a clear message.",
+    "post": "Validate early, validate completely. startswith(), len(), and raise ValueError — three tools that prevent bad data from causing chaos downstream."
+  },
+  "ch08_07": {
+    "pre": "Not every error is fatal. Graceful degradation means providing reasonable defaults when things go wrong. Better to show 'UNKNOWN' than crash the whole system.",
+    "post": "Default values and fallback behavior keep your program running when data is missing. The user sees a result, not a stack trace. That's professional error handling."
+  },
+  "ch08_08": {
+    "pre": "Final dossier challenge: error handling inside loops. When processing batches of data, one bad item shouldn't stop the whole operation. Recover and continue.",
+    "post": "Error recovery in loops — process what you can, handle what you can't. Floor 8 complete. You now handle errors like a seasoned operative. Nothing catches you off guard."
+  },
+  "ch09_01": {
+    "pre": "Floor 9 — Field Manual. Python's standard library is massive. import gives you access to math, random, os, json, and hundreds more. Time to arm yourself.",
+    "post": "import module, then module.function(). Python's standard library has a module for almost everything. Learn to find and use them — that's real programming power."
+  },
+  "ch09_02": {
+    "pre": "from math import pi, ceil, floor brings specific names directly into your namespace. Cleaner code, no module prefix needed.",
+    "post": "from...import is cleaner for specific names. But be careful — importing too many names can cause conflicts. Use wisely."
+  },
+  "ch09_03": {
+    "pre": "Lambda functions — anonymous, inline, powerful. Perfect as sort keys, filter conditions, and map transforms. One line, one purpose.",
+    "post": "lambda x: x[1] — a tiny function right where you need it. sorted() with key=lambda is one of Python's most common patterns. Master it."
+  },
+  "ch09_04": {
+    "pre": "map() applies a function to every element in a sequence. Combined with lambda, it's a one-liner data transformer. Functional programming in action.",
+    "post": "map(function, iterable) — transform every element without writing a loop. Wrap in list() to see the results. Clean, declarative, efficient."
+  },
+  "ch09_05": {
+    "pre": "filter() keeps only elements that pass a test. Like map(), it takes a function and an iterable. Together they replace most simple loops.",
+    "post": "filter(lambda x: x > 10, data) — keep what matters, discard the rest. Functional tools make your intent crystal clear."
+  },
+  "ch09_06": {
+    "pre": "List comprehensions with conditions — Python's swiss army knife. [x for x in data if condition] does what filter does, but more Pythonically.",
+    "post": "Compound conditions in comprehensions: and, or, nested checks. When you need to filter on multiple criteria, this is the way."
+  },
+  "ch09_07": {
+    "pre": "Dictionary comprehensions: {key: value for item in iterable}. Build entire dictionaries in one expression. Efficient, readable, powerful.",
+    "post": "Dict comprehensions are the dictionary equivalent of list comprehensions. Same syntax, curly braces instead of square brackets. Use them everywhere."
+  },
+  "ch09_08": {
+    "pre": "f-strings can do more than interpolation. Format specs control width, alignment, and padding. Perfect for building clean, aligned reports and tables.",
+    "post": ":<10 left-aligns, :>5 right-aligns, :08d zero-pads. Format specs turn messy output into professional reports. Details matter, operative."
+  },
+  "ch09_09": {
+    "pre": "Regular expressions — the ultimate pattern matching tool. The re module lets you find, extract, and replace text patterns. Powerful but cryptic at first.",
+    "post": "re.findall() extracts all matches. \\d+ matches digits, AGT-\\d+ matches agent IDs. Regex is a language within a language — worth learning."
+  },
+  "ch09_10": {
+    "pre": "Final field manual challenge: chain all your tools together. filter → sorted → map → sum. Functional programming at its finest — data flows through a pipeline.",
+    "post": "Chaining functional tools creates clean data pipelines. Floor 9 complete. You've assembled a formidable toolkit. Time to build something bigger."
+  },
+  "ch10_01": {
+    "pre": "Floor 10 — Operative Classes. Object-oriented programming organizes code into classes — blueprints for objects. Attributes store data, methods define behavior.",
+    "post": "Classes bundle data and behavior together. Create instances with ClassName(). Access attributes with dot notation. Simple, but it changes everything."
+  },
+  "ch10_02": {
+    "pre": "Methods are functions that belong to a class. The first parameter is always self — it refers to the instance calling the method. This is how objects know about themselves.",
+    "post": "self is the instance. Methods use self to access the object's own data. bot.greet() automatically passes bot as self. That's the magic."
+  },
+  "ch10_03": {
+    "pre": "The __init__ constructor runs automatically when you create an instance. It sets up the initial state. Different arguments, different bots — same blueprint.",
+    "post": "__init__ is the birth of an object. self.attribute = parameter stores data on the instance. Each object carries its own state."
+  },
+  "ch10_04": {
+    "pre": "__str__ and __repr__ — how your object introduces itself. __str__ is for humans, __repr__ is for developers. Both are essential for debugging.",
+    "post": "str(obj) calls __str__. repr(obj) calls __repr__. Good __repr__ should look like a valid constructor. Good __str__ should be readable."
+  },
+  "ch10_05": {
+    "pre": "Inheritance — the ability to build new classes on top of existing ones. class Agent(Person): inherits everything from Person, then adds more. super() calls the parent.",
+    "post": "Inheritance creates is-a relationships. An Agent IS a Person. super().__init__() ensures the parent is properly initialized. Build on what exists."
+  },
+  "ch10_06": {
+    "pre": "Method overriding — subclasses can replace or extend parent methods. Each subclass defines its own behavior while sharing the same interface.",
+    "post": "Override to customize. Use super() to extend rather than replace. Polymorphism means the same method call does different things depending on the object type."
+  },
+  "ch10_07": {
+    "pre": "Encapsulation — protecting an object's internal state. Python uses naming conventions: _protected, __private (name mangling). Getter and setter methods control access.",
+    "post": "Double underscore triggers name mangling — the attribute becomes harder to access directly. Getters and setters add validation. Not bulletproof, but a clear signal: stay out."
+  },
+  "ch10_08": {
+    "pre": "@classmethod receives the class itself. @staticmethod is just a regular function that lives in the class namespace. Both are useful for factory patterns and utilities.",
+    "post": "Class methods know about the class. Static methods don't. Use @classmethod for factory methods, @staticmethod for utility functions. They live on the class, not instances."
+  },
+  "ch10_09": {
+    "pre": "Composition — building complex objects from simpler ones. A Building HAS Floors. This has-a relationship is often more flexible than inheritance.",
+    "post": "Composition over inheritance is a key design principle. Objects containing other objects creates flexible, maintainable structures. A tower is just floors stacked together."
+  },
+  "ch10_10": {
+    "pre": "Final OOP challenge: polymorphism through duck typing. If it has a patrol() method, it can patrol. No shared base class needed — that's Python's philosophy.",
+    "post": "If it walks like a duck and quacks like a duck... Python doesn't care about the type, only the interface. Floor 10 complete — you think in objects now."
+  },
+  "ch11_01": {
+    "pre": "Floor 11 — Quality Assurance. Professional Python starts with type hints. They don't change runtime behavior but make your code self-documenting and IDE-friendly.",
+    "post": "Type hints are documentation that tools can verify. def func(x: int) -> str tells everyone what goes in and what comes out. Zero cost, huge benefit."
+  },
+  "ch11_02": {
+    "pre": "Dataclasses eliminate boilerplate. @dataclass auto-generates __init__, __repr__, and __eq__. Define your fields with type annotations, Python does the rest.",
+    "post": "@dataclass is Python's answer to 'I just want a simple class that holds data.' Less code, fewer bugs, more readable. Use it whenever you can."
+  },
+  "ch11_03": {
+    "pre": "assert statements are runtime checks for things that should always be true. If the assertion fails, your program stops immediately with a clear message.",
+    "post": "assert is your safety net during development. It catches impossible states before they cause mysterious bugs downstream. Fail fast, fail clearly."
+  },
+  "ch11_04": {
+    "pre": "Writing tests is writing insurance. assert inside test functions verifies your code works correctly. If a test fails, you know exactly what broke.",
+    "post": "Test functions with assert — the foundation of reliable code. In production you'd use pytest or unittest, but the concept is the same: verify expected behavior."
+  },
+  "ch11_05": {
+    "pre": "Docstrings explain what your code does, what it takes, and what it returns. Triple-quoted, placed right after the function definition. Your future self will thank you.",
+    "post": "Good docstrings are an investment. Args, Returns, Raises — document the contract. help(func) shows the docstring. Make it count."
+  },
+  "ch11_06": {
+    "pre": "Magic numbers are a code smell. Enums give names to values: ThreatLevel.HIGH instead of 8. Constants like MAX_AGENTS = 12 make code readable and maintainable.",
+    "post": "Enums prevent invalid values. Constants prevent magic numbers. Your code now says what it means. ThreatLevel.HIGH.value gives you 8, but the code reads like English."
+  },
+  "ch11_07": {
+    "pre": "The typing module provides generic types: List[str], Dict[str, int], Optional[str]. They express complex type relationships that basic annotations can't.",
+    "post": "List[str] says 'a list containing strings.' Optional[str] says 'a string or None.' These types are the vocabulary of professional Python."
+  },
+  "ch11_08": {
+    "pre": "Final QA challenge: combine everything — dataclasses, enums, type hints, docstrings, filtering. This is what professional Python looks like.",
+    "post": "Clean types, clear documentation, structured data, typed functions. Floor 11 complete — your code is now production-grade. One floor remains, operative."
+  },
+  "ch12_01": {
+    "pre": "Floor 12 — Deep Cover. The executive floor. Advanced Python for elite operatives. Generators use yield to produce values lazily — one at a time, on demand.",
+    "post": "Generators are memory-efficient — they produce values one at a time instead of storing everything in memory. yield pauses and resumes. Elegant and powerful."
+  },
+  "ch12_02": {
+    "pre": "Generator expressions — like list comprehensions but with parentheses. (x**2 for x in data) creates a lazy sequence. Perfect for large datasets.",
+    "post": "Generator expressions are the lazy cousin of list comprehensions. They use almost no memory because values are computed on-the-fly. Use them when you don't need the full list."
+  },
+  "ch12_03": {
+    "pre": "Decorators — functions that wrap other functions. @logged adds behavior before and after a function call without modifying the function itself. Aspect-oriented programming.",
+    "post": "Decorators are one of Python's most powerful patterns. Logging, timing, authentication — all can be added with a simple @decorator. Clean separation of concerns."
+  },
+  "ch12_04": {
+    "pre": "Parameterized decorators — decorators that take arguments. Three levels of nesting: the factory, the decorator, the wrapper. Complex but incredibly useful.",
+    "post": "require_clearance(8) returns a decorator. That decorator wraps the function. Three nested functions, one clean interface. This is Python's closure system at full power."
+  },
+  "ch12_05": {
+    "pre": "Context managers — the __enter__/__exit__ protocol. You've used them with 'with'. Now build your own. Control what happens when entering and leaving a block.",
+    "post": "You've gone from using with to building with. __enter__ sets up, __exit__ tears down. Exceptions, cleanup, resource management — all handled automatically."
+  },
+  "ch12_06": {
+    "pre": "async/await — Python's concurrency model. async def creates a coroutine, await pauses until a result is ready. asyncio.gather runs multiple tasks concurrently.",
+    "post": "Async Python handles I/O-bound tasks efficiently. While one task waits for data, others can run. In the real world, this means faster network operations and API calls."
+  },
+  "ch12_07": {
+    "pre": "Pattern matching — Python 3.10's match/case. Structural pattern matching deconstructs data and branches based on shape. Guards add conditions to patterns.",
+    "post": "match/case is more than switch/case — it matches structure. Dictionaries, tuples, nested patterns, guards. Python's most powerful control flow construct."
+  },
+  "ch12_08": {
+    "pre": "The walrus operator (:=) — assign and use a value in one expression. Perfect in while loops, comprehensions, and if conditions. Concise and powerful.",
+    "post": "(:=) assigns and returns. In comprehensions, it lets you both test and capture a value. Use it when you'd otherwise need a temporary variable."
+  },
+  "ch12_09": {
+    "pre": "Advanced comprehensions — nested loops, cross-products, matrix operations. When data is multi-dimensional, comprehensions handle the complexity elegantly.",
+    "post": "Nested comprehensions read like nested loops — left to right, outer to inner. For flattening, pairing, and filtering multi-dimensional data, they're unbeatable."
+  },
+  "ch12_10": {
+    "pre": "FINAL SHOWDOWN. Every skill you've learned converges here — regex, dataclasses, typing, comprehensions, sorting, lambdas, walrus operator. Parse vulnerability logs, filter critical threats, display results. This is it, operative.",
+    "post": "You've combined every tool in your arsenal. From print('Hello, World!') to advanced vulnerability analysis. Floor 12 — cleared. The building is yours. Welcome to the executive level, operative. Mission complete."
   }
 }

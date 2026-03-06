@@ -65,6 +65,72 @@ export {
   ch06_09_sets,
   ch06_10_combining_collections,
 } from './chapter06';
+export {
+  ch07_01_read_file,
+  ch07_02_write_file,
+  ch07_03_file_line_processing,
+  ch07_04_csv_parsing,
+  ch07_05_string_split_join,
+  ch07_06_with_statement,
+  ch07_07_json_parsing,
+  ch07_08_data_transformation,
+} from './chapter07';
+export {
+  ch08_01_try_except,
+  ch08_02_multiple_except,
+  ch08_03_try_except_else_finally,
+  ch08_04_raising_exceptions,
+  ch08_05_custom_exception_classes,
+  ch08_06_input_validation_with_errors,
+  ch08_07_graceful_degradation,
+  ch08_08_error_handling_in_loops,
+} from './chapter08';
+export {
+  ch09_01_importing_modules,
+  ch09_02_from_import,
+  ch09_03_lambda_functions,
+  ch09_04_map_function,
+  ch09_05_filter_function,
+  ch09_06_list_comprehension_conditionals,
+  ch09_07_dictionary_comprehension,
+  ch09_08_string_formatting_advanced,
+  ch09_09_regular_expressions,
+  ch09_10_combining_tools,
+} from './chapter09';
+export {
+  ch10_01_simple_class,
+  ch10_02_methods,
+  ch10_03_init_constructor,
+  ch10_04_str_repr,
+  ch10_05_inheritance,
+  ch10_06_method_override,
+  ch10_07_encapsulation,
+  ch10_08_class_static_methods,
+  ch10_09_composition,
+  ch10_10_polymorphism,
+} from './chapter10';
+export {
+  ch11_01_type_hints,
+  ch11_02_dataclasses,
+  ch11_03_assert_statements,
+  ch11_04_writing_simple_tests,
+  ch11_05_docstrings,
+  ch11_06_constants_enums,
+  ch11_07_list_typing,
+  ch11_08_putting_it_together,
+} from './chapter11';
+export {
+  ch12_01_generators,
+  ch12_02_generator_expressions,
+  ch12_03_decorators_basics,
+  ch12_04_decorators_with_args,
+  ch12_05_context_managers,
+  ch12_06_async_basics,
+  ch12_07_pattern_matching,
+  ch12_08_walrus_operator,
+  ch12_09_advanced_comprehensions,
+  ch12_10_final_showdown,
+} from './chapter12';
 
 import { ch01_01_hello_world } from './chapter01/ch01_01_hello_world';
 import { ch01_02_variables } from './chapter01/ch01_02_variables';
@@ -125,6 +191,66 @@ import { ch06_07_dict_methods } from './chapter06/ch06_07_dict_methods';
 import { ch06_08_nested_dicts } from './chapter06/ch06_08_nested_dicts';
 import { ch06_09_sets } from './chapter06/ch06_09_sets';
 import { ch06_10_combining_collections } from './chapter06/ch06_10_combining_collections';
+
+import { ch07_01_read_file } from './chapter07/ch07_01_read_file';
+import { ch07_02_write_file } from './chapter07/ch07_02_write_file';
+import { ch07_03_file_line_processing } from './chapter07/ch07_03_file_line_processing';
+import { ch07_04_csv_parsing } from './chapter07/ch07_04_csv_parsing';
+import { ch07_05_string_split_join } from './chapter07/ch07_05_string_split_join';
+import { ch07_06_with_statement } from './chapter07/ch07_06_with_statement';
+import { ch07_07_json_parsing } from './chapter07/ch07_07_json_parsing';
+import { ch07_08_data_transformation } from './chapter07/ch07_08_data_transformation';
+
+import { ch08_01_try_except } from './chapter08/ch08_01_try_except';
+import { ch08_02_multiple_except } from './chapter08/ch08_02_multiple_except';
+import { ch08_03_try_except_else_finally } from './chapter08/ch08_03_try_except_else_finally';
+import { ch08_04_raising_exceptions } from './chapter08/ch08_04_raising_exceptions';
+import { ch08_05_custom_exception_classes } from './chapter08/ch08_05_custom_exception_classes';
+import { ch08_06_input_validation_with_errors } from './chapter08/ch08_06_input_validation_with_errors';
+import { ch08_07_graceful_degradation } from './chapter08/ch08_07_graceful_degradation';
+import { ch08_08_error_handling_in_loops } from './chapter08/ch08_08_error_handling_in_loops';
+
+import { ch09_01_importing_modules } from './chapter09/ch09_01_importing_modules';
+import { ch09_02_from_import } from './chapter09/ch09_02_from_import';
+import { ch09_03_lambda_functions } from './chapter09/ch09_03_lambda_functions';
+import { ch09_04_map_function } from './chapter09/ch09_04_map_function';
+import { ch09_05_filter_function } from './chapter09/ch09_05_filter_function';
+import { ch09_06_list_comprehension_conditionals } from './chapter09/ch09_06_list_comprehension_conditionals';
+import { ch09_07_dictionary_comprehension } from './chapter09/ch09_07_dictionary_comprehension';
+import { ch09_08_string_formatting_advanced } from './chapter09/ch09_08_string_formatting_advanced';
+import { ch09_09_regular_expressions } from './chapter09/ch09_09_regular_expressions';
+import { ch09_10_combining_tools } from './chapter09/ch09_10_combining_tools';
+
+import { ch10_01_simple_class } from './chapter10/ch10_01_simple_class';
+import { ch10_02_methods } from './chapter10/ch10_02_methods';
+import { ch10_03_init_constructor } from './chapter10/ch10_03_init_constructor';
+import { ch10_04_str_repr } from './chapter10/ch10_04_str_repr';
+import { ch10_05_inheritance } from './chapter10/ch10_05_inheritance';
+import { ch10_06_method_override } from './chapter10/ch10_06_method_override';
+import { ch10_07_encapsulation } from './chapter10/ch10_07_encapsulation';
+import { ch10_08_class_static_methods } from './chapter10/ch10_08_class_static_methods';
+import { ch10_09_composition } from './chapter10/ch10_09_composition';
+import { ch10_10_polymorphism } from './chapter10/ch10_10_polymorphism';
+
+import { ch11_01_type_hints } from './chapter11/ch11_01_type_hints';
+import { ch11_02_dataclasses } from './chapter11/ch11_02_dataclasses';
+import { ch11_03_assert_statements } from './chapter11/ch11_03_assert_statements';
+import { ch11_04_writing_simple_tests } from './chapter11/ch11_04_writing_simple_tests';
+import { ch11_05_docstrings } from './chapter11/ch11_05_docstrings';
+import { ch11_06_constants_enums } from './chapter11/ch11_06_constants_enums';
+import { ch11_07_list_typing } from './chapter11/ch11_07_list_typing';
+import { ch11_08_putting_it_together } from './chapter11/ch11_08_putting_it_together';
+
+import { ch12_01_generators } from './chapter12/ch12_01_generators';
+import { ch12_02_generator_expressions } from './chapter12/ch12_02_generator_expressions';
+import { ch12_03_decorators_basics } from './chapter12/ch12_03_decorators_basics';
+import { ch12_04_decorators_with_args } from './chapter12/ch12_04_decorators_with_args';
+import { ch12_05_context_managers } from './chapter12/ch12_05_context_managers';
+import { ch12_06_async_basics } from './chapter12/ch12_06_async_basics';
+import { ch12_07_pattern_matching } from './chapter12/ch12_07_pattern_matching';
+import { ch12_08_walrus_operator } from './chapter12/ch12_08_walrus_operator';
+import { ch12_09_advanced_comprehensions } from './chapter12/ch12_09_advanced_comprehensions';
+import { ch12_10_final_showdown } from './chapter12/ch12_10_final_showdown';
 
 import type { Challenge } from '@venomous-snake/shared-types';
 
@@ -190,6 +316,66 @@ export const challengeMap: Record<string, Challenge> = {
   [ch06_08_nested_dicts.id]: ch06_08_nested_dicts,
   [ch06_09_sets.id]: ch06_09_sets,
   [ch06_10_combining_collections.id]: ch06_10_combining_collections,
+  // Chapter 7
+  [ch07_01_read_file.id]: ch07_01_read_file,
+  [ch07_02_write_file.id]: ch07_02_write_file,
+  [ch07_03_file_line_processing.id]: ch07_03_file_line_processing,
+  [ch07_04_csv_parsing.id]: ch07_04_csv_parsing,
+  [ch07_05_string_split_join.id]: ch07_05_string_split_join,
+  [ch07_06_with_statement.id]: ch07_06_with_statement,
+  [ch07_07_json_parsing.id]: ch07_07_json_parsing,
+  [ch07_08_data_transformation.id]: ch07_08_data_transformation,
+  // Chapter 8
+  [ch08_01_try_except.id]: ch08_01_try_except,
+  [ch08_02_multiple_except.id]: ch08_02_multiple_except,
+  [ch08_03_try_except_else_finally.id]: ch08_03_try_except_else_finally,
+  [ch08_04_raising_exceptions.id]: ch08_04_raising_exceptions,
+  [ch08_05_custom_exception_classes.id]: ch08_05_custom_exception_classes,
+  [ch08_06_input_validation_with_errors.id]: ch08_06_input_validation_with_errors,
+  [ch08_07_graceful_degradation.id]: ch08_07_graceful_degradation,
+  [ch08_08_error_handling_in_loops.id]: ch08_08_error_handling_in_loops,
+  // Chapter 9
+  [ch09_01_importing_modules.id]: ch09_01_importing_modules,
+  [ch09_02_from_import.id]: ch09_02_from_import,
+  [ch09_03_lambda_functions.id]: ch09_03_lambda_functions,
+  [ch09_04_map_function.id]: ch09_04_map_function,
+  [ch09_05_filter_function.id]: ch09_05_filter_function,
+  [ch09_06_list_comprehension_conditionals.id]: ch09_06_list_comprehension_conditionals,
+  [ch09_07_dictionary_comprehension.id]: ch09_07_dictionary_comprehension,
+  [ch09_08_string_formatting_advanced.id]: ch09_08_string_formatting_advanced,
+  [ch09_09_regular_expressions.id]: ch09_09_regular_expressions,
+  [ch09_10_combining_tools.id]: ch09_10_combining_tools,
+  // Chapter 10
+  [ch10_01_simple_class.id]: ch10_01_simple_class,
+  [ch10_02_methods.id]: ch10_02_methods,
+  [ch10_03_init_constructor.id]: ch10_03_init_constructor,
+  [ch10_04_str_repr.id]: ch10_04_str_repr,
+  [ch10_05_inheritance.id]: ch10_05_inheritance,
+  [ch10_06_method_override.id]: ch10_06_method_override,
+  [ch10_07_encapsulation.id]: ch10_07_encapsulation,
+  [ch10_08_class_static_methods.id]: ch10_08_class_static_methods,
+  [ch10_09_composition.id]: ch10_09_composition,
+  [ch10_10_polymorphism.id]: ch10_10_polymorphism,
+  // Chapter 11
+  [ch11_01_type_hints.id]: ch11_01_type_hints,
+  [ch11_02_dataclasses.id]: ch11_02_dataclasses,
+  [ch11_03_assert_statements.id]: ch11_03_assert_statements,
+  [ch11_04_writing_simple_tests.id]: ch11_04_writing_simple_tests,
+  [ch11_05_docstrings.id]: ch11_05_docstrings,
+  [ch11_06_constants_enums.id]: ch11_06_constants_enums,
+  [ch11_07_list_typing.id]: ch11_07_list_typing,
+  [ch11_08_putting_it_together.id]: ch11_08_putting_it_together,
+  // Chapter 12
+  [ch12_01_generators.id]: ch12_01_generators,
+  [ch12_02_generator_expressions.id]: ch12_02_generator_expressions,
+  [ch12_03_decorators_basics.id]: ch12_03_decorators_basics,
+  [ch12_04_decorators_with_args.id]: ch12_04_decorators_with_args,
+  [ch12_05_context_managers.id]: ch12_05_context_managers,
+  [ch12_06_async_basics.id]: ch12_06_async_basics,
+  [ch12_07_pattern_matching.id]: ch12_07_pattern_matching,
+  [ch12_08_walrus_operator.id]: ch12_08_walrus_operator,
+  [ch12_09_advanced_comprehensions.id]: ch12_09_advanced_comprehensions,
+  [ch12_10_final_showdown.id]: ch12_10_final_showdown,
 };
 
 /** Get all challenges for a chapter */

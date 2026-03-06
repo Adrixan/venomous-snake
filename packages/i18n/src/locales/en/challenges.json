@@ -214,5 +214,221 @@
   "ch06_10": {
     "title": "Intel Merge",
     "description": "Merge two dictionaries using spread syntax and iterate over sorted results."
+  },
+  "ch07_01": {
+    "title": "Intel File Reader",
+    "description": "Read classified intel from a simulated file using Python's io.StringIO module."
+  },
+  "ch07_02": {
+    "title": "Mission Logger",
+    "description": "Write mission log entries to a simulated file using io.StringIO and retrieve the content."
+  },
+  "ch07_03": {
+    "title": "Line Scrubber",
+    "description": "Process raw file lines by stripping whitespace and filtering out empty lines."
+  },
+  "ch07_04": {
+    "title": "CSV Decoder",
+    "description": "Parse comma-separated asset data by splitting the string on delimiters."
+  },
+  "ch07_05": {
+    "title": "Signal Splitter",
+    "description": "Split a colon-delimited message into parts and rejoin them with a new delimiter."
+  },
+  "ch07_06": {
+    "title": "Secure Reader",
+    "description": "Use a with statement (context manager) to safely read from an io.StringIO object."
+  },
+  "ch07_07": {
+    "title": "JSON Intel",
+    "description": "Parse a JSON-formatted intelligence string into a Python dictionary and access its fields."
+  },
+  "ch07_08": {
+    "title": "Data Transform",
+    "description": "Parse JSON data and transform the results using a list comprehension."
+  },
+  "ch08_01": {
+    "title": "Error Trap",
+    "description": "Use try/except to catch a ValueError when converting invalid input to an integer."
+  },
+  "ch08_02": {
+    "title": "Multi-Catch",
+    "description": "Handle different exception types (KeyError, TypeError) with multiple except blocks."
+  },
+  "ch08_03": {
+    "title": "Full Protocol",
+    "description": "Use the complete try/except/else/finally pattern to handle a signal decoding operation."
+  },
+  "ch08_04": {
+    "title": "Raise the Alarm",
+    "description": "Use the raise keyword to throw a ValueError when input validation fails."
+  },
+  "ch08_05": {
+    "title": "Custom Alert",
+    "description": "Create a custom MissionError exception class that stores a mission ID."
+  },
+  "ch08_06": {
+    "title": "ID Validator",
+    "description": "Write a validation function that raises ValueError for improperly formatted agent IDs."
+  },
+  "ch08_07": {
+    "title": "Graceful Fallback",
+    "description": "Implement a function that gracefully returns a default value when a key is missing."
+  },
+  "ch08_08": {
+    "title": "Batch Recovery",
+    "description": "Process a list of values inside a loop, recovering from errors on each iteration."
+  },
+  "ch09_01": {
+    "title": "Module Recon",
+    "description": "Import and use the math and random standard library modules."
+  },
+  "ch09_02": {
+    "title": "Selective Import",
+    "description": "Use from...import to bring specific names (pi, ceil, floor) into scope."
+  },
+  "ch09_03": {
+    "title": "Lambda Sorter",
+    "description": "Sort a list of agent tuples by level using a lambda function as the sort key."
+  },
+  "ch09_04": {
+    "title": "Map Encoder",
+    "description": "Transform a list of codes using map() with a lambda function."
+  },
+  "ch09_05": {
+    "title": "Signal Filter",
+    "description": "Filter a list of signal values using filter() with a lambda condition."
+  },
+  "ch09_06": {
+    "title": "Conditional Sweep",
+    "description": "Use a list comprehension with compound conditions to find specific multiples."
+  },
+  "ch09_07": {
+    "title": "Clearance Map",
+    "description": "Build a dictionary from a list using dictionary comprehension."
+  },
+  "ch09_08": {
+    "title": "Ops Report",
+    "description": "Format a table with aligned columns using advanced f-string format specifications."
+  },
+  "ch09_09": {
+    "title": "Pattern Scanner",
+    "description": "Extract agent IDs and timestamps from a log string using regular expressions."
+  },
+  "ch09_10": {
+    "title": "Tool Chain",
+    "description": "Chain map, filter, and sorted together with lambdas to process score data."
+  },
+  "ch10_01": {
+    "title": "Bot Blueprint",
+    "description": "Define a simple class with class-level attributes and create an instance."
+  },
+  "ch10_02": {
+    "title": "Bot Commands",
+    "description": "Add methods to a class that accept parameters and return formatted strings."
+  },
+  "ch10_03": {
+    "title": "Bot Factory",
+    "description": "Use __init__ to create bots with custom names and threat levels."
+  },
+  "ch10_04": {
+    "title": "Bot Identity",
+    "description": "Implement __str__ and __repr__ to give your bot human-readable and developer-friendly representations."
+  },
+  "ch10_05": {
+    "title": "Agent Lineage",
+    "description": "Create an Agent subclass that inherits from Person and extends its behavior using super()."
+  },
+  "ch10_06": {
+    "title": "Alert Override",
+    "description": "Override the alert() method in subclasses to customize bot behavior."
+  },
+  "ch10_07": {
+    "title": "Clearance Lock",
+    "description": "Use name mangling (__attribute) and getter/setter methods to protect private data."
+  },
+  "ch10_08": {
+    "title": "Mission Control",
+    "description": "Use @classmethod to track instance count and @staticmethod for utility validation."
+  },
+  "ch10_09": {
+    "title": "Tower Builder",
+    "description": "Compose a Building class from Floor objects to model a has-a relationship."
+  },
+  "ch10_10": {
+    "title": "Bot Patrol",
+    "description": "Demonstrate polymorphism by calling the same method on different bot types."
+  },
+  "ch11_01": {
+    "title": "Type Annotations",
+    "description": "Add type hints to function parameters and return values."
+  },
+  "ch11_02": {
+    "title": "Data Blueprints",
+    "description": "Use @dataclass to auto-generate __init__, __repr__, and __eq__ methods."
+  },
+  "ch11_03": {
+    "title": "Assert Guard",
+    "description": "Use assert statements to validate function inputs with descriptive error messages."
+  },
+  "ch11_04": {
+    "title": "Cipher Test",
+    "description": "Write test functions using assert to verify a Caesar cipher encryption function."
+  },
+  "ch11_05": {
+    "title": "Field Docs",
+    "description": "Write proper docstrings with Args and Returns sections for a threat analysis function."
+  },
+  "ch11_06": {
+    "title": "Threat Levels",
+    "description": "Organize magic values using Enum classes and module-level constants."
+  },
+  "ch11_07": {
+    "title": "Typed Arsenal",
+    "description": "Use List, Dict, and Optional from the typing module to annotate complex data types."
+  },
+  "ch11_08": {
+    "title": "Pro Module",
+    "description": "Combine dataclasses, enums, type hints, and filtering into a professional Python module."
+  },
+  "ch12_01": {
+    "title": "Signal Stream",
+    "description": "Create a generator function using yield to produce a sequence of signal values."
+  },
+  "ch12_02": {
+    "title": "Lazy Compute",
+    "description": "Use generator expressions for memory-efficient lazy computation."
+  },
+  "ch12_03": {
+    "title": "Logged Ops",
+    "description": "Build a decorator that logs function calls with entry and exit messages."
+  },
+  "ch12_04": {
+    "title": "Clearance Gate",
+    "description": "Create a parameterized decorator that enforces minimum clearance levels."
+  },
+  "ch12_05": {
+    "title": "Secure Channel",
+    "description": "Implement the context manager protocol (__enter__/__exit__) for a secure channel class."
+  },
+  "ch12_06": {
+    "title": "Async Intel",
+    "description": "Use async/await and asyncio.gather to run concurrent intelligence-gathering operations."
+  },
+  "ch12_07": {
+    "title": "Signal Classifier",
+    "description": "Use Python 3.10+ match/case structural pattern matching to classify signal types."
+  },
+  "ch12_08": {
+    "title": "Walrus Scanner",
+    "description": "Use the walrus operator (:=) in a list comprehension to assign and filter simultaneously."
+  },
+  "ch12_09": {
+    "title": "Deep Scan",
+    "description": "Use nested list comprehensions to flatten matrices and generate floor-room pairs."
+  },
+  "ch12_10": {
+    "title": "Final Showdown",
+    "description": "Combine regex, dataclasses, typing, comprehensions, and sorting to analyze vulnerability logs."
   }
 }

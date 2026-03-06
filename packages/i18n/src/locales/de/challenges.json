@@ -214,5 +214,221 @@
   "ch06_10": {
     "title": "Intel-Zusammenführung",
     "description": "Führe zwei Dictionaries mit Spread-Syntax zusammen und iteriere über sortierte Ergebnisse."
+  },
+  "ch07_01": {
+    "title": "Intel-Dateileser",
+    "description": "Lies klassifizierte Intel aus einer simulierten Datei mit Pythons io.StringIO-Modul."
+  },
+  "ch07_02": {
+    "title": "Missions-Logger",
+    "description": "Schreibe Missionslogeinträge in eine simulierte Datei mit io.StringIO und rufe den Inhalt ab."
+  },
+  "ch07_03": {
+    "title": "Zeilen-Bereiniger",
+    "description": "Verarbeite rohe Dateizeilen durch Entfernen von Leerzeichen und Filtern leerer Zeilen."
+  },
+  "ch07_04": {
+    "title": "CSV-Decoder",
+    "description": "Parse kommagetrennte Daten durch Aufteilen des Strings an Trennzeichen."
+  },
+  "ch07_05": {
+    "title": "Signal-Splitter",
+    "description": "Teile eine doppelpunktgetrennte Nachricht in Teile und füge sie mit einem neuen Trennzeichen zusammen."
+  },
+  "ch07_06": {
+    "title": "Sicherer Leser",
+    "description": "Verwende eine with-Anweisung (Kontextmanager), um sicher aus einem io.StringIO-Objekt zu lesen."
+  },
+  "ch07_07": {
+    "title": "JSON-Intel",
+    "description": "Parse einen JSON-formatierten Geheimdienststring in ein Python-Dictionary und greife auf dessen Felder zu."
+  },
+  "ch07_08": {
+    "title": "Datentransformation",
+    "description": "Parse JSON-Daten und transformiere die Ergebnisse mit einer List Comprehension."
+  },
+  "ch08_01": {
+    "title": "Fehlerfalle",
+    "description": "Verwende try/except, um einen ValueError beim Konvertieren ungültiger Eingaben abzufangen."
+  },
+  "ch08_02": {
+    "title": "Multi-Fang",
+    "description": "Behandle verschiedene Ausnahmetypen (KeyError, TypeError) mit mehreren except-Blöcken."
+  },
+  "ch08_03": {
+    "title": "Vollprotokoll",
+    "description": "Verwende das vollständige try/except/else/finally-Muster für eine Signaldekodierungsoperation."
+  },
+  "ch08_04": {
+    "title": "Alarm auslösen",
+    "description": "Verwende das raise-Schlüsselwort, um einen ValueError bei fehlgeschlagener Validierung auszulösen."
+  },
+  "ch08_05": {
+    "title": "Benutzerdefinierter Alarm",
+    "description": "Erstelle eine benutzerdefinierte MissionError-Ausnahmeklasse mit Missions-ID."
+  },
+  "ch08_06": {
+    "title": "ID-Validator",
+    "description": "Schreibe eine Validierungsfunktion, die ValueError für fehlerhafte Agenten-IDs auslöst."
+  },
+  "ch08_07": {
+    "title": "Eleganter Fallback",
+    "description": "Implementiere eine Funktion, die bei fehlendem Schlüssel einen Standardwert zurückgibt."
+  },
+  "ch08_08": {
+    "title": "Batch-Wiederherstellung",
+    "description": "Verarbeite eine Werteliste in einer Schleife mit Fehlerwiederherstellung bei jeder Iteration."
+  },
+  "ch09_01": {
+    "title": "Modul-Aufklärung",
+    "description": "Importiere und verwende die Standardbibliotheksmodule math und random."
+  },
+  "ch09_02": {
+    "title": "Selektiver Import",
+    "description": "Verwende from...import, um bestimmte Namen (pi, ceil, floor) direkt zu importieren."
+  },
+  "ch09_03": {
+    "title": "Lambda-Sortierer",
+    "description": "Sortiere eine Liste von Agenten-Tupeln nach Level mit einer Lambda-Funktion als Sortierschlüssel."
+  },
+  "ch09_04": {
+    "title": "Map-Encoder",
+    "description": "Transformiere eine Codeliste mit map() und einer Lambda-Funktion."
+  },
+  "ch09_05": {
+    "title": "Signalfilter",
+    "description": "Filtere eine Liste von Signalwerten mit filter() und einer Lambda-Bedingung."
+  },
+  "ch09_06": {
+    "title": "Bedingter Scan",
+    "description": "Verwende eine List Comprehension mit zusammengesetzten Bedingungen, um bestimmte Vielfache zu finden."
+  },
+  "ch09_07": {
+    "title": "Freigabe-Map",
+    "description": "Erstelle ein Dictionary aus einer Liste mit Dictionary Comprehension."
+  },
+  "ch09_08": {
+    "title": "Einsatzbericht",
+    "description": "Formatiere eine Tabelle mit ausgerichteten Spalten mit erweiterten f-String-Formatspezifikationen."
+  },
+  "ch09_09": {
+    "title": "Muster-Scanner",
+    "description": "Extrahiere Agenten-IDs und Zeitstempel aus einem Logstring mit regulären Ausdrücken."
+  },
+  "ch09_10": {
+    "title": "Werkzeugkette",
+    "description": "Verkette map, filter und sorted mit Lambdas zur Verarbeitung von Punktedaten."
+  },
+  "ch10_01": {
+    "title": "Bot-Bauplan",
+    "description": "Definiere eine einfache Klasse mit Klassenattributen und erstelle eine Instanz."
+  },
+  "ch10_02": {
+    "title": "Bot-Befehle",
+    "description": "Füge einer Klasse Methoden hinzu, die Parameter akzeptieren und formatierte Strings zurückgeben."
+  },
+  "ch10_03": {
+    "title": "Bot-Fabrik",
+    "description": "Verwende __init__, um Bots mit individuellen Namen und Bedrohungsstufen zu erstellen."
+  },
+  "ch10_04": {
+    "title": "Bot-Identität",
+    "description": "Implementiere __str__ und __repr__ für lesbare und entwicklerfreundliche Darstellungen."
+  },
+  "ch10_05": {
+    "title": "Agenten-Abstammung",
+    "description": "Erstelle eine Agent-Unterklasse, die von Person erbt und deren Verhalten mit super() erweitert."
+  },
+  "ch10_06": {
+    "title": "Alarm-Override",
+    "description": "Überschreibe die alert()-Methode in Unterklassen, um Bot-Verhalten anzupassen."
+  },
+  "ch10_07": {
+    "title": "Freigabe-Sperre",
+    "description": "Verwende Name-Mangling (__attribut) und Getter/Setter-Methoden zum Schutz privater Daten."
+  },
+  "ch10_08": {
+    "title": "Missionskontrolle",
+    "description": "Verwende @classmethod zur Instanzzählung und @staticmethod für Hilfsvalidierung."
+  },
+  "ch10_09": {
+    "title": "Turm-Baumeister",
+    "description": "Komponiere eine Building-Klasse aus Floor-Objekten für eine Hat-ein-Beziehung."
+  },
+  "ch10_10": {
+    "title": "Bot-Patrouille",
+    "description": "Demonstriere Polymorphismus durch Aufruf derselben Methode auf verschiedenen Bot-Typen."
+  },
+  "ch11_01": {
+    "title": "Typ-Annotationen",
+    "description": "Füge Typhinweise zu Funktionsparametern und Rückgabewerten hinzu."
+  },
+  "ch11_02": {
+    "title": "Daten-Baupläne",
+    "description": "Verwende @dataclass zur automatischen Generierung von __init__, __repr__ und __eq__."
+  },
+  "ch11_03": {
+    "title": "Assert-Wächter",
+    "description": "Verwende assert-Anweisungen zur Validierung von Funktionseingaben mit aussagekräftigen Fehlermeldungen."
+  },
+  "ch11_04": {
+    "title": "Chiffre-Test",
+    "description": "Schreibe Testfunktionen mit assert zur Überprüfung einer Caesar-Verschlüsselungsfunktion."
+  },
+  "ch11_05": {
+    "title": "Felddokumentation",
+    "description": "Schreibe ordentliche Docstrings mit Args- und Returns-Abschnitten für eine Bedrohungsanalysefunktion."
+  },
+  "ch11_06": {
+    "title": "Bedrohungsstufen",
+    "description": "Organisiere magische Werte mit Enum-Klassen und Modulkonstanten."
+  },
+  "ch11_07": {
+    "title": "Typisiertes Arsenal",
+    "description": "Verwende List, Dict und Optional aus dem typing-Modul für komplexe Typannotationen."
+  },
+  "ch11_08": {
+    "title": "Profi-Modul",
+    "description": "Kombiniere Dataclasses, Enums, Typhinweise und Filterung zu einem professionellen Python-Modul."
+  },
+  "ch12_01": {
+    "title": "Signalstrom",
+    "description": "Erstelle eine Generatorfunktion mit yield zur Erzeugung einer Signalwertesequenz."
+  },
+  "ch12_02": {
+    "title": "Faule Berechnung",
+    "description": "Verwende Generatorausdrücke für speichereffiziente verzögerte Berechnung."
+  },
+  "ch12_03": {
+    "title": "Protokollierte Ops",
+    "description": "Baue einen Dekorator, der Funktionsaufrufe mit Ein- und Ausstiegsmeldungen protokolliert."
+  },
+  "ch12_04": {
+    "title": "Freigabe-Tor",
+    "description": "Erstelle einen parametrisierten Dekorator, der Mindestfreigabestufen erzwingt."
+  },
+  "ch12_05": {
+    "title": "Sicherer Kanal",
+    "description": "Implementiere das Kontextmanager-Protokoll (__enter__/__exit__) für eine sichere Kanalklasse."
+  },
+  "ch12_06": {
+    "title": "Async-Intel",
+    "description": "Verwende async/await und asyncio.gather für gleichzeitige Geheimdienstoperationen."
+  },
+  "ch12_07": {
+    "title": "Signal-Klassifizierer",
+    "description": "Verwende Python 3.10+ match/case Structural Pattern Matching zur Signaltypklassifizierung."
+  },
+  "ch12_08": {
+    "title": "Walross-Scanner",
+    "description": "Verwende den Walross-Operator (:=) in einer List Comprehension zum gleichzeitigen Zuweisen und Filtern."
+  },
+  "ch12_09": {
+    "title": "Tiefen-Scan",
+    "description": "Verwende verschachtelte List Comprehensions zum Flachklopfen von Matrizen und Erzeugen von Etage-Raum-Paaren."
+  },
+  "ch12_10": {
+    "title": "Finaler Showdown",
+    "description": "Kombiniere Regex, Dataclasses, Typing, Comprehensions und Sortierung zur Analyse von Schwachstellenprotokollen."
   }
 }

@@ -256,5 +256,221 @@
       "1": "Du hast den String-Tresor geknackt. Textmanipulation: abgeschlossen. Die Personalakten der Einrichtung haben keine Geheimnisse mehr vor dir.",
       "2": "String-Methoden, Indizierung, Slicing, f-Strings, split und join — alles in deinem Werkzeugkasten. Etage 3 wartet. Booleans und Logik kommen als nächstes. Denk sorgfältig nach."
     }
+  },
+  "ch07_01": {
+    "pre": "Etage 7 — Intel-Dateien. Echte Agenten müssen Daten aus Dateien lesen. Da wir im Browser arbeiten, simulieren wir Datei-I/O mit io.StringIO — eine Datei im Speicher.",
+    "post": "io.StringIO gibt dir ein dateiähnliches Objekt zum Lesen. Gleiche Schnittstelle wie eine echte Datei, null Festplattenzugriff. Sauber und portabel."
+  },
+  "ch07_02": {
+    "pre": "Lesen ist die halbe Miete. Jetzt schreiben wir Daten in eine simulierte Datei. io.StringIO() erstellt einen leeren Puffer — schreibe hinein, lies mit getvalue() aus.",
+    "post": "write() fügt Inhalt hinzu, getvalue() holt alles ab. In der echten Welt nutzt du open('datei', 'w') — aber das Konzept ist identisch."
+  },
+  "ch07_03": {
+    "pre": "Rohdaten sind chaotisch — extra Leerzeichen, leere Zeilen, inkonsistente Formatierung. Ein guter Agent bereinigt seine Daten vor der Verwendung.",
+    "post": "strip() entfernt Leerzeichen von beiden Enden. Filtern in einer Comprehension entfernt leere Zeilen. Immer Daten bereinigen — Müll rein, Müll raus."
+  },
+  "ch07_04": {
+    "pre": "CSV — Comma-Separated Values. Das einfachste Datenformat überhaupt, und eines der häufigsten. split(',') ist alles, was du brauchst.",
+    "post": "split() verwandelt einen String in eine Liste. Einfach, effektiv, bewährt. Für komplexes CSV mit Anführungszeichen gibt es das csv-Modul."
+  },
+  "ch07_05": {
+    "pre": "Nachrichten verwenden oft Trennzeichen. Aufteilen und Zusammenfügen ermöglicht Neuformatierung. split() trennt, join() verbindet.",
+    "post": "split(':') trennt bei Doppelpunkten. ' | '.join(parts) fügt mit Pipes zusammen. Dieses Split-Transform-Join-Muster ist überall."
+  },
+  "ch07_06": {
+    "pre": "Die with-Anweisung ist Pythons Kontextmanager — automatische Ressourcenbereinigung. Nie wieder vergessen, Dateien zu schließen.",
+    "post": "with garantiert Bereinigung auch bei Fehlern. Für Dateien, Datenbanken, Netzwerkverbindungen — immer with verwenden."
+  },
+  "ch07_07": {
+    "pre": "JSON ist die Lingua Franca des Datenaustauschs. APIs sprechen es, Configs nutzen es. json.loads() verwandelt einen JSON-String in ein Dictionary.",
+    "post": "json.loads() für Strings, json.load() für Dateien. JSON-Typen mappen auf Python: object→dict, array→list, true→True, null→None."
+  },
+  "ch07_08": {
+    "pre": "Letzte Intel-Herausforderung: JSON-Parsing mit Datentransformation kombinieren. Parsen, extrahieren, transformieren — der Kern der Datenverarbeitung.",
+    "post": "Parsen, extrahieren, transformieren, ausgeben. Etage 7 abgeschlossen — Pythons Datenverarbeitungstoolkit gemeistert. Deine Intel-Fähigkeiten sind einsatzbereit, Agent."
+  },
+  "ch08_01": {
+    "pre": "Etage 8 — Missions-Dossiers. In der echten Welt geht Dinge schief. try/except ist Pythons elegante Fehlerbehandlung — Probleme abfangen bevor sie abstürzen.",
+    "post": "try/except fängt Fehler ab ohne Absturz. ValueError feuert wenn int() keine Zahl bekommt. Immer voraussehen, was schiefgehen kann."
+  },
+  "ch08_02": {
+    "pre": "Verschiedene Fehler brauchen verschiedene Antworten. Mehrere except-Blöcke ermöglichen gezielte Behandlung von KeyError, TypeError und anderen.",
+    "post": "Mehrere except-Blöcke — wie mehrere Fluchtwege. Jeder fängt einen bestimmten Fehlertyp. Reihenfolge zählt: spezifische vor allgemeinen."
+  },
+  "ch08_03": {
+    "pre": "Das vollständige Fehlerbehandlungsmuster: try für riskanten Code, except fängt Fehler, else bei Erfolg, finally läuft immer.",
+    "post": "try → except → else → finally. Der else-Block wird oft übersehen, ist aber unglaublich nützlich — läuft nur ohne Ausnahme. finally läuft immer."
+  },
+  "ch08_04": {
+    "pre": "Manchmal MUSST du einen Fehler signalisieren. raise erzeugt eine Ausnahme auf Kommando. Kombiniert mit benutzerdefinierten Nachrichten wird dein Code selbstdokumentierend.",
+    "post": "raise ValueError('nachricht') erzeugt eine neue Ausnahme. Eingaben früh validieren, laut scheitern, klar scheitern."
+  },
+  "ch08_05": {
+    "pre": "Eingebaute Ausnahmen sind gut, aber benutzerdefinierte erzählen eine bessere Geschichte. class MissionError(Exception): — jetzt tragen deine Fehler missionsspezifische Daten.",
+    "post": "Benutzerdefinierte Ausnahmen erben von Exception. Sie können Extradaten tragen und machen Fehlerbehandlung präziser."
+  },
+  "ch08_06": {
+    "pre": "Eingabevalidierung ist die erste Verteidigungslinie. Alles prüfen, nichts vertrauen. Wenn Eingaben Anforderungen nicht erfüllen — ValueError auslösen.",
+    "post": "Früh validieren, vollständig validieren. startswith(), len() und raise ValueError — drei Werkzeuge gegen Datenchaos."
+  },
+  "ch08_07": {
+    "pre": "Nicht jeder Fehler ist fatal. Elegante Degradation bedeutet vernünftige Standardwerte bei Problemen. Besser 'UNBEKANNT' zeigen als abstürzen.",
+    "post": "Standardwerte und Fallback-Verhalten halten dein Programm am Laufen. Der Benutzer sieht ein Ergebnis, keinen Stacktrace."
+  },
+  "ch08_08": {
+    "pre": "Letzte Dossier-Herausforderung: Fehlerbehandlung in Schleifen. Ein fehlerhaftes Element soll nicht die ganze Operation stoppen. Erholen und weitermachen.",
+    "post": "Fehlerwiederherstellung in Schleifen — verarbeite was geht, behandle was nicht geht. Etage 8 abgeschlossen. Du behandelst Fehler wie ein erfahrener Agent."
+  },
+  "ch09_01": {
+    "pre": "Etage 9 — Feldhandbuch. Pythons Standardbibliothek ist riesig. import gibt dir Zugang zu math, random, os, json und hunderten mehr.",
+    "post": "import modul, dann modul.funktion(). Pythons Standardbibliothek hat für fast alles ein Modul. Lerne sie zu finden — das ist echte Programmierkraft."
+  },
+  "ch09_02": {
+    "pre": "from math import pi, ceil, floor bringt bestimmte Namen direkt in deinen Namespace. Sauberer Code ohne Modulpräfix.",
+    "post": "from...import ist sauberer für bestimmte Namen. Aber Vorsicht — zu viele Importe können Konflikte verursachen."
+  },
+  "ch09_03": {
+    "pre": "Lambda-Funktionen — anonym, inline, mächtig. Perfekt als Sortierschlüssel, Filterbedingungen und Map-Transformationen.",
+    "post": "lambda x: x[1] — eine winzige Funktion genau dort wo du sie brauchst. sorted() mit key=lambda ist eines der häufigsten Python-Muster."
+  },
+  "ch09_04": {
+    "pre": "map() wendet eine Funktion auf jedes Element einer Sequenz an. Kombiniert mit lambda ein Einzeiler-Datentransformer.",
+    "post": "map(funktion, iterable) — transformiere jedes Element ohne Schleife. Wickle in list() ein für die Ergebnisse."
+  },
+  "ch09_05": {
+    "pre": "filter() behält nur Elemente, die einen Test bestehen. Wie map() nimmt es eine Funktion und ein Iterable.",
+    "post": "filter(lambda x: x > 10, daten) — behalte was zählt, verwirf den Rest. Funktionale Werkzeuge machen deine Absicht kristallklar."
+  },
+  "ch09_06": {
+    "pre": "List Comprehensions mit Bedingungen — Pythons Schweizer Taschenmesser. [x for x in data if bedingung] macht was filter tut, aber pythonischer.",
+    "post": "Zusammengesetzte Bedingungen in Comprehensions: and, or, verschachtelte Prüfungen. Für mehrere Kriterien ist das der Weg."
+  },
+  "ch09_07": {
+    "pre": "Dictionary Comprehensions: {key: value for item in iterable}. Baue ganze Dictionaries in einem Ausdruck.",
+    "post": "Dict Comprehensions sind das Dictionary-Äquivalent von List Comprehensions. Gleiche Syntax, geschweifte statt eckige Klammern."
+  },
+  "ch09_08": {
+    "pre": "f-Strings können mehr als Interpolation. Formatspezifikationen steuern Breite, Ausrichtung und Auffüllung. Perfekt für saubere Berichte.",
+    "post": ":<10 linksbündig, :>5 rechtsbündig, :08d mit Nullen auffüllen. Formatspezifikationen verwandeln chaotische Ausgabe in professionelle Berichte."
+  },
+  "ch09_09": {
+    "pre": "Reguläre Ausdrücke — das ultimative Mustererkennungswerkzeug. Das re-Modul findet, extrahiert und ersetzt Textmuster.",
+    "post": "re.findall() extrahiert alle Treffer. \\d+ matcht Ziffern. Regex ist eine Sprache in der Sprache — lohnt sich zu lernen."
+  },
+  "ch09_10": {
+    "pre": "Letzte Feldhandbuch-Herausforderung: alle Werkzeuge verketten. filter → sorted → map → sum. Funktionale Programmierung vom Feinsten.",
+    "post": "Verkettete funktionale Werkzeuge erzeugen saubere Datenpipelines. Etage 9 abgeschlossen. Du hast ein beeindruckendes Toolkit zusammengestellt."
+  },
+  "ch10_01": {
+    "pre": "Etage 10 — Agenten-Klassen. Objektorientierte Programmierung organisiert Code in Klassen — Baupläne für Objekte. Attribute speichern Daten, Methoden definieren Verhalten.",
+    "post": "Klassen bündeln Daten und Verhalten. Erstelle Instanzen mit KlassenName(). Greife auf Attribute mit Punktnotation zu."
+  },
+  "ch10_02": {
+    "pre": "Methoden sind Funktionen innerhalb einer Klasse. Der erste Parameter ist immer self — er verweist auf die aufrufende Instanz.",
+    "post": "self ist die Instanz. Methoden nutzen self für den Zugriff auf eigene Daten. bot.greet() übergibt bot automatisch als self."
+  },
+  "ch10_03": {
+    "pre": "Der __init__-Konstruktor läuft automatisch beim Erstellen einer Instanz. Er richtet den Anfangszustand ein.",
+    "post": "__init__ ist die Geburt eines Objekts. self.attribut = parameter speichert Daten auf der Instanz. Jedes Objekt trägt seinen eigenen Zustand."
+  },
+  "ch10_04": {
+    "pre": "__str__ und __repr__ — wie sich dein Objekt vorstellt. __str__ für Menschen, __repr__ für Entwickler.",
+    "post": "str(obj) ruft __str__ auf. repr(obj) ruft __repr__ auf. Gutes __repr__ sollte wie ein gültiger Konstruktor aussehen."
+  },
+  "ch10_05": {
+    "pre": "Vererbung — neue Klassen auf bestehenden aufbauen. class Agent(Person): erbt alles von Person. super() ruft den Elternteil auf.",
+    "post": "Vererbung erzeugt Ist-ein-Beziehungen. Ein Agent IST eine Person. super().__init__() stellt sicher, dass der Elternteil initialisiert wird."
+  },
+  "ch10_06": {
+    "pre": "Methodenüberschreibung — Unterklassen können Elternmethoden ersetzen oder erweitern. Jede Unterklasse definiert eigenes Verhalten.",
+    "post": "Überschreibe zum Anpassen. Nutze super() zum Erweitern statt Ersetzen. Polymorphismus: gleicher Methodenaufruf, anderes Verhalten."
+  },
+  "ch10_07": {
+    "pre": "Kapselung — den internen Zustand eines Objekts schützen. Python nutzt Namenskonventionen: _geschützt, __privat (Name-Mangling).",
+    "post": "Doppelter Unterstrich löst Name-Mangling aus. Getter und Setter fügen Validierung hinzu. Nicht kugelsicher, aber ein klares Signal."
+  },
+  "ch10_08": {
+    "pre": "@classmethod empfängt die Klasse selbst. @staticmethod ist eine reguläre Funktion im Klassen-Namespace.",
+    "post": "Klassenmethoden kennen die Klasse. Statische Methoden nicht. @classmethod für Fabrikmethoden, @staticmethod für Hilfsfunktionen."
+  },
+  "ch10_09": {
+    "pre": "Komposition — komplexe Objekte aus einfacheren bauen. Ein Gebäude HAT Etagen. Diese Hat-ein-Beziehung ist oft flexibler als Vererbung.",
+    "post": "Komposition über Vererbung ist ein wichtiges Designprinzip. Objekte die andere Objekte enthalten schaffen flexible Strukturen."
+  },
+  "ch10_10": {
+    "pre": "Letzte OOP-Herausforderung: Polymorphismus durch Duck-Typing. Hat es patrol()? Dann kann es patrouillieren. Keine gemeinsame Basisklasse nötig.",
+    "post": "Wenn es wie eine Ente läuft und wie eine Ente quakt... Python kümmert sich nicht um den Typ, nur um die Schnittstelle. Etage 10 abgeschlossen."
+  },
+  "ch11_01": {
+    "pre": "Etage 11 — Qualitätssicherung. Professionelles Python beginnt mit Typhinweisen. Sie ändern nichts zur Laufzeit, machen aber Code selbstdokumentierend.",
+    "post": "Typhinweise sind Dokumentation, die Werkzeuge überprüfen können. def func(x: int) -> str sagt allen, was rein und raus geht."
+  },
+  "ch11_02": {
+    "pre": "Dataclasses eliminieren Boilerplate. @dataclass generiert automatisch __init__, __repr__ und __eq__. Felder definieren, Python macht den Rest.",
+    "post": "@dataclass ist Pythons Antwort auf 'Ich will nur eine einfache Klasse für Daten.' Weniger Code, weniger Bugs, besser lesbar."
+  },
+  "ch11_03": {
+    "pre": "assert-Anweisungen sind Laufzeitprüfungen für Dinge, die immer wahr sein sollten. Schlägt die Assertion fehl, stoppt dein Programm sofort.",
+    "post": "assert ist dein Sicherheitsnetz bei der Entwicklung. Es fängt unmögliche Zustände ab bevor sie mysteriöse Bugs verursachen."
+  },
+  "ch11_04": {
+    "pre": "Tests schreiben ist Versicherung abschließen. assert in Testfunktionen überprüft, ob dein Code korrekt funktioniert.",
+    "post": "Testfunktionen mit assert — die Grundlage zuverlässigen Codes. In Produktion nutzt du pytest oder unittest, aber das Konzept ist gleich."
+  },
+  "ch11_05": {
+    "pre": "Docstrings erklären was dein Code tut, was er nimmt und was er zurückgibt. In dreifachen Anführungszeichen, direkt nach der Funktionsdefinition.",
+    "post": "Gute Docstrings sind eine Investition. Args, Returns, Raises — dokumentiere den Vertrag. help(func) zeigt den Docstring."
+  },
+  "ch11_06": {
+    "pre": "Magische Zahlen sind ein Code-Smell. Enums geben Werten Namen: ThreatLevel.HIGH statt 8. Konstanten machen Code lesbar.",
+    "post": "Enums verhindern ungültige Werte. Konstanten verhindern magische Zahlen. Dein Code sagt jetzt was er meint."
+  },
+  "ch11_07": {
+    "pre": "Das typing-Modul bietet generische Typen: List[str], Dict[str, int], Optional[str]. Sie drücken komplexe Typbeziehungen aus.",
+    "post": "List[str] sagt 'eine Liste mit Strings.' Optional[str] sagt 'ein String oder None.' Diese Typen sind das Vokabular von professionellem Python."
+  },
+  "ch11_08": {
+    "pre": "Letzte QA-Herausforderung: alles kombinieren — Dataclasses, Enums, Typhinweise, Docstrings, Filterung. So sieht professionelles Python aus.",
+    "post": "Saubere Typen, klare Dokumentation, strukturierte Daten. Etage 11 abgeschlossen — dein Code ist jetzt produktionsreif. Eine Etage bleibt, Agent."
+  },
+  "ch12_01": {
+    "pre": "Etage 12 — Tiefe Tarnung. Die Chefetage. Fortgeschrittenes Python für Elite-Agenten. Generatoren nutzen yield für verzögerte Werteerzeugung.",
+    "post": "Generatoren sind speichereffizient — sie erzeugen Werte einzeln statt alles im Speicher zu halten. yield pausiert und setzt fort."
+  },
+  "ch12_02": {
+    "pre": "Generatorausdrücke — wie List Comprehensions aber mit runden Klammern. (x**2 for x in data) erzeugt eine faule Sequenz.",
+    "post": "Generatorausdrücke sind der faule Cousin der List Comprehensions. Fast kein Speicherverbrauch, da Werte on-the-fly berechnet werden."
+  },
+  "ch12_03": {
+    "pre": "Dekoratoren — Funktionen die andere Funktionen umwickeln. @logged fügt Verhalten vor und nach einem Aufruf hinzu, ohne die Funktion selbst zu ändern.",
+    "post": "Dekoratoren sind eines der mächtigsten Python-Muster. Logging, Timing, Authentifizierung — alles mit einem einfachen @dekorator."
+  },
+  "ch12_04": {
+    "pre": "Parametrisierte Dekoratoren — Dekoratoren mit Argumenten. Drei Verschachtelungsebenen: Fabrik, Dekorator, Wrapper.",
+    "post": "require_clearance(8) gibt einen Dekorator zurück. Drei verschachtelte Funktionen, eine saubere Schnittstelle. Pythons Closure-System auf Hochtouren."
+  },
+  "ch12_05": {
+    "pre": "Kontextmanager — das __enter__/__exit__-Protokoll. Du hast sie mit 'with' benutzt. Jetzt bau deinen eigenen.",
+    "post": "Du bist vom Nutzen zum Bauen übergegangen. __enter__ richtet ein, __exit__ räumt auf. Ausnahmen, Bereinigung, Ressourcenverwaltung — alles automatisch."
+  },
+  "ch12_06": {
+    "pre": "async/await — Pythons Nebenläufigkeitsmodell. async def erstellt eine Koroutine, await pausiert bis ein Ergebnis bereit ist.",
+    "post": "Async Python behandelt I/O-gebundene Aufgaben effizient. Während eine Aufgabe auf Daten wartet, können andere laufen."
+  },
+  "ch12_07": {
+    "pre": "Pattern Matching — Python 3.10s match/case. Strukturelles Pattern Matching dekonstruiert Daten und verzweigt basierend auf Struktur.",
+    "post": "match/case ist mehr als switch/case — es matcht Strukturen. Dictionaries, Tupel, verschachtelte Muster, Guards."
+  },
+  "ch12_08": {
+    "pre": "Der Walross-Operator (:=) — zuweisen und verwenden in einem Ausdruck. Perfekt in Schleifen, Comprehensions und Bedingungen.",
+    "post": "(:=) weist zu und gibt zurück. In Comprehensions lässt es dich gleichzeitig testen und einen Wert erfassen."
+  },
+  "ch12_09": {
+    "pre": "Fortgeschrittene Comprehensions — verschachtelte Schleifen, Kreuzprodukte, Matrixoperationen. Für mehrdimensionale Daten unschlagbar.",
+    "post": "Verschachtelte Comprehensions lesen sich wie verschachtelte Schleifen — links nach rechts, außen nach innen."
+  },
+  "ch12_10": {
+    "pre": "FINALER SHOWDOWN. Jede erlernte Fähigkeit konvergiert hier — Regex, Dataclasses, Typing, Comprehensions, Sortierung, Lambdas, Walross-Operator. Parse Schwachstellenprotokolle, filtere kritische Bedrohungen. Das ist es, Agent.",
+    "post": "Du hast jedes Werkzeug in deinem Arsenal kombiniert. Von print('Hello, World!') bis zur fortgeschrittenen Schwachstellenanalyse. Etage 12 — geräumt. Das Gebäude gehört dir. Willkommen auf der Chefetage, Agent. Mission abgeschlossen."
   }
 }
