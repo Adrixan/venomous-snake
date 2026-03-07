@@ -6,8 +6,8 @@ export function createGameConfig(parent: string | HTMLElement): Phaser.Types.Cor
   return {
     type: Phaser.AUTO,
     parent,
-    width: 800,
-    height: 608,
+    width: 400,
+    height: 304,
     backgroundColor: '#0a0a0f',
     pixelArt: true,
     scale: {

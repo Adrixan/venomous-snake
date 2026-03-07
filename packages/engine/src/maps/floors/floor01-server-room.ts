@@ -138,28 +138,31 @@ function buildWallsLayer(): number[] {
 function buildFurnitureLayer(): number[] {
   const layer = newGrid();
 
-  // Server racks (VENT tiles) in each bay
-  // Bay 1: rows 2-9, Bay 2: rows 11-19, Bay 3: rows 21-28
+  // Server bays: dense SERVER_RACK grids (replaces bare VENT tiles)
   const bayRows: [number, number][] = [
     [2, 9],
     [11, 19],
     [21, 28],
   ];
   for (const [startRow, endRow] of bayRows) {
-    for (let x = 2; x <= 15; x += 3) {
-      for (let y = startRow; y <= endRow; y += 2) {
-        setTile(layer, x, y, LOBBY_GID.VENT);
-        setTile(layer, x + 1, y, LOBBY_GID.VENT);
+    for (let y = startRow; y <= endRow; y += 2) {
+      for (let x = 2; x <= 15; x += 3) {
+        setTile(layer, x, y, LOBBY_GID.SERVER_RACK);
+        setTile(layer, x + 1, y, LOBBY_GID.SERVER_RACK);
       }
     }
-    // Cable runs on floor between racks
+    // Cable management runs between rack rows
     for (let x = 1; x <= 16; x += 2) {
       setTile(layer, x, startRow + 1, LOBBY_GID.CABLE);
       setTile(layer, x, endRow - 1, LOBBY_GID.CABLE);
     }
+    // Pipe conduit at top of each bay
+    for (let x = 1; x <= 16; x++) {
+      setTile(layer, x, startRow, LOBBY_GID.PIPE_H);
+    }
   }
 
-  // Monitoring area: desks and chairs (cols 23-31)
+  // Monitoring area: desk clusters with wall screens (cols 23-32)
   for (let y = 3; y <= 27; y += 5) {
     setTile(layer, 24, y, LOBBY_GID.DESK);
     setTile(layer, 25, y, LOBBY_GID.DESK);
@@ -167,13 +170,86 @@ function buildFurnitureLayer(): number[] {
     setTile(layer, 29, y, LOBBY_GID.DESK);
     setTile(layer, 30, y, LOBBY_GID.DESK);
     setTile(layer, 31, y, LOBBY_GID.CHAIR);
+    // Wall-screen panel on elevator wall face
+    setTile(layer, 32, y, LOBBY_GID.WALL_SCREEN);
+    setTile(layer, 32, y + 1, LOBBY_GID.WALL_SCREEN);
   }
+  // Filing cabinets between desk rows in monitoring area
+  setTile(layer, 23, 6, LOBBY_GID.FILING_CABINET);
+  setTile(layer, 23, 11, LOBBY_GID.FILING_CABINET);
+  setTile(layer, 23, 16, LOBBY_GID.FILING_CABINET);
+  setTile(layer, 23, 21, LOBBY_GID.FILING_CABINET);
+  // Extra planter accents
+  setTile(layer, 23, 2, LOBBY_GID.PLANTER);
+  setTile(layer, 23, 27, LOBBY_GID.PLANTER);
 
   // Cooling vents in elevator shaft
   setTile(layer, 35, 2, LOBBY_GID.VENT);
   setTile(layer, 37, 2, LOBBY_GID.VENT);
+  setTile(layer, 35, 14, LOBBY_GID.VENT);
+  setTile(layer, 37, 14, LOBBY_GID.VENT);
   setTile(layer, 35, 28, LOBBY_GID.VENT);
   setTile(layer, 37, 28, LOBBY_GID.VENT);
+
+  return layer;
+}
+
+function buildDecorationLayer(): number[] {
+  const layer = newGrid();
+
+  // ── Server bays: floor grates under rack rows + oil stains ───────────────
+  const bayRows: [number, number][] = [
+    [2, 9],
+    [11, 19],
+    [21, 28],
+  ];
+  for (const [startRow, endRow] of bayRows) {
+    // Floor grates at mid-aisle of each bay
+    for (let x = 3; x <= 14; x += 3) {
+      setTile(layer, x, startRow + 2, LOBBY_GID.FLOOR_GRATE);
+      setTile(layer, x, endRow - 2, LOBBY_GID.FLOOR_GRATE);
+    }
+    // Oil/coolant stains scattered around racks
+    setTile(layer, 4, startRow + 3, LOBBY_GID.OIL_STAIN);
+    setTile(layer, 11, startRow + 5, LOBBY_GID.OIL_STAIN);
+    // Ceiling lights at bay entrances
+    setTile(layer, 19, startRow + 1, LOBBY_GID.CEILING_LIGHT);
+    setTile(layer, 19, endRow - 1, LOBBY_GID.CEILING_LIGHT);
+  }
+
+  // ── Monitoring area: ceiling lights + caution stripes at doors ───────────
+  for (let y = 5; y <= 25; y += 5) {
+    setTile(layer, 28, y, LOBBY_GID.CEILING_LIGHT);
+  }
+  setTile(layer, 24, 4, LOBBY_GID.FLOOR_GRATE);
+  setTile(layer, 24, 9, LOBBY_GID.FLOOR_GRATE);
+  setTile(layer, 24, 14, LOBBY_GID.FLOOR_GRATE);
+  setTile(layer, 24, 19, LOBBY_GID.FLOOR_GRATE);
+  setTile(layer, 24, 24, LOBBY_GID.FLOOR_GRATE);
+
+  // ── Caution stripes at all corridor doors ─────────────────────────────────
+  setTile(layer, 16, 5, LOBBY_GID.CAUTION_STRIPE);
+  setTile(layer, 16, 15, LOBBY_GID.CAUTION_STRIPE);
+  setTile(layer, 16, 25, LOBBY_GID.CAUTION_STRIPE);
+  setTile(layer, 18, 5, LOBBY_GID.CAUTION_STRIPE);
+  setTile(layer, 18, 15, LOBBY_GID.CAUTION_STRIPE);
+  setTile(layer, 7, 10, LOBBY_GID.CAUTION_STRIPE);
+  setTile(layer, 9, 10, LOBBY_GID.CAUTION_STRIPE);
+  setTile(layer, 7, 20, LOBBY_GID.CAUTION_STRIPE);
+  setTile(layer, 9, 20, LOBBY_GID.CAUTION_STRIPE);
+  setTile(layer, 32, 5, LOBBY_GID.CAUTION_STRIPE);
+  setTile(layer, 32, 25, LOBBY_GID.CAUTION_STRIPE);
+
+  // ── Neon strips along corridor walls ──────────────────────────────────────
+  for (let y = 2; y <= 28; y += 4) {
+    setTile(layer, 18, y, LOBBY_GID.NEON_STRIP);
+    setTile(layer, 21, y, LOBBY_GID.NEON_STRIP);
+  }
+
+  // ── Elevator: floor grates ────────────────────────────────────────────────
+  setTile(layer, 36, 3, LOBBY_GID.FLOOR_GRATE);
+  setTile(layer, 36, 14, LOBBY_GID.FLOOR_GRATE);
+  setTile(layer, 36, 27, LOBBY_GID.CEILING_LIGHT);
 
   return layer;
 }
@@ -327,9 +403,46 @@ function buildObjectLayer(): TiledObject[] {
   );
   // Elevator down (to floor 0)
   add(
-    makeObject(nextId, 'Elevator to Lobby', 'door', 37, 25, [
+    makeObject(nextId++, 'Elevator to Lobby', 'door', 37, 25, [
       prop('targetFloor', 'floor0'),
       prop('locked', 'false'),
+    ]),
+  );
+
+  // ─── Items ──────────────────────────────────────────────────────────────────
+  // Datafile on monitoring desk — Python intro manual left by a sysadmin
+  add(
+    makeObject(nextId++, 'Python Basics Manual', 'item', 25, 3, [
+      prop('itemType', 'datafile'),
+      prop('itemId', 'python_basics'),
+    ]),
+  );
+  // Tool inside server bay 1, tucked against the server rack at col 3
+  add(
+    makeObject(nextId++, 'Debugger Module', 'item', 3, 3, [
+      prop('itemType', 'tool'),
+      prop('itemId', 'debugger_module'),
+    ]),
+  );
+  // Datafile near monitoring terminal — internal network topology notes
+  add(
+    makeObject(nextId++, 'Network Topology File', 'item', 10, 13, [
+      prop('itemType', 'datafile'),
+      prop('itemId', 'network_topology'),
+    ]),
+  );
+  // Keycard in the monitoring supervisor's area (desk row 8)
+  add(
+    makeObject(nextId++, 'Server Room Keycard', 'item', 29, 8, [
+      prop('itemType', 'keycard'),
+      prop('itemId', 'server_room_keycard'),
+    ]),
+  );
+  // Tool on monitoring desk — auto-complete utility found after access challenge
+  add(
+    makeObject(nextId, 'Auto-Complete Chip', 'item', 24, 18, [
+      prop('itemType', 'tool'),
+      prop('itemId', 'autocomplete_chip'),
     ]),
   );
 
@@ -340,6 +453,7 @@ function buildObjectLayer(): TiledObject[] {
 
 export function generateFloor1Tilemap(): TiledMap {
   const floorData = buildFloorLayer();
+  const decorationData = buildDecorationLayer();
   const wallsData = buildWallsLayer();
   const furnitureData = buildFurnitureLayer();
   const interactiveData = buildInteractiveLayer();
@@ -380,6 +494,7 @@ export function generateFloor1Tilemap(): TiledMap {
     infinite: false,
     layers: [
       tileLayer('floor', floorData),
+      tileLayer('decoration', decorationData),
       tileLayer('walls', wallsData),
       tileLayer('furniture', furnitureData),
       tileLayer('interactive', interactiveData),

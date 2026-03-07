@@ -89,6 +89,20 @@ export function App(): React.JSX.Element {
     })();
   }, []);
 
+  // Auto-request fullscreen on first user interaction
+  useEffect(() => {
+    const requestFs = () => {
+      if (!document.fullscreenElement) {
+        void document.documentElement.requestFullscreen().catch(() => {
+          // Fullscreen may be blocked by browser policy — silently ignore
+        });
+      }
+      document.removeEventListener('pointerdown', requestFs);
+    };
+    document.addEventListener('pointerdown', requestFs, { once: true });
+    return () => document.removeEventListener('pointerdown', requestFs);
+  }, []);
+
   const audioSettings: AudioSettingsPanelProps = {
     masterVolume,
     musicVolume,

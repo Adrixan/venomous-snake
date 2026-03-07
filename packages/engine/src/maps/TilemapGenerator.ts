@@ -267,53 +267,136 @@ function buildFurnitureLayer(): number[] {
   for (let x = 2; x <= 9; x++) {
     setTile(layer, x, 17, LOBBY_GID.RECEPTION_DESK);
   }
-  // Chairs near reception desk
+  // Guest seating cluster near reception
   setTile(layer, 11, 17, LOBBY_GID.CHAIR);
+  setTile(layer, 11, 18, LOBBY_GID.CHAIR);
   setTile(layer, 11, 21, LOBBY_GID.CHAIR);
   setTile(layer, 4, 22, LOBBY_GID.CHAIR);
-
-  // Planters – corners of the main hall
+  setTile(layer, 5, 22, LOBBY_GID.CHAIR);
+  // Secondary meeting desk cluster (centre hall)
+  setTile(layer, 19, 22, LOBBY_GID.DESK);
+  setTile(layer, 20, 22, LOBBY_GID.DESK);
+  setTile(layer, 19, 23, LOBBY_GID.CHAIR);
+  setTile(layer, 21, 23, LOBBY_GID.CHAIR);
+  setTile(layer, 19, 25, LOBBY_GID.DESK);
+  setTile(layer, 20, 25, LOBBY_GID.CHAIR);
+  // Filing cabinet row along inner wall (south side of divider)
+  setTile(layer, 13, 16, LOBBY_GID.FILING_CABINET);
+  setTile(layer, 14, 16, LOBBY_GID.FILING_CABINET);
+  setTile(layer, 22, 16, LOBBY_GID.FILING_CABINET);
+  setTile(layer, 23, 16, LOBBY_GID.FILING_CABINET);
+  // Mounted screens on south wall of hall
+  setTile(layer, 9, 28, LOBBY_GID.WALL_SCREEN);
+  setTile(layer, 17, 28, LOBBY_GID.WALL_SCREEN);
+  setTile(layer, 25, 28, LOBBY_GID.WALL_SCREEN);
+  // Planters – perimeter and mid-hall accents
   setTile(layer, 1, 14, LOBBY_GID.PLANTER);
+  setTile(layer, 1, 20, LOBBY_GID.PLANTER);
   setTile(layer, 1, 27, LOBBY_GID.PLANTER);
+  setTile(layer, 12, 19, LOBBY_GID.PLANTER);
+  setTile(layer, 12, 26, LOBBY_GID.PLANTER);
   setTile(layer, 31, 14, LOBBY_GID.PLANTER);
+  setTile(layer, 31, 20, LOBBY_GID.PLANTER);
   setTile(layer, 31, 27, LOBBY_GID.PLANTER);
 
-  // ── Break room: tables ───────────────────────────────────────────────────
+  // ── Break room: table clusters + seating ─────────────────────────────────
+  // Cluster A (north side)
+  setTile(layer, 3, 4, LOBBY_GID.DESK);
   setTile(layer, 4, 4, LOBBY_GID.DESK);
   setTile(layer, 5, 4, LOBBY_GID.DESK);
+  setTile(layer, 3, 5, LOBBY_GID.CHAIR);
+  setTile(layer, 5, 5, LOBBY_GID.CHAIR);
+  // Cluster B (south side)
+  setTile(layer, 3, 7, LOBBY_GID.DESK);
   setTile(layer, 4, 7, LOBBY_GID.DESK);
-  setTile(layer, 5, 7, LOBBY_GID.CHAIR);
+  setTile(layer, 5, 7, LOBBY_GID.DESK);
+  setTile(layer, 3, 8, LOBBY_GID.CHAIR);
+  setTile(layer, 4, 8, LOBBY_GID.CHAIR);
+  // Storage + planters
+  setTile(layer, 8, 5, LOBBY_GID.FILING_CABINET);
+  setTile(layer, 9, 5, LOBBY_GID.FILING_CABINET);
+  setTile(layer, 8, 9, LOBBY_GID.PLANTER);
+  setTile(layer, 1, 9, LOBBY_GID.PLANTER);
+  // Pipe conduit at ceiling of break room
+  for (let x = 1; x <= 11; x++) {
+    setTile(layer, x, 1, LOBBY_GID.PIPE_H);
+  }
 
-  // ── Security: guard desk + filing cabinets ────────────────────────────────
+  // ── Security: guard desks + wall-screen bank + filing cabinets ───────────
+  // Main guard desk cluster
   setTile(layer, 14, 3, LOBBY_GID.DESK);
   setTile(layer, 15, 3, LOBBY_GID.DESK);
-  setTile(layer, 20, 9, LOBBY_GID.DESK);
-  setTile(layer, 21, 9, LOBBY_GID.CHAIR);
+  setTile(layer, 13, 4, LOBBY_GID.CHAIR);
+  setTile(layer, 15, 4, LOBBY_GID.CHAIR);
+  // Secondary console cluster
+  setTile(layer, 17, 7, LOBBY_GID.DESK);
+  setTile(layer, 18, 7, LOBBY_GID.DESK);
+  setTile(layer, 19, 7, LOBBY_GID.DESK);
+  setTile(layer, 20, 8, LOBBY_GID.DESK);
+  setTile(layer, 21, 8, LOBBY_GID.DESK);
+  setTile(layer, 17, 8, LOBBY_GID.CHAIR);
+  setTile(layer, 20, 9, LOBBY_GID.CHAIR);
+  // Filing cabinet banks
+  setTile(layer, 22, 3, LOBBY_GID.FILING_CABINET);
+  setTile(layer, 22, 4, LOBBY_GID.FILING_CABINET);
   setTile(layer, 22, 5, LOBBY_GID.FILING_CABINET);
   setTile(layer, 22, 6, LOBBY_GID.FILING_CABINET);
+  setTile(layer, 13, 7, LOBBY_GID.FILING_CABINET);
   setTile(layer, 13, 8, LOBBY_GID.FILING_CABINET);
+  setTile(layer, 13, 9, LOBBY_GID.FILING_CABINET);
+  // Wall-screen bank on north wall
+  setTile(layer, 14, 2, LOBBY_GID.WALL_SCREEN);
+  setTile(layer, 16, 2, LOBBY_GID.WALL_SCREEN);
+  setTile(layer, 18, 2, LOBBY_GID.WALL_SCREEN);
+  setTile(layer, 20, 2, LOBBY_GID.WALL_SCREEN);
+  setTile(layer, 22, 2, LOBBY_GID.WALL_SCREEN);
+  // Pipe conduit at ceiling of security room
+  for (let x = 13; x <= 23; x++) {
+    setTile(layer, x, 1, LOBBY_GID.PIPE_H);
+  }
 
-  // Security wall screens (mounted near north wall)
-  setTile(layer, 17, 2, LOBBY_GID.WALL_SCREEN);
-  setTile(layer, 21, 2, LOBBY_GID.WALL_SCREEN);
-
-  // ── Server closet: server racks + cable management ────────────────────────
+  // ── Server closet: dense rack arrays + cable management ───────────────────
+  // North rack row (gap at col 27 for terminal access)
+  setTile(layer, 25, 2, LOBBY_GID.SERVER_RACK);
   setTile(layer, 26, 2, LOBBY_GID.SERVER_RACK);
-  setTile(layer, 27, 2, LOBBY_GID.SERVER_RACK);
   setTile(layer, 28, 2, LOBBY_GID.SERVER_RACK);
-  setTile(layer, 26, 9, LOBBY_GID.SERVER_RACK);
-  setTile(layer, 27, 9, LOBBY_GID.SERVER_RACK);
-  setTile(layer, 29, 5, LOBBY_GID.CABLE);
-  setTile(layer, 30, 5, LOBBY_GID.CABLE);
-
-  // Pipe conduit along north wall of server closet (below ceiling)
+  setTile(layer, 29, 2, LOBBY_GID.SERVER_RACK);
+  setTile(layer, 30, 2, LOBBY_GID.SERVER_RACK);
+  setTile(layer, 31, 2, LOBBY_GID.SERVER_RACK);
+  setTile(layer, 32, 2, LOBBY_GID.SERVER_RACK);
+  // Mid rack row
+  setTile(layer, 25, 5, LOBBY_GID.SERVER_RACK);
+  setTile(layer, 26, 5, LOBBY_GID.SERVER_RACK);
+  setTile(layer, 28, 5, LOBBY_GID.SERVER_RACK);
+  setTile(layer, 29, 5, LOBBY_GID.SERVER_RACK);
+  setTile(layer, 30, 5, LOBBY_GID.SERVER_RACK);
+  setTile(layer, 32, 5, LOBBY_GID.SERVER_RACK);
+  // South rack row (gap at col 31 for terminal walkway)
+  setTile(layer, 25, 8, LOBBY_GID.SERVER_RACK);
+  setTile(layer, 26, 8, LOBBY_GID.SERVER_RACK);
+  setTile(layer, 28, 8, LOBBY_GID.SERVER_RACK);
+  setTile(layer, 29, 8, LOBBY_GID.SERVER_RACK);
+  setTile(layer, 30, 8, LOBBY_GID.SERVER_RACK);
+  setTile(layer, 32, 8, LOBBY_GID.SERVER_RACK);
+  // Cable management aisles between rack rows
+  for (let x = 25; x <= 32; x++) {
+    setTile(layer, x, 4, LOBBY_GID.CABLE);
+    setTile(layer, x, 7, LOBBY_GID.CABLE);
+  }
+  // Pipe conduit at ceiling of server closet
   for (let x = 25; x <= 32; x++) {
     setTile(layer, x, 1, LOBBY_GID.PIPE_H);
   }
 
-  // Elevator: vent on wall
-  setTile(layer, 34, 10, LOBBY_GID.VENT);
-  setTile(layer, 38, 10, LOBBY_GID.VENT);
+  // ── Elevator: maintenance vents ────────────────────────────────────────────
+  setTile(layer, 34, 3, LOBBY_GID.VENT);
+  setTile(layer, 38, 3, LOBBY_GID.VENT);
+  setTile(layer, 34, 9, LOBBY_GID.VENT);
+  setTile(layer, 38, 9, LOBBY_GID.VENT);
+  setTile(layer, 34, 16, LOBBY_GID.VENT);
+  setTile(layer, 38, 16, LOBBY_GID.VENT);
+  setTile(layer, 34, 24, LOBBY_GID.VENT);
+  setTile(layer, 38, 24, LOBBY_GID.VENT);
 
   return layer;
 }
@@ -322,36 +405,80 @@ function buildFurnitureLayer(): number[] {
 function buildDecorationLayer(): number[] {
   const layer = newGrid();
 
-  // ── Floor grates near terminals and server equipment ──────────────────────
-  setTile(layer, 8, 3, LOBBY_GID.FLOOR_GRATE); // near break room terminal
-  setTile(layer, 25, 3, LOBBY_GID.FLOOR_GRATE); // near server console
-  setTile(layer, 28, 4, LOBBY_GID.FLOOR_GRATE);
-  setTile(layer, 30, 8, LOBBY_GID.FLOOR_GRATE); // near diagnostic panel
+  // ── Break room: ceiling lights + floor grates ─────────────────────────────
+  setTile(layer, 4, 3, LOBBY_GID.CEILING_LIGHT);
+  setTile(layer, 8, 3, LOBBY_GID.CEILING_LIGHT);
+  setTile(layer, 4, 8, LOBBY_GID.CEILING_LIGHT);
+  setTile(layer, 8, 8, LOBBY_GID.CEILING_LIGHT);
+  setTile(layer, 7, 6, LOBBY_GID.FLOOR_GRATE);
+  setTile(layer, 10, 4, LOBBY_GID.FLOOR_GRATE); // near terminal
+  setTile(layer, 2, 9, LOBBY_GID.OIL_STAIN);
+
+  // ── Security: ceiling lights + floor grates + neon accents ───────────────
+  setTile(layer, 15, 5, LOBBY_GID.CEILING_LIGHT);
+  setTile(layer, 19, 5, LOBBY_GID.CEILING_LIGHT);
+  setTile(layer, 15, 9, LOBBY_GID.CEILING_LIGHT);
+  setTile(layer, 19, 9, LOBBY_GID.CEILING_LIGHT);
+  setTile(layer, 16, 6, LOBBY_GID.FLOOR_GRATE);
+  setTile(layer, 20, 6, LOBBY_GID.FLOOR_GRATE);
+  setTile(layer, 17, 10, LOBBY_GID.FLOOR_GRATE);
+  setTile(layer, 21, 10, LOBBY_GID.FLOOR_GRATE);
+  // Neon floor accents along security east wall
+  setTile(layer, 23, 3, LOBBY_GID.NEON_STRIP);
+  setTile(layer, 23, 6, LOBBY_GID.NEON_STRIP);
+  setTile(layer, 23, 9, LOBBY_GID.NEON_STRIP);
+
+  // ── Server closet: dense floor grates + oil stains + ceiling lights ───────
+  setTile(layer, 26, 3, LOBBY_GID.FLOOR_GRATE);
+  setTile(layer, 28, 3, LOBBY_GID.FLOOR_GRATE);
+  setTile(layer, 30, 3, LOBBY_GID.FLOOR_GRATE);
+  setTile(layer, 32, 3, LOBBY_GID.FLOOR_GRATE);
+  setTile(layer, 26, 6, LOBBY_GID.FLOOR_GRATE);
+  setTile(layer, 28, 6, LOBBY_GID.FLOOR_GRATE);
+  setTile(layer, 30, 6, LOBBY_GID.FLOOR_GRATE);
+  setTile(layer, 32, 6, LOBBY_GID.FLOOR_GRATE);
+  setTile(layer, 26, 10, LOBBY_GID.FLOOR_GRATE);
+  setTile(layer, 28, 10, LOBBY_GID.FLOOR_GRATE);
+  setTile(layer, 30, 10, LOBBY_GID.FLOOR_GRATE);
+  setTile(layer, 29, 5, LOBBY_GID.OIL_STAIN);
+  setTile(layer, 31, 7, LOBBY_GID.OIL_STAIN);
+  setTile(layer, 27, 9, LOBBY_GID.OIL_STAIN);
+  setTile(layer, 26, 4, LOBBY_GID.CEILING_LIGHT);
+  setTile(layer, 30, 4, LOBBY_GID.CEILING_LIGHT);
 
   // ── Caution stripes flanking every door passage ───────────────────────────
-  // Break room door (col 6, row 12)
   setTile(layer, 5, 13, LOBBY_GID.CAUTION_STRIPE);
   setTile(layer, 7, 13, LOBBY_GID.CAUTION_STRIPE);
-  // Security door (col 18, row 12)
   setTile(layer, 17, 13, LOBBY_GID.CAUTION_STRIPE);
   setTile(layer, 19, 13, LOBBY_GID.CAUTION_STRIPE);
-  // Server closet door (col 29, row 12)
   setTile(layer, 28, 13, LOBBY_GID.CAUTION_STRIPE);
   setTile(layer, 30, 13, LOBBY_GID.CAUTION_STRIPE);
-  // Elevator doorways
   setTile(layer, COL_ELEVATOR_W + 1, DOOR_ELEV_UPPER_ROW, LOBBY_GID.CAUTION_STRIPE);
   setTile(layer, COL_ELEVATOR_W + 1, DOOR_ELEV_LOWER_ROW, LOBBY_GID.CAUTION_STRIPE);
+  setTile(layer, ENTRANCE_COL_A - 1, MAP_H - 2, LOBBY_GID.CAUTION_STRIPE);
+  setTile(layer, ENTRANCE_COL_B + 1, MAP_H - 2, LOBBY_GID.CAUTION_STRIPE);
 
-  // ── Oil / coolant stains ──────────────────────────────────────────────────
-  setTile(layer, 29, 7, LOBBY_GID.OIL_STAIN); // server closet leakage
-  setTile(layer, 31, 6, LOBBY_GID.OIL_STAIN);
-  setTile(layer, 2, 9, LOBBY_GID.OIL_STAIN); // break room floor
-
-  // ── Ceiling-light reflection pools in main hall ───────────────────────────
+  // ── Main hall: ceiling light grid ─────────────────────────────────────────
   for (let x = 6; x < COL_ELEVATOR_W; x += 8) {
-    setTile(layer, x, 16, LOBBY_GID.CEILING_LIGHT);
-    setTile(layer, x, 23, LOBBY_GID.CEILING_LIGHT);
+    setTile(layer, x, 15, LOBBY_GID.CEILING_LIGHT);
+    setTile(layer, x, 20, LOBBY_GID.CEILING_LIGHT);
+    setTile(layer, x, 26, LOBBY_GID.CEILING_LIGHT);
   }
+
+  // ── Main hall: neon floor accent strips along left edge ───────────────────
+  for (let y = ROW_DIVIDER + 2; y < MAP_H - 2; y += 3) {
+    setTile(layer, 2, y, LOBBY_GID.NEON_STRIP);
+  }
+
+  // ── Main hall: cable run at base of reception desk ────────────────────────
+  for (let x = 2; x <= 9; x++) {
+    setTile(layer, x, 18, LOBBY_GID.CABLE);
+  }
+
+  // ── Elevator: floor grates and lights ────────────────────────────────────
+  setTile(layer, 36, 3, LOBBY_GID.FLOOR_GRATE);
+  setTile(layer, 36, 10, LOBBY_GID.FLOOR_GRATE);
+  setTile(layer, 36, 22, LOBBY_GID.CEILING_LIGHT);
 
   return layer;
 }

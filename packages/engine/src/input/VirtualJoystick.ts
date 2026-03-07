@@ -87,15 +87,14 @@ export class VirtualJoystick {
     // Activate for left 60% of screen
     if (pointer.x > this.scene.scale.width * 0.6) return;
 
-    const zoom = this.scene.cameras.main.zoom || 1;
     const margin = this.outerRadius + 10;
-    const vpWidth = this.scene.scale.width / zoom;
-    const vpHeight = this.scene.scale.height / zoom;
+    const vpWidth = this.scene.scale.width;
+    const vpHeight = this.scene.scale.height;
 
     this.active = true;
     this.pointerId = pointer.id;
-    this.baseX = Phaser.Math.Clamp(pointer.x / zoom, margin, vpWidth - margin);
-    this.baseY = Phaser.Math.Clamp(pointer.y / zoom, margin, vpHeight - margin);
+    this.baseX = Phaser.Math.Clamp(pointer.x, margin, vpWidth - margin);
+    this.baseY = Phaser.Math.Clamp(pointer.y, margin, vpHeight - margin);
     this.outputX = 0;
     this.outputY = 0;
 
@@ -109,9 +108,8 @@ export class VirtualJoystick {
   private onPointerMove(pointer: Phaser.Input.Pointer): void {
     if (!this.active || pointer.id !== this.pointerId) return;
 
-    const zoom = this.scene.cameras.main.zoom || 1;
-    const dx = pointer.x / zoom - this.baseX;
-    const dy = pointer.y / zoom - this.baseY;
+    const dx = pointer.x - this.baseX;
+    const dy = pointer.y - this.baseY;
     const dist = Math.sqrt(dx * dx + dy * dy);
     const maxDist = this.outerRadius - this.thumbRadius;
     const clampedDist = Math.min(dist, maxDist);
@@ -211,8 +209,7 @@ export class VirtualJoystick {
   }
 
   private drawGhost(): void {
-    const zoom = this.scene.cameras.main.zoom || 1;
-    const vpHeight = this.scene.scale.height / zoom;
+    const vpHeight = this.scene.scale.height;
     const gx = this.outerRadius + 20;
     const gy = vpHeight - this.outerRadius - 20;
     this.ghost.clear();

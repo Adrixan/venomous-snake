@@ -147,15 +147,17 @@ export function SettingsPanel({ onBack, audioSettings }: SettingsPanelProps): Re
   };
 
   const buttonStyle: React.CSSProperties = {
-    minHeight: '44px',
-    padding: '10px 20px',
-    background: 'transparent',
-    border: '1px solid #333',
-    color: '#e0e0e0',
+    minWidth: '48px',
+    minHeight: '48px',
+    padding: '12px 20px',
+    background: 'rgba(10, 10, 15, 0.85)',
+    border: '1px solid #00ff9d55',
+    color: '#00ff9d',
     fontFamily: FONT_FAMILY,
-    fontSize: '14px',
+    fontSize: '16px',
     cursor: 'pointer',
     marginTop: '8px',
+    boxShadow: '0 0 6px rgba(0,255,157,0.15)',
   };
 
   return (

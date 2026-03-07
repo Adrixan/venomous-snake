@@ -148,34 +148,144 @@ function buildWallsLayer(): number[] {
 function buildFurnitureLayer(): number[] {
   const layer = newGrid();
 
-  // Monitoring station clusters in control room
+  // Main control room: dense monitoring station clusters
   for (let y = 7; y <= 21; y += 7) {
     for (let x = 7; x <= 23; x += 8) {
       setTile(layer, x, y, LOBBY_GID.DESK);
       setTile(layer, x + 1, y, LOBBY_GID.DESK);
+      setTile(layer, x + 2, y, LOBBY_GID.DESK);
       setTile(layer, x, y + 1, LOBBY_GID.CHAIR);
       setTile(layer, x + 1, y + 1, LOBBY_GID.CHAIR);
+      setTile(layer, x + 2, y + 1, LOBBY_GID.CHAIR);
     }
   }
-
-  // Command office furniture
-  setTile(layer, 29, 3, LOBBY_GID.DESK);
-  setTile(layer, 30, 3, LOBBY_GID.DESK);
-  setTile(layer, 29, 4, LOBBY_GID.CHAIR);
-  setTile(layer, 29, 10, LOBBY_GID.DESK);
-  setTile(layer, 30, 10, LOBBY_GID.CHAIR);
-
-  // Camera bay equipment
-  for (let x = 2; x <= 30; x += 4) {
-    setTile(layer, x, 2, LOBBY_GID.DESK);
-    setTile(layer, x, 3, LOBBY_GID.CHAIR);
+  // Wall-screen bank along south wall of control room (row 23 face)
+  for (let x = 6; x <= 26; x += 2) {
+    setTile(layer, x, 23, LOBBY_GID.WALL_SCREEN);
+  }
+  // Filing cabinets in control room corners
+  setTile(layer, 5, 6, LOBBY_GID.FILING_CABINET);
+  setTile(layer, 5, 7, LOBBY_GID.FILING_CABINET);
+  setTile(layer, 5, 14, LOBBY_GID.FILING_CABINET);
+  setTile(layer, 5, 21, LOBBY_GID.FILING_CABINET);
+  setTile(layer, 26, 8, LOBBY_GID.FILING_CABINET);
+  setTile(layer, 26, 15, LOBBY_GID.FILING_CABINET);
+  setTile(layer, 26, 22, LOBBY_GID.FILING_CABINET);
+  // Planters in control room
+  setTile(layer, 6, 24, LOBBY_GID.PLANTER);
+  setTile(layer, 25, 24, LOBBY_GID.PLANTER);
+  // Pipe conduit along south wall of control room
+  for (let x = 5; x <= 26; x++) {
+    setTile(layer, x, 24, LOBBY_GID.PIPE_H);
   }
 
-  // Interrogation room furniture
+  // Command office: desk + extra furniture
+  setTile(layer, 29, 3, LOBBY_GID.DESK);
+  setTile(layer, 30, 3, LOBBY_GID.DESK);
+  setTile(layer, 31, 3, LOBBY_GID.DESK);
+  setTile(layer, 29, 4, LOBBY_GID.CHAIR);
+  setTile(layer, 31, 4, LOBBY_GID.CHAIR);
+  setTile(layer, 29, 9, LOBBY_GID.DESK);
+  setTile(layer, 30, 9, LOBBY_GID.DESK);
+  setTile(layer, 30, 10, LOBBY_GID.CHAIR);
+  setTile(layer, 31, 8, LOBBY_GID.FILING_CABINET);
+  setTile(layer, 31, 9, LOBBY_GID.FILING_CABINET);
+  setTile(layer, 31, 10, LOBBY_GID.FILING_CABINET);
+  // Wall screen in command office
+  setTile(layer, 28, 2, LOBBY_GID.WALL_SCREEN);
+  setTile(layer, 30, 2, LOBBY_GID.WALL_SCREEN);
+  setTile(layer, 32, 2, LOBBY_GID.WALL_SCREEN);
+
+  // Camera bay: equipment row (monitoring consoles facing south)
+  for (let x = 2; x <= 30; x += 4) {
+    setTile(layer, x, 2, LOBBY_GID.DESK);
+    setTile(layer, x + 1, 2, LOBBY_GID.DESK);
+    setTile(layer, x, 3, LOBBY_GID.CHAIR);
+  }
+  // Server rack in camera bay corners
+  setTile(layer, 1, 2, LOBBY_GID.SERVER_RACK);
+  setTile(layer, 31, 2, LOBBY_GID.SERVER_RACK);
+  setTile(layer, 32, 2, LOBBY_GID.SERVER_RACK);
+  // Cable runs in camera bay
+  for (let x = 1; x <= 32; x += 3) {
+    setTile(layer, x, 1, LOBBY_GID.CABLE);
+  }
+
+  // Interrogation room: table + chairs
   setTile(layer, 4, 26, LOBBY_GID.DESK);
-  setTile(layer, 5, 26, LOBBY_GID.CHAIR);
+  setTile(layer, 5, 26, LOBBY_GID.DESK);
+  setTile(layer, 4, 27, LOBBY_GID.CHAIR);
+  setTile(layer, 6, 27, LOBBY_GID.CHAIR);
   setTile(layer, 4, 28, LOBBY_GID.CHAIR);
   setTile(layer, 6, 28, LOBBY_GID.CHAIR);
+  setTile(layer, 8, 26, LOBBY_GID.FILING_CABINET);
+  setTile(layer, 8, 27, LOBBY_GID.FILING_CABINET);
+  setTile(layer, 10, 26, LOBBY_GID.WALL_SCREEN);
+  setTile(layer, 10, 28, LOBBY_GID.WALL_SCREEN);
+
+  return layer;
+}
+
+function buildDecorationLayer(): number[] {
+  const layer = newGrid();
+
+  // ── Camera bay: floor grates + neon strips + ceiling lights ──────────────
+  for (let x = 3; x <= 30; x += 4) {
+    setTile(layer, x, 1, LOBBY_GID.FLOOR_GRATE);
+  }
+  setTile(layer, 8, 3, LOBBY_GID.NEON_STRIP);
+  setTile(layer, 16, 3, LOBBY_GID.NEON_STRIP);
+  setTile(layer, 24, 3, LOBBY_GID.NEON_STRIP);
+  setTile(layer, 10, 1, LOBBY_GID.CEILING_LIGHT);
+  setTile(layer, 22, 1, LOBBY_GID.CEILING_LIGHT);
+
+  // ── Control room: ceiling light grid + floor grates ──────────────────────
+  for (let x = 8; x <= 24; x += 8) {
+    setTile(layer, x, 9, LOBBY_GID.CEILING_LIGHT);
+    setTile(layer, x, 16, LOBBY_GID.CEILING_LIGHT);
+    setTile(layer, x, 22, LOBBY_GID.CEILING_LIGHT);
+  }
+  setTile(layer, 7, 10, LOBBY_GID.FLOOR_GRATE);
+  setTile(layer, 15, 10, LOBBY_GID.FLOOR_GRATE);
+  setTile(layer, 23, 10, LOBBY_GID.FLOOR_GRATE);
+  setTile(layer, 7, 17, LOBBY_GID.FLOOR_GRATE);
+  setTile(layer, 15, 17, LOBBY_GID.FLOOR_GRATE);
+  setTile(layer, 23, 17, LOBBY_GID.FLOOR_GRATE);
+  // Neon floor accents along control room walls
+  for (let y = 6; y <= 22; y += 4) {
+    setTile(layer, 6, y, LOBBY_GID.NEON_STRIP);
+    setTile(layer, 25, y, LOBBY_GID.NEON_STRIP);
+  }
+
+  // ── Command office: ceiling lights + carpet ───────────────────────────────
+  setTile(layer, 30, 5, LOBBY_GID.CEILING_LIGHT);
+  setTile(layer, 30, 12, LOBBY_GID.CEILING_LIGHT);
+  setTile(layer, 29, 7, LOBBY_GID.CARPET);
+  setTile(layer, 30, 7, LOBBY_GID.CARPET);
+  setTile(layer, 31, 7, LOBBY_GID.CARPET);
+
+  // ── Interrogation room: caution stripes + oil stain ──────────────────────
+  setTile(layer, 3, 25, LOBBY_GID.CAUTION_STRIPE);
+  setTile(layer, 11, 25, LOBBY_GID.CAUTION_STRIPE);
+  setTile(layer, 7, 28, LOBBY_GID.OIL_STAIN);
+  setTile(layer, 5, 25, LOBBY_GID.CEILING_LIGHT);
+
+  // ── Caution stripes at all door thresholds ────────────────────────────────
+  setTile(layer, 15, 4, LOBBY_GID.CAUTION_STRIPE);
+  setTile(layer, 17, 4, LOBBY_GID.CAUTION_STRIPE);
+  setTile(layer, 26, 8, LOBBY_GID.CAUTION_STRIPE);
+  setTile(layer, 29, 14, LOBBY_GID.CAUTION_STRIPE);
+  setTile(layer, 31, 14, LOBBY_GID.CAUTION_STRIPE);
+  setTile(layer, 5, 24, LOBBY_GID.CAUTION_STRIPE);
+  setTile(layer, 7, 24, LOBBY_GID.CAUTION_STRIPE);
+  setTile(layer, 11, 27, LOBBY_GID.CAUTION_STRIPE);
+  setTile(layer, 13, 27, LOBBY_GID.CAUTION_STRIPE);
+  setTile(layer, 32, 5, LOBBY_GID.CAUTION_STRIPE);
+  setTile(layer, 32, 25, LOBBY_GID.CAUTION_STRIPE);
+
+  // ── Elevator: floor grate + ceiling light ────────────────────────────────
+  setTile(layer, 36, 5, LOBBY_GID.FLOOR_GRATE);
+  setTile(layer, 36, 20, LOBBY_GID.CEILING_LIGHT);
 
   return layer;
 }
@@ -340,9 +450,46 @@ function buildObjectLayer(): TiledObject[] {
   );
   // Elevator down (to floor 2)
   add(
-    makeObject(nextId, 'Elevator to Floor 2', 'door', 37, 25, [
+    makeObject(nextId++, 'Elevator to Floor 2', 'door', 37, 25, [
       prop('targetFloor', 'floor2'),
       prop('locked', 'false'),
+    ]),
+  );
+
+  // ─── Items ──────────────────────────────────────────────────────────────────
+  // Datafile in command office on the supervisor's desk
+  add(
+    makeObject(nextId++, 'Surveillance Protocol Log', 'item', 29, 4, [
+      prop('itemType', 'datafile'),
+      prop('itemId', 'surveillance_protocol_log'),
+    ]),
+  );
+  // Keycard locked in command office drawer — grants deeper access
+  add(
+    makeObject(nextId++, 'Surveillance Hub Keycard', 'item', 30, 11, [
+      prop('itemType', 'keycard'),
+      prop('itemId', 'surveillance_hub_keycard'),
+    ]),
+  );
+  // Datafile in main control room near Control Console 1
+  add(
+    makeObject(nextId++, 'Security Protocol Log', 'item', 10, 13, [
+      prop('itemType', 'datafile'),
+      prop('itemId', 'security_protocol_log'),
+    ]),
+  );
+  // Tool in control room — obfuscation utility found at a monitoring station
+  add(
+    makeObject(nextId++, 'Code Obfuscator Tool', 'item', 18, 13, [
+      prop('itemType', 'tool'),
+      prop('itemId', 'code_obfuscator'),
+    ]),
+  );
+  // Datafile in interrogation room — admin credentials cached on terminal
+  add(
+    makeObject(nextId, 'Admin Credentials File', 'item', 5, 27, [
+      prop('itemType', 'datafile'),
+      prop('itemId', 'admin_credentials'),
     ]),
   );
 
@@ -353,6 +500,7 @@ function buildObjectLayer(): TiledObject[] {
 
 export function generateFloor3Tilemap(): TiledMap {
   const floorData = buildFloorLayer();
+  const decorationData = buildDecorationLayer();
   const wallsData = buildWallsLayer();
   const furnitureData = buildFurnitureLayer();
   const interactiveData = buildInteractiveLayer();
@@ -393,6 +541,7 @@ export function generateFloor3Tilemap(): TiledMap {
     infinite: false,
     layers: [
       tileLayer('floor', floorData),
+      tileLayer('decoration', decorationData),
       tileLayer('walls', wallsData),
       tileLayer('furniture', furnitureData),
       tileLayer('interactive', interactiveData),

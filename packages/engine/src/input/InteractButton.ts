@@ -23,9 +23,8 @@ export class InteractButton {
     this.scene = scene;
     this.size = size;
 
-    const zoom = scene.cameras.main.zoom || 1;
-    this.buttonX = scene.scale.width / zoom - MARGIN - size / 2;
-    this.buttonY = scene.scale.height / zoom - MARGIN - size / 2;
+    this.buttonX = scene.scale.width - MARGIN - size / 2;
+    this.buttonY = scene.scale.height - MARGIN - size / 2;
 
     this.bg = scene.add.graphics();
     this.bg.setScrollFactor(0);
@@ -76,9 +75,8 @@ export class InteractButton {
   private onPointerDown(pointer: Phaser.Input.Pointer): void {
     if (!this.available) return;
     const half = this.size / 2;
-    const zoom = this.scene.cameras.main.zoom || 1;
-    const px = pointer.x / zoom;
-    const py = pointer.y / zoom;
+    const px = pointer.x;
+    const py = pointer.y;
     const inX = px >= this.buttonX - half && px <= this.buttonX + half;
     const inY = py >= this.buttonY - half && py <= this.buttonY + half;
     if (inX && inY) {

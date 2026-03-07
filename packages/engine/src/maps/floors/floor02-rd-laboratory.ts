@@ -145,35 +145,128 @@ function buildWallsLayer(): number[] {
 function buildFurnitureLayer(): number[] {
   const layer = newGrid();
 
-  // Lab benches (DESK) in central lab area — rows of benches
+  // Central lab: dense bench rows with chairs on both sides
   for (let y = 3; y <= 12; y += 3) {
     for (let x = 3; x <= 18; x += 4) {
       setTile(layer, x, y, LOBBY_GID.DESK);
       setTile(layer, x + 1, y, LOBBY_GID.DESK);
+      // Chair on south side of each bench
+      setTile(layer, x, y + 1, LOBBY_GID.CHAIR);
+      setTile(layer, x + 1, y + 1, LOBBY_GID.CHAIR);
     }
   }
+  // Filing cabinets along east wall of lab (col 20)
+  setTile(layer, 20, 4, LOBBY_GID.FILING_CABINET);
+  setTile(layer, 20, 7, LOBBY_GID.FILING_CABINET);
+  setTile(layer, 20, 10, LOBBY_GID.FILING_CABINET);
+  // Planters in lab corners
+  setTile(layer, 1, 2, LOBBY_GID.PLANTER);
+  setTile(layer, 1, 13, LOBBY_GID.PLANTER);
+  // Pipe conduit along lab north wall
+  for (let x = 1; x <= 20; x++) {
+    setTile(layer, x, 1, LOBBY_GID.PIPE_H);
+  }
 
-  // Specimen containers (PLANTER) in containment zone
+  // Containment zone: specimen containers + wall screens + cable runs
   for (let x = 23; x <= 31; x += 4) {
     setTile(layer, x, 3, LOBBY_GID.PLANTER);
     setTile(layer, x, 8, LOBBY_GID.PLANTER);
     setTile(layer, x, 12, LOBBY_GID.PLANTER);
   }
+  // Wall-screen bank on north wall of containment
+  setTile(layer, 22, 2, LOBBY_GID.WALL_SCREEN);
+  setTile(layer, 24, 2, LOBBY_GID.WALL_SCREEN);
+  setTile(layer, 26, 2, LOBBY_GID.WALL_SCREEN);
+  setTile(layer, 28, 2, LOBBY_GID.WALL_SCREEN);
+  setTile(layer, 30, 2, LOBBY_GID.WALL_SCREEN);
+  setTile(layer, 32, 2, LOBBY_GID.WALL_SCREEN);
+  // Cable runs along containment floor
+  for (let x = 22; x <= 32; x += 2) {
+    setTile(layer, x, 13, LOBBY_GID.CABLE);
+  }
+  // Vents in containment zone
+  setTile(layer, 24, 1, LOBBY_GID.VENT);
+  setTile(layer, 30, 1, LOBBY_GID.VENT);
 
-  // Prep room: desks and chairs
+  // Prep room: multiple desk clusters + filing cabinets
   setTile(layer, 3, 18, LOBBY_GID.DESK);
   setTile(layer, 4, 18, LOBBY_GID.DESK);
   setTile(layer, 3, 19, LOBBY_GID.CHAIR);
+  setTile(layer, 5, 19, LOBBY_GID.CHAIR);
   setTile(layer, 8, 22, LOBBY_GID.DESK);
   setTile(layer, 9, 22, LOBBY_GID.DESK);
   setTile(layer, 8, 23, LOBBY_GID.CHAIR);
+  setTile(layer, 10, 23, LOBBY_GID.CHAIR);
   setTile(layer, 3, 26, LOBBY_GID.DESK);
   setTile(layer, 4, 26, LOBBY_GID.DESK);
   setTile(layer, 5, 26, LOBBY_GID.CHAIR);
+  setTile(layer, 3, 27, LOBBY_GID.CHAIR);
+  setTile(layer, 11, 17, LOBBY_GID.FILING_CABINET);
+  setTile(layer, 11, 18, LOBBY_GID.FILING_CABINET);
+  setTile(layer, 11, 19, LOBBY_GID.FILING_CABINET);
+  setTile(layer, 2, 28, LOBBY_GID.PLANTER);
+  setTile(layer, 11, 28, LOBBY_GID.PLANTER);
+  // Pipe conduit at ceiling of prep room
+  for (let x = 1; x <= 12; x++) {
+    setTile(layer, x, 16, LOBBY_GID.PIPE_H);
+  }
 
-  // Vents in containment zone ceiling
-  setTile(layer, 24, 2, LOBBY_GID.VENT);
-  setTile(layer, 30, 2, LOBBY_GID.VENT);
+  return layer;
+}
+
+function buildDecorationLayer(): number[] {
+  const layer = newGrid();
+
+  // ── Central lab: ceiling light grid + floor grates ────────────────────────
+  for (let x = 4; x <= 18; x += 7) {
+    setTile(layer, x, 2, LOBBY_GID.CEILING_LIGHT);
+    setTile(layer, x, 7, LOBBY_GID.CEILING_LIGHT);
+    setTile(layer, x, 12, LOBBY_GID.CEILING_LIGHT);
+  }
+  setTile(layer, 2, 5, LOBBY_GID.FLOOR_GRATE);
+  setTile(layer, 2, 10, LOBBY_GID.FLOOR_GRATE);
+  setTile(layer, 19, 5, LOBBY_GID.FLOOR_GRATE);
+  setTile(layer, 19, 9, LOBBY_GID.FLOOR_GRATE);
+
+  // ── Containment zone: neon + grates + oil stains ─────────────────────────
+  setTile(layer, 23, 4, LOBBY_GID.NEON_STRIP);
+  setTile(layer, 27, 4, LOBBY_GID.NEON_STRIP);
+  setTile(layer, 31, 4, LOBBY_GID.NEON_STRIP);
+  setTile(layer, 23, 9, LOBBY_GID.NEON_STRIP);
+  setTile(layer, 27, 9, LOBBY_GID.NEON_STRIP);
+  setTile(layer, 31, 9, LOBBY_GID.NEON_STRIP);
+  setTile(layer, 25, 6, LOBBY_GID.FLOOR_GRATE);
+  setTile(layer, 29, 6, LOBBY_GID.FLOOR_GRATE);
+  setTile(layer, 25, 11, LOBBY_GID.FLOOR_GRATE);
+  setTile(layer, 29, 11, LOBBY_GID.FLOOR_GRATE);
+  setTile(layer, 26, 10, LOBBY_GID.OIL_STAIN);
+  setTile(layer, 32, 7, LOBBY_GID.OIL_STAIN);
+  setTile(layer, 27, 3, LOBBY_GID.CEILING_LIGHT);
+  setTile(layer, 27, 12, LOBBY_GID.CEILING_LIGHT);
+
+  // ── Prep room: ceiling lights + grates ───────────────────────────────────
+  setTile(layer, 4, 17, LOBBY_GID.CEILING_LIGHT);
+  setTile(layer, 9, 17, LOBBY_GID.CEILING_LIGHT);
+  setTile(layer, 4, 24, LOBBY_GID.CEILING_LIGHT);
+  setTile(layer, 9, 24, LOBBY_GID.CEILING_LIGHT);
+  setTile(layer, 6, 20, LOBBY_GID.FLOOR_GRATE);
+  setTile(layer, 6, 27, LOBBY_GID.FLOOR_GRATE);
+  setTile(layer, 7, 17, LOBBY_GID.OIL_STAIN);
+
+  // ── Caution stripes at all door passages ──────────────────────────────────
+  setTile(layer, 20, 7, LOBBY_GID.CAUTION_STRIPE);
+  setTile(layer, 25, 14, LOBBY_GID.CAUTION_STRIPE);
+  setTile(layer, 27, 14, LOBBY_GID.CAUTION_STRIPE);
+  setTile(layer, 5, 15, LOBBY_GID.CAUTION_STRIPE);
+  setTile(layer, 7, 15, LOBBY_GID.CAUTION_STRIPE);
+  setTile(layer, 12, 21, LOBBY_GID.CAUTION_STRIPE);
+  setTile(layer, 14, 21, LOBBY_GID.CAUTION_STRIPE);
+  setTile(layer, 32, 5, LOBBY_GID.CAUTION_STRIPE);
+  setTile(layer, 32, 25, LOBBY_GID.CAUTION_STRIPE);
+
+  // ── Elevator: floor grate + ceiling light ────────────────────────────────
+  setTile(layer, 36, 5, LOBBY_GID.FLOOR_GRATE);
+  setTile(layer, 36, 20, LOBBY_GID.CEILING_LIGHT);
 
   return layer;
 }
@@ -337,9 +430,46 @@ function buildObjectLayer(): TiledObject[] {
   );
   // Elevator down (to floor 1)
   add(
-    makeObject(nextId, 'Elevator to Floor 1', 'door', 37, 25, [
+    makeObject(nextId++, 'Elevator to Floor 1', 'door', 37, 25, [
       prop('targetFloor', 'floor1'),
       prop('locked', 'false'),
+    ]),
+  );
+
+  // ─── Items ──────────────────────────────────────────────────────────────────
+  // Datafile on first lab bench — experiment notes left by a researcher
+  add(
+    makeObject(nextId++, 'Experiment Log Alpha', 'item', 5, 4, [
+      prop('itemType', 'datafile'),
+      prop('itemId', 'experiment_log_alpha'),
+    ]),
+  );
+  // Tool on central lab bench — coding utility recovered from a workstation
+  add(
+    makeObject(nextId++, 'Syntax Highlighter Upgrade', 'item', 13, 4, [
+      prop('itemType', 'tool'),
+      prop('itemId', 'syntax_highlighter'),
+    ]),
+  );
+  // Keycard inside containment zone, near the containment console
+  add(
+    makeObject(nextId++, 'Lab Access Card', 'item', 24, 4, [
+      prop('itemType', 'keycard'),
+      prop('itemId', 'lab_access_card'),
+    ]),
+  );
+  // Datafile in containment zone — classified genetic research protocol
+  add(
+    makeObject(nextId++, 'Genetic Research Protocol', 'item', 30, 4, [
+      prop('itemType', 'datafile'),
+      prop('itemId', 'genetic_research_protocol'),
+    ]),
+  );
+  // Tool in prep room on the analyst's desk
+  add(
+    makeObject(nextId, 'Code Formatter Patch', 'item', 4, 19, [
+      prop('itemType', 'tool'),
+      prop('itemId', 'code_formatter_patch'),
     ]),
   );
 
@@ -350,6 +480,7 @@ function buildObjectLayer(): TiledObject[] {
 
 export function generateFloor2Tilemap(): TiledMap {
   const floorData = buildFloorLayer();
+  const decorationData = buildDecorationLayer();
   const wallsData = buildWallsLayer();
   const furnitureData = buildFurnitureLayer();
   const interactiveData = buildInteractiveLayer();
@@ -390,6 +521,7 @@ export function generateFloor2Tilemap(): TiledMap {
     infinite: false,
     layers: [
       tileLayer('floor', floorData),
+      tileLayer('decoration', decorationData),
       tileLayer('walls', wallsData),
       tileLayer('furniture', furnitureData),
       tileLayer('interactive', interactiveData),

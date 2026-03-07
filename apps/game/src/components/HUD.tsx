@@ -89,16 +89,17 @@ export function HUD(): React.JSX.Element {
   };
 
   const hudButtonStyle: React.CSSProperties = {
-    minWidth: '44px',
-    minHeight: '44px',
-    padding: '6px 10px',
-    background: 'rgba(10, 10, 15, 0.8)',
-    border: '1px solid #333',
-    color: '#e0e0e0',
+    minWidth: '48px',
+    minHeight: '48px',
+    padding: '12px',
+    background: 'rgba(10, 10, 15, 0.85)',
+    border: '1px solid #00ff9d55',
+    color: '#00ff9d',
     fontFamily: FONT_FAMILY,
-    fontSize: '12px',
+    fontSize: '16px',
     cursor: 'pointer',
     pointerEvents: 'auto',
+    boxShadow: '0 0 6px rgba(0,255,157,0.15)',
   };
 
   const bottomRightStyle: React.CSSProperties = {
