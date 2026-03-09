@@ -41,9 +41,17 @@ export class GameScene extends Phaser.Scene {
   private nearestInteractive: InteractiveObject | null = null;
   private nearestNPC: NPC | null = null;
   private unsubscribeEventBus: (() => void) | null = null;
+  private roomKey: string | undefined;
 
   constructor() {
     super({ key: 'GameScene' });
+  }
+
+  // Phaser calls init() before preload()/create() — including on scene.restart().
+  // Storing roomKey here guarantees create() always has it even if Phaser's data
+  // forwarding to create() is unreliable across restart cycles.
+  init(data: GameSceneData): void {
+    this.roomKey = data.roomKey;
   }
 
   preload(): void {
@@ -60,7 +68,7 @@ export class GameScene extends Phaser.Scene {
     this.inputManager = new InputManager(this);
 
     // Attempt to load a Tiled map when a room key is provided
-    const roomKey = data.roomKey;
+    const roomKey = this.roomKey ?? data.roomKey;
     let loadedTilemap: Phaser.Tilemaps.Tilemap | null = null;
 
     if (roomKey && this.cache.tilemap.has(roomKey)) {

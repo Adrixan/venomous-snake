@@ -54,7 +54,7 @@ export class TilemapManager {
     const objectLayer = this.tilemap.getObjectLayer('objects');
     if (!objectLayer) return;
 
-    const validTypes = new Set(['player_start', 'npc', 'terminal', 'door', 'item']);
+    const validTypes = new Set(['player_start', 'npc', 'terminal', 'door', 'item', 'elevator']);
 
     for (const obj of objectLayer.objects) {
       const spawnType = obj.type ?? obj.name ?? '';

@@ -355,6 +355,21 @@ export class InteractiveObject extends Phaser.Physics.Arcade.Sprite {
   private promptLabel: Phaser.GameObjects.Text | null = null;
   private inRange = false;
 
+  // Tracks challenge IDs that have been completed — shared across all instances
+  // so that door locking checks work regardless of which instance was created first.
+  private static completedChallenges = new Set<string>();
+  private static _globalUnsubscribe: (() => void) | null = null;
+
+  /** Called once to start listening for CHALLENGE_COMPLETED events globally. */
+  private static ensureGlobalListener(): void {
+    if (InteractiveObject._globalUnsubscribe) return;
+    InteractiveObject._globalUnsubscribe = EventBus.on((event) => {
+      if (event.type === 'CHALLENGE_COMPLETED') {
+        InteractiveObject.completedChallenges.add(event.payload.challengeId);
+      }
+    });
+  }
+
   /** Pre-generate cyberpunk procedural textures for all interactive object types. */
   static createPlaceholderTextures(scene: Phaser.Scene): void {
     const types: InteractiveObjectType[] = ['terminal', 'door', 'item', 'npc', 'elevator'];
@@ -393,6 +408,8 @@ export class InteractiveObject extends Phaser.Physics.Arcade.Sprite {
     properties?: Record<string, unknown>,
   ) {
     super(scene, x, y, getTextureKey(type));
+
+    InteractiveObject.ensureGlobalListener();
 
     this.objectType = type;
     this.objectProperties = properties ?? {};
@@ -467,6 +484,26 @@ export class InteractiveObject extends Phaser.Physics.Arcade.Sprite {
       });
       this.destroy();
     } else if (this.objectType === 'door' || this.objectType === 'elevator') {
+      const locked = this.objectProperties['locked'];
+      const requiresChallenge = this.objectProperties['requiresChallenge'];
+
+      if (locked === 'true' || locked === true) {
+        const challengeId = typeof requiresChallenge === 'string' ? requiresChallenge : undefined;
+        const isUnlocked =
+          challengeId !== undefined && InteractiveObject.completedChallenges.has(challengeId);
+
+        if (!isUnlocked) {
+          EventBus.emit({
+            type: 'INTERACTION_PROMPT',
+            payload: {
+              objectId: this.objectId,
+              promptText: '[LOCKED] Complete the terminal challenge first',
+            },
+          });
+          return;
+        }
+      }
+
       const rawFloor = this.objectProperties['targetFloor'];
       const targetFloor = parseTargetFloor(rawFloor);
       EventBus.emit({ type: 'FLOOR_CHANGE', payload: { targetFloor } });
