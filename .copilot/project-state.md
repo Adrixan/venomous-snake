@@ -1,6 +1,6 @@
 # Venomous Snake — Project State
 
-> Last updated: 2026-03-07 → bug fixes + engagement improvements
+> Last updated: 2026-03-08 → bug fix round 7
 
 ## User Profile
 
@@ -271,6 +271,14 @@ Top-priority epics (Must): Foundation, Core Engine, Hacking Terminal, Challenge 
 - **Achievement toast**: Wired to App.tsx, triggers on first pickup and floor unlock
 - **Level calculation**: Auto-calculates from XP (floor(xp/100) + 1)
 - **Quest log**: Live progress from game state via useCurriculumProgress hook
+
+### Round 7 — Submit Button, Mission Objectives & Floor Transitions (commit ed220ae)
+- **Submit button visibility**: Restructured CSS flex chain so toolbar is always visible
+- **Mission Objectives panel**: Persistent checklist derived from challenge test cases with pass/fail/pending states
+- **Door locking**: ACCESS DENIED with camera shake + floating red text when trying locked doors; removed unlocked door from test room fallback
+- **Floor transitions**: Added `camera.resetFX()` at start of `create()`, safety timeout forcing camera visible after 1s, `FLOOR_ARRIVED` event for React layer
+- **Shared event types**: Added `ACCESS_DENIED` and `FLOOR_ARRIVED` event types to `shared-types`
+- Files changed: `InteractiveObject.ts`, `GameScene.ts`, `shared-types/index.ts`, `HackingTerminal.tsx`, `terminal.css`
 
 ## Open Items
 
