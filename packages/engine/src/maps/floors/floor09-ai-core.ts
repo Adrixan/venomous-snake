@@ -341,9 +341,39 @@ function buildObjectLayer(): TiledObject[] {
   );
   // Elevator down (to floor 8)
   add(
-    makeObject(nextId, 'Elevator to Floor 8', 'door', 37, 25, [
+    makeObject(nextId++, 'Elevator to Floor 8', 'door', 37, 25, [
       prop('targetFloor', 'floor8'),
       prop('locked', 'false'),
+    ]),
+  );
+
+  // ─── Items ──────────────────────────────────────────────────────────────────
+  // Datafile in the aisle between mainframe clusters 1 and 2 (upper hall)
+  add(
+    makeObject(nextId++, 'Neural Network Log', 'item', 9, 4, [
+      prop('itemType', 'datafile'),
+      prop('itemId', 'neural_network_log'),
+    ]),
+  );
+  // Keycard near cluster 3, lower hall
+  add(
+    makeObject(nextId++, 'AI Core Access', 'item', 22, 24, [
+      prop('itemType', 'keycard'),
+      prop('itemId', 'ai_core_access'),
+    ]),
+  );
+  // Tool in the aisle between clusters 1 and 2 (lower hall)
+  add(
+    makeObject(nextId++, 'Decorator Pattern Tool', 'item', 9, 22, [
+      prop('itemType', 'tool'),
+      prop('itemId', 'decorator_pattern_tool'),
+    ]),
+  );
+  // Tool between cluster 3 and the neural hub
+  add(
+    makeObject(nextId, 'Lambda Optimizer', 'item', 24, 18, [
+      prop('itemType', 'tool'),
+      prop('itemId', 'lambda_optimizer'),
     ]),
   );
 

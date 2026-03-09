@@ -230,9 +230,32 @@ function buildObjectLayer(): TiledObject[] {
 
   // Elevator down only (to floor 10) — no elevator up
   add(
-    makeObject(nextId, 'Elevator to Floor 10', 'door', 37, 25, [
+    makeObject(nextId++, 'Elevator to Floor 10', 'door', 37, 25, [
       prop('targetFloor', 'floor10'),
       prop('locked', 'false'),
+    ]),
+  );
+
+  // ─── Items ──────────────────────────────────────────────────────────────────
+  // Keycard in the left server nexus corner
+  add(
+    makeObject(nextId++, 'Vault Data', 'item', 5, 5, [
+      prop('itemType', 'keycard'),
+      prop('itemId', 'vault_data'),
+    ]),
+  );
+  // Tool on the open rooftop to the left of the helipad
+  add(
+    makeObject(nextId++, 'Final Toolkit', 'item', 7, 20, [
+      prop('itemType', 'tool'),
+      prop('itemId', 'final_toolkit'),
+    ]),
+  );
+  // Datafile on the upper rooftop area near the server nexus
+  add(
+    makeObject(nextId, 'Whistleblower Package', 'item', 9, 3, [
+      prop('itemType', 'datafile'),
+      prop('itemId', 'whistleblower_package'),
     ]),
   );
 

@@ -368,9 +368,39 @@ function buildObjectLayer(): TiledObject[] {
   );
   // Elevator down (to floor 7)
   add(
-    makeObject(nextId, 'Elevator to Floor 7', 'door', 37, 25, [
+    makeObject(nextId++, 'Elevator to Floor 7', 'door', 37, 25, [
       prop('targetFloor', 'floor7'),
       prop('locked', 'false'),
+    ]),
+  );
+
+  // ─── Items ──────────────────────────────────────────────────────────────────
+  // Tool in lab cell area (aisle beside cell Alpha)
+  add(
+    makeObject(nextId++, 'Class Designer Tool', 'item', 10, 8, [
+      prop('itemType', 'tool'),
+      prop('itemId', 'class_designer_tool'),
+    ]),
+  );
+  // Datafile on open lab bench
+  add(
+    makeObject(nextId++, 'Vault Research Data', 'item', 20, 20, [
+      prop('itemType', 'datafile'),
+      prop('itemId', 'vault_research_data'),
+    ]),
+  );
+  // Keycard near the right corridor wall
+  add(
+    makeObject(nextId++, 'Vault Key', 'item', 30, 14, [
+      prop('itemType', 'keycard'),
+      prop('itemId', 'vault_key'),
+    ]),
+  );
+  // Datafile in lower inner vault
+  add(
+    makeObject(nextId, 'Inheritance Manual', 'item', 28, 25, [
+      prop('itemType', 'datafile'),
+      prop('itemId', 'inheritance_manual'),
     ]),
   );
 

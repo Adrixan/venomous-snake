@@ -322,9 +322,39 @@ function buildObjectLayer(): TiledObject[] {
   );
   // Elevator down (to floor 3)
   add(
-    makeObject(nextId, 'Elevator to Floor 3', 'door', 37, 25, [
+    makeObject(nextId++, 'Elevator to Floor 3', 'door', 37, 25, [
       prop('targetFloor', 'floor3'),
       prop('locked', 'false'),
+    ]),
+  );
+
+  // ─── Items ──────────────────────────────────────────────────────────────────
+  // Datafile in archive aisle between shelf rows (col 5 is a walkable gap)
+  add(
+    makeObject(nextId++, 'List Comprehension Guide', 'item', 5, 3, [
+      prop('itemType', 'datafile'),
+      prop('itemId', 'list_comprehension_guide'),
+    ]),
+  );
+  // Tool on reading-room table, away from desks
+  add(
+    makeObject(nextId++, 'JSON Parser Tool', 'item', 26, 8, [
+      prop('itemType', 'tool'),
+      prop('itemId', 'json_parser_tool'),
+    ]),
+  );
+  // Datafile on reading-room desk between desk clusters (row 13 is a gap)
+  add(
+    makeObject(nextId++, 'Dictionary Reference', 'item', 23, 13, [
+      prop('itemType', 'datafile'),
+      prop('itemId', 'dictionary_reference'),
+    ]),
+  );
+  // Keycard in vault between heavy shelving groups
+  add(
+    makeObject(nextId, 'Data Archives Keycard', 'item', 17, 26, [
+      prop('itemType', 'keycard'),
+      prop('itemId', 'data_archives_keycard'),
     ]),
   );
 

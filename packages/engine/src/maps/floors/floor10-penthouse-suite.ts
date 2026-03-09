@@ -338,9 +338,32 @@ function buildObjectLayer(): TiledObject[] {
   );
   // Elevator down (to floor 9)
   add(
-    makeObject(nextId, 'Elevator to Floor 9', 'door', 37, 25, [
+    makeObject(nextId++, 'Elevator to Floor 9', 'door', 37, 25, [
       prop('targetFloor', 'floor9'),
       prop('locked', 'false'),
+    ]),
+  );
+
+  // ─── Items ──────────────────────────────────────────────────────────────────
+  // Tool in the lower private office, away from NPCs
+  add(
+    makeObject(nextId++, 'Unit Test Framework', 'item', 6, 12, [
+      prop('itemType', 'tool'),
+      prop('itemId', 'unit_test_framework'),
+    ]),
+  );
+  // Keycard displayed in the trophy room
+  add(
+    makeObject(nextId++, 'Penthouse Invite', 'item', 28, 7, [
+      prop('itemType', 'keycard'),
+      prop('itemId', 'penthouse_invite'),
+    ]),
+  );
+  // Datafile on the grand foyer floor
+  add(
+    makeObject(nextId, 'Stakeholder Report', 'item', 22, 20, [
+      prop('itemType', 'datafile'),
+      prop('itemId', 'stakeholder_report'),
     ]),
   );
 

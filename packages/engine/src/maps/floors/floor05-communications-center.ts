@@ -309,9 +309,39 @@ function buildObjectLayer(): TiledObject[] {
   );
   // Elevator down (to floor 4)
   add(
-    makeObject(nextId, 'Elevator to Floor 4', 'door', 37, 25, [
+    makeObject(nextId++, 'Elevator to Floor 4', 'door', 37, 25, [
       prop('targetFloor', 'floor4'),
       prop('locked', 'false'),
+    ]),
+  );
+
+  // ─── Items ──────────────────────────────────────────────────────────────────
+  // Tool near upper comms stations
+  add(
+    makeObject(nextId++, 'File Handler Tool', 'item', 12, 4, [
+      prop('itemType', 'tool'),
+      prop('itemId', 'file_handler_tool'),
+    ]),
+  );
+  // Datafile tucked in the lower comms floor corner
+  add(
+    makeObject(nextId++, 'Comms Encryption Log', 'item', 5, 25, [
+      prop('itemType', 'datafile'),
+      prop('itemId', 'comms_encryption_log'),
+    ]),
+  );
+  // Tool on open area of main comms floor
+  add(
+    makeObject(nextId++, 'CSV Processor', 'item', 20, 8, [
+      prop('itemType', 'tool'),
+      prop('itemId', 'csv_processor'),
+    ]),
+  );
+  // Keycard in the server relay section
+  add(
+    makeObject(nextId, 'Comms Center Keycard', 'item', 28, 22, [
+      prop('itemType', 'keycard'),
+      prop('itemId', 'comms_center_keycard'),
     ]),
   );
 

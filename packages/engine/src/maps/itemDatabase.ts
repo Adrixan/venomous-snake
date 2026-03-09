@@ -84,6 +84,138 @@ const ITEM_DATABASE: Record<string, ItemMeta> = {
       'Administrative credentials file. Contains partially-encrypted admin passwords and session tokens.',
     itemType: 'datafile',
   },
+
+  // ── Floor 04 – Data Archives ────────────────────────────────────────────────
+  list_comprehension_guide: {
+    description: 'Guide to Python list comprehensions and generator expressions.',
+    itemType: 'datafile',
+  },
+  data_archives_keycard: {
+    description: 'Level 4 access card with magnetic stripe.',
+    itemType: 'keycard',
+  },
+  json_parser_tool: {
+    description: 'Utility for parsing and validating JSON data structures.',
+    itemType: 'tool',
+  },
+  dictionary_reference: {
+    description: 'Reference manual for Python dictionaries and hash maps.',
+    itemType: 'datafile',
+  },
+
+  // ── Floor 05 – Communications Center ───────────────────────────────────────
+  file_handler_tool: {
+    description: 'Advanced file read/write utility for the hacking terminal.',
+    itemType: 'tool',
+  },
+  comms_encryption_log: {
+    description: 'Encrypted communication logs between Rattlesnake executives.',
+    itemType: 'datafile',
+  },
+  comms_center_keycard: {
+    description: 'Communications floor access authorization.',
+    itemType: 'keycard',
+  },
+  csv_processor: {
+    description: 'Tool for processing comma-separated data files.',
+    itemType: 'tool',
+  },
+
+  // ── Floor 06 – Executive Wing ───────────────────────────────────────────────
+  exception_handler_upgrade: {
+    description: 'Upgrade that adds try/except debugging to the terminal.',
+    itemType: 'tool',
+  },
+  executive_memo: {
+    description: "Internal memo about Project Venom's true purpose.",
+    itemType: 'datafile',
+  },
+  executive_clearance: {
+    description: 'Executive-level clearance badge.',
+    itemType: 'keycard',
+  },
+
+  // ── Floor 07 – Manufacturing ─────────────────────────────────────────────────
+  module_loader: {
+    description: 'Import system extension for the hacking terminal.',
+    itemType: 'tool',
+  },
+  manufacturing_blueprint: {
+    description: "Blueprints for Rattlesnake's automated assembly line.",
+    itemType: 'datafile',
+  },
+  factory_access_key: {
+    description: 'Manufacturing floor override key.',
+    itemType: 'keycard',
+  },
+  pip_installer_patch: {
+    description: 'Package manager patch for terminal.',
+    itemType: 'tool',
+  },
+
+  // ── Floor 08 – Research Vault ────────────────────────────────────────────────
+  class_designer_tool: {
+    description: 'Object-oriented design assistant for the terminal.',
+    itemType: 'tool',
+  },
+  vault_research_data: {
+    description: 'Classified research data on Project Venom.',
+    itemType: 'datafile',
+  },
+  vault_key: {
+    description: 'High-security vault access credential.',
+    itemType: 'keycard',
+  },
+  inheritance_manual: {
+    description: 'Manual on class inheritance and polymorphism.',
+    itemType: 'datafile',
+  },
+
+  // ── Floor 09 – AI Core ───────────────────────────────────────────────────────
+  neural_network_log: {
+    description: "Logs from Rattlesnake's AI training experiments.",
+    itemType: 'datafile',
+  },
+  ai_core_access: {
+    description: 'AI Core restricted access token.',
+    itemType: 'keycard',
+  },
+  decorator_pattern_tool: {
+    description: 'Advanced Python decorator utility.',
+    itemType: 'tool',
+  },
+  lambda_optimizer: {
+    description: 'Lambda function optimization tool.',
+    itemType: 'tool',
+  },
+
+  // ── Floor 10 – Penthouse ─────────────────────────────────────────────────────
+  unit_test_framework: {
+    description: 'Testing framework for validating hack scripts.',
+    itemType: 'tool',
+  },
+  penthouse_invite: {
+    description: 'Forged invitation to the penthouse level.',
+    itemType: 'keycard',
+  },
+  stakeholder_report: {
+    description: "Quarterly report revealing Rattlesnake's true finances.",
+    itemType: 'datafile',
+  },
+
+  // ── Floor 11 – Rooftop ───────────────────────────────────────────────────────
+  vault_data: {
+    description: 'Compiled evidence from the vault — the ultimate proof.',
+    itemType: 'keycard',
+  },
+  final_toolkit: {
+    description: 'Complete Python toolkit for the final confrontation.',
+    itemType: 'tool',
+  },
+  whistleblower_package: {
+    description: 'Pre-packaged evidence ready for public release.',
+    itemType: 'datafile',
+  },
 };
 
 /** Returns item metadata for a given itemId, or a generic fallback. */

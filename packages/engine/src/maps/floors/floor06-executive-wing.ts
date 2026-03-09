@@ -349,9 +349,32 @@ function buildObjectLayer(): TiledObject[] {
   );
   // Elevator down (to floor 5)
   add(
-    makeObject(nextId, 'Elevator to Floor 5', 'door', 37, 25, [
+    makeObject(nextId++, 'Elevator to Floor 5', 'door', 37, 25, [
       prop('targetFloor', 'floor5'),
       prop('locked', 'false'),
+    ]),
+  );
+
+  // ─── Items ──────────────────────────────────────────────────────────────────
+  // Tool in upper-left corner office
+  add(
+    makeObject(nextId++, 'Exception Handler Upgrade', 'item', 6, 9, [
+      prop('itemType', 'tool'),
+      prop('itemId', 'exception_handler_upgrade'),
+    ]),
+  );
+  // Datafile on boardroom table
+  add(
+    makeObject(nextId++, 'Executive Memo', 'item', 18, 12, [
+      prop('itemType', 'datafile'),
+      prop('itemId', 'executive_memo'),
+    ]),
+  );
+  // Keycard in upper-right corner office
+  add(
+    makeObject(nextId, 'Executive Clearance', 'item', 27, 6, [
+      prop('itemType', 'keycard'),
+      prop('itemId', 'executive_clearance'),
     ]),
   );
 

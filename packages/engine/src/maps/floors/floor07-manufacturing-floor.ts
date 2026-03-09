@@ -320,9 +320,39 @@ function buildObjectLayer(): TiledObject[] {
   );
   // Elevator down (to floor 6)
   add(
-    makeObject(nextId, 'Elevator to Floor 6', 'door', 37, 25, [
+    makeObject(nextId++, 'Elevator to Floor 6', 'door', 37, 25, [
       prop('targetFloor', 'floor6'),
       prop('locked', 'false'),
+    ]),
+  );
+
+  // ─── Items ──────────────────────────────────────────────────────────────────
+  // Tool in the control room area (upper-left)
+  add(
+    makeObject(nextId++, 'Module Loader', 'item', 6, 3, [
+      prop('itemType', 'tool'),
+      prop('itemId', 'module_loader'),
+    ]),
+  );
+  // Datafile on the open factory floor between assembly lines
+  add(
+    makeObject(nextId++, 'Manufacturing Blueprint', 'item', 18, 11, [
+      prop('itemType', 'datafile'),
+      prop('itemId', 'manufacturing_blueprint'),
+    ]),
+  );
+  // Keycard on the open floor near the east wall
+  add(
+    makeObject(nextId++, 'Factory Access Key', 'item', 28, 4, [
+      prop('itemType', 'keycard'),
+      prop('itemId', 'factory_access_key'),
+    ]),
+  );
+  // Tool between assembly lines 2 and 3
+  add(
+    makeObject(nextId, 'Pip Installer Patch', 'item', 14, 20, [
+      prop('itemType', 'tool'),
+      prop('itemId', 'pip_installer_patch'),
     ]),
   );
 
