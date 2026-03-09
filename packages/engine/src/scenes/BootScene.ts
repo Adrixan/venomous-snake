@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
 import { generateTilesetTexture } from '../maps/TilesetGenerator';
 import { generateLobbyTilemap, LOBBY_MAP_KEY } from '../maps/TilemapGenerator';
+import { getRegisteredFloors, getFloorTilemap } from '../maps/FloorRegistry';
 
 export class BootScene extends Phaser.Scene {
   constructor() {
@@ -47,6 +48,18 @@ export class BootScene extends Phaser.Scene {
         format: Phaser.Tilemaps.Formats.TILED_JSON,
         data: lobbyJson,
       });
+    }
+
+    // Preload all registered floor tilemaps so door transitions work
+    for (const floorNum of getRegisteredFloors()) {
+      const floorDef = getFloorTilemap(floorNum);
+      if (floorDef !== null && !this.cache.tilemap.has(floorDef.mapKey)) {
+        const floorJson = floorDef.generateTilemap();
+        this.cache.tilemap.add(floorDef.mapKey, {
+          format: Phaser.Tilemaps.Formats.TILED_JSON,
+          data: floorJson,
+        });
+      }
     }
 
     this.scene.start('GameScene', { roomKey: LOBBY_MAP_KEY });

@@ -9,6 +9,7 @@ import { InputManager } from '../input/InputManager';
 import { TilemapManager } from '../systems/TilemapManager';
 import { CameraSystem } from '../systems/CameraSystem';
 import { getFloorTilemap } from '../maps/FloorRegistry';
+import { LOBBY_TILESET_KEY } from '../maps/TilesetGenerator';
 import { TransitionManager } from '../systems/TransitionManager';
 import { ParticleManager } from '../systems/ParticleManager';
 
@@ -65,7 +66,7 @@ export class GameScene extends Phaser.Scene {
     if (roomKey && this.cache.tilemap.has(roomKey)) {
       try {
         this.tilemapManager = new TilemapManager();
-        loadedTilemap = this.tilemapManager.loadTilemap(this, roomKey, `${roomKey}_tiles`);
+        loadedTilemap = this.tilemapManager.loadTilemap(this, roomKey, LOBBY_TILESET_KEY);
 
         const collisionLayer = this.tilemapManager.getCollisionLayer();
         const spawnPoints = this.tilemapManager.getSpawnPoints();
@@ -343,11 +344,23 @@ export class GameScene extends Phaser.Scene {
         this.interactiveObjects = this.interactiveObjects.filter((obj) => obj.active);
       } else if (event.type === 'FLOOR_CHANGE') {
         const { targetFloor } = event.payload;
+        const tilemapDef = getFloorTilemap(targetFloor);
+        if (tilemapDef === null) {
+          // Floor not yet implemented — show message and stay
+          const msg = this.add.text(
+            this.cameras.main.centerX,
+            this.cameras.main.centerY,
+            'Floor under construction...',
+            { fontFamily: 'monospace', fontSize: '14px', color: '#ffb454' },
+          );
+          msg.setOrigin(0.5).setScrollFactor(0).setDepth(300);
+          this.time.delayedCall(2000, () => msg.destroy());
+          return;
+        }
         this.player?.freeze();
         this.cameras.main.fadeOut(400, 0, 0, 0);
         this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, () => {
-          const tilemapDef = getFloorTilemap(targetFloor);
-          this.scene.restart(tilemapDef !== null ? { roomKey: tilemapDef.mapKey } : {});
+          this.scene.restart({ roomKey: tilemapDef.mapKey });
         });
       } else if (event.type === 'CHALLENGE_RESULT') {
         const player = this.player;

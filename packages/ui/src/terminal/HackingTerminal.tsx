@@ -42,6 +42,9 @@ const statusLabels: Record<InterpreterStatus, string> = {
   error: 'Error',
 };
 
+// Module-level counter to ensure each free-mode terminal gets a unique key
+let _freeEditorSessionId = 0;
+
 // ─── Free-form terminal (existing behaviour) ──────────────────────────────────
 
 interface FreeModeProps {
@@ -63,6 +66,7 @@ function FreeModeTerminal({
   const [status, setStatus] = useState<InterpreterStatus>('uninitialized');
   const [inputPrompt, setInputPrompt] = useState<string | undefined>(undefined);
   const editorRef = useRef<TerminalEditorHandle>(null);
+  const [editorKey] = useState(() => ++_freeEditorSessionId);
   const breakpoint = useBreakpoint();
   const isAndroid = useIsAndroid();
 
@@ -171,6 +175,7 @@ function FreeModeTerminal({
         >
           <div className="terminal-editor-area">
             <TerminalEditor
+              key={editorKey}
               ref={editorRef}
               initialCode={initialCode}
               onRun={handleRunSync}
