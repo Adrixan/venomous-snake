@@ -108,8 +108,12 @@ export class GameScene extends Phaser.Scene {
           }
 
           if (isInteractiveType(sp.type)) {
+            const propsWithName: Record<string, unknown> = {
+              name: sp.name,
+              ...(sp.properties ?? {}),
+            };
             this.interactiveObjects.push(
-              new InteractiveObject(this, sp.x, sp.y, sp.type, sp.properties),
+              new InteractiveObject(this, sp.x, sp.y, sp.type, propsWithName),
             );
           }
         }

@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
 import { EventBus } from '../EventBus';
+import { getItemMeta } from '../maps/itemDatabase';
 
 export type InteractiveObjectType = 'terminal' | 'door' | 'item' | 'npc' | 'elevator';
 
@@ -350,6 +351,7 @@ export class InteractiveObject extends Phaser.Physics.Arcade.Sprite {
   private readonly objectId: string;
   readonly objectType: InteractiveObjectType;
   private readonly objectProperties: Record<string, unknown>;
+  private readonly displayName: string;
   private promptLabel: Phaser.GameObjects.Text | null = null;
   private inRange = false;
 
@@ -399,6 +401,9 @@ export class InteractiveObject extends Phaser.Physics.Arcade.Sprite {
     this.objectId =
       typeof idFromProps === 'string' ? idFromProps : `${type}_${Math.round(x)}_${Math.round(y)}`;
 
+    const nameFromProps = this.objectProperties['name'];
+    this.displayName = typeof nameFromProps === 'string' ? nameFromProps : type;
+
     scene.add.existing(this);
     scene.physics.add.existing(this);
 
@@ -407,7 +412,7 @@ export class InteractiveObject extends Phaser.Physics.Arcade.Sprite {
     // Expand interaction zone beyond the visual footprint
     body.setSize(56, 56, true);
 
-    this.promptLabel = scene.add.text(x, y - 28, `< [E] ${type} >`, {
+    this.promptLabel = scene.add.text(x, y - 28, `< [E] ${this.displayName} >`, {
       fontFamily: 'monospace',
       fontSize: '10px',
       color: '#00ff9d',
@@ -448,7 +453,18 @@ export class InteractiveObject extends Phaser.Physics.Arcade.Sprite {
     } else if (this.objectType === 'npc') {
       EventBus.emit({ type: 'DIALOG_START', payload: { npcId: this.objectId } });
     } else if (this.objectType === 'item') {
-      EventBus.emit({ type: 'ITEM_PICKUP', payload: { itemId: this.objectId } });
+      const itemIdProp = this.objectProperties['itemId'];
+      const itemId = typeof itemIdProp === 'string' ? itemIdProp : this.objectId;
+      const meta = getItemMeta(itemId);
+      EventBus.emit({
+        type: 'ITEM_PICKUP',
+        payload: {
+          itemId,
+          name: this.displayName,
+          description: meta.description,
+          itemType: meta.itemType,
+        },
+      });
       this.destroy();
     } else if (this.objectType === 'door' || this.objectType === 'elevator') {
       const rawFloor = this.objectProperties['targetFloor'];
@@ -461,7 +477,7 @@ export class InteractiveObject extends Phaser.Physics.Arcade.Sprite {
     this.promptLabel?.setVisible(true);
     EventBus.emit({
       type: 'INTERACTION_PROMPT',
-      payload: { objectId: this.objectId, promptText: `[E] ${this.objectType}` },
+      payload: { objectId: this.objectId, promptText: `[E] ${this.displayName}` },
     });
   }
 

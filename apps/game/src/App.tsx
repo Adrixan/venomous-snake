@@ -26,8 +26,9 @@ import {
   CutscenePlayer,
   TutorialOverlay,
   CreditsScreen,
+  ItemPickupToast,
 } from '@venomous-snake/ui';
-import type { AudioSettingsPanelProps } from '@venomous-snake/ui';
+import type { AudioSettingsPanelProps, ItemPickupNotification } from '@venomous-snake/ui';
 import { chapters } from '@venomous-snake/challenges';
 import type { CurriculumProgress } from '@venomous-snake/shared-types';
 import { EventBus } from '@venomous-snake/engine';
@@ -121,6 +122,10 @@ export function App(): React.JSX.Element {
   const [savedProgress, setSavedProgress] = useState<CurriculumProgress | undefined>(undefined);
   const [sessionKey, setSessionKey] = useState(0);
 
+  // Item pickup notifications
+  const [pickupNotifications, setPickupNotifications] = useState<ItemPickupNotification[]>([]);
+  const seenItemsRef = useRef<Set<string>>(new Set());
+
   // Stable interpreter — recreated on new game, persists across paused transitions
   const interpreterRef = useRef<MockInterpreter | null>(null);
   if (interpreterRef.current === null) {
@@ -133,7 +138,9 @@ export function App(): React.JSX.Element {
   const saveSystem = useSaveSystem(controllerRef);
 
   // Dialog state driven by EventBus DIALOG_START / DIALOG_END
-  const dialogState = useDialog();
+  const inventory = useGameStore((state) => state.inventory);
+  const incrementAlertLevel = useGameStore((state) => state.incrementAlertLevel);
+  const dialogState = useDialog({ inventory, onAlertRaised: incrementAlertLevel });
 
   // Story flow: cutscenes, tutorial, credits
   const storyFlow = useStoryFlow(completedChallenges);
@@ -195,6 +202,27 @@ export function App(): React.JSX.Element {
     });
     return unsub;
   }, [openTerminal]);
+
+  // Listen for ITEM_PICKUP events and show pickup toast
+  useEffect(() => {
+    const unsub = EventBus.on((event) => {
+      if (event.type === 'ITEM_PICKUP') {
+        const { itemId, name, description, itemType } = event.payload;
+        const isFirstPickup = !seenItemsRef.current.has(itemId);
+        seenItemsRef.current.add(itemId);
+        const notification: ItemPickupNotification = {
+          id: `pickup_${itemId}_${Date.now()}`,
+          itemId,
+          name,
+          description,
+          itemType,
+          isFirstPickup,
+        };
+        setPickupNotifications((prev) => [...prev, notification]);
+      }
+    });
+    return unsub;
+  }, []);
 
   const handleNewGame = useCallback(() => {
     setMenuView('newgame');
@@ -287,6 +315,10 @@ export function App(): React.JSX.Element {
   const handleClosePanel = useCallback(() => {
     setActivePanel('none');
   }, [setActivePanel]);
+
+  const handleDismissPickup = useCallback((id: string) => {
+    setPickupNotifications((prev) => prev.filter((n) => n.id !== id));
+  }, []);
 
   const handleFloorSelect = useCallback(
     (floorId: string) => {
@@ -407,6 +439,11 @@ export function App(): React.JSX.Element {
           {/* z-index: 0 — Phaser canvas */}
           <GameCanvas />
           <HUD />
+
+          {/* z-index: 500 — Item pickup notifications */}
+          {pickupNotifications.length > 0 && (
+            <ItemPickupToast notifications={pickupNotifications} onDismiss={handleDismissPickup} />
+          )}
 
           {/* z-index: 100/101 — Dialog overlay (below terminal) */}
           <DialogOverlay {...dialogState} />

@@ -12,9 +12,16 @@ export const lobbyGuardDialog: DialogTree = {
       textKey: 'npc.guard.n1',
       portraitId: 'guard',
       choices: [
-        { textKey: 'npc.guard.n1_choice_show_id', nextNodeId: 'n2' },
+        // Requires id_card in inventory; shown grayed-out when missing
+        { textKey: 'npc.guard.n1_choice_show_id', nextNodeId: 'n2', requiresItem: 'id_card' },
         { textKey: 'npc.guard.n1_choice_sneak', nextNodeId: 'n3' },
         { textKey: 'npc.guard.n1_choice_ask', nextNodeId: 'n5' },
+        // Bluff option – always visible, leads to alert when player has no id_card
+        {
+          textKey: 'npc.guard.n1_choice_bluff_claim',
+          nextNodeId: 'n_bluff_claim',
+          condition: '!guard_cleared',
+        },
       ],
     },
     n2: {
@@ -50,13 +57,39 @@ export const lobbyGuardDialog: DialogTree = {
       textKey: 'npc.guard.n5',
       portraitId: 'guard',
     },
+    // Maintenance bluff caught — raises lobby alert
     n6: {
       id: 'n6',
       speaker: 'npc',
       speakerNameKey: 'npc.guard.speaker',
       textKey: 'npc.guard.n6',
       portraitId: 'guard',
-      setsFlag: 'guard_suspicious',
+      setsFlag: 'raise_alert_lobby',
+    },
+    // "I'm authorized without ID" bluff branch
+    n_bluff_claim: {
+      id: 'n_bluff_claim',
+      speaker: 'npc',
+      speakerNameKey: 'npc.guard.speaker',
+      textKey: 'npc.guard.n_bluff_claim',
+      portraitId: 'guard',
+      choices: [
+        { textKey: 'npc.guard.n_bluff_choice_back_down', nextNodeId: 'n4' },
+        {
+          textKey: 'npc.guard.n_bluff_choice_insist',
+          nextNodeId: 'n_alert',
+          setsFlag: 'guard_suspicious',
+        },
+      ],
+    },
+    // Alert raised — guards go to yellow alert
+    n_alert: {
+      id: 'n_alert',
+      speaker: 'npc',
+      speakerNameKey: 'npc.guard.speaker',
+      textKey: 'npc.guard.n_alert',
+      portraitId: 'guard',
+      setsFlag: 'raise_alert_lobby',
     },
   },
 };

@@ -12,9 +12,20 @@ export const drVolkovDialog: DialogTree = {
       textKey: 'npc.volkov.n1',
       portraitId: 'volkov',
       choices: [
-        { textKey: 'npc.volkov.n1_choice_research', nextNodeId: 'n2' },
+        // Vault inner sanctum requires authorization
+        {
+          textKey: 'npc.volkov.n1_choice_research',
+          nextNodeId: 'n2',
+          requiresItem: 'vault_key',
+        },
         { textKey: 'npc.volkov.n1_choice_objects', nextNodeId: 'n3' },
         { textKey: 'npc.volkov.n1_choice_leave', nextNodeId: 'n4' },
+        // Unauthorized access attempt — shown when vault_key not held
+        {
+          textKey: 'npc.volkov.n1_choice_demand_access',
+          nextNodeId: 'n_bluff',
+          condition: '!volkov_research_shared',
+        },
       ],
     },
     n2: {
@@ -57,6 +68,30 @@ export const drVolkovDialog: DialogTree = {
       speakerNameKey: 'npc.volkov.speaker',
       textKey: 'npc.volkov.n6',
       portraitId: 'volkov',
+    },
+    // Unauthorized vault access attempt
+    n_bluff: {
+      id: 'n_bluff',
+      speaker: 'npc',
+      speakerNameKey: 'npc.volkov.speaker',
+      textKey: 'npc.volkov.n_bluff',
+      portraitId: 'volkov',
+      choices: [
+        { textKey: 'npc.volkov.n_bluff_choice_back_off', nextNodeId: 'n4' },
+        {
+          textKey: 'npc.volkov.n_bluff_choice_force',
+          nextNodeId: 'n_alert',
+        },
+      ],
+    },
+    // Volkov triggers vault lockdown
+    n_alert: {
+      id: 'n_alert',
+      speaker: 'npc',
+      speakerNameKey: 'npc.volkov.speaker',
+      textKey: 'npc.volkov.n_alert',
+      portraitId: 'volkov',
+      setsFlag: 'raise_alert_floor8',
     },
   },
 };

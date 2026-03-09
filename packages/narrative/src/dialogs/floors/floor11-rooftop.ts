@@ -12,9 +12,20 @@ export const venomousSnakeDialog: DialogTree = {
       textKey: 'npc.snake.n1',
       portraitId: 'snake',
       choices: [
-        { textKey: 'npc.snake.n1_choice_challenge', nextNodeId: 'n2' },
+        // Full confrontation requires the vault data as leverage
+        {
+          textKey: 'npc.snake.n1_choice_challenge',
+          nextNodeId: 'n2',
+          requiresItem: 'vault_data',
+        },
         { textKey: 'npc.snake.n1_choice_reason', nextNodeId: 'n3' },
         { textKey: 'npc.snake.n1_choice_defy', nextNodeId: 'n4' },
+        // Attempting confrontation unprepared — triggers Snake's countermeasures
+        {
+          textKey: 'npc.snake.n1_choice_bluff_challenge',
+          nextNodeId: 'n_unprepared',
+          condition: '!snake_encountered',
+        },
       ],
     },
     n2: {
@@ -60,6 +71,15 @@ export const venomousSnakeDialog: DialogTree = {
       textKey: 'npc.snake.n6',
       portraitId: 'snake',
       setsFlag: 'snake_encountered',
+    },
+    // Player confronts Snake without evidence — Snake triggers a full lockdown
+    n_unprepared: {
+      id: 'n_unprepared',
+      speaker: 'npc',
+      speakerNameKey: 'npc.snake.speaker',
+      textKey: 'npc.snake.n_unprepared',
+      portraitId: 'snake',
+      setsFlag: 'raise_alert_floor11',
     },
   },
 };

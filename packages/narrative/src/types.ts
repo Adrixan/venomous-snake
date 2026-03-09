@@ -5,6 +5,8 @@ export interface DialogChoice {
   nextNodeId: string;
   condition?: string;
   setsFlag?: string;
+  /** itemId that must be in the player's inventory for this choice to appear. */
+  requiresItem?: string;
 }
 
 export interface DialogNode {
@@ -24,6 +26,18 @@ export interface DialogTree {
   id: string;
   startNodeId: string;
   nodes: Record<string, DialogNode>;
+}
+
+/** A dialog choice annotated with inventory-gate availability for UI rendering. */
+export interface ChoiceWithState {
+  choice: DialogChoice;
+  /** `true` when the choice passes all conditions and inventory requirements. */
+  available: boolean;
+  /**
+   * Set when `available` is `false` due to an inventory requirement.
+   * Format: `'inventory:<itemId>'` — matches `parseLockItemId()` in DialogOverlay.
+   */
+  lockReason?: string;
 }
 
 export interface NarrativeFlag {

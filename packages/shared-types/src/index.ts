@@ -37,7 +37,10 @@ export type GameEvent =
   | { type: 'DIALOG_START'; payload: { npcId: string; dialogId?: string } }
   | { type: 'DIALOG_END' }
   | { type: 'ROOM_TRANSITION'; payload: { from: string; to: string } }
-  | { type: 'ITEM_PICKUP'; payload: { itemId: string } }
+  | {
+      type: 'ITEM_PICKUP';
+      payload: { itemId: string; name: string; description: string; itemType: string };
+    }
   | { type: 'SCENE_READY' }
   | { type: 'OVERLAY_CHANGE'; payload: OverlayState }
   // GameController challenge events
@@ -101,6 +104,15 @@ export interface GameStoreState {
   // Terminal challenge tracking
   currentChallengeId: string | null;
 
+  // Inventory — item IDs the player currently holds
+  inventory: string[];
+
+  /**
+   * Current stealth/alert level across the whole facility.
+   * 0 = normal  1 = guards watchful  2 = high alert  3 = full lockdown
+   */
+  alertLevel: 0 | 1 | 2 | 3;
+
   // Audio settings
   masterVolume: number;
   musicVolume: number;
@@ -141,6 +153,14 @@ export interface GameStoreState {
   setDialog: (content: DialogContent) => void;
   clearDialog: () => void;
   resetGameState: () => void;
+
+  // Inventory actions
+  addToInventory: (itemId: string) => void;
+  removeFromInventory: (itemId: string) => void;
+
+  // Alert / stealth actions
+  setAlertLevel: (level: 0 | 1 | 2 | 3) => void;
+  incrementAlertLevel: () => void;
 
   // Audio actions
   setMasterVolume: (volume: number) => void;

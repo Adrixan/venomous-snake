@@ -12,9 +12,20 @@ export const butlerSterlingDialog: DialogTree = {
       textKey: 'npc.sterling.n1',
       portraitId: 'sterling',
       choices: [
-        { textKey: 'npc.sterling.n1_choice_snake', nextNodeId: 'n2' },
+        // Audience with Snake requires an official invitation
+        {
+          textKey: 'npc.sterling.n1_choice_snake',
+          nextNodeId: 'n2',
+          requiresItem: 'penthouse_invite',
+        },
         { textKey: 'npc.sterling.n1_choice_warn', nextNodeId: 'n3' },
         { textKey: 'npc.sterling.n1_choice_pass', nextNodeId: 'n4' },
+        // Uninvited intrusion attempt
+        {
+          textKey: 'npc.sterling.n1_choice_demand',
+          nextNodeId: 'n_bluff',
+          condition: '!sterling_info_shared',
+        },
       ],
     },
     n2: {
@@ -57,6 +68,30 @@ export const butlerSterlingDialog: DialogTree = {
       speakerNameKey: 'npc.sterling.speaker',
       textKey: 'npc.sterling.n6',
       portraitId: 'sterling',
+    },
+    // No invitation — Sterling politely but firmly blocks entry
+    n_bluff: {
+      id: 'n_bluff',
+      speaker: 'npc',
+      speakerNameKey: 'npc.sterling.speaker',
+      textKey: 'npc.sterling.n_bluff',
+      portraitId: 'sterling',
+      choices: [
+        { textKey: 'npc.sterling.n_bluff_choice_back_off', nextNodeId: 'n6' },
+        {
+          textKey: 'npc.sterling.n_bluff_choice_force',
+          nextNodeId: 'n_alert',
+        },
+      ],
+    },
+    // Sterling activates the penthouse security response
+    n_alert: {
+      id: 'n_alert',
+      speaker: 'npc',
+      speakerNameKey: 'npc.sterling.speaker',
+      textKey: 'npc.sterling.n_alert',
+      portraitId: 'sterling',
+      setsFlag: 'raise_alert_floor10',
     },
   },
 };

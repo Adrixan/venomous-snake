@@ -17,6 +17,7 @@ export * from './responsive/ResponsiveLayout';
 export const UI_VERSION = '0.0.1';
 export * from './panels/SkillTreePanel';
 export * from './notifications/AchievementToast';
+export * from './notifications/ItemPickupToast';
 export * from './hud/XPBar';
 export * from './accessibility';
 export * from './narrative';

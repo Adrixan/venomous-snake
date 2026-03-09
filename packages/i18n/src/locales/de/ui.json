@@ -267,5 +267,12 @@
     "xp_gained": "Du hast {{xp}} EP erhalten",
     "level_up": "Level aufgestiegen! Du bist jetzt Level {{level}}: {{title}}",
     "achievement_unlocked": "Erfolg freigeschaltet: {{name}}"
+  },
+  "item_pickup": {
+    "title": "Gegenstand erhalten",
+    "first_time_label": "NEU",
+    "type_datafile": "Datei",
+    "type_tool": "Werkzeug",
+    "type_keycard": "Zugangskarte"
   }
 }

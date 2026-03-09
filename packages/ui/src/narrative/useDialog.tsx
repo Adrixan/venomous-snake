@@ -26,15 +26,35 @@ import {
   rivalAgentNovaDialog,
   venomousSnakeDialog,
 } from '@venomous-snake/narrative';
-import type { DialogNode, DialogChoice } from '@venomous-snake/narrative';
+import type { DialogNode, DialogChoice, ChoiceWithState } from '@venomous-snake/narrative';
 import { EventBus } from '@venomous-snake/engine';
+
+export interface UseDialogOptions {
+  /**
+   * The player's current inventory (item IDs). Passed to the dialog engine so
+   * it can gate choices that require specific items.
+   */
+  inventory?: string[];
+  /**
+   * Called whenever the dialog engine sets a flag whose ID starts with
+   * `raise_alert_`. Use this to increment the game-level alert state.
+   */
+  onAlertRaised?: () => void;
+}
 
 export interface UseDialogReturn {
   isOpen: boolean;
   currentNode: DialogNode | null;
   availableChoices: DialogChoice[];
+  /**
+   * All choices for the current node that pass narrative conditions, annotated
+   * with availability. Inventory-locked choices are included but marked
+   * `available: false` so the UI can render them grayed-out with a tooltip.
+   */
+  displayChoices: ChoiceWithState[];
   /** Advance to the next linear node (no-op when choices are present). */
   advance: () => void;
+  /** Select an available choice by its index in `availableChoices`. */
   selectChoice: (index: number) => void;
 }
 
@@ -42,13 +62,21 @@ export interface UseDialogReturn {
  * Manages NPC dialog state driven by the EventBus `DIALOG_START` event.
  *
  * Usage: mount once at the app root; DialogOverlay consumes its return value.
+ *
+ * @param options.inventory  Current player inventory (item IDs). When provided,
+ *   the engine filters choices that require items not in the inventory, showing
+ *   them as locked in the UI instead.
+ * @param options.onAlertRaised  Called whenever a `raise_alert_*` flag is set
+ *   during dialog, so the caller can increment the game-level alert counter.
  */
-export function useDialog(): UseDialogReturn {
+export function useDialog(options: UseDialogOptions = {}): UseDialogReturn {
+  const { inventory, onAlertRaised } = options;
   const engineRef = useRef<DialogEngine | null>(null);
 
   const [isOpen, setIsOpen] = useState(false);
   const [currentNode, setCurrentNode] = useState<DialogNode | null>(null);
   const [availableChoices, setAvailableChoices] = useState<DialogChoice[]>([]);
+  const [displayChoices, setDisplayChoices] = useState<ChoiceWithState[]>([]);
 
   // Initialise the engine once and register all known dialog trees.
   if (engineRef.current === null) {
@@ -89,16 +117,33 @@ export function useDialog(): UseDialogReturn {
       if (event.type === 'node_display') {
         setCurrentNode(event.node);
         setAvailableChoices([]);
+        setDisplayChoices([]);
       } else if (event.type === 'choices_available') {
         setAvailableChoices(event.choices);
+        // Compute annotated display choices (includes inventory-locked ones)
+        const display = engineRef.current?.getDisplayChoices() ?? [];
+        setDisplayChoices(display);
+      } else if (event.type === 'flag_set') {
+        // Any flag starting with 'raise_alert_' triggers the alert callback and
+        // also marks the engine-level 'alert_active' flag for condition checks.
+        if (event.flagId.startsWith('raise_alert_')) {
+          onAlertRaised?.();
+          engineRef.current?.setFlag('alert_active', true);
+        }
       } else if (event.type === 'dialog_complete') {
         setIsOpen(false);
         setCurrentNode(null);
         setAvailableChoices([]);
+        setDisplayChoices([]);
         EventBus.emit({ type: 'DIALOG_END' });
       }
     });
-  }, []);
+  }, [onAlertRaised]);
+
+  // Keep the engine's inventory snapshot in sync with the caller's inventory.
+  useEffect(() => {
+    engineRef.current?.setInventory(inventory ?? []);
+  }, [inventory]);
 
   // Listen for DIALOG_START on the global EventBus.
   useEffect(() => {
@@ -133,5 +178,5 @@ export function useDialog(): UseDialogReturn {
     }
   }, []);
 
-  return { isOpen, currentNode, availableChoices, advance, selectChoice };
+  return { isOpen, currentNode, availableChoices, displayChoices, advance, selectChoice };
 }

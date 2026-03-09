@@ -12,9 +12,20 @@ export const secretaryKimDialog: DialogTree = {
       textKey: 'npc.kim.n1',
       portraitId: 'kim',
       choices: [
-        { textKey: 'npc.kim.n1_choice_appointment', nextNodeId: 'n2' },
+        // Requires executive clearance pass; grayed-out without it
+        {
+          textKey: 'npc.kim.n1_choice_appointment',
+          nextNodeId: 'n2',
+          requiresItem: 'executive_clearance',
+        },
         { textKey: 'npc.kim.n1_choice_excuse', nextNodeId: 'n3' },
         { textKey: 'npc.kim.n1_choice_direct', nextNodeId: 'n4' },
+        // Bluff without clearance — only shown when clearance not already verified
+        {
+          textKey: 'npc.kim.n1_choice_bluff_pass',
+          nextNodeId: 'n_bluff',
+          condition: '!kim_appointment_checked',
+        },
       ],
     },
     n2: {
@@ -58,6 +69,31 @@ export const secretaryKimDialog: DialogTree = {
       textKey: 'npc.kim.n6',
       portraitId: 'kim',
     },
+    // Attempting to talk past Kim without clearance
+    n_bluff: {
+      id: 'n_bluff',
+      speaker: 'npc',
+      speakerNameKey: 'npc.kim.speaker',
+      textKey: 'npc.kim.n_bluff',
+      portraitId: 'kim',
+      choices: [
+        { textKey: 'npc.kim.n_bluff_choice_back_off', nextNodeId: 'n6' },
+        {
+          textKey: 'npc.kim.n_bluff_choice_insist',
+          nextNodeId: 'n_alert',
+          setsFlag: 'kim_annoyed',
+        },
+      ],
+    },
+    // Kim calls security — floor 6 alert raised
+    n_alert: {
+      id: 'n_alert',
+      speaker: 'npc',
+      speakerNameKey: 'npc.kim.speaker',
+      textKey: 'npc.kim.n_alert',
+      portraitId: 'kim',
+      setsFlag: 'raise_alert_floor6',
+    },
   },
 };
 
@@ -92,7 +128,11 @@ export const execBlackwellDialog: DialogTree = {
       textKey: 'npc.blackwell.n3',
       portraitId: 'blackwell',
       choices: [
-        { textKey: 'npc.blackwell.n3_choice_double_down', nextNodeId: 'n5' },
+        {
+          textKey: 'npc.blackwell.n3_choice_double_down',
+          nextNodeId: 'n_alert',
+          setsFlag: 'blackwell_suspicious',
+        },
         { textKey: 'npc.blackwell.n3_choice_back_off', nextNodeId: 'n6' },
       ],
     },
@@ -118,6 +158,15 @@ export const execBlackwellDialog: DialogTree = {
       speakerNameKey: 'npc.blackwell.speaker',
       textKey: 'npc.blackwell.n6',
       portraitId: 'blackwell',
+    },
+    // Blackwell calls corporate security — floor 6 alert raised
+    n_alert: {
+      id: 'n_alert',
+      speaker: 'npc',
+      speakerNameKey: 'npc.blackwell.speaker',
+      textKey: 'npc.blackwell.n_alert',
+      portraitId: 'blackwell',
+      setsFlag: 'raise_alert_floor6',
     },
   },
 };

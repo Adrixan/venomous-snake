@@ -5,6 +5,7 @@ export type {
   DialogTree,
   DialogNode,
   DialogChoice,
+  ChoiceWithState,
   NarrativeState,
   NarrativeFlag,
   DialogSpeaker,

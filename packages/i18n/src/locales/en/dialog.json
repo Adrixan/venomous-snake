@@ -486,7 +486,12 @@
       "n3_choice_bluff": "Maintenance. Here to fix the ventilation unit.",
       "n4": "Right. Stay in the public zones and don't touch anything that isn't yours.",
       "n5": "Cameras on every floor. Access logs for every terminal. Whatever you're planning — don't.",
-      "n6": "Maintenance… sure. I'll be running your credentials again in five minutes. Don't go anywhere."
+      "n6": "Maintenance… sure. I'm radioing that in for immediate verification. Don't move — you're officially an incident report.",
+      "n1_choice_bluff_claim": "I don't need ID — I'm with the oversight committee.",
+      "n_bluff_claim": "Oversight committee. That's a new one. Without verified credentials, I can't let you through. Last chance — produce ID or step back.",
+      "n_bluff_choice_back_down": "My apologies. Wrong floor.",
+      "n_bluff_choice_insist": "Check your override registry. My clearance supersedes standard log entries.",
+      "n_alert": "That's enough. I'm calling it in. Yellow alert — all units, eyes on the lobby level."
     },
     "silva": {
       "speaker": "Dr. Silva",
@@ -693,7 +698,12 @@
       "n6": "Proper clearance — now that's a valid approach. Handle the prerequisites, catch the errors, then retry. Refreshing to see someone who understands error handling. I'll be here when you return. I'm always here.",
       "n1_greeting": "This floor smells of premium coffee and crushed ambitions. Welcome to the executive wing.",
       "n3_hint": "Every error has a handler, and I am the first line of defense. Think of me as the try block around this entire floor.",
-      "n5_followup": "I've seen your type before. Determined. Persistent. Usually ends with security escorting them out. Good luck."
+      "n5_followup": "I've seen your type before. Determined. Persistent. Usually ends with security escorting them out. Good luck.",
+      "n1_choice_bluff_pass": "I don't have a pass, but I have urgent business upstairs.",
+      "n_bluff": "Urgent business. Without a clearance pass. How… creative. I'll give you one opportunity to explain yourself.",
+      "n_bluff_choice_back_off": "You know what, I'll come back with the paperwork.",
+      "n_bluff_choice_insist": "This cannot wait. I need access now.",
+      "n_alert": "I see. I’m afraid this conversation is over. Security, please escort this individual out — and flag the floor."
     },
     "blackwell": {
       "speaker": "Exec Blackwell",
@@ -710,7 +720,8 @@
       "n6": "Mistaken. Yes, I thought so. Mistakes happen — even in well-tested code. The important thing is catching them before they propagate. You may go. Kim will validate your exit. Consider this a handled exception.",
       "n1_greeting": "Kim usually filters out the riffraff. You're either very skilled or very lucky. Let's find out which.",
       "n3_hint": "Information is like an exception — thrown carelessly, it crashes systems. Handled properly, it's power.",
-      "n5_followup": "Clock's ticking. Whatever you have to say, make it exception-worthy. I don't catch just anything."
+      "n5_followup": "Clock's ticking. Whatever you have to say, make it exception-worthy. I don't catch just anything.",
+      "n_alert": "You think I don't know corporate espionage when I see it? I'm calling building security right now. Enjoy the lockdown."
     },
     "kowalski": {
       "speaker": "Engineer Kowalski",
@@ -761,7 +772,12 @@
       "n6": "Not an instance? How delightfully defiant. But consider — you have properties: a name, a health value, an inventory. You have methods: walk, talk, fight. You were instantiated when you began this mission. Whether you accept it or not... you are an object.",
       "n1_greeting": "Not many venture this deep. The vault is not for the intellectually timid.",
       "n3_hint": "Every object in this vault has a __init__ method — a constructor that defines its initial state. Without it, the object is nothing.",
-      "n5_followup": "Inheritance is powerful but dangerous. Inherit too deeply and your hierarchy becomes fragile. Keep it shallow. Keep it clean."
+      "n5_followup": "Inheritance is powerful but dangerous. Inherit too deeply and your hierarchy becomes fragile. Keep it shallow. Keep it clean.",
+      "n1_choice_demand_access": "I need access to the vault research. Immediately.",
+      "n_bluff": "Access? Without authorisation? You are either very brave or very stupid, and I suspect the latter. The vault key exists for a reason.",
+      "n_bluff_choice_back_off": "My mistake. I’ll obtain the proper credentials.",
+      "n_bluff_choice_force": "Stand aside. I’m going in regardless.",
+      "n_alert": "Foolish. Lockdown protocol initiated. Every system on this floor now knows your face. I hope your hacking skills are better than your social engineering."
     },
     "aifragment": {
       "speaker": "AI Fragment",
@@ -829,7 +845,12 @@
       "n6": "More time. A wise choice, perhaps. The penthouse library is at your disposal. Review, reflect, prepare. Mr. Snake has waited this long. He can wait a little longer. But don't keep him waiting forever.",
       "n1_greeting": "Ah. I had a feeling tonight would bring a visitor. The elevator has been... restless.",
       "n3_hint": "Mr. Snake designed every floor as a lesson. If you've truly learned from each, the rooftop will reveal its purpose.",
-      "n5_followup": "It has been an honor, operative. Whatever the outcome... you've earned the right to face what waits above."
+      "n5_followup": "It has been an honor, operative. Whatever the outcome... you've earned the right to face what waits above.",
+      "n1_choice_demand": "I demand an audience with Venomous Snake. Now.",
+      "n_bluff": "I’m afraid Mr. Snake does not receive unannounced visitors. Particularly those who demand rather than request. Shall I show you the exit?",
+      "n_bluff_choice_back_off": "Perhaps I was too hasty. I will procure an invitation.",
+      "n_bluff_choice_force": "Get out of my way.",
+      "n_alert": "How unfortunate. You leave me no choice but to activate the penthouse security protocol. I do hope you enjoy confined spaces."
     },
     "nova": {
       "speaker": "Rival Agent Nova",
@@ -863,7 +884,25 @@
       "n6": "Refuse my game? You've been playing it since Floor 1. Every choice you made, every branch you took, every loop you survived — all part of the program. You can't refuse the game, operative. You can only decide how it ends. So... how does your story return?",
       "n1_greeting": "Welcome to the rooftop. The city spreads below us like a circuit board — millions of processes, all running, all connected.",
       "n3_hint": "Every floor you conquered was a function in my program. You are the input. The question is... what will you output?",
-      "n5_followup": "You have exceeded my test cases. You are... an edge case I did not predict. And that, operative, is the highest compliment a programmer can give."
+      "n5_followup": "You have exceeded my test cases. You are... an edge case I did not predict. And that, operative, is the highest compliment a programmer can give.",
+      "n1_choice_bluff_challenge": "I know everything. The game is over, Snake.",
+      "n_unprepared": "Everything? Really? Let me observe… no vault data, no proof, no leverage. You’ve arrived at the final recursion without a termination condition. How poetic. Initiating countermeasures."
+    }
+  },
+  "items": {
+    "id_card": "ID Card",
+    "executive_clearance": "Executive Clearance Pass",
+    "vault_key": "Vault Key",
+    "penthouse_invite": "Penthouse Invitation",
+    "vault_data": "Vault Data Drive"
+  },
+  "ui": {
+    "requires_item": "Requires: {{item}}",
+    "alert_level": {
+      "label": "Alert Level",
+      "1": "Alert Level 1 — Guards are watching. Tread carefully.",
+      "2": "Alert Level 2 — Security on high alert. Most bluffs will fail.",
+      "3": "Alert Level 3 — Full lockdown. Use terminal hacks to find another way."
     }
   }
 }

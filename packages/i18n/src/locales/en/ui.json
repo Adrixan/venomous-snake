@@ -267,5 +267,12 @@
     "xp_gained": "You gained {{xp}} XP",
     "level_up": "Level up! You are now level {{level}}: {{title}}",
     "achievement_unlocked": "Achievement unlocked: {{name}}"
+  },
+  "item_pickup": {
+    "title": "Item Acquired",
+    "first_time_label": "NEW",
+    "type_datafile": "Data File",
+    "type_tool": "Tool",
+    "type_keycard": "Keycard"
   }
 }

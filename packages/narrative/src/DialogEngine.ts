@@ -1,4 +1,11 @@
-import type { DialogTree, DialogNode, DialogChoice, NarrativeState, NarrativeFlag } from './types';
+import type {
+  DialogTree,
+  DialogNode,
+  DialogChoice,
+  ChoiceWithState,
+  NarrativeState,
+  NarrativeFlag,
+} from './types';
 
 export type DialogEventHandler = (event: DialogEvent) => void;
 
@@ -12,6 +19,7 @@ export class DialogEngine {
   private state: NarrativeState;
   private dialogs: Map<string, DialogTree> = new Map();
   private handlers: Set<DialogEventHandler> = new Set();
+  private inventory: string[] = [];
 
   constructor(initialState?: NarrativeState) {
     this.state = initialState ?? {
@@ -123,6 +131,37 @@ export class DialogEngine {
     return Boolean(flag.value);
   }
 
+  /** Update the player's inventory snapshot used for `requiresItem` choice gating. */
+  setInventory(items: string[]): void {
+    this.inventory = items;
+  }
+
+  /** Returns true if `itemId` is currently in the player's inventory. */
+  private checkInventory(itemId: string): boolean {
+    return this.inventory.includes(itemId);
+  }
+
+  /**
+   * Returns all choices for the current node, each annotated with whether the
+   * player can select it (condition passes AND inventory requirement met).
+   */
+  getDisplayChoices(): ChoiceWithState[] {
+    const node = this.getCurrentNode();
+    if (!node?.choices) return [];
+    return node.choices
+      .filter((c) => !c.condition || this.checkCondition(c.condition))
+      .map((c) => {
+        const itemLocked = c.requiresItem !== undefined && !this.checkInventory(c.requiresItem);
+        return {
+          choice: c,
+          available: !itemLocked,
+          ...(itemLocked && c.requiresItem !== undefined
+            ? { lockReason: `inventory:${c.requiresItem}` }
+            : {}),
+        };
+      });
+  }
+
   onEvent(handler: DialogEventHandler): () => void {
     this.handlers.add(handler);
     return () => {
@@ -144,7 +183,11 @@ export class DialogEngine {
   }
 
   private getAvailableChoices(choices: DialogChoice[]): DialogChoice[] {
-    return choices.filter((c) => !c.condition || this.checkCondition(c.condition));
+    return choices.filter(
+      (c) =>
+        (!c.condition || this.checkCondition(c.condition)) &&
+        (!c.requiresItem || this.checkInventory(c.requiresItem)),
+    );
   }
 
   private completeDialog(): void {

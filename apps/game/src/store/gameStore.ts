@@ -88,6 +88,12 @@ export const useGameStore = create<GameStoreState>((set) => ({
   dialogActive: false,
   dialogContent: null,
 
+  // Inventory
+  inventory: [],
+
+  // Alert / stealth level
+  alertLevel: 0 as 0 | 1 | 2 | 3,
+
   // Audio settings
   masterVolume: initialAudio.masterVolume,
   musicVolume: initialAudio.musicVolume,
@@ -167,6 +173,23 @@ export const useGameStore = create<GameStoreState>((set) => ({
   setDialog: (content) => set({ dialogActive: true, dialogContent: content }),
   clearDialog: () => set({ dialogActive: false, dialogContent: null }),
 
+  // Inventory actions
+  addToInventory: (itemId) =>
+    set((state) => ({
+      inventory: state.inventory.includes(itemId) ? state.inventory : [...state.inventory, itemId],
+    })),
+  removeFromInventory: (itemId) =>
+    set((state) => ({
+      inventory: state.inventory.filter((id) => id !== itemId),
+    })),
+
+  // Alert / stealth actions
+  setAlertLevel: (level) => set({ alertLevel: level }),
+  incrementAlertLevel: () =>
+    set((state) => ({
+      alertLevel: Math.min(3, state.alertLevel + 1) as 0 | 1 | 2 | 3,
+    })),
+
   // Audio actions
   setMasterVolume: (volume) => {
     const v = Math.max(0, Math.min(1, volume));
@@ -208,5 +231,7 @@ export const useGameStore = create<GameStoreState>((set) => ({
       unlockedFloors: [0],
       dialogActive: false,
       dialogContent: null,
+      inventory: [],
+      alertLevel: 0,
     }),
 }));

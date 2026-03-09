@@ -6,6 +6,12 @@ import type { UseDialogReturn } from './useDialog';
 
 export type DialogOverlayProps = UseDialogReturn;
 
+/** Extract the item ID from a `lockReason` string like `'inventory:id_card'`. */
+function parseLockItemId(lockReason: string): string | null {
+  if (lockReason.startsWith('inventory:')) return lockReason.slice('inventory:'.length);
+  return null;
+}
+
 const FONT_FAMILY = "'JetBrains Mono', 'Fira Code', 'Courier New', monospace";
 const CHAR_DELAY_MS = 30;
 
@@ -29,7 +35,7 @@ const KEYFRAMES = `
 export function DialogOverlay({
   isOpen,
   currentNode,
-  availableChoices,
+  displayChoices,
   advance,
   selectChoice,
 }: DialogOverlayProps): React.JSX.Element | null {
@@ -50,7 +56,7 @@ export function DialogOverlay({
       ? (SPEAKER_COLORS[portraitId] ?? DEFAULT_SPEAKER_COLOR)
       : DEFAULT_SPEAKER_COLOR;
 
-  const hasChoices = availableChoices.length > 0;
+  const hasChoices = displayChoices.length > 0;
 
   // Animate overlay in/out.
   useEffect(() => {
@@ -255,20 +261,61 @@ export function DialogOverlay({
                 aria-label="Dialog choices"
                 style={{ display: 'flex', flexDirection: 'column', gap: 8 }}
               >
-                {availableChoices.map((choice, i) => (
-                  <button
-                    key={choice.nextNodeId}
-                    type="button"
-                    onClick={() => selectChoice(i)}
-                    style={choiceButtonStyle(speakerColor)}
-                    tabIndex={0}
-                  >
-                    <span aria-hidden="true" style={{ color: speakerColor, marginRight: 8 }}>
-                      ›
-                    </span>
-                    {t(choice.textKey)}
-                  </button>
-                ))}
+                {(() => {
+                  let availableIndex = 0;
+                  return displayChoices.map((dc) => {
+                    const isLocked = !dc.available;
+                    const myAvailIndex = isLocked ? -1 : availableIndex++;
+                    const itemId =
+                      dc.lockReason !== undefined ? parseLockItemId(dc.lockReason) : null;
+                    const requiresLabel =
+                      itemId !== null
+                        ? t('ui.requires_item', {
+                            item: t(`items.${itemId}`, { defaultValue: itemId }),
+                          })
+                        : null;
+
+                    return (
+                      <button
+                        key={dc.choice.nextNodeId}
+                        type="button"
+                        disabled={isLocked}
+                        title={requiresLabel ?? undefined}
+                        onClick={() => {
+                          if (!isLocked && myAvailIndex !== -1) selectChoice(myAvailIndex);
+                        }}
+                        style={choiceButtonStyle(speakerColor, isLocked)}
+                        tabIndex={isLocked ? -1 : 0}
+                        aria-disabled={isLocked}
+                      >
+                        <span
+                          aria-hidden="true"
+                          style={{
+                            color: isLocked ? 'rgba(255,255,255,0.25)' : speakerColor,
+                            marginRight: 8,
+                          }}
+                        >
+                          {isLocked ? '🔒' : '›'}
+                        </span>
+                        <span style={{ opacity: isLocked ? 0.4 : 1 }}>{t(dc.choice.textKey)}</span>
+                        {requiresLabel !== null && (
+                          <span
+                            aria-label={requiresLabel}
+                            style={{
+                              display: 'block',
+                              fontSize: 10,
+                              color: 'rgba(255,159,28,0.7)',
+                              marginTop: 3,
+                              letterSpacing: '0.05em',
+                            }}
+                          >
+                            {requiresLabel}
+                          </span>
+                        )}
+                      </button>
+                    );
+                  });
+                })()}
               </div>
             )}
 
@@ -313,15 +360,15 @@ export function DialogOverlay({
   );
 }
 
-function choiceButtonStyle(accentColor: string): React.CSSProperties {
+function choiceButtonStyle(accentColor: string, isLocked = false): React.CSSProperties {
   return {
-    background: 'transparent',
-    border: `1px solid ${accentColor}44`,
+    background: isLocked ? 'rgba(255,255,255,0.03)' : 'transparent',
+    border: `1px solid ${isLocked ? 'rgba(255,255,255,0.1)' : `${accentColor}44`}`,
     color: '#d0d8e8',
     fontFamily: FONT_FAMILY,
     fontSize: 'clamp(12px, 1.6vw, 14px)',
     padding: '10px 16px',
-    cursor: 'pointer',
+    cursor: isLocked ? 'not-allowed' : 'pointer',
     textAlign: 'left',
     transition: 'background 0.15s, border-color 0.15s',
     letterSpacing: '0.03em',
