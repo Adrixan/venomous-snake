@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useCallback, useImperativeHandle, forwardRef } from 'react';
-import { EditorState } from '@codemirror/state';
+import { EditorState, Compartment } from '@codemirror/state';
 import {
   EditorView,
   keymap,
@@ -47,6 +47,7 @@ function TerminalEditorInner(
 ): React.JSX.Element {
   const containerRef = useRef<HTMLDivElement>(null);
   const viewRef = useRef<EditorView | null>(null);
+  const readOnlyCompartment = useRef(new Compartment());
   const onRunRef = useRef(onRun);
   const onSubmitRef = useRef(onSubmit);
   const onChangeRef = useRef(onChange);
@@ -54,6 +55,16 @@ function TerminalEditorInner(
   onRunRef.current = onRun;
   onSubmitRef.current = onSubmit;
   onChangeRef.current = onChange;
+
+  // Dynamically update readOnly when disabled prop changes
+  useEffect(() => {
+    const view = viewRef.current;
+    if (view) {
+      view.dispatch({
+        effects: readOnlyCompartment.current.reconfigure(EditorState.readOnly.of(disabled)),
+      });
+    }
+  }, [disabled]);
 
   const handleRunClick = useCallback(() => {
     const view = viewRef.current;
@@ -126,7 +137,7 @@ function TerminalEditorInner(
           onChangeRef.current?.(update.state.doc.toString());
         }
       }),
-      EditorState.readOnly.of(disabled),
+      readOnlyCompartment.current.of(EditorState.readOnly.of(disabled)),
       // On Android with custom keyboard, suppress the system IME
       EditorView.contentAttributes.of({
         inputmode: isAndroid ? 'none' : 'text',
