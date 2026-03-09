@@ -538,11 +538,32 @@ export class InteractiveObject extends Phaser.Physics.Arcade.Sprite {
           challengeId !== undefined && InteractiveObject.completedChallenges.has(challengeId);
 
         if (!isUnlocked) {
+          // Camera shake for tactile denied-access feedback
+          this.scene.cameras.main.shake(200, 0.005);
+
+          // Temporary red "ACCESS DENIED" text that floats up and fades
+          const deniedText = this.scene.add.text(this.x, this.y - 32, 'ACCESS DENIED', {
+            fontFamily: 'monospace',
+            fontSize: '12px',
+            color: '#ff0000',
+            stroke: '#000000',
+            strokeThickness: 3,
+          });
+          deniedText.setOrigin(0.5, 1).setDepth(200);
+          this.scene.tweens.add({
+            targets: deniedText,
+            alpha: 0,
+            y: this.y - 64,
+            duration: 2000,
+            ease: 'Power2',
+            onComplete: () => deniedText.destroy(),
+          });
+
           EventBus.emit({
-            type: 'INTERACTION_PROMPT',
+            type: 'ACCESS_DENIED',
             payload: {
               objectId: this.objectId,
-              promptText: '[LOCKED] Complete the terminal challenge first',
+              message: '[LOCKED] Complete the terminal challenge first',
             },
           });
           return;

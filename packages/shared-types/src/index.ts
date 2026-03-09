@@ -54,7 +54,9 @@ export type GameEvent =
   | { type: 'FLOOR_COMPLETE'; payload: { floorNumber: number } }
   | { type: 'FLOOR_CHANGE'; payload: { targetFloor: number } }
   | { type: 'DIALOG_TRIGGERED'; payload: DialogContent }
-  | { type: 'DIALOG_DISMISSED' };
+  | { type: 'DIALOG_DISMISSED' }
+  | { type: 'ACCESS_DENIED'; payload: { objectId: string; message: string } }
+  | { type: 'FLOOR_ARRIVED'; payload: { floor: number } };
 
 /** Player facing direction */
 export type Direction = 'up' | 'down' | 'left' | 'right';

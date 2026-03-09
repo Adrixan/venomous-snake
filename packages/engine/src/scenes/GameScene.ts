@@ -42,6 +42,7 @@ export class GameScene extends Phaser.Scene {
   private nearestNPC: NPC | null = null;
   private unsubscribeEventBus: (() => void) | null = null;
   private roomKey: string | undefined;
+  private currentFloor = 0;
 
   constructor() {
     super({ key: 'GameScene' });
@@ -52,6 +53,10 @@ export class GameScene extends Phaser.Scene {
   // forwarding to create() is unreliable across restart cycles.
   init(data: GameSceneData): void {
     this.roomKey = data.roomKey;
+    if (data.roomKey) {
+      const match = /\d+/.exec(data.roomKey);
+      this.currentFloor = match ? parseInt(match[0], 10) : 0;
+    }
   }
 
   preload(): void {
@@ -61,6 +66,9 @@ export class GameScene extends Phaser.Scene {
   }
 
   create(data: GameSceneData): void {
+    // Reset camera effects from previous scene lifecycle
+    this.cameras.main.resetFX();
+
     let playerX = Math.floor((ROOM_COLS / 2) * GRID);
     let playerY = Math.floor((ROOM_ROWS / 2) * GRID);
 
@@ -133,7 +141,7 @@ export class GameScene extends Phaser.Scene {
           this.physics.add.collider(this.player, collisionLayer);
         }
       } catch (err) {
-        console.warn('[GameScene] Tilemap load failed, falling back to test room:', err);
+        console.error('[GameScene] Tilemap load failed for key:', roomKey, err);
         this.tilemapManager = null;
         loadedTilemap = null;
       }
@@ -190,6 +198,16 @@ export class GameScene extends Phaser.Scene {
 
     // Fade in on every scene start (covers both fresh loads and floor transitions)
     this.cameras.main.fadeIn(400, 0, 0, 0);
+
+    // Notify the React layer that the floor transition completed
+    EventBus.emit({ type: 'FLOOR_ARRIVED', payload: { floor: this.currentFloor } });
+
+    // Safety net: ensure camera is visible after 1 second regardless of fade state
+    this.time.delayedCall(1000, () => {
+      if (this.cameras.main.alpha < 1) {
+        this.cameras.main.setAlpha(1);
+      }
+    });
   }
 
   update(_time: number, delta: number): void {
@@ -257,7 +275,6 @@ export class GameScene extends Phaser.Scene {
 
     const spawns: Array<[InteractiveObjectType, number, number]> = [
       ['terminal', cx - 3, cy - 3],
-      ['door', cx, cy + 4],
       ['item', cx + 3, cy + 3],
     ];
 
@@ -365,6 +382,7 @@ export class GameScene extends Phaser.Scene {
           this.time.delayedCall(2000, () => msg.destroy());
           return;
         }
+        console.log('[GameScene] Floor transition to:', tilemapDef.mapKey);
         this.player?.freeze();
         this.cameras.main.fadeOut(400, 0, 0, 0);
         this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, () => {

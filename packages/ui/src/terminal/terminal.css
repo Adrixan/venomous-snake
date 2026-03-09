@@ -71,8 +71,10 @@
 
 .terminal-editor-area {
   flex: 1;
+  display: flex;
+  flex-direction: column;
   overflow: hidden;
-  min-height: 0;
+  min-height: 60px;
   border-bottom: 1px solid var(--term-border);
 }
 
@@ -81,9 +83,10 @@
 }
 
 .terminal-editor-wrapper {
-  height: 100%;
+  flex: 1;
   display: flex;
   flex-direction: column;
+  min-height: 0;
 }
 
 .terminal-editor-cm {
@@ -96,10 +99,11 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 6px 12px;
+  padding: 8px 12px;
   background: var(--term-bg-darker);
   border-top: 1px solid var(--term-border);
   flex-shrink: 0;
+  min-height: 40px;
 }
 
 /* ─── Output Panel ────────────────────────────────────────────────────────── */
@@ -333,9 +337,14 @@
 /* ─── Submit Button ──────────────────────────────────────────────────────── */
 
 .terminal-btn-submit {
-  background: rgba(0, 180, 216, 0.08);
+  background: rgba(0, 180, 216, 0.12);
   border-color: var(--term-cyan);
   color: var(--term-cyan);
+  font-weight: 700;
+  font-size: 13px;
+  padding: 6px 16px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
 .terminal-btn-submit:hover {
@@ -369,6 +378,55 @@
   text-transform: uppercase;
   margin-bottom: 4px;
   font-weight: 700;
+}
+
+/* ─── Mission Objectives Panel ──────────────────────────────────────────── */
+
+.terminal-objectives {
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--term-border);
+  background: rgba(0, 255, 157, 0.03);
+  flex-shrink: 0;
+  max-height: 140px;
+  overflow-y: auto;
+}
+
+.terminal-objectives-title {
+  font-size: 11px;
+  color: var(--term-green);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.terminal-objective-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  font-size: 12px;
+  padding: 3px 0;
+  line-height: 1.4;
+}
+
+.terminal-objective-check {
+  flex-shrink: 0;
+  width: 16px;
+  text-align: center;
+}
+
+.terminal-objective-item.passed {
+  color: var(--term-green);
+  text-decoration: line-through;
+  opacity: 0.7;
+}
+
+.terminal-objective-item.failed {
+  color: var(--term-red);
+}
+
+.terminal-objective-item.pending {
+  color: var(--term-fg);
 }
 
 /* ─── Result Panel ───────────────────────────────────────────────────────── */

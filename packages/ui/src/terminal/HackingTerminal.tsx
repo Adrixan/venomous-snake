@@ -233,6 +233,7 @@ function ChallengeModeTerminal({
     isRunning,
     result,
     hints,
+    challengeResult,
     submitCode,
     runCode,
     resetState,
@@ -311,6 +312,16 @@ function ChallengeModeTerminal({
   const isDisabled = isRunning;
   const initialCode = challenge?.scaffoldedCode ?? '# Write your Python code here\n';
 
+  // Derive per-test objective status from last challengeResult
+  const testResults = challengeResult?.testResults;
+  const objectives =
+    challenge?.testCases.map((tc, i) => {
+      const tr = testResults?.[i];
+      const objStatus: 'passed' | 'failed' | 'pending' =
+        tr !== undefined ? (tr.passed ? 'passed' : 'failed') : 'pending';
+      return { description: tc.description, hidden: tc.hidden, status: objStatus };
+    }) ?? [];
+
   return (
     <div className="terminal-container" style={{ position: 'relative' }}>
       {/* Header */}
@@ -356,6 +367,26 @@ function ChallengeModeTerminal({
         </div>
       )}
 
+      {/* Mission Objectives — persistent checklist derived from test cases */}
+      {objectives.length > 0 && (
+        <div className="terminal-objectives">
+          <div className="terminal-objectives-title">
+            🎯 MISSION OBJECTIVES ({objectives.filter((o) => o.status === 'passed').length}/
+            {objectives.filter((o) => !o.hidden).length})
+          </div>
+          {objectives
+            .filter((o) => !o.hidden)
+            .map((obj, i) => (
+              <div key={i} className={`terminal-objective-item ${obj.status}`}>
+                <span className="terminal-objective-check">
+                  {obj.status === 'passed' ? '✓' : obj.status === 'failed' ? '✗' : '○'}
+                </span>
+                <span>{obj.description}</span>
+              </div>
+            ))}
+        </div>
+      )}
+
       {/* Editor + output */}
       <div
         className="terminal-split"
@@ -385,7 +416,7 @@ function ChallengeModeTerminal({
             </div>
           ) : (
             <div className="terminal-result-fail">
-              <span>✗ Tests failed — check output and try again</span>
+              <span>✗ Tests failed — check objectives and try again</span>
             </div>
           )}
         </div>
@@ -414,7 +445,7 @@ function ChallengeModeTerminal({
       {/* Status bar */}
       <div className="terminal-status-bar">
         <span>{interpreter.getVersion()}</span>
-        <span>Ctrl+Enter to run • Submit ✓ to evaluate • Esc to close</span>
+        <span>Run ▶ to test • Submit ✓ to evaluate • Esc to close</span>
       </div>
 
       {/* Success overlay */}
