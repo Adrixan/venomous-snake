@@ -353,6 +353,8 @@ export class InteractiveObject extends Phaser.Physics.Arcade.Sprite {
   private readonly objectProperties: Record<string, unknown>;
   private readonly displayName: string;
   private promptLabel: Phaser.GameObjects.Text | null = null;
+  private lockIcon: Phaser.GameObjects.Text | null = null;
+  private instanceUnsubscribe: (() => void) | null = null;
   private inRange = false;
 
   // Tracks challenge IDs that have been completed — shared across all instances
@@ -439,6 +441,49 @@ export class InteractiveObject extends Phaser.Physics.Arcade.Sprite {
     this.promptLabel.setOrigin(0.5, 1);
     this.promptLabel.setVisible(false);
     this.promptLabel.setDepth(210);
+
+    if (this.objectType === 'door' || this.objectType === 'elevator') {
+      this.applyDoorTint();
+      this.instanceUnsubscribe = EventBus.on((event) => {
+        if (event.type === 'CHALLENGE_COMPLETED') {
+          const reqChallenge = this.objectProperties['requiresChallenge'];
+          if (typeof reqChallenge === 'string' && reqChallenge === event.payload.challengeId) {
+            this.applyDoorTint();
+          }
+        }
+      });
+    }
+  }
+
+  private applyDoorTint(): void {
+    const locked = this.objectProperties['locked'];
+    const requiresChallenge = this.objectProperties['requiresChallenge'];
+
+    if (locked !== 'true' && locked !== true) {
+      this.clearTint();
+      this.lockIcon?.destroy();
+      this.lockIcon = null;
+      return;
+    }
+
+    const challengeId = typeof requiresChallenge === 'string' ? requiresChallenge : undefined;
+    const isUnlocked =
+      challengeId !== undefined && InteractiveObject.completedChallenges.has(challengeId);
+
+    if (isUnlocked) {
+      this.setTint(0x44ff44);
+      this.lockIcon?.destroy();
+      this.lockIcon = null;
+    } else {
+      this.setTint(0xff4444);
+      if (!this.lockIcon) {
+        this.lockIcon = this.scene.add.text(this.x, this.y - 22, '🔒', {
+          fontSize: '14px',
+        });
+        this.lockIcon.setOrigin(0.5, 1);
+        this.lockIcon.setDepth(210);
+      }
+    }
   }
 
   setPlayerInRange(inRange: boolean): void {
@@ -526,6 +571,10 @@ export class InteractiveObject extends Phaser.Physics.Arcade.Sprite {
   override destroy(fromScene?: boolean): void {
     this.promptLabel?.destroy();
     this.promptLabel = null;
+    this.lockIcon?.destroy();
+    this.lockIcon = null;
+    this.instanceUnsubscribe?.();
+    this.instanceUnsubscribe = null;
     super.destroy(fromScene);
   }
 }

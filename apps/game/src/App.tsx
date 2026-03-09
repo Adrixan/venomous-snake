@@ -10,6 +10,7 @@ import { GameControllerProvider } from './hooks/useGameController';
 import { useSaveSystem } from './hooks/useSaveSystem';
 import { useGameAudio } from './hooks/useGameAudio';
 import { useStoryFlow } from './hooks/useStoryFlow';
+import { useCurriculumProgress } from './hooks/useCurriculumProgress';
 import { RotateDeviceOverlay } from './components/RotateDeviceOverlay';
 import { MockInterpreter } from '@venomous-snake/python-runtime';
 import {
@@ -27,24 +28,23 @@ import {
   TutorialOverlay,
   CreditsScreen,
   ItemPickupToast,
+  AchievementToast,
 } from '@venomous-snake/ui';
-import type { AudioSettingsPanelProps, ItemPickupNotification } from '@venomous-snake/ui';
+import type {
+  AudioSettingsPanelProps,
+  ItemPickupNotification,
+  ToastNotification,
+} from '@venomous-snake/ui';
 import { chapters } from '@venomous-snake/challenges';
-import type { CurriculumProgress } from '@venomous-snake/shared-types';
+import { ACHIEVEMENTS } from '@venomous-snake/challenge-engine';
+
 import { EventBus } from '@venomous-snake/engine';
+import type { CurriculumProgress } from '@venomous-snake/shared-types';
 import type { GameController } from './GameController';
 import { useReducedMotion } from '@venomous-snake/ui';
 
 type MenuView = 'main' | 'newgame' | 'settings';
 type SaveModalMode = 'save' | 'load' | null;
-
-const defaultProgress: CurriculumProgress = {
-  challenges: {},
-  currentChapter: 1,
-  totalXp: 0,
-  completedChallenges: 0,
-  unlockedFloors: ['lobby'],
-};
 
 export function App(): React.JSX.Element {
   const gamePhase = useGameStore((state) => state.gamePhase);
@@ -75,6 +75,9 @@ export function App(): React.JSX.Element {
 
   // Wire audio to game events (always active once the component mounts)
   useGameAudio();
+
+  // Derive curriculum progress from live game store state
+  const curriculumProgress = useCurriculumProgress();
 
   // Request landscape orientation lock (progressive enhancement)
   useEffect(() => {
@@ -125,6 +128,9 @@ export function App(): React.JSX.Element {
   // Item pickup notifications
   const [pickupNotifications, setPickupNotifications] = useState<ItemPickupNotification[]>([]);
   const seenItemsRef = useRef<Set<string>>(new Set());
+
+  // Achievement notifications
+  const [achievementNotifications, setAchievementNotifications] = useState<ToastNotification[]>([]);
 
   // Stable interpreter — recreated on new game, persists across paused transitions
   const interpreterRef = useRef<MockInterpreter | null>(null);
@@ -224,6 +230,23 @@ export function App(): React.JSX.Element {
     return unsub;
   }, []);
 
+  // Listen for ACHIEVEMENT_UNLOCKED events and show achievement toast
+  useEffect(() => {
+    const unsub = EventBus.on((event) => {
+      if (event.type === 'ACHIEVEMENT_UNLOCKED') {
+        const { id } = event.payload;
+        const achievement = ACHIEVEMENTS.find((a) => a.id === id);
+        if (achievement === undefined) return;
+        const notification: ToastNotification = {
+          id: `achievement_${id}_${Date.now()}`,
+          achievement,
+        };
+        setAchievementNotifications((prev) => [...prev, notification]);
+      }
+    });
+    return unsub;
+  }, []);
+
   const handleNewGame = useCallback(() => {
     setMenuView('newgame');
   }, []);
@@ -318,6 +341,10 @@ export function App(): React.JSX.Element {
 
   const handleDismissPickup = useCallback((id: string) => {
     setPickupNotifications((prev) => prev.filter((n) => n.id !== id));
+  }, []);
+
+  const handleDismissAchievement = useCallback((id: string) => {
+    setAchievementNotifications((prev) => prev.filter((n) => n.id !== id));
   }, []);
 
   const handleFloorSelect = useCallback(
@@ -445,6 +472,14 @@ export function App(): React.JSX.Element {
             <ItemPickupToast notifications={pickupNotifications} onDismiss={handleDismissPickup} />
           )}
 
+          {/* z-index: 500 — Achievement notifications */}
+          {achievementNotifications.length > 0 && (
+            <AchievementToast
+              notifications={achievementNotifications}
+              onDismiss={handleDismissAchievement}
+            />
+          )}
+
           {/* z-index: 100/101 — Dialog overlay (below terminal) */}
           <DialogOverlay {...dialogState} />
 
@@ -483,7 +518,7 @@ export function App(): React.JSX.Element {
           <QuestLog
             isOpen={activePanel === 'questlog'}
             onClose={handleClosePanel}
-            curriculumProgress={defaultProgress}
+            curriculumProgress={curriculumProgress}
             chapters={chapters}
             currentFloor={currentFloor}
           />

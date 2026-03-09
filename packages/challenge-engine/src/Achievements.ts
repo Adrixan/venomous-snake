@@ -22,6 +22,15 @@ export interface Achievement {
 export const ACHIEVEMENTS: Achievement[] = [
   // ── Story milestones ──────────────────────────────────────────────────────
   {
+    id: 'first_pickup',
+    nameKey: 'achievements.first_pickup',
+    descriptionKey: 'achievements.first_pickup.desc',
+    icon: '📦',
+    trigger: { type: 'floor_unlock', floor: '__item_pickup__' },
+    xpReward: 15,
+    secret: false,
+  },
+  {
     id: 'first_hack',
     nameKey: 'achievements.first_hack',
     descriptionKey: 'achievements.first_hack.desc',

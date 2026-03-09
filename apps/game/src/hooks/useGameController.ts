@@ -2,6 +2,7 @@ import React, { createContext, useContext, useRef, useEffect } from 'react';
 import { GameController } from '../GameController';
 import { useGameStore } from '../store/gameStore';
 import { EventBus } from '@venomous-snake/engine';
+import { ACHIEVEMENTS } from '@venomous-snake/challenge-engine';
 import type {
   PythonInterpreter,
   CurriculumProgress,
@@ -37,6 +38,7 @@ export function GameControllerProvider({
   children,
 }: GameControllerProviderProps): React.JSX.Element {
   const localRef = useRef<GameController | null>(null);
+  const hasFirstPickupRef = useRef(false);
 
   if (localRef.current === null) {
     localRef.current =
@@ -90,9 +92,31 @@ export function GameControllerProvider({
           console.info('[Achievement unlocked]', event.payload.nameKey);
           break;
 
-        case 'FLOOR_UNLOCKED':
-          store.unlockFloor(event.payload.floor);
+        case 'ITEM_PICKUP': {
+          if (!hasFirstPickupRef.current) {
+            hasFirstPickupRef.current = true;
+            EventBus.emit({
+              type: 'ACHIEVEMENT_UNLOCKED',
+              payload: { id: 'first_pickup', nameKey: 'achievements.first_pickup' },
+            });
+          }
           break;
+        }
+
+        case 'FLOOR_UNLOCKED': {
+          store.unlockFloor(event.payload.floor);
+          const floorId = `floor_${event.payload.floor}`;
+          const floorAchievement = ACHIEVEMENTS.find(
+            (a) => a.trigger.type === 'floor_unlock' && a.trigger.floor === floorId,
+          );
+          if (floorAchievement !== undefined) {
+            EventBus.emit({
+              type: 'ACHIEVEMENT_UNLOCKED',
+              payload: { id: floorAchievement.id, nameKey: floorAchievement.nameKey },
+            });
+          }
+          break;
+        }
 
         case 'FLOOR_CHANGE':
           store.setCurrentFloor(

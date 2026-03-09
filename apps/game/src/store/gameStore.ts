@@ -151,7 +151,11 @@ export const useGameStore = create<GameStoreState>((set) => ({
   setActivePanel: (panel) => set({ activePanel: panel }),
   setPlayerName: (name) => set({ playerName: name }),
   setPlayerGender: (gender) => set({ playerGender: gender }),
-  addXp: (amount) => set((state) => ({ xp: state.xp + amount })),
+  addXp: (amount) =>
+    set((state) => {
+      const newXp = state.xp + amount;
+      return { xp: newXp, level: Math.floor(newXp / 100) + 1 };
+    }),
   setLevel: (level) => set({ level }),
   setCurrentFloor: (floor) => set({ currentFloor: floor }),
 
