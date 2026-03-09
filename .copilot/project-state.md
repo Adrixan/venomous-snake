@@ -1,6 +1,6 @@
 # Venomous Snake — Project State
 
-> Last updated: 2026-03-06 → final completion update
+> Last updated: 2026-03-07 → bug fixes + engagement improvements
 
 ## User Profile
 
@@ -237,6 +237,40 @@ Top-priority epics (Must): Foundation, Core Engine, Hacking Terminal, Challenge 
 - Total curriculum: **105 challenges across 12 chapters**
 - All type-checks pass, all tests pass, build succeeds
 - Commit: 4516ea0
+
+## Bug Fix Rounds (Post-Completion)
+
+### Round 1 — Mobile & Gameplay (commit a748a7a)
+- Virtual joystick positioning fixed
+- Android keyboard (custom CodeKeyboard)
+- Dialog system continuation
+- Character sprites, background music
+
+### Round 2 — Visual & Interaction (commit e22ef9a)
+- Custom Android keyboard, interaction system
+- Camera zoom to 2.0, dialog portraits (24 SVG), level visuals
+
+### Round 3 — Visibility & Graphics (commit fb3e3fb)
+- E button depth above vignette (200), landscape enforcement
+- All placeholder sprites replaced with cyberpunk designs
+
+### Round 4 — Display Scaling (commit da6e457)
+- Switched from camera zoom 2.0 to base resolution 400×304 with Scale.FIT
+- Tripled furniture/decorations across all floors
+- 48×48 HUD buttons with neon styling, 15 learning items
+
+### Round 5 — Game Logic (commits 33fb9f3, 4445715)
+- Inventory-gated dialog choices and stealth/alert system (0-3 alert levels)
+- Floor preloading in BootScene, tileset key fix, terminal session key
+
+### Round 6 — Critical Bugs + Engagement (commits d2f6f94, 8f500b8, b3e4d52, 1108ec8)
+- **Terminal typing**: CodeMirror Compartment for dynamic readOnly (was baked at mount)
+- **Floor transitions**: Added `init()` to GameScene, 'elevator' to TilemapManager valid types, door locking with `requiresChallenge` checks
+- **Items**: 27 new items added to floors 4-11, all with database entries
+- **Locked door visuals**: Red tint + 🔒 for locked, green for unlocked
+- **Achievement toast**: Wired to App.tsx, triggers on first pickup and floor unlock
+- **Level calculation**: Auto-calculates from XP (floor(xp/100) + 1)
+- **Quest log**: Live progress from game state via useCurriculumProgress hook
 
 ## Open Items
 
