@@ -87,7 +87,7 @@ export interface GameStoreState {
   interactionPrompt: { objectId: string; promptText: string } | null;
 
   // UI shell state
-  gamePhase: 'menu' | 'playing' | 'paused';
+  gamePhase: 'menu' | 'playing' | 'paused' | 'tutorial';
   activePanel: 'none' | 'inventory' | 'questlog' | 'map' | 'settings' | 'terminal';
   playerName: string;
   playerGender: 'male' | 'female' | 'nonbinary';
@@ -137,7 +137,7 @@ export interface GameStoreState {
   setInteractionPrompt: (prompt: { objectId: string; promptText: string } | null) => void;
 
   // UI shell actions
-  setGamePhase: (phase: 'menu' | 'playing' | 'paused') => void;
+  setGamePhase: (phase: 'menu' | 'playing' | 'paused' | 'tutorial') => void;
   setActivePanel: (
     panel: 'none' | 'inventory' | 'questlog' | 'map' | 'settings' | 'terminal',
   ) => void;

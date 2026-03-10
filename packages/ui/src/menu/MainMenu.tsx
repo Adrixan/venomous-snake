@@ -7,6 +7,7 @@ export interface MainMenuProps {
   onContinue: () => void;
   onLoadGame: () => void;
   onSettings: () => void;
+  onTutorial?: () => void;
 }
 
 interface MenuItem {
@@ -24,6 +25,7 @@ export function MainMenu({
   onContinue,
   onLoadGame,
   onSettings,
+  onTutorial,
 }: MainMenuProps): React.JSX.Element {
   const { t } = useTranslation('ui');
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -32,6 +34,9 @@ export function MainMenu({
     { id: 'new', labelKey: 'menu.new_game', action: onNewGame, visible: true },
     { id: 'continue', labelKey: 'menu.continue_game', action: onContinue, visible: hasSaveData },
     { id: 'load', labelKey: 'menu.load_game', action: onLoadGame, visible: hasSaveData },
+    ...(onTutorial !== undefined
+      ? [{ id: 'tutorial', labelKey: 'menu.tutorial', action: onTutorial, visible: true }]
+      : []),
     { id: 'settings', labelKey: 'menu.settings', action: onSettings, visible: true },
   ];
 

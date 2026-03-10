@@ -25,7 +25,8 @@
     "save_game": "Spiel speichern",
     "settings": "Einstellungen",
     "quit": "Zum Menü",
-    "resume": "Fortsetzen"
+    "resume": "Fortsetzen",
+    "tutorial": "Tutorial-Modus"
   },
   "new_game": {
     "step_gender": "Wähle deine Identität",
@@ -274,5 +275,22 @@
     "type_datafile": "Datei",
     "type_tool": "Werkzeug",
     "type_keycard": "Zugangskarte"
+  },
+  "tutorial": {
+    "title": "PYTHON TUTORIAL",
+    "subtitle": "Lerne Python Schritt für Schritt",
+    "back_to_menu": "Zurück zum Menü",
+    "chapter": "Kapitel",
+    "challenges_completed": "{completed}/{total} abgeschlossen",
+    "start_challenge": "Challenge starten",
+    "next_challenge": "Nächste Challenge",
+    "prev_challenge": "Vorherige Challenge",
+    "chapter_locked": "Schließe das vorherige Kapitel ab zum Freischalten",
+    "all_complete": "Alle Challenges abgeschlossen!",
+    "progress": "Fortschritt",
+    "reset_progress": "Fortschritt zurücksetzen",
+    "reset_confirm": "Bist du sicher? Das löscht den gesamten Tutorial-Fortschritt.",
+    "difficulty": "Schwierigkeit",
+    "concepts": "Konzepte"
   }
 }

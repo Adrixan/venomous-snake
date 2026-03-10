@@ -29,6 +29,7 @@ import {
   CreditsScreen,
   ItemPickupToast,
   AchievementToast,
+  TutorMode,
 } from '@venomous-snake/ui';
 import type {
   AudioSettingsPanelProps,
@@ -396,6 +397,25 @@ export function App(): React.JSX.Element {
     setGamePhase('paused');
   }, [gamePhase, setGamePhase]);
 
+  const handleTutorial = useCallback(() => {
+    setGamePhase('tutorial');
+  }, [setGamePhase]);
+
+  const handleTutorialBack = useCallback(() => {
+    setGamePhase('menu');
+  }, [setGamePhase]);
+
+  // Tutorial phase
+  if (gamePhase === 'tutorial') {
+    return (
+      <>
+        <TutorMode onBack={handleTutorialBack} />
+        <PWAUpdateNotifier />
+        <RotateDeviceOverlay />
+      </>
+    );
+  }
+
   // Menu phase
   if (gamePhase === 'menu') {
     if (menuView === 'newgame') {
@@ -426,6 +446,7 @@ export function App(): React.JSX.Element {
           onContinue={handleContinue}
           onLoadGame={handleLoadGame}
           onSettings={handleMenuSettings}
+          onTutorial={handleTutorial}
         />
         {/* Load-game slot picker shown over the main menu */}
         {saveModalMode === 'load' && (

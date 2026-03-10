@@ -23,3 +23,4 @@ export * from './accessibility';
 export * from './narrative';
 export * from './i18n';
 export * from './effects/CRTEffect';
+export * from './tutor';

@@ -25,7 +25,8 @@
     "save_game": "Save Game",
     "settings": "Settings",
     "quit": "Quit to Menu",
-    "resume": "Resume"
+    "resume": "Resume",
+    "tutorial": "Tutorial Mode"
   },
   "new_game": {
     "step_gender": "Choose Your Identity",
@@ -274,5 +275,22 @@
     "type_datafile": "Data File",
     "type_tool": "Tool",
     "type_keycard": "Keycard"
+  },
+  "tutorial": {
+    "title": "PYTHON TUTORIAL",
+    "subtitle": "Learn Python step by step",
+    "back_to_menu": "Back to Menu",
+    "chapter": "Chapter",
+    "challenges_completed": "{completed}/{total} completed",
+    "start_challenge": "Start Challenge",
+    "next_challenge": "Next Challenge",
+    "prev_challenge": "Previous Challenge",
+    "chapter_locked": "Complete previous chapter to unlock",
+    "all_complete": "All challenges completed!",
+    "progress": "Progress",
+    "reset_progress": "Reset Progress",
+    "reset_confirm": "Are you sure? This will clear all tutorial progress.",
+    "difficulty": "Difficulty",
+    "concepts": "Concepts"
   }
 }
