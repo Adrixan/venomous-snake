@@ -98,6 +98,10 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
     this.frozen = false;
   }
 
+  isFrozen(): boolean {
+    return this.frozen;
+  }
+
   getDirection(): Direction {
     return this.direction;
   }

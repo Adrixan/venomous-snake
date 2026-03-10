@@ -294,7 +294,7 @@ export class GameScene extends Phaser.Scene {
         id: 'guard_01',
         name: 'Guard',
         behavior: 'idle',
-        dialogId: 'dialog_guard',
+        dialogId: 'guard_torres',
         blocksPath: true,
       }),
     );
@@ -305,7 +305,7 @@ export class GameScene extends Phaser.Scene {
         id: 'scientist_01',
         name: 'Dr. Silva',
         behavior: 'patrol',
-        dialogId: 'dialog_scientist',
+        dialogId: 'dr_silva',
         patrolPath: [
           { x: (cx - 5) * GRID + GRID / 2, y: (cy + 3) * GRID + GRID / 2 },
           { x: (cx - 1) * GRID + GRID / 2, y: (cy + 3) * GRID + GRID / 2 },
@@ -345,6 +345,8 @@ export class GameScene extends Phaser.Scene {
   }
 
   private checkInteractKey(): void {
+    // Don't process interactions while the player is frozen (dialog/terminal open)
+    if (this.player?.isFrozen()) return;
     if (!this.inputManager?.isInteracting()) return;
 
     if (this.nearestInteractive) {

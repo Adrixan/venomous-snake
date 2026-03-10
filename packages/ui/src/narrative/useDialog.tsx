@@ -72,6 +72,7 @@ export interface UseDialogReturn {
 export function useDialog(options: UseDialogOptions = {}): UseDialogReturn {
   const { inventory, onAlertRaised } = options;
   const engineRef = useRef<DialogEngine | null>(null);
+  const isOpenRef = useRef(false);
 
   const [isOpen, setIsOpen] = useState(false);
   const [currentNode, setCurrentNode] = useState<DialogNode | null>(null);
@@ -131,6 +132,7 @@ export function useDialog(options: UseDialogOptions = {}): UseDialogReturn {
           engineRef.current?.setFlag('alert_active', true);
         }
       } else if (event.type === 'dialog_complete') {
+        isOpenRef.current = false;
         setIsOpen(false);
         setCurrentNode(null);
         setAvailableChoices([]);
@@ -151,10 +153,13 @@ export function useDialog(options: UseDialogOptions = {}): UseDialogReturn {
       if (event.type !== 'DIALOG_START') return;
       const { dialogId } = event.payload;
       if (!dialogId) return;
+      // Prevent re-entrant dialog starts
+      if (isOpenRef.current) return;
       const engine = engineRef.current;
       if (!engine) return;
       try {
         engine.startDialog(dialogId);
+        isOpenRef.current = true;
         setIsOpen(true);
       } catch (err) {
         console.warn('[useDialog] Failed to start dialog:', dialogId, err);

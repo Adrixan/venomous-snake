@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import type {
   PythonInterpreter,
   PythonOutput,
@@ -14,6 +15,13 @@ import { useChallengeTerminal } from './useChallengeTerminal';
 import { useBreakpoint } from '../responsive/useBreakpoint';
 import { useIsAndroid } from './useIsAndroid';
 import './terminal.css';
+
+/** Convert keys like "challenges.ch01_02.title" to "challenges:ch01_02.title" for i18next namespace resolution */
+function nsKey(key: string): string {
+  const dot = key.indexOf('.');
+  if (dot === -1) return key;
+  return key.substring(0, dot) + ':' + key.substring(dot + 1);
+}
 
 interface HackingTerminalProps {
   interpreter?: PythonInterpreter;
@@ -227,6 +235,7 @@ function ChallengeModeTerminal({
   onSubmit,
   onChallengeSuccess,
 }: ChallengeModeProps): React.JSX.Element {
+  const { t } = useTranslation(['challenges', 'ui']);
   const {
     challenge,
     outputs,
@@ -357,13 +366,16 @@ function ChallengeModeTerminal({
         </div>
       </div>
 
-      {/* Challenge description */}
+      {/* Challenge description & instructions */}
       {challenge !== null && (
         <div className="terminal-challenge-desc">
           <div className="terminal-challenge-desc-title">
-            {`CH${String(challenge.chapter).padStart(2, '0')}.${String(challenge.order).padStart(2, '0')} • ${challenge.difficulty.toUpperCase()} • +${challenge.xpReward} XP`}
+            {`CH${String(challenge.chapter).padStart(2, '0')}.${String(challenge.order).padStart(2, '0')} • ${t(nsKey(challenge.titleKey))}`}
           </div>
-          <div>{challenge.descriptionKey}</div>
+          <div className="terminal-challenge-desc-meta">
+            {challenge.difficulty.toUpperCase()} • +{challenge.xpReward} XP
+          </div>
+          <div className="terminal-challenge-desc-body">{t(nsKey(challenge.descriptionKey))}</div>
         </div>
       )}
 
