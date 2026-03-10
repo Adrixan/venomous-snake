@@ -199,21 +199,21 @@ function buildObjectLayer(): TiledObject[] {
   // NPCs
   add(
     makeObject(nextId++, 'CEO "The Snake" Viper', 'npc', 20, 5, [
-      prop('dialogId', 'ceo_viper'),
+      prop('dialogId', 'dialog_snake'),
       prop('npcId', 'ceo_viper'),
       prop('behavior', 'guard'),
     ]),
   );
   add(
     makeObject(nextId++, 'Final Security Override', 'npc', 10, 15, [
-      prop('dialogId', 'final_security'),
+      prop('dialogId', 'dialog_coreguardian'),
       prop('npcId', 'final_security'),
       prop('behavior', 'idle'),
     ]),
   );
   add(
     makeObject(nextId++, 'Rogue AI Sentinel', 'npc', 28, 15, [
-      prop('dialogId', 'rogue_ai_sentinel'),
+      prop('dialogId', 'dialog_ghost'),
       prop('npcId', 'rogue_ai_sentinel'),
       prop('behavior', 'guard'),
     ]),

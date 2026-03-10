@@ -158,6 +158,8 @@ export function useDialog(options: UseDialogOptions = {}): UseDialogReturn {
         setIsOpen(true);
       } catch (err) {
         console.warn('[useDialog] Failed to start dialog:', dialogId, err);
+        // Emit DIALOG_END so GameScene unfreezes the player
+        EventBus.emit({ type: 'DIALOG_END' });
       }
     });
   }, []);

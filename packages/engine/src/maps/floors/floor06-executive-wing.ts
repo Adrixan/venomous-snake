@@ -261,21 +261,21 @@ function buildObjectLayer(): TiledObject[] {
   // NPCs
   add(
     makeObject(nextId++, 'VP Richards', 'npc', 4, 4, [
-      prop('dialogId', 'vp_richards'),
+      prop('dialogId', 'dialog_blackwell'),
       prop('npcId', 'vp_richards'),
       prop('behavior', 'idle'),
     ]),
   );
   add(
     makeObject(nextId++, 'Executive Assistant Pham', 'npc', 16, 14, [
-      prop('dialogId', 'exec_assistant_pham'),
+      prop('dialogId', 'dialog_kim'),
       prop('npcId', 'exec_assistant_pham'),
       prop('behavior', 'patrol'),
     ]),
   );
   add(
     makeObject(nextId++, 'Security Detail Ibarra', 'npc', 30, 22, [
-      prop('dialogId', 'security_ibarra'),
+      prop('dialogId', 'dialog_echo'),
       prop('npcId', 'security_ibarra'),
       prop('behavior', 'guard'),
     ]),

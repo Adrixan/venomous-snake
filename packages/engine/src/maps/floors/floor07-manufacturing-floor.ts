@@ -218,21 +218,21 @@ function buildObjectLayer(): TiledObject[] {
   // NPCs
   add(
     makeObject(nextId++, 'Floor Manager Vasquez', 'npc', 16, 11, [
-      prop('dialogId', 'floor_mgr_vasquez'),
+      prop('dialogId', 'dialog_kowalski'),
       prop('npcId', 'floor_mgr_vasquez'),
       prop('behavior', 'patrol'),
     ]),
   );
   add(
     makeObject(nextId++, 'Robotic Arm Operator', 'npc', 8, 6, [
-      prop('dialogId', 'robotic_arm_op'),
+      prop('dialogId', 'dialog_labbot'),
       prop('npcId', 'robotic_arm_op'),
       prop('behavior', 'idle'),
     ]),
   );
   add(
     makeObject(nextId++, 'QA Inspector Ito', 'npc', 24, 17, [
-      prop('dialogId', 'qa_inspector_ito'),
+      prop('dialogId', 'dialog_delta7'),
       prop('npcId', 'qa_inspector_ito'),
       prop('behavior', 'patrol'),
     ]),

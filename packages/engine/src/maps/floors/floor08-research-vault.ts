@@ -266,21 +266,21 @@ function buildObjectLayer(): TiledObject[] {
   // NPCs
   add(
     makeObject(nextId++, 'Vault Commander Nkosi', 'npc', 16, 1, [
-      prop('dialogId', 'vault_cmdr_nkosi'),
+      prop('dialogId', 'dialog_voss'),
       prop('npcId', 'vault_cmdr_nkosi'),
       prop('behavior', 'guard'),
     ]),
   );
   add(
     makeObject(nextId++, 'Lead Researcher Dr. Yamoto', 'npc', 14, 18, [
-      prop('dialogId', 'dr_yamoto'),
+      prop('dialogId', 'dialog_patel'),
       prop('npcId', 'dr_yamoto'),
       prop('behavior', 'idle'),
     ]),
   );
   add(
     makeObject(nextId++, 'Containment Specialist', 'npc', 6, 8, [
-      prop('dialogId', 'containment_spec'),
+      prop('dialogId', 'dialog_echo'),
       prop('npcId', 'containment_spec'),
       prop('behavior', 'patrol'),
     ]),

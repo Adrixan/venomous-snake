@@ -253,21 +253,21 @@ function buildObjectLayer(): TiledObject[] {
   // NPCs
   add(
     makeObject(nextId++, 'AI Systems Director Zhao', 'npc', 16, 14, [
-      prop('dialogId', 'ai_director_zhao'),
+      prop('dialogId', 'dialog_aifragment'),
       prop('npcId', 'ai_director_zhao'),
       prop('behavior', 'idle'),
     ]),
   );
   add(
     makeObject(nextId++, 'Neural Tech Petrov', 'npc', 8, 14, [
-      prop('dialogId', 'neural_tech_petrov'),
+      prop('dialogId', 'dialog_chen'),
       prop('npcId', 'neural_tech_petrov'),
       prop('behavior', 'patrol'),
     ]),
   );
   add(
     makeObject(nextId++, 'Security AI Unit', 'npc', 28, 14, [
-      prop('dialogId', 'security_ai_unit'),
+      prop('dialogId', 'dialog_coreguardian'),
       prop('npcId', 'security_ai_unit'),
       prop('behavior', 'guard'),
     ]),

@@ -328,21 +328,21 @@ function buildObjectLayer(): TiledObject[] {
   // NPCs
   add(
     makeObject(nextId++, 'Dr. Nakamura', 'npc', 8, 6, [
-      prop('dialogId', 'dr_nakamura'),
+      prop('dialogId', 'dialog_patel'),
       prop('npcId', 'dr_nakamura'),
       prop('behavior', 'idle'),
     ]),
   );
   add(
     makeObject(nextId++, 'Lab Technician Reyes', 'npc', 15, 9, [
-      prop('dialogId', 'lab_tech_reyes'),
+      prop('dialogId', 'dialog_jamie'),
       prop('npcId', 'lab_tech_reyes'),
       prop('behavior', 'patrol'),
     ]),
   );
   add(
     makeObject(nextId++, 'Security Bot', 'npc', 27, 10, [
-      prop('dialogId', 'security_bot'),
+      prop('dialogId', 'dialog_delta7'),
       prop('npcId', 'security_bot'),
       prop('behavior', 'guard'),
     ]),

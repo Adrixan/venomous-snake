@@ -221,21 +221,21 @@ function buildObjectLayer(): TiledObject[] {
   // NPCs
   add(
     makeObject(nextId++, 'Communications Director Park', 'npc', 12, 10, [
-      prop('dialogId', 'comm_director_park'),
+      prop('dialogId', 'dialog_diaz'),
       prop('npcId', 'comm_director_park'),
       prop('behavior', 'idle'),
     ]),
   );
   add(
     makeObject(nextId++, 'Signal Tech Volkov', 'npc', 20, 18, [
-      prop('dialogId', 'signal_tech_volkov'),
+      prop('dialogId', 'dialog_volkov'),
       prop('npcId', 'signal_tech_volkov'),
       prop('behavior', 'patrol'),
     ]),
   );
   add(
     makeObject(nextId++, 'Network Engineer Adeyemi', 'npc', 28, 14, [
-      prop('dialogId', 'net_eng_adeyemi'),
+      prop('dialogId', 'dialog_kowalski'),
       prop('npcId', 'net_eng_adeyemi'),
       prop('behavior', 'wander'),
     ]),

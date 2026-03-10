@@ -220,21 +220,21 @@ function buildObjectLayer(): TiledObject[] {
   // NPCs
   add(
     makeObject(nextId++, 'Archivist Huang', 'npc', 10, 7, [
-      prop('dialogId', 'archivist_huang'),
+      prop('dialogId', 'dialog_okafor'),
       prop('npcId', 'archivist_huang'),
       prop('behavior', 'idle'),
     ]),
   );
   add(
     makeObject(nextId++, 'Security Drone Alpha', 'npc', 16, 14, [
-      prop('dialogId', 'security_drone_alpha'),
+      prop('dialogId', 'dialog_delta7'),
       prop('npcId', 'security_drone_alpha'),
       prop('behavior', 'patrol'),
     ]),
   );
   add(
     makeObject(nextId++, 'Records Clerk Osei', 'npc', 25, 10, [
-      prop('dialogId', 'records_clerk_osei'),
+      prop('dialogId', 'dialog_jamie'),
       prop('npcId', 'records_clerk_osei'),
       prop('behavior', 'wander'),
     ]),

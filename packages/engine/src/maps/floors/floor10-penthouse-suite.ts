@@ -243,21 +243,21 @@ function buildObjectLayer(): TiledObject[] {
   // NPCs
   add(
     makeObject(nextId++, 'CEO Shadow "The Snake"', 'npc', 10, 5, [
-      prop('dialogId', 'ceo_shadow'),
+      prop('dialogId', 'dialog_snake'),
       prop('npcId', 'ceo_shadow'),
       prop('behavior', 'idle'),
     ]),
   );
   add(
     makeObject(nextId++, 'Head of Security Romero', 'npc', 16, 22, [
-      prop('dialogId', 'security_romero'),
+      prop('dialogId', 'dialog_echo'),
       prop('npcId', 'security_romero'),
       prop('behavior', 'guard'),
     ]),
   );
   add(
     makeObject(nextId++, 'Personal Assistant Liang', 'npc', 14, 8, [
-      prop('dialogId', 'pa_liang'),
+      prop('dialogId', 'dialog_sterling'),
       prop('npcId', 'pa_liang'),
       prop('behavior', 'idle'),
     ]),
