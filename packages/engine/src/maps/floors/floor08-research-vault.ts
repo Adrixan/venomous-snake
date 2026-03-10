@@ -289,70 +289,70 @@ function buildObjectLayer(): TiledObject[] {
   // Terminals
   add(
     makeObject(nextId++, 'Lab Cell Alpha', 'terminal', 5, 5, [
-      prop('challengeId', 'ch10_01'),
+      prop('challengeId', 'ch10_01_simple_class'),
       prop('label', 'Lab Cell Alpha'),
       prop('room', 'cell_1'),
     ]),
   );
   add(
     makeObject(nextId++, 'Lab Cell Beta', 'terminal', 13, 5, [
-      prop('challengeId', 'ch10_02'),
+      prop('challengeId', 'ch10_02_methods'),
       prop('label', 'Lab Cell Beta'),
       prop('room', 'cell_2'),
     ]),
   );
   add(
     makeObject(nextId++, 'Lab Cell Gamma', 'terminal', 21, 5, [
-      prop('challengeId', 'ch10_03'),
+      prop('challengeId', 'ch10_03_init_constructor'),
       prop('label', 'Lab Cell Gamma'),
       prop('room', 'cell_3'),
     ]),
   );
   add(
     makeObject(nextId++, 'Lab Cell Delta', 'terminal', 29, 5, [
-      prop('challengeId', 'ch10_04'),
+      prop('challengeId', 'ch10_04_str_repr'),
       prop('label', 'Lab Cell Delta'),
       prop('room', 'cell_4'),
     ]),
   );
   add(
     makeObject(nextId++, 'Open Lab Console 1', 'terminal', 8, 16, [
-      prop('challengeId', 'ch10_05'),
+      prop('challengeId', 'ch10_05_inheritance'),
       prop('label', 'Open Lab Console 1'),
       prop('room', 'open_lab'),
     ]),
   );
   add(
     makeObject(nextId++, 'Open Lab Console 2', 'terminal', 16, 16, [
-      prop('challengeId', 'ch10_06'),
+      prop('challengeId', 'ch10_06_method_override'),
       prop('label', 'Open Lab Console 2'),
       prop('room', 'open_lab'),
     ]),
   );
   add(
     makeObject(nextId++, 'Open Lab Console 3', 'terminal', 24, 16, [
-      prop('challengeId', 'ch10_07'),
+      prop('challengeId', 'ch10_07_encapsulation'),
       prop('label', 'Open Lab Console 3'),
       prop('room', 'open_lab'),
     ]),
   );
   add(
     makeObject(nextId++, 'Vault Terminal Alpha', 'terminal', 8, 22, [
-      prop('challengeId', 'ch10_08'),
+      prop('challengeId', 'ch10_08_class_static_methods'),
       prop('label', 'Vault Terminal Alpha'),
       prop('room', 'open_lab'),
     ]),
   );
   add(
     makeObject(nextId++, 'Vault Terminal Beta', 'terminal', 16, 22, [
-      prop('challengeId', 'ch10_09'),
+      prop('challengeId', 'ch10_09_composition'),
       prop('label', 'Vault Terminal Beta'),
       prop('room', 'open_lab'),
     ]),
   );
   add(
     makeObject(nextId++, 'Vault Terminal Gamma', 'terminal', 24, 22, [
-      prop('challengeId', 'ch10_10'),
+      prop('challengeId', 'ch10_10_polymorphism'),
       prop('label', 'Vault Terminal Gamma'),
       prop('room', 'open_lab'),
     ]),
@@ -363,7 +363,7 @@ function buildObjectLayer(): TiledObject[] {
     makeObject(nextId++, 'Elevator to Floor 9', 'door', 37, 5, [
       prop('targetFloor', 'floor9'),
       prop('locked', 'true'),
-      prop('requiresChallenge', 'ch10_10'),
+      prop('requiresChallenge', 'ch10_10_polymorphism'),
     ]),
   );
   // Elevator down (to floor 7)

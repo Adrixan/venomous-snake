@@ -33,7 +33,7 @@ export const floorConfigs: FloorConfig[] = [
       'ch02_07_string_formatting',
       'ch02_08_len_and_string_ops',
     ],
-    requiredCompletions: 16,
+    requiredCompletions: 8,
   },
   {
     floorNumber: 1,

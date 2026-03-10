@@ -636,7 +636,7 @@ function buildObjectLayer(): TiledObject[] {
 
   add(
     makeObject(nextId++, 'Diagnostic Panel', 'terminal', 31, 9, [
-      prop('challengeId', 'ch01_05_float_calc'),
+      prop('challengeId', 'ch01_05_float_calculations'),
       prop('label', 'Diagnostic Panel'),
       prop('room', 'server_closet'),
     ]),
@@ -644,7 +644,7 @@ function buildObjectLayer(): TiledObject[] {
 
   add(
     makeObject(nextId++, 'Elevator Panel', 'terminal', 35, 15, [
-      prop('challengeId', 'ch01_07_multiline'),
+      prop('challengeId', 'ch01_07_multiple_prints'),
       prop('label', 'Elevator Panel'),
       prop('room', 'elevator'),
     ]),
@@ -655,6 +655,80 @@ function buildObjectLayer(): TiledObject[] {
       prop('challengeId', 'ch01_08_comments'),
       prop('label', 'Access Control'),
       prop('room', 'elevator'),
+    ]),
+  );
+
+  // ── Ch01_06 terminal (was missing) ──────────────────────────────────────────
+  add(
+    makeObject(nextId++, 'Comms Terminal', 'terminal', 14, 9, [
+      prop('challengeId', 'ch01_06_string_concatenation'),
+      prop('label', 'Comms Terminal'),
+      prop('room', 'security'),
+    ]),
+  );
+
+  // ── Chapter 2 terminals (bonus area) ──────────────────────────────────────
+  add(
+    makeObject(nextId++, 'Network Analyzer', 'terminal', 5, 15, [
+      prop('challengeId', 'ch02_01_string_methods'),
+      prop('label', 'Network Analyzer'),
+      prop('room', 'break_room'),
+    ]),
+  );
+
+  add(
+    makeObject(nextId++, 'Log Viewer', 'terminal', 10, 15, [
+      prop('challengeId', 'ch02_02_string_indexing'),
+      prop('label', 'Log Viewer'),
+      prop('room', 'break_room'),
+    ]),
+  );
+
+  add(
+    makeObject(nextId++, 'Data Slicer', 'terminal', 16, 15, [
+      prop('challengeId', 'ch02_03_string_slicing'),
+      prop('label', 'Data Slicer'),
+      prop('room', 'security'),
+    ]),
+  );
+
+  add(
+    makeObject(nextId++, 'Format Console', 'terminal', 22, 15, [
+      prop('challengeId', 'ch02_04_fstrings_basics'),
+      prop('label', 'Format Console'),
+      prop('room', 'security'),
+    ]),
+  );
+
+  add(
+    makeObject(nextId++, 'Input Terminal', 'terminal', 27, 15, [
+      prop('challengeId', 'ch02_05_input_basics'),
+      prop('label', 'Input Terminal'),
+      prop('room', 'server_closet'),
+    ]),
+  );
+
+  add(
+    makeObject(nextId++, 'Type Converter', 'terminal', 31, 15, [
+      prop('challengeId', 'ch02_06_type_conversion'),
+      prop('label', 'Type Converter'),
+      prop('room', 'server_closet'),
+    ]),
+  );
+
+  add(
+    makeObject(nextId++, 'String Formatter', 'terminal', 5, 20, [
+      prop('challengeId', 'ch02_07_string_formatting'),
+      prop('label', 'String Formatter'),
+      prop('room', 'break_room'),
+    ]),
+  );
+
+  add(
+    makeObject(nextId++, 'Length Checker', 'terminal', 10, 20, [
+      prop('challengeId', 'ch02_08_len_and_string_ops'),
+      prop('label', 'Length Checker'),
+      prop('room', 'break_room'),
     ]),
   );
 

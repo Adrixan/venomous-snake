@@ -2,7 +2,7 @@ import type { DialogTree } from '../types';
 
 /** Dr. Silva — patrols the lab wing, hints about the first terminal challenge. */
 export const drSilvaDialog: DialogTree = {
-  id: 'dialog_scientist',
+  id: 'dr_silva',
   startNodeId: 'n1',
   nodes: {
     n1: {

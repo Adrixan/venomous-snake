@@ -276,56 +276,56 @@ function buildObjectLayer(): TiledObject[] {
   // Terminals
   add(
     makeObject(nextId++, 'Mainframe Node 1', 'terminal', 4, 6, [
-      prop('challengeId', 'ch11_01'),
+      prop('challengeId', 'ch11_01_type_hints'),
       prop('label', 'Mainframe Node 1'),
       prop('room', 'cluster_1'),
     ]),
   );
   add(
     makeObject(nextId++, 'Mainframe Node 2', 'terminal', 12, 6, [
-      prop('challengeId', 'ch11_02'),
+      prop('challengeId', 'ch11_02_dataclasses'),
       prop('label', 'Mainframe Node 2'),
       prop('room', 'cluster_2'),
     ]),
   );
   add(
     makeObject(nextId++, 'Mainframe Node 3', 'terminal', 28, 6, [
-      prop('challengeId', 'ch11_03'),
+      prop('challengeId', 'ch11_03_assert_statements'),
       prop('label', 'Mainframe Node 3'),
       prop('room', 'cluster_4'),
     ]),
   );
   add(
     makeObject(nextId++, 'Mainframe Node 4', 'terminal', 4, 22, [
-      prop('challengeId', 'ch11_04'),
+      prop('challengeId', 'ch11_04_writing_simple_tests'),
       prop('label', 'Mainframe Node 4'),
       prop('room', 'cluster_1'),
     ]),
   );
   add(
     makeObject(nextId++, 'Mainframe Node 5', 'terminal', 28, 22, [
-      prop('challengeId', 'ch11_05'),
+      prop('challengeId', 'ch11_05_docstrings'),
       prop('label', 'Mainframe Node 5'),
       prop('room', 'cluster_4'),
     ]),
   );
   add(
     makeObject(nextId++, 'Neural Hub North', 'terminal', 16, 12, [
-      prop('challengeId', 'ch11_06'),
+      prop('challengeId', 'ch11_06_constants_enums'),
       prop('label', 'Neural Hub North'),
       prop('room', 'neural_hub'),
     ]),
   );
   add(
     makeObject(nextId++, 'Neural Hub South', 'terminal', 16, 18, [
-      prop('challengeId', 'ch11_07'),
+      prop('challengeId', 'ch11_07_list_typing'),
       prop('label', 'Neural Hub South'),
       prop('room', 'neural_hub'),
     ]),
   );
   add(
     makeObject(nextId++, 'Neural Core Access', 'terminal', 16, 15, [
-      prop('challengeId', 'ch11_08'),
+      prop('challengeId', 'ch11_08_putting_it_together'),
       prop('label', 'Neural Core Access'),
       prop('room', 'neural_hub'),
     ]),
@@ -336,7 +336,7 @@ function buildObjectLayer(): TiledObject[] {
     makeObject(nextId++, 'Elevator to Floor 10', 'door', 37, 5, [
       prop('targetFloor', 'floor10'),
       prop('locked', 'true'),
-      prop('requiresChallenge', 'ch11_08'),
+      prop('requiresChallenge', 'ch11_08_putting_it_together'),
     ]),
   );
   // Elevator down (to floor 8)

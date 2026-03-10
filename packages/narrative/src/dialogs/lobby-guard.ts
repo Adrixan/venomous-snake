@@ -2,7 +2,7 @@ import type { DialogTree } from '../types';
 
 /** Guard at the lobby entrance. Warns about security and blocks unregistered operatives. */
 export const lobbyGuardDialog: DialogTree = {
-  id: 'dialog_guard',
+  id: 'guard_torres',
   startNodeId: 'n1',
   nodes: {
     n1: {

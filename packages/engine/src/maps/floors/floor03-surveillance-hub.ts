@@ -371,70 +371,70 @@ function buildObjectLayer(): TiledObject[] {
   // Terminals
   add(
     makeObject(nextId++, 'Monitor Wall Panel 1', 'terminal', 8, 6, [
-      prop('challengeId', 'ch05_01'),
+      prop('challengeId', 'ch05_01_simple_function'),
       prop('label', 'Monitor Wall Panel 1'),
       prop('room', 'control_room'),
     ]),
   );
   add(
     makeObject(nextId++, 'Monitor Wall Panel 2', 'terminal', 12, 6, [
-      prop('challengeId', 'ch05_02'),
+      prop('challengeId', 'ch05_02_function_return'),
       prop('label', 'Monitor Wall Panel 2'),
       prop('room', 'control_room'),
     ]),
   );
   add(
     makeObject(nextId++, 'Monitor Wall Panel 3', 'terminal', 16, 6, [
-      prop('challengeId', 'ch05_03'),
+      prop('challengeId', 'ch05_03_multiple_parameters'),
       prop('label', 'Monitor Wall Panel 3'),
       prop('room', 'control_room'),
     ]),
   );
   add(
     makeObject(nextId++, 'Monitor Wall Panel 4', 'terminal', 20, 6, [
-      prop('challengeId', 'ch05_04'),
+      prop('challengeId', 'ch05_04_default_parameters'),
       prop('label', 'Monitor Wall Panel 4'),
       prop('room', 'control_room'),
     ]),
   );
   add(
     makeObject(nextId++, 'Monitor Wall Panel 5', 'terminal', 24, 6, [
-      prop('challengeId', 'ch05_05'),
+      prop('challengeId', 'ch05_05_return_multiple'),
       prop('label', 'Monitor Wall Panel 5'),
       prop('room', 'control_room'),
     ]),
   );
   add(
     makeObject(nextId++, 'Control Console 1', 'terminal', 10, 14, [
-      prop('challengeId', 'ch05_06'),
+      prop('challengeId', 'ch05_06_functions_calling_functions'),
       prop('label', 'Control Console 1'),
       prop('room', 'control_room'),
     ]),
   );
   add(
     makeObject(nextId++, 'Control Console 2', 'terminal', 18, 14, [
-      prop('challengeId', 'ch05_07'),
+      prop('challengeId', 'ch05_07_scope'),
       prop('label', 'Control Console 2'),
       prop('room', 'control_room'),
     ]),
   );
   add(
     makeObject(nextId++, 'Control Console 3', 'terminal', 10, 22, [
-      prop('challengeId', 'ch05_08'),
+      prop('challengeId', 'ch05_08_args'),
       prop('label', 'Control Console 3'),
       prop('room', 'control_room'),
     ]),
   );
   add(
     makeObject(nextId++, 'Command Terminal', 'terminal', 29, 6, [
-      prop('challengeId', 'ch05_09'),
+      prop('challengeId', 'ch05_09_kwargs'),
       prop('label', 'Command Terminal'),
       prop('room', 'command_office'),
     ]),
   );
   add(
     makeObject(nextId++, 'Interrogation Terminal', 'terminal', 6, 26, [
-      prop('challengeId', 'ch05_10'),
+      prop('challengeId', 'ch05_10_lambda'),
       prop('label', 'Interrogation Terminal'),
       prop('room', 'interrogation'),
     ]),
@@ -445,7 +445,7 @@ function buildObjectLayer(): TiledObject[] {
     makeObject(nextId++, 'Elevator to Floor 4', 'door', 37, 5, [
       prop('targetFloor', 'floor4'),
       prop('locked', 'true'),
-      prop('requiresChallenge', 'ch05_10'),
+      prop('requiresChallenge', 'ch05_10_lambda'),
     ]),
   );
   // Elevator down (to floor 2)

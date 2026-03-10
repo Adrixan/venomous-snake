@@ -266,63 +266,63 @@ function buildObjectLayer(): TiledObject[] {
   // Terminals
   add(
     makeObject(nextId++, 'CEO Private Terminal 1', 'terminal', 4, 4, [
-      prop('challengeId', 'ch12_01'),
+      prop('challengeId', 'ch12_01_generators'),
       prop('label', 'CEO Private Terminal 1'),
       prop('room', 'private_office'),
     ]),
   );
   add(
     makeObject(nextId++, 'CEO Private Terminal 2', 'terminal', 15, 4, [
-      prop('challengeId', 'ch12_02'),
+      prop('challengeId', 'ch12_02_generator_expressions'),
       prop('label', 'CEO Private Terminal 2'),
       prop('room', 'private_office'),
     ]),
   );
   add(
     makeObject(nextId++, 'CEO Private Terminal 3', 'terminal', 4, 10, [
-      prop('challengeId', 'ch12_03'),
+      prop('challengeId', 'ch12_03_decorators_basics'),
       prop('label', 'CEO Private Terminal 3'),
       prop('room', 'private_office'),
     ]),
   );
   add(
     makeObject(nextId++, 'Trophy Display Terminal', 'terminal', 24, 4, [
-      prop('challengeId', 'ch12_04'),
+      prop('challengeId', 'ch12_04_decorators_with_args'),
       prop('label', 'Trophy Display Terminal'),
       prop('room', 'trophy_room'),
     ]),
   );
   add(
     makeObject(nextId++, 'Trophy Archive Console', 'terminal', 30, 8, [
-      prop('challengeId', 'ch12_05'),
+      prop('challengeId', 'ch12_05_context_managers'),
       prop('label', 'Trophy Archive Console'),
       prop('room', 'trophy_room'),
     ]),
   );
   add(
     makeObject(nextId++, 'Foyer Kiosk West', 'terminal', 8, 18, [
-      prop('challengeId', 'ch12_06'),
+      prop('challengeId', 'ch12_06_async_basics'),
       prop('label', 'Foyer Kiosk West'),
       prop('room', 'grand_foyer'),
     ]),
   );
   add(
     makeObject(nextId++, 'Foyer Central Console', 'terminal', 16, 24, [
-      prop('challengeId', 'ch12_07'),
+      prop('challengeId', 'ch12_07_pattern_matching'),
       prop('label', 'Foyer Central Console'),
       prop('room', 'grand_foyer'),
     ]),
   );
   add(
     makeObject(nextId++, 'Foyer Kiosk East', 'terminal', 24, 18, [
-      prop('challengeId', 'ch12_08'),
+      prop('challengeId', 'ch12_08_walrus_operator'),
       prop('label', 'Foyer Kiosk East'),
       prop('room', 'grand_foyer'),
     ]),
   );
   add(
     makeObject(nextId++, 'Penthouse Access Terminal', 'terminal', 16, 28, [
-      prop('challengeId', 'ch12_09'),
+      prop('challengeId', 'ch12_09_advanced_comprehensions'),
       prop('label', 'Penthouse Access Terminal'),
       prop('room', 'grand_foyer'),
     ]),
@@ -333,7 +333,7 @@ function buildObjectLayer(): TiledObject[] {
     makeObject(nextId++, 'Elevator to Floor 11', 'door', 37, 5, [
       prop('targetFloor', 'floor11'),
       prop('locked', 'true'),
-      prop('requiresChallenge', 'ch12_09'),
+      prop('requiresChallenge', 'ch12_09_advanced_comprehensions'),
     ]),
   );
   // Elevator down (to floor 9)

@@ -351,70 +351,70 @@ function buildObjectLayer(): TiledObject[] {
   // Terminals
   add(
     makeObject(nextId++, 'Lab Bench Terminal 1', 'terminal', 5, 3, [
-      prop('challengeId', 'ch04_01'),
+      prop('challengeId', 'ch04_01_simple_for_loop'),
       prop('label', 'Lab Bench Terminal 1'),
       prop('room', 'central_lab'),
     ]),
   );
   add(
     makeObject(nextId++, 'Lab Bench Terminal 2', 'terminal', 13, 3, [
-      prop('challengeId', 'ch04_02'),
+      prop('challengeId', 'ch04_02_range_basics'),
       prop('label', 'Lab Bench Terminal 2'),
       prop('room', 'central_lab'),
     ]),
   );
   add(
     makeObject(nextId++, 'Lab Bench Terminal 3', 'terminal', 5, 6, [
-      prop('challengeId', 'ch04_03'),
+      prop('challengeId', 'ch04_03_for_with_range'),
       prop('label', 'Lab Bench Terminal 3'),
       prop('room', 'central_lab'),
     ]),
   );
   add(
     makeObject(nextId++, 'Lab Bench Terminal 4', 'terminal', 13, 6, [
-      prop('challengeId', 'ch04_04'),
+      prop('challengeId', 'ch04_04_while_basics'),
       prop('label', 'Lab Bench Terminal 4'),
       prop('room', 'central_lab'),
     ]),
   );
   add(
     makeObject(nextId++, 'Lab Bench Terminal 5', 'terminal', 5, 9, [
-      prop('challengeId', 'ch04_05'),
+      prop('challengeId', 'ch04_05_while_condition'),
       prop('label', 'Lab Bench Terminal 5'),
       prop('room', 'central_lab'),
     ]),
   );
   add(
     makeObject(nextId++, 'Lab Bench Terminal 6', 'terminal', 13, 9, [
-      prop('challengeId', 'ch04_06'),
+      prop('challengeId', 'ch04_06_break_statement'),
       prop('label', 'Lab Bench Terminal 6'),
       prop('room', 'central_lab'),
     ]),
   );
   add(
     makeObject(nextId++, 'Containment Console 1', 'terminal', 24, 5, [
-      prop('challengeId', 'ch04_07'),
+      prop('challengeId', 'ch04_07_continue_statement'),
       prop('label', 'Containment Console 1'),
       prop('room', 'containment_zone'),
     ]),
   );
   add(
     makeObject(nextId++, 'Containment Console 2', 'terminal', 30, 5, [
-      prop('challengeId', 'ch04_08'),
+      prop('challengeId', 'ch04_08_nested_loops'),
       prop('label', 'Containment Console 2'),
       prop('room', 'containment_zone'),
     ]),
   );
   add(
     makeObject(nextId++, 'Prep Station Terminal', 'terminal', 5, 20, [
-      prop('challengeId', 'ch04_09'),
+      prop('challengeId', 'ch04_09_loop_accumulator'),
       prop('label', 'Prep Station Terminal'),
       prop('room', 'prep_room'),
     ]),
   );
   add(
     makeObject(nextId++, 'Prep Analysis Console', 'terminal', 10, 25, [
-      prop('challengeId', 'ch04_10'),
+      prop('challengeId', 'ch04_10_for_enumerate'),
       prop('label', 'Prep Analysis Console'),
       prop('room', 'prep_room'),
     ]),
@@ -425,7 +425,7 @@ function buildObjectLayer(): TiledObject[] {
     makeObject(nextId++, 'Elevator to Floor 3', 'door', 37, 5, [
       prop('targetFloor', 'floor3'),
       prop('locked', 'true'),
-      prop('requiresChallenge', 'ch04_10'),
+      prop('requiresChallenge', 'ch04_10_for_enumerate'),
     ]),
   );
   // Elevator down (to floor 1)

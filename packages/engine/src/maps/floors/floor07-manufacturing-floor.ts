@@ -241,70 +241,70 @@ function buildObjectLayer(): TiledObject[] {
   // Terminals
   add(
     makeObject(nextId++, 'Control Room Console', 'terminal', 3, 2, [
-      prop('challengeId', 'ch09_01'),
+      prop('challengeId', 'ch09_01_importing_modules'),
       prop('label', 'Control Room Console'),
       prop('room', 'control_room'),
     ]),
   );
   add(
     makeObject(nextId++, 'QA Station A1', 'terminal', 6, 9, [
-      prop('challengeId', 'ch09_02'),
+      prop('challengeId', 'ch09_02_from_import'),
       prop('label', 'QA Station A1'),
       prop('room', 'qa_station_a'),
     ]),
   );
   add(
     makeObject(nextId++, 'QA Station A2', 'terminal', 14, 9, [
-      prop('challengeId', 'ch09_03'),
+      prop('challengeId', 'ch09_03_lambda_functions'),
       prop('label', 'QA Station A2'),
       prop('room', 'qa_station_a'),
     ]),
   );
   add(
     makeObject(nextId++, 'QA Station A3', 'terminal', 22, 9, [
-      prop('challengeId', 'ch09_04'),
+      prop('challengeId', 'ch09_04_map_function'),
       prop('label', 'QA Station A3'),
       prop('room', 'qa_station_a'),
     ]),
   );
   add(
     makeObject(nextId++, 'QA Station B1', 'terminal', 6, 17, [
-      prop('challengeId', 'ch09_05'),
+      prop('challengeId', 'ch09_05_filter_function'),
       prop('label', 'QA Station B1'),
       prop('room', 'qa_station_b'),
     ]),
   );
   add(
     makeObject(nextId++, 'QA Station B2', 'terminal', 14, 17, [
-      prop('challengeId', 'ch09_06'),
+      prop('challengeId', 'ch09_06_list_comprehension_conditionals'),
       prop('label', 'QA Station B2'),
       prop('room', 'qa_station_b'),
     ]),
   );
   add(
     makeObject(nextId++, 'QA Station B3', 'terminal', 22, 17, [
-      prop('challengeId', 'ch09_07'),
+      prop('challengeId', 'ch09_07_dictionary_comprehension'),
       prop('label', 'QA Station B3'),
       prop('room', 'qa_station_b'),
     ]),
   );
   add(
     makeObject(nextId++, 'Assembly Terminal 1', 'terminal', 10, 26, [
-      prop('challengeId', 'ch09_08'),
+      prop('challengeId', 'ch09_08_string_formatting_advanced'),
       prop('label', 'Assembly Terminal 1'),
       prop('room', 'main_floor'),
     ]),
   );
   add(
     makeObject(nextId++, 'Assembly Terminal 2', 'terminal', 20, 26, [
-      prop('challengeId', 'ch09_09'),
+      prop('challengeId', 'ch09_09_regular_expressions'),
       prop('label', 'Assembly Terminal 2'),
       prop('room', 'main_floor'),
     ]),
   );
   add(
     makeObject(nextId++, 'Assembly Terminal 3', 'terminal', 30, 26, [
-      prop('challengeId', 'ch09_10'),
+      prop('challengeId', 'ch09_10_combining_tools'),
       prop('label', 'Assembly Terminal 3'),
       prop('room', 'main_floor'),
     ]),
@@ -315,7 +315,7 @@ function buildObjectLayer(): TiledObject[] {
     makeObject(nextId++, 'Elevator to Floor 8', 'door', 37, 5, [
       prop('targetFloor', 'floor8'),
       prop('locked', 'true'),
-      prop('requiresChallenge', 'ch09_10'),
+      prop('requiresChallenge', 'ch09_10_combining_tools'),
     ]),
   );
   // Elevator down (to floor 6)

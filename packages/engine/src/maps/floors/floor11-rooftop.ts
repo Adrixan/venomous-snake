@@ -222,7 +222,7 @@ function buildObjectLayer(): TiledObject[] {
   // Boss terminal
   add(
     makeObject(nextId++, 'Server Nexus Core', 'terminal', 20, 15, [
-      prop('challengeId', 'ch12_10'),
+      prop('challengeId', 'ch12_10_final_showdown'),
       prop('label', 'Server Nexus Core'),
       prop('room', 'rooftop'),
     ]),

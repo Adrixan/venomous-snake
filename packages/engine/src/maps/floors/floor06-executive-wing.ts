@@ -284,56 +284,56 @@ function buildObjectLayer(): TiledObject[] {
   // Terminals
   add(
     makeObject(nextId++, 'Executive Terminal NW', 'terminal', 3, 3, [
-      prop('challengeId', 'ch08_01'),
+      prop('challengeId', 'ch08_01_try_except'),
       prop('label', 'Executive Terminal NW'),
       prop('room', 'office_upper_left'),
     ]),
   );
   add(
     makeObject(nextId++, 'Executive Terminal NE', 'terminal', 28, 3, [
-      prop('challengeId', 'ch08_02'),
+      prop('challengeId', 'ch08_02_multiple_except'),
       prop('label', 'Executive Terminal NE'),
       prop('room', 'office_upper_right'),
     ]),
   );
   add(
     makeObject(nextId++, 'Boardroom Console W', 'terminal', 10, 8, [
-      prop('challengeId', 'ch08_03'),
+      prop('challengeId', 'ch08_03_try_except_else_finally'),
       prop('label', 'Boardroom Console W'),
       prop('room', 'boardroom'),
     ]),
   );
   add(
     makeObject(nextId++, 'Boardroom Console E', 'terminal', 22, 8, [
-      prop('challengeId', 'ch08_04'),
+      prop('challengeId', 'ch08_04_raising_exceptions'),
       prop('label', 'Boardroom Console E'),
       prop('room', 'boardroom'),
     ]),
   );
   add(
     makeObject(nextId++, 'Boardroom Podium', 'terminal', 16, 16, [
-      prop('challengeId', 'ch08_05'),
+      prop('challengeId', 'ch08_05_custom_exception_classes'),
       prop('label', 'Boardroom Podium'),
       prop('room', 'boardroom'),
     ]),
   );
   add(
     makeObject(nextId++, 'Lower Office Terminal 1', 'terminal', 5, 24, [
-      prop('challengeId', 'ch08_06'),
+      prop('challengeId', 'ch08_06_input_validation_with_errors'),
       prop('label', 'Lower Office Terminal 1'),
       prop('room', 'lower_offices'),
     ]),
   );
   add(
     makeObject(nextId++, 'Lower Office Terminal 2', 'terminal', 15, 24, [
-      prop('challengeId', 'ch08_07'),
+      prop('challengeId', 'ch08_07_graceful_degradation'),
       prop('label', 'Lower Office Terminal 2'),
       prop('room', 'lower_offices'),
     ]),
   );
   add(
     makeObject(nextId++, 'Lower Office Terminal 3', 'terminal', 25, 24, [
-      prop('challengeId', 'ch08_08'),
+      prop('challengeId', 'ch08_08_error_handling_in_loops'),
       prop('label', 'Lower Office Terminal 3'),
       prop('room', 'lower_offices'),
     ]),
@@ -344,7 +344,7 @@ function buildObjectLayer(): TiledObject[] {
     makeObject(nextId++, 'Elevator to Floor 7', 'door', 37, 5, [
       prop('targetFloor', 'floor7'),
       prop('locked', 'true'),
-      prop('requiresChallenge', 'ch08_08'),
+      prop('requiresChallenge', 'ch08_08_error_handling_in_loops'),
     ]),
   );
   // Elevator down (to floor 5)

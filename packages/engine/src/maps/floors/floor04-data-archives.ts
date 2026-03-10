@@ -243,70 +243,70 @@ function buildObjectLayer(): TiledObject[] {
   // Terminals
   add(
     makeObject(nextId++, 'Archive Terminal A1', 'terminal', 4, 4, [
-      prop('challengeId', 'ch06_01'),
+      prop('challengeId', 'ch06_01_create_list'),
       prop('label', 'Archive Terminal A1'),
       prop('room', 'archive_stacks'),
     ]),
   );
   add(
     makeObject(nextId++, 'Archive Terminal A2', 'terminal', 12, 4, [
-      prop('challengeId', 'ch06_02'),
+      prop('challengeId', 'ch06_02_list_methods'),
       prop('label', 'Archive Terminal A2'),
       prop('room', 'archive_stacks'),
     ]),
   );
   add(
     makeObject(nextId++, 'Archive Terminal B1', 'terminal', 4, 10, [
-      prop('challengeId', 'ch06_03'),
+      prop('challengeId', 'ch06_03_list_slicing'),
       prop('label', 'Archive Terminal B1'),
       prop('room', 'archive_stacks'),
     ]),
   );
   add(
     makeObject(nextId++, 'Archive Terminal B2', 'terminal', 12, 10, [
-      prop('challengeId', 'ch06_04'),
+      prop('challengeId', 'ch06_04_list_comprehension'),
       prop('label', 'Archive Terminal B2'),
       prop('room', 'archive_stacks'),
     ]),
   );
   add(
     makeObject(nextId++, 'Archive Terminal C1', 'terminal', 4, 18, [
-      prop('challengeId', 'ch06_05'),
+      prop('challengeId', 'ch06_05_tuples'),
       prop('label', 'Archive Terminal C1'),
       prop('room', 'archive_stacks'),
     ]),
   );
   add(
     makeObject(nextId++, 'Archive Terminal C2', 'terminal', 12, 18, [
-      prop('challengeId', 'ch06_06'),
+      prop('challengeId', 'ch06_06_dictionaries'),
       prop('label', 'Archive Terminal C2'),
       prop('room', 'archive_stacks'),
     ]),
   );
   add(
     makeObject(nextId++, 'Reading Room Kiosk 1', 'terminal', 25, 5, [
-      prop('challengeId', 'ch06_07'),
+      prop('challengeId', 'ch06_07_dict_methods'),
       prop('label', 'Reading Room Kiosk 1'),
       prop('room', 'reading_room'),
     ]),
   );
   add(
     makeObject(nextId++, 'Reading Room Kiosk 2', 'terminal', 30, 12, [
-      prop('challengeId', 'ch06_08'),
+      prop('challengeId', 'ch06_08_nested_dicts'),
       prop('label', 'Reading Room Kiosk 2'),
       prop('room', 'reading_room'),
     ]),
   );
   add(
     makeObject(nextId++, 'Vault Access Terminal', 'terminal', 8, 25, [
-      prop('challengeId', 'ch06_09'),
+      prop('challengeId', 'ch06_09_sets'),
       prop('label', 'Vault Access Terminal'),
       prop('room', 'restricted_vault'),
     ]),
   );
   add(
     makeObject(nextId++, 'Vault Core Terminal', 'terminal', 22, 26, [
-      prop('challengeId', 'ch06_10'),
+      prop('challengeId', 'ch06_10_combining_collections'),
       prop('label', 'Vault Core Terminal'),
       prop('room', 'restricted_vault'),
     ]),
@@ -317,7 +317,7 @@ function buildObjectLayer(): TiledObject[] {
     makeObject(nextId++, 'Elevator to Floor 5', 'door', 37, 5, [
       prop('targetFloor', 'floor5'),
       prop('locked', 'true'),
-      prop('requiresChallenge', 'ch06_10'),
+      prop('requiresChallenge', 'ch06_10_combining_collections'),
     ]),
   );
   // Elevator down (to floor 3)

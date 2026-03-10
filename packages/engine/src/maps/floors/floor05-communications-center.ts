@@ -244,56 +244,56 @@ function buildObjectLayer(): TiledObject[] {
   // Terminals
   add(
     makeObject(nextId++, 'Comm Station 1', 'terminal', 8, 6, [
-      prop('challengeId', 'ch07_01'),
+      prop('challengeId', 'ch07_01_read_file'),
       prop('label', 'Comm Station 1'),
       prop('room', 'main_comms'),
     ]),
   );
   add(
     makeObject(nextId++, 'Comm Station 2', 'terminal', 16, 6, [
-      prop('challengeId', 'ch07_02'),
+      prop('challengeId', 'ch07_02_write_file'),
       prop('label', 'Comm Station 2'),
       prop('room', 'main_comms'),
     ]),
   );
   add(
     makeObject(nextId++, 'Comm Station 3', 'terminal', 8, 14, [
-      prop('challengeId', 'ch07_03'),
+      prop('challengeId', 'ch07_03_file_line_processing'),
       prop('label', 'Comm Station 3'),
       prop('room', 'main_comms'),
     ]),
   );
   add(
     makeObject(nextId++, 'Comm Station 4', 'terminal', 16, 14, [
-      prop('challengeId', 'ch07_04'),
+      prop('challengeId', 'ch07_04_csv_parsing'),
       prop('label', 'Comm Station 4'),
       prop('room', 'main_comms'),
     ]),
   );
   add(
     makeObject(nextId++, 'Comm Station 5', 'terminal', 8, 22, [
-      prop('challengeId', 'ch07_05'),
+      prop('challengeId', 'ch07_05_string_split_join'),
       prop('label', 'Comm Station 5'),
       prop('room', 'main_comms'),
     ]),
   );
   add(
     makeObject(nextId++, 'Comm Station 6', 'terminal', 16, 22, [
-      prop('challengeId', 'ch07_06'),
+      prop('challengeId', 'ch07_06_with_statement'),
       prop('label', 'Comm Station 6'),
       prop('room', 'main_comms'),
     ]),
   );
   add(
     makeObject(nextId++, 'Relay Console 1', 'terminal', 29, 6, [
-      prop('challengeId', 'ch07_07'),
+      prop('challengeId', 'ch07_07_json_parsing'),
       prop('label', 'Relay Console 1'),
       prop('room', 'server_relay'),
     ]),
   );
   add(
     makeObject(nextId++, 'Relay Console 2', 'terminal', 29, 18, [
-      prop('challengeId', 'ch07_08'),
+      prop('challengeId', 'ch07_08_data_transformation'),
       prop('label', 'Relay Console 2'),
       prop('room', 'server_relay'),
     ]),
@@ -304,7 +304,7 @@ function buildObjectLayer(): TiledObject[] {
     makeObject(nextId++, 'Elevator to Floor 6', 'door', 37, 5, [
       prop('targetFloor', 'floor6'),
       prop('locked', 'true'),
-      prop('requiresChallenge', 'ch07_08'),
+      prop('requiresChallenge', 'ch07_08_data_transformation'),
     ]),
   );
   // Elevator down (to floor 4)
