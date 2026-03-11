@@ -26,7 +26,7 @@ export const ch02_01_string_methods: Challenge = {
     {
       id: 'tc01',
       description: 'Should print SHADOW VIPER in uppercase',
-      expectedOutput: 'SHADOW VIPER',
+      expectedOutput: 'SHADOW VIPER\nshadow viper\nShadow Viper',
       hidden: false,
     },
     {

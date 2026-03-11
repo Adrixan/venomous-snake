@@ -24,7 +24,7 @@ export const ch01_04_string_types: Challenge = {
     {
       id: 'tc01',
       description: 'Should print the type of a string variable',
-      expectedOutput: "<class 'str'>",
+      expectedOutput: "<class 'str'>\n<class 'int'>",
       hidden: false,
     },
     {

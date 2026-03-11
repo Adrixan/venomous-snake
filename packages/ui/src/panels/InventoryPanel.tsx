@@ -145,7 +145,7 @@ export function InventoryPanel({ isOpen, onClose, items }: InventoryPanelProps):
                       onMouseLeave={() => setHoveredItem(null)}
                     >
                       <span style={{ fontSize: '18px' }}>{icon ?? '•'}</span>
-                      <span style={{ color: '#e0e0e0', fontSize: '13px' }}>{item.nameKey}</span>
+                      <span style={{ color: '#e0e0e0', fontSize: '13px' }}>{t(item.nameKey)}</span>
                       {isHovered && (
                         <div
                           style={{
@@ -163,7 +163,7 @@ export function InventoryPanel({ isOpen, onClose, items }: InventoryPanelProps):
                             marginLeft: '4px',
                           }}
                         >
-                          {item.descriptionKey}
+                          {t(item.descriptionKey)}
                         </div>
                       )}
                     </div>

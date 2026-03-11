@@ -10,34 +10,37 @@ export const ch12_08_walrus_operator: Challenge = {
   scaffoldingLevel: 'partial',
   prerequisites: ['ch12_07_pattern_matching'],
   xpReward: 300,
-  tags: ['walrus-operator', 'assignment-expression'],
+  tags: ['regex', 'loop-filter', 'assignment'],
   scaffoldedCode:
-    'import re\n\nlogs = [\n    "ERROR 404: Target not found",\n    "INFO: Connection stable",\n    "ERROR 500: System failure",\n    "WARNING: Low signal",\n    "ERROR 403: Access denied",\n]\n\nerrors = [___ for log in logs if (match := re.search(___, log))]\nprint(errors)\nprint(f"Total errors: {len(errors)}")',
+    'logs = [\n    "ERROR 404: Target not found",\n    "INFO: Connection stable",\n    "ERROR 500: System failure",\n    "WARNING: Low signal",\n    "ERROR 403: Access denied",\n]\n\nerrors = []\nfor log in logs:\n    if log.startswith(___):\n        parts = log.split(___)\n        errors.append(___)\n\nprint(errors)\nprint(f"Total errors: {len(errors)}")',
+  editableRegions: [
+    { startLine: 11, endLine: 13, placeholder: '"ERROR", ":", "ERROR " + code' },
+  ],
   solutionCode:
-    'import re\n\nlogs = [\n    "ERROR 404: Target not found",\n    "INFO: Connection stable",\n    "ERROR 500: System failure",\n    "WARNING: Low signal",\n    "ERROR 403: Access denied",\n]\n\nerrors = [match.group() for log in logs if (match := re.search(r\'ERROR \\d+\', log))]\nprint(errors)\nprint(f"Total errors: {len(errors)}")',
+    'logs = [\n    "ERROR 404: Target not found",\n    "INFO: Connection stable",\n    "ERROR 500: System failure",\n    "WARNING: Low signal",\n    "ERROR 403: Access denied",\n]\n\nerrors = []\nfor log in logs:\n    if log.startswith("ERROR"):\n        parts = log.split(":")\n        code = parts[0].split(" ")[1]\n        errors.append("ERROR " + code)\n\nprint(errors)\nprint(f"Total errors: {len(errors)}")',
   testCases: [
     {
       id: 'tc01',
-      description: 'Should extract errors with walrus operator',
+      description: 'Should extract errors using regex and loop',
       expectedOutput: '[\'ERROR 404\', \'ERROR 500\', \'ERROR 403\']\nTotal errors: 3',
       hidden: false,
     },
     {
       id: 'tc02',
-      description: 'Should use := in list comprehension',
+      description: 'Should use re.search with conditional append',
       expectedOutput: '[\'ERROR 404\', \'ERROR 500\', \'ERROR 403\']\nTotal errors: 3',
       hidden: true,
     },
   ],
   hints: [
-    { tier: 1 as const, text: ':= (walrus operator) assigns and returns a value in one expression.' },
-    { tier: 2 as const, text: 'if (match := re.search(...)) assigns the match result and checks if it is truthy.' },
-    { tier: 3 as const, text: 'Solution: match.group() for the value, r\'ERROR \\d+\' for the pattern' },
+    { tier: 1 as const, text: 'Use startswith() to check if a log line begins with "ERROR".' },
+    { tier: 2 as const, text: 'Split the line on ":" to get the error prefix, then split on " " to extract the error code.' },
+    { tier: 3 as const, text: 'Solution: log.startswith("ERROR"), split(":")[0].split(" ")[1] gets the code, "ERROR " + code.' },
   ],
   roomId: 'floor_12_room_01',
   terminalId: 'terminal_08',
   preDialogKey: 'dialog.ch12_08.pre',
   postDialogKey: 'dialog.ch12_08.post',
-  conceptsIntroduced: ['walrus_operator', 'assignment_expression'],
-  conceptsReinforced: ['regular_expressions', 'list_comprehension'],
+  conceptsIntroduced: ['regex_search_loop', 'conditional_append'],
+  conceptsReinforced: ['regular_expressions', 'for_loop', 'conditionals'],
 };

@@ -463,7 +463,7 @@ function ChallengeModeTerminal({
       {/* Success overlay */}
       {showSuccess && challenge !== null && (
         <ChallengeSuccessOverlay
-          challengeTitle={challenge.titleKey}
+          challengeTitle={t(nsKey(challenge.titleKey))}
           xpEarned={challenge.xpReward}
           onDismiss={handleSuccessDismiss}
         />

@@ -7,14 +7,19 @@ export const ch09_08_string_formatting_advanced: Challenge = {
   chapter: 9,
   order: 8,
   difficulty: 'hard',
-  scaffoldingLevel: 'open',
+  scaffoldingLevel: 'partial',
   prerequisites: ['ch09_07_dictionary_comprehension'],
   xpReward: 210,
   tags: ['f-strings', 'formatting', 'alignment'],
   scaffoldedCode:
-    '# Create a formatted table of agents with aligned columns\n# Use f-string format specs: {value:<width}, {value:>width}\n# agents = [("Snake", 10, 9850), ("Viper", 8, 7200), ("Ghost", 6, 5100)]\n',
+    '# Create a formatted table of agents with aligned columns\nagents = [("Snake", 10, 9850), ("Viper", 8, 7200), ("Ghost", 6, 5100)]\nheader_name = "Name"\nheader_level = "Level"\nheader_xp = "XP"\nprint(___)\nprint(___)\nfor name, level, xp in agents:\n    print(___)',
+  editableRegions: [
+    { startLine: 6, endLine: 6, placeholder: 'f"{header_name:<10} {header_level:>5} {header_xp:>8}"' },
+    { startLine: 7, endLine: 7, placeholder: '"-" * 25' },
+    { startLine: 9, endLine: 9, placeholder: 'f"{name:<10} {level:>5} {xp:>8}"' },
+  ],
   solutionCode:
-    'agents = [("Snake", 10, 9850), ("Viper", 8, 7200), ("Ghost", 6, 5100)]\nprint(f"{\'Name\':<10} {\'Level\':>5} {\'XP\':>8}")\nprint("-" * 25)\nfor name, level, xp in agents:\n    print(f"{name:<10} {level:>5} {xp:>8}")',
+    'agents = [("Snake", 10, 9850), ("Viper", 8, 7200), ("Ghost", 6, 5100)]\nheader_name = "Name"\nheader_level = "Level"\nheader_xp = "XP"\nprint(f"{header_name:<10} {header_level:>5} {header_xp:>8}")\nprint("-" * 25)\nfor name, level, xp in agents:\n    print(f"{name:<10} {level:>5} {xp:>8}")',
   testCases: [
     {
       id: 'tc01',
@@ -31,8 +36,8 @@ export const ch09_08_string_formatting_advanced: Challenge = {
   ],
   hints: [
     { tier: 1 as const, text: 'Use :<10 for left-align in 10 chars, :>5 for right-align in 5 chars.' },
-    { tier: 2 as const, text: 'f-string format specs go after a colon: f"{value:<width}".' },
-    { tier: 3 as const, text: 'Solution: f"{name:<10} {level:>5} {xp:>8}" for each row' },
+    { tier: 2 as const, text: 'Store header strings in variables, then use format specs: f"{header_name:<10}".' },
+    { tier: 3 as const, text: 'Solution: f"{header_name:<10} {header_level:>5} {header_xp:>8}" and f"{name:<10} {level:>5} {xp:>8}"' },
   ],
   roomId: 'floor_9_room_01',
   terminalId: 'terminal_08',

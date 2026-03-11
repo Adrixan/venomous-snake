@@ -7,18 +7,22 @@ export const ch10_08_class_static_methods: Challenge = {
   chapter: 10,
   order: 8,
   difficulty: 'hard',
-  scaffoldingLevel: 'open',
+  scaffoldingLevel: 'partial',
   prerequisites: ['ch10_07_encapsulation'],
   xpReward: 240,
-  tags: ['oop', 'classmethod', 'staticmethod'],
+  tags: ['oop', 'class_variables', 'utility_functions'],
   scaffoldedCode:
-    '# Create a Mission class with:\n# - Class variable _count tracking instances\n# - @classmethod get_count(cls) returning cls._count\n# - @staticmethod validate_name(name) checking it starts with "OP-"\n',
+    '# Create a Mission class with a count tracker\n# Use a regular method to access class state\n# Use a standalone function for validation\nclass Mission:\n    _count = 0\n\n    def __init__(self, name):\n        self.name = name\n        Mission._count += 1\n\n    def get_count(self):\n        return ___\n\ndef validate_mission_name(name):\n    return ___\n\nprint(validate_mission_name("OP-007"))\nm1 = Mission("OP-001")\nm2 = Mission("OP-002")\nprint(m1.get_count())',
+  editableRegions: [
+    { startLine: 11, endLine: 11, placeholder: 'Mission._count' },
+    { startLine: 14, endLine: 14, placeholder: 'name.startswith("OP-")' },
+  ],
   solutionCode:
-    'class Mission:\n    _count = 0\n    \n    def __init__(self, name):\n        self.name = name\n        Mission._count += 1\n    \n    @classmethod\n    def get_count(cls):\n        return cls._count\n    \n    @staticmethod\n    def validate_name(name):\n        return name.startswith("OP-")\n\nprint(Mission.validate_name("OP-007"))\nm1 = Mission("OP-001")\nm2 = Mission("OP-002")\nprint(Mission.get_count())',
+    'class Mission:\n    _count = 0\n\n    def __init__(self, name):\n        self.name = name\n        Mission._count += 1\n\n    def get_count(self):\n        return Mission._count\n\ndef validate_mission_name(name):\n    return name.startswith("OP-")\n\nprint(validate_mission_name("OP-007"))\nm1 = Mission("OP-001")\nm2 = Mission("OP-002")\nprint(m1.get_count())',
   testCases: [
     {
       id: 'tc01',
-      description: 'Should use classmethod and staticmethod',
+      description: 'Should validate names and track instance count',
       expectedOutput: 'True\n2',
       hidden: false,
     },
@@ -30,14 +34,14 @@ export const ch10_08_class_static_methods: Challenge = {
     },
   ],
   hints: [
-    { tier: 1 as const, text: '@classmethod receives cls (the class itself). @staticmethod needs no cls or self.' },
-    { tier: 2 as const, text: 'Class variables are shared across all instances. Increment with ClassName._count += 1.' },
-    { tier: 3 as const, text: 'Solution: @classmethod def get_count(cls): return cls._count, @staticmethod def validate_name(name): return name.startswith("OP-")' },
+    { tier: 1 as const, text: 'Class variables are shared across all instances. Access with ClassName._count.' },
+    { tier: 2 as const, text: 'A regular method can read class variables via the class name. Standalone functions work like static methods.' },
+    { tier: 3 as const, text: 'Solution: return Mission._count in get_count, return name.startswith("OP-") in validate_mission_name' },
   ],
   roomId: 'floor_10_room_01',
   terminalId: 'terminal_08',
   preDialogKey: 'dialog.ch10_08.pre',
   postDialogKey: 'dialog.ch10_08.post',
-  conceptsIntroduced: ['classmethod', 'staticmethod', 'class_variables'],
+  conceptsIntroduced: ['class_variables', 'utility_functions'],
   conceptsReinforced: ['class_definition', 'init_constructor'],
 };

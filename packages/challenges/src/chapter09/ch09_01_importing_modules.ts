@@ -22,13 +22,13 @@ export const ch09_01_importing_modules: Challenge = {
     {
       id: 'tc01',
       description: 'Should use math and random modules',
-      expectedOutput: '12.0\n9\n2',
+      expectedOutput: '12.0\n9\n6',
       hidden: false,
     },
     {
       id: 'tc02',
       description: 'Should call correct module functions',
-      expectedOutput: '12.0\n9\n2',
+      expectedOutput: '12.0\n9\n6',
       hidden: true,
     },
   ],

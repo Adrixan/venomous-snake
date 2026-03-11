@@ -10,43 +10,44 @@ export const ch06_04_list_comprehension: Challenge = {
   scaffoldingLevel: 'partial',
   prerequisites: ['ch06_01_create_list'],
   xpReward: 200,
-  tags: ['list_comprehension', 'filter', 'dictionary'],
+  tags: ['list_comprehension', 'filter', 'transform'],
 
   scaffoldedCode:
-    '# Filter active camera IDs using a list comprehension\ncameras = [{"id": 1, "active": True}, {"id": 2, "active": False}, {"id": 3, "active": True}]\nactive_ids = ___\nprint(active_ids)',
+    '# Filter and transform security scores using list comprehension\nsecurity_scores = [3, 7, 2, 9, 4, 6, 1, 8]\nhigh_scores = [___ for s in security_scores if ___]\nprint(high_scores)\ndoubled = [___ for s in high_scores]\nprint(doubled)',
   editableRegions: [
-    { startLine: 3, endLine: 3, placeholder: '[cam["id"] for cam in cameras if cam["active"]]' },
+    { startLine: 3, endLine: 3, placeholder: 's ... s >= 5' },
+    { startLine: 5, endLine: 5, placeholder: 's * 2' },
   ],
   solutionCode:
-    'cameras = [{"id": 1, "active": True}, {"id": 2, "active": False}, {"id": 3, "active": True}]\nactive_ids = [cam["id"] for cam in cameras if cam["active"]]\nprint(active_ids)',
+    'security_scores = [3, 7, 2, 9, 4, 6, 1, 8]\nhigh_scores = [s for s in security_scores if s >= 5]\nprint(high_scores)\ndoubled = [s * 2 for s in high_scores]\nprint(doubled)',
 
   testCases: [
     {
       id: 'tc01',
-      description: 'Should filter to active camera IDs [1, 3]',
-      expectedOutput: '[1, 3]',
+      description: 'Should filter scores >= 5 and double them',
+      expectedOutput: '[7, 9, 6, 8]\n[14, 18, 12, 16]',
       hidden: false,
     },
     {
       id: 'tc02',
-      description: 'Should use list comprehension with condition',
-      expectedOutput: '[1, 3]',
+      description: 'Should use list comprehension with condition and transform',
+      expectedOutput: '[7, 9, 6, 8]\n[14, 18, 12, 16]',
       hidden: true,
     },
   ],
 
   hints: [
     {
-      tier: 1,
-      text: 'List comprehensions create lists in one line: [expression for item in list if condition].',
+      tier: 1 as const,
+      text: 'List comprehensions: [expression for item in list if condition]. The condition filters items.',
     },
     {
-      tier: 2,
-      text: 'Extract the id where active is True: [cam["id"] for cam in cameras if cam["active"]].',
+      tier: 2 as const,
+      text: 'Filter: [s for s in scores if s >= 5]. Transform: [s * 2 for s in scores].',
     },
     {
-      tier: 3,
-      text: 'Solution: active_ids = [cam["id"] for cam in cameras if cam["active"]]',
+      tier: 3 as const,
+      text: 'Solution: high_scores = [s for s in security_scores if s >= 5], doubled = [s * 2 for s in high_scores]',
     },
   ],
 

@@ -3,6 +3,13 @@ import { useTranslation } from 'react-i18next';
 import type { Challenge, Difficulty } from '@venomous-snake/shared-types';
 import type { TestResult } from '@venomous-snake/challenge-engine';
 
+/** Convert keys like "challenges.ch01_02.title" to "challenges:ch01_02.title" for i18next namespace resolution */
+function nsKey(key: string): string {
+  const dot = key.indexOf('.');
+  if (dot === -1) return key;
+  return key.substring(0, dot) + ':' + key.substring(dot + 1);
+}
+
 export interface ChallengePanelProps {
   challenge: Challenge;
   testResults?: TestResult[];
@@ -41,7 +48,7 @@ export function ChallengePanel({
   onGetHint,
   onClose,
 }: ChallengePanelProps): React.JSX.Element {
-  const { t } = useTranslation('ui');
+  const { t } = useTranslation(['ui', 'challenges']);
   const [startTime] = useState<number>(Date.now);
   const [elapsed, setElapsed] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
@@ -102,7 +109,7 @@ export function ChallengePanel({
           zIndex: 1000,
         }}
       >
-        <span style={{ color: '#00ff88', fontSize: 12 }}>{t(challenge.titleKey)}</span>
+        <span style={{ color: '#00ff88', fontSize: 12 }}>{t(nsKey(challenge.titleKey))}</span>
         <span style={{ color: '#00e5ff', fontSize: 12 }}>{formatTime(elapsed)}</span>
       </div>
     );
@@ -140,7 +147,7 @@ export function ChallengePanel({
         }}
       >
         <div>
-          <h2 style={{ margin: 0, color: '#00ff88', fontSize: 16 }}>{t(challenge.titleKey)}</h2>
+          <h2 style={{ margin: 0, color: '#00ff88', fontSize: 16 }}>{t(nsKey(challenge.titleKey))}</h2>
           <span
             style={{
               display: 'inline-block',
@@ -176,7 +183,7 @@ export function ChallengePanel({
 
       {/* Description */}
       <div style={{ padding: '12px 16px', color: '#b3b1ad', fontSize: 13, lineHeight: 1.5 }}>
-        {t(challenge.descriptionKey)}
+        {t(nsKey(challenge.descriptionKey))}
       </div>
 
       {/* Stats row */}

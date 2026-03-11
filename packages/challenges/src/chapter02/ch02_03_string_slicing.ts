@@ -26,13 +26,13 @@ export const ch02_03_string_slicing: Challenge = {
     {
       id: 'tc01',
       description: 'Should extract the prefix CLASSIFIED',
-      expectedOutput: 'CLASSIFIED',
+      expectedOutput: 'CLASSIFIED\nINTEL\nSSIFI',
       hidden: false,
     },
     {
       id: 'tc02',
       description: 'Should extract the suffix INTEL',
-      expectedOutput: 'CLASSIFIED\nINTEL',
+      expectedOutput: 'CLASSIFIED\nINTEL\nSSIFI',
       hidden: false,
     },
     {

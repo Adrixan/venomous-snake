@@ -12,10 +12,10 @@ export const ch06_10_combining_collections: Challenge = {
   xpReward: 225,
   tags: ['dictionary', 'merge', 'sorted'],
 
-  scaffoldedCode: '# Write your solution here\n',
+  scaffoldedCode: '# Merge two intel databases and print sorted results\n# Use dict.update() to combine dictionaries\n',
 
   solutionCode:
-    'source_a = {"Viper": 3, "Ghost": 5}\nsource_b = {"Phantom": 2, "Viper": 4}\nmerged = {**source_a, **source_b}\nfor name, level in sorted(merged.items()):\n    print(f"{name}: {level}")',
+    'source_a = {"Viper": 3, "Ghost": 5}\nsource_b = {"Phantom": 2, "Viper": 4}\nmerged = {}\nmerged.update(source_a)\nmerged.update(source_b)\nfor name, level in sorted(merged.items()):\n    print(f"{name}: {level}")',
 
   testCases: [
     {
@@ -34,16 +34,16 @@ export const ch06_10_combining_collections: Challenge = {
 
   hints: [
     {
-      tier: 1,
-      text: 'Use {**dict1, **dict2} to merge dictionaries. Later values override earlier ones.',
+      tier: 1 as const,
+      text: 'Use dict.update() to merge dictionaries. Later updates override earlier values.',
     },
     {
-      tier: 2,
+      tier: 2 as const,
       text: 'sorted(dict.items()) sorts by key. Use a for loop to print each name and level.',
     },
     {
-      tier: 3,
-      text: 'Solution: merged = {**source_a, **source_b}, then for name, level in sorted(merged.items()):',
+      tier: 3 as const,
+      text: 'Solution: merged = {}, merged.update(source_a), merged.update(source_b), then loop sorted(merged.items())',
     },
   ],
 
@@ -52,6 +52,6 @@ export const ch06_10_combining_collections: Challenge = {
   preDialogKey: 'dialog.ch06_10.pre',
   postDialogKey: 'dialog.ch06_10.post',
 
-  conceptsIntroduced: ['dict_merge', 'dict_spread', 'sorted_items'],
+  conceptsIntroduced: ['dict_merge', 'dict_update', 'sorted_items'],
   conceptsReinforced: ['dictionary', 'for_loop', 'fstrings'],
 };

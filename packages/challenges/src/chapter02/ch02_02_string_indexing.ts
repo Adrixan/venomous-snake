@@ -26,13 +26,13 @@ export const ch02_02_string_indexing: Challenge = {
     {
       id: 'tc01',
       description: 'Should extract the first character V',
-      expectedOutput: 'V',
+      expectedOutput: 'V\n7\nP',
       hidden: false,
     },
     {
       id: 'tc02',
       description: 'Should extract the last character 7',
-      expectedOutput: 'V\n7',
+      expectedOutput: 'V\n7\nP',
       hidden: false,
     },
     {

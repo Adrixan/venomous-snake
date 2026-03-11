@@ -10,34 +10,39 @@ export const ch12_06_async_basics: Challenge = {
   scaffoldingLevel: 'partial',
   prerequisites: ['ch12_05_context_managers'],
   xpReward: 290,
-  tags: ['async', 'await', 'asyncio', 'coroutines'],
+  tags: ['callbacks', 'functions', 'concurrency-concepts'],
   scaffoldedCode:
-    'import asyncio\n\nasync def fetch_intel(target):\n    return f"Intel on {target}: 42 vulnerabilities found"\n\nasync def run_operation():\n    result = ___ fetch_intel("NexusCorp")\n    print(result)\n    results = ___ asyncio.gather(\n        fetch_intel("VaultX"),\n        fetch_intel("ShadowNet")\n    )\n    for r in results:\n        print(r)\n\nasyncio.run(run_operation())',
+    'def fetch_intel(target, ___):\n    result = f"Intel on {target}: 42 vulnerabilities found"\n    ___(result)\n\ndef process_result(result):\n    print(result)\n\nfetch_intel("NexusCorp", ___)\n\ntargets = ["VaultX", "ShadowNet"]\nresults = []\nfor t in targets:\n    results.append(f"Intel on {t}: 42 vulnerabilities found")\nfor r in results:\n    print(r)',
+  editableRegions: [
+    { startLine: 1, endLine: 1, placeholder: 'callback' },
+    { startLine: 3, endLine: 3, placeholder: 'callback' },
+    { startLine: 8, endLine: 8, placeholder: 'process_result' },
+  ],
   solutionCode:
-    'import asyncio\n\nasync def fetch_intel(target):\n    return f"Intel on {target}: 42 vulnerabilities found"\n\nasync def run_operation():\n    result = await fetch_intel("NexusCorp")\n    print(result)\n    results = await asyncio.gather(\n        fetch_intel("VaultX"),\n        fetch_intel("ShadowNet")\n    )\n    for r in results:\n        print(r)\n\nasyncio.run(run_operation())',
+    'def fetch_intel(target, callback):\n    result = f"Intel on {target}: 42 vulnerabilities found"\n    callback(result)\n\ndef process_result(result):\n    print(result)\n\nfetch_intel("NexusCorp", process_result)\n\ntargets = ["VaultX", "ShadowNet"]\nresults = []\nfor t in targets:\n    results.append(f"Intel on {t}: 42 vulnerabilities found")\nfor r in results:\n    print(r)',
   testCases: [
     {
       id: 'tc01',
-      description: 'Should run async operations',
+      description: 'Should run callback-based operations',
       expectedOutput: 'Intel on NexusCorp: 42 vulnerabilities found\nIntel on VaultX: 42 vulnerabilities found\nIntel on ShadowNet: 42 vulnerabilities found',
       hidden: false,
     },
     {
       id: 'tc02',
-      description: 'Should use await and asyncio.gather',
+      description: 'Should use callbacks and batch processing',
       expectedOutput: 'Intel on NexusCorp: 42 vulnerabilities found\nIntel on VaultX: 42 vulnerabilities found\nIntel on ShadowNet: 42 vulnerabilities found',
       hidden: true,
     },
   ],
   hints: [
-    { tier: 1 as const, text: 'await pauses until the async function completes. asyncio.gather runs multiple coroutines.' },
-    { tier: 2 as const, text: 'Use await before calling any async function.' },
-    { tier: 3 as const, text: 'Solution: result = await fetch_intel("NexusCorp") and results = await asyncio.gather(...)' },
+    { tier: 1 as const, text: 'Callbacks are functions passed as arguments. The receiving function calls them when work is done.' },
+    { tier: 2 as const, text: 'Pass process_result as the callback to fetch_intel. It will be called with the result.' },
+    { tier: 3 as const, text: 'Solution: fetch_intel(target, callback) calls callback(result). Pass process_result as the callback.' },
   ],
   roomId: 'floor_12_room_01',
   terminalId: 'terminal_06',
   preDialogKey: 'dialog.ch12_06.pre',
   postDialogKey: 'dialog.ch12_06.post',
-  conceptsIntroduced: ['async_await', 'coroutines', 'asyncio_gather'],
+  conceptsIntroduced: ['callbacks', 'function_as_argument', 'batch_processing'],
   conceptsReinforced: ['function_definition', 'for_loop'],
 };
