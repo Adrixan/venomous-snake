@@ -14,16 +14,11 @@ import {
   SettingsPanel,
   PauseMenu,
   CRTEffect,
-  ItemPickupToast,
   AchievementToast,
   StoryTerminal,
   VictoryScreen,
 } from '@venomous-snake/ui';
-import type {
-  AudioSettingsPanelProps,
-  ItemPickupNotification,
-  ToastNotification,
-} from '@venomous-snake/ui';
+import type { AudioSettingsPanelProps, ToastNotification } from '@venomous-snake/ui';
 import { ACHIEVEMENTS } from '@venomous-snake/challenge-engine';
 
 import { EventBus, TextAdventureEngine } from '@venomous-snake/engine';
@@ -57,9 +52,6 @@ export function App(): React.JSX.Element {
   const narrativeLog = useGameStore((state) => state.narrativeLog);
   const availableActions = useGameStore((state) => state.availableActions);
   const setAvailableActions = useGameStore((state) => state.setAvailableActions);
-  const inventory = useGameStore((state) => state.inventory);
-  const addToInventory = useGameStore((state) => state.addToInventory);
-  const addPickedUpItem = useGameStore((state) => state.addPickedUpItem);
   const addCompletedChallenge = useGameStore((state) => state.addCompletedChallenge);
   const gameCompleted = useGameStore((state) => state.gameCompleted);
   const setGameCompleted = useGameStore((state) => state.setGameCompleted);
@@ -93,10 +85,6 @@ export function App(): React.JSX.Element {
   const [saveModalMode, setSaveModalMode] = useState<SaveModalMode>(null);
   const [savedProgress, setSavedProgress] = useState<CurriculumProgress | undefined>(undefined);
   const [sessionKey, setSessionKey] = useState(0);
-
-  // Item pickup notifications
-  const [pickupNotifications, setPickupNotifications] = useState<ItemPickupNotification[]>([]);
-  const seenItemsRef = useRef<Set<string>>(new Set());
 
   // Achievement notifications
   const [achievementNotifications, setAchievementNotifications] = useState<ToastNotification[]>([]);
@@ -174,9 +162,9 @@ export function App(): React.JSX.Element {
   // Refresh available actions whenever relevant state changes
   const refreshActions = useCallback(() => {
     if (!engineRef.current) return;
-    const actions = engineRef.current.getAvailableActions(completedChallenges, inventory);
+    const actions = engineRef.current.getAvailableActions(completedChallenges);
     setAvailableActions(actions);
-  }, [completedChallenges, inventory, setAvailableActions]);
+  }, [completedChallenges, setAvailableActions]);
 
   useEffect(() => {
     refreshActions();
@@ -186,7 +174,9 @@ export function App(): React.JSX.Element {
   const handleAction = useCallback(
     (action: GameAction) => {
       if (!engineRef.current) return;
-      engineRef.current.executeAction(action, completedChallenges, inventory);
+      // Safety: ignore disabled actions even if UI didn't prevent the click
+      if (action.disabled) return;
+      engineRef.current.executeAction(action, completedChallenges);
 
       // Sync narrative log
       const state = engineRef.current.getState();
@@ -208,7 +198,6 @@ export function App(): React.JSX.Element {
     },
     [
       completedChallenges,
-      inventory,
       appendNarrative,
       setCurrentRoom,
       addVisitedRoom,
@@ -224,23 +213,6 @@ export function App(): React.JSX.Element {
         case 'TERMINAL_OPEN': {
           const { terminalId, challengeId } = event.payload;
           openTerminal(terminalId, challengeId);
-          break;
-        }
-        case 'ITEM_PICKUP': {
-          const { itemId, name, description, itemType } = event.payload;
-          addToInventory(itemId);
-          addPickedUpItem(itemId);
-          const isFirstPickup = !seenItemsRef.current.has(itemId);
-          seenItemsRef.current.add(itemId);
-          const notification: ItemPickupNotification = {
-            id: `pickup_${itemId}_${Date.now()}`,
-            itemId,
-            name,
-            description,
-            itemType,
-            isFirstPickup,
-          };
-          setPickupNotifications((prev) => [...prev, notification]);
           break;
         }
         case 'ACHIEVEMENT_UNLOCKED': {
@@ -280,27 +252,18 @@ export function App(): React.JSX.Element {
             }
             engineNarrativeSyncIndex.current = engineState.narrativeLog.length;
           }
-          // Refresh actions after challenge completion
-          setTimeout(() => {
-            refreshActions();
-            // Check if all challenges are complete
-            if (engineRef.current?.isGameComplete()) {
-              setGameCompleted(true);
-            }
-          }, 100);
+          // Refresh actions synchronously — store already updated above
+          refreshActions();
+          // Check if all challenges are complete
+          if (engineRef.current?.isGameComplete()) {
+            setGameCompleted(true);
+          }
           break;
         }
       }
     });
     return unsub;
-  }, [
-    openTerminal,
-    addToInventory,
-    addPickedUpItem,
-    addCompletedChallenge,
-    appendNarrative,
-    refreshActions,
-  ]);
+  }, [openTerminal, addCompletedChallenge, appendNarrative, refreshActions]);
 
   // Keyboard shortcuts
   useEffect(() => {
@@ -315,10 +278,6 @@ export function App(): React.JSX.Element {
           } else {
             setGamePhase('paused');
           }
-          break;
-        case 'i':
-        case 'I':
-          setActivePanel(activePanel === 'inventory' ? 'none' : 'inventory');
           break;
         case 'q':
         case 'Q':
@@ -422,16 +381,12 @@ export function App(): React.JSX.Element {
     setActivePanel('none');
   }, [setActivePanel]);
 
-  const handleDismissPickup = useCallback((id: string) => {
-    setPickupNotifications((prev) => prev.filter((n) => n.id !== id));
-  }, []);
-
   const handleDismissAchievement = useCallback((id: string) => {
     setAchievementNotifications((prev) => prev.filter((n) => n.id !== id));
   }, []);
 
   const handleOpenPanel = useCallback(
-    (panel: 'inventory' | 'questlog' | 'map' | 'settings') => {
+    (panel: 'questlog' | 'map' | 'settings') => {
       setActivePanel(panel);
     },
     [setActivePanel],
@@ -589,9 +544,6 @@ export function App(): React.JSX.Element {
           )}
 
           {/* Notifications */}
-          {pickupNotifications.length > 0 && (
-            <ItemPickupToast notifications={pickupNotifications} onDismiss={handleDismissPickup} />
-          )}
           {achievementNotifications.length > 0 && (
             <AchievementToast
               notifications={achievementNotifications}

@@ -332,6 +332,12 @@
   .terminal-editor-area .cm-editor .cm-scroller {
     overflow-anchor: none;
   }
+
+  .terminal-btn-submit {
+    min-height: 44px;
+    font-size: 14px;
+    padding: 8px 20px;
+  }
 }
 
 /* ─── Submit Button ──────────────────────────────────────────────────────── */

@@ -32,8 +32,6 @@ export interface RoomConnection {
   locked: boolean;
   /** Challenge IDs that must be completed to unlock this connection */
   requiredChallenges?: string[];
-  /** Item ID required to unlock this connection */
-  requiredItem?: string;
 }
 
 /** A hackable terminal in a room */
@@ -56,17 +54,6 @@ export interface RoomNPC {
   disappearsWhen?: string[];
 }
 
-/** An item that can be picked up in a room */
-export interface RoomItem {
-  id: string;
-  nameKey: string;
-  descriptionKey: string;
-  itemType: string;
-  /** Only visible after these flags are set */
-  appearsWhen?: string[];
-  /** Already picked up (tracked in state, not definition) */
-}
-
 /** A room in the text adventure world */
 export interface Room {
   id: string;
@@ -77,7 +64,6 @@ export interface Room {
   firstVisitKey?: string;
   connections: RoomConnection[];
   npcs: RoomNPC[];
-  items: RoomItem[];
   terminals: RoomTerminal[];
 }
 
@@ -95,16 +81,7 @@ export interface NarrativeEntry {
 /** Available action the player can take */
 export interface GameAction {
   id: string;
-  type:
-    | 'move'
-    | 'examine'
-    | 'talk'
-    | 'hack'
-    | 'pickup'
-    | 'use_item'
-    | 'look'
-    | 'inventory'
-    | 'help';
+  type: 'move' | 'examine' | 'talk' | 'hack' | 'look' | 'help';
   label: string;
   targetId?: string;
   disabled?: boolean;
@@ -115,7 +92,6 @@ export interface GameAction {
 export interface TextAdventureState {
   currentRoomId: string;
   visitedRooms: string[];
-  pickedUpItems: string[];
   storyFlags: Record<string, boolean | number>;
   narrativeLog: NarrativeEntry[];
 }
@@ -139,11 +115,6 @@ export type GameEvent =
   | { type: 'CHALLENGE_RESULT'; payload: ChallengeResultState & { xpEarned: number } }
   | { type: 'CHALLENGE_COMPLETED'; payload: { challengeId: string } }
   | { type: 'CHALLENGE_ABANDONED' }
-  // Item events
-  | {
-      type: 'ITEM_PICKUP';
-      payload: { itemId: string; name: string; description: string; itemType: string };
-    }
   // Progression events
   | { type: 'XP_CHANGED'; payload: { xp: number; level: number } }
   | { type: 'ACHIEVEMENT_UNLOCKED'; payload: { id: string; nameKey: string } }
@@ -165,7 +136,6 @@ export interface OverlayState {
   terminalOpen: boolean;
   dialogOpen: boolean;
   menuOpen: boolean;
-  inventoryOpen: boolean;
   mapOpen: boolean;
 }
 
@@ -176,7 +146,7 @@ export interface GameStoreState {
 
   // UI shell state
   gamePhase: 'menu' | 'playing' | 'paused';
-  activePanel: 'none' | 'inventory' | 'questlog' | 'map' | 'settings';
+  activePanel: 'none' | 'questlog' | 'map' | 'settings';
   playerName: string;
   playerGender: 'male' | 'female' | 'nonbinary';
   xp: number;
@@ -185,7 +155,6 @@ export interface GameStoreState {
 
   // Text adventure state
   visitedRooms: string[];
-  pickedUpItems: string[];
   storyFlags: Record<string, boolean | number>;
   narrativeLog: NarrativeEntry[];
   availableActions: GameAction[];
@@ -198,9 +167,6 @@ export interface GameStoreState {
   dialogActive: boolean;
   dialogContent: DialogContent | null;
   currentChallengeId: string | null;
-
-  // Inventory
-  inventory: string[];
 
   alertLevel: 0 | 1 | 2 | 3;
 
@@ -225,12 +191,11 @@ export interface GameStoreState {
   openDialog: (dialogId: string, npcId: string) => void;
   closeDialog: () => void;
   toggleMenu: () => void;
-  toggleInventory: () => void;
   toggleMap: () => void;
 
   // UI shell actions
   setGamePhase: (phase: 'menu' | 'playing' | 'paused') => void;
-  setActivePanel: (panel: 'none' | 'inventory' | 'questlog' | 'map' | 'settings') => void;
+  setActivePanel: (panel: 'none' | 'questlog' | 'map' | 'settings') => void;
   setPlayerName: (name: string) => void;
   setPlayerGender: (gender: 'male' | 'female' | 'nonbinary') => void;
   addXp: (amount: number) => void;
@@ -241,15 +206,10 @@ export interface GameStoreState {
   setActiveChallenge: (id: string | null) => void;
   setChallengeResult: (result: ChallengeResultState | null) => void;
   addCompletedChallenge: (id: string) => void;
-  addPickedUpItem: (itemId: string) => void;
   unlockFloor: (n: number) => void;
   setDialog: (content: DialogContent) => void;
   clearDialog: () => void;
   resetGameState: () => void;
-
-  // Inventory actions
-  addToInventory: (itemId: string) => void;
-  removeFromInventory: (itemId: string) => void;
 
   // Alert / stealth actions
   setAlertLevel: (level: 0 | 1 | 2 | 3) => void;

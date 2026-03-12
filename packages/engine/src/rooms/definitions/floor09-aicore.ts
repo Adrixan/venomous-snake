@@ -30,7 +30,6 @@ export const floor09Rooms: Room[] = [
         dialogId: 'cooling_tech_adam_intro',
       },
     ],
-    items: [],
     terminals: [
       {
         id: 'aicore_terminal_01',
@@ -86,7 +85,6 @@ export const floor09Rooms: Room[] = [
         dialogId: 'ai_operator_bella_intro',
       },
     ],
-    items: [],
     terminals: [
       {
         id: 'aicore_terminal_04',
@@ -154,7 +152,6 @@ export const floor09Rooms: Room[] = [
         dialogId: 'neural_engineer_cole_intro',
       },
     ],
-    items: [],
     terminals: [
       {
         id: 'aicore_terminal_08',

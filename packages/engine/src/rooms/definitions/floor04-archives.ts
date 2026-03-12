@@ -34,7 +34,6 @@ export const floor04Rooms: Room[] = [
         dialogId: 'librarian_luna_intro',
       },
     ],
-    items: [],
     terminals: [
       {
         id: 'archive_terminal_01',
@@ -90,7 +89,6 @@ export const floor04Rooms: Room[] = [
         dialogId: 'data_curator_miles_intro',
       },
     ],
-    items: [],
     terminals: [
       {
         id: 'archive_terminal_04',
@@ -158,7 +156,6 @@ export const floor04Rooms: Room[] = [
         dialogId: 'vault_keeper_nina_intro',
       },
     ],
-    items: [],
     terminals: [
       {
         id: 'archive_terminal_08',

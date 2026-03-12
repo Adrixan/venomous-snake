@@ -54,7 +54,6 @@ const INITIAL_OVERLAY_STATE = {
   terminalOpen: false,
   dialogOpen: false,
   menuOpen: false,
-  inventoryOpen: false,
   mapOpen: false,
 };
 
@@ -73,7 +72,6 @@ export const useGameStore = create<GameStoreState>((set) => ({
 
   // Text adventure state
   visitedRooms: [],
-  pickedUpItems: [],
   storyFlags: {},
   narrativeLog: [],
   availableActions: [],
@@ -86,9 +84,6 @@ export const useGameStore = create<GameStoreState>((set) => ({
   unlockedFloors: [0],
   dialogActive: false,
   dialogContent: null,
-
-  // Inventory
-  inventory: [],
 
   // Alert / stealth level
   alertLevel: 0 as 0 | 1 | 2 | 3,
@@ -146,10 +141,6 @@ export const useGameStore = create<GameStoreState>((set) => ({
     set((state) => ({
       overlay: { ...state.overlay, menuOpen: !state.overlay.menuOpen },
     })),
-  toggleInventory: () =>
-    set((state) => ({
-      overlay: { ...state.overlay, inventoryOpen: !state.overlay.inventoryOpen },
-    })),
   toggleMap: () =>
     set((state) => ({
       overlay: { ...state.overlay, mapOpen: !state.overlay.mapOpen },
@@ -177,12 +168,6 @@ export const useGameStore = create<GameStoreState>((set) => ({
         ? state.completedChallenges
         : [...state.completedChallenges, id],
     })),
-  addPickedUpItem: (itemId) =>
-    set((state) => ({
-      pickedUpItems: state.pickedUpItems.includes(itemId)
-        ? state.pickedUpItems
-        : [...state.pickedUpItems, itemId],
-    })),
   unlockFloor: (n) =>
     set((state) => ({
       unlockedFloors: state.unlockedFloors.includes(n)
@@ -191,16 +176,6 @@ export const useGameStore = create<GameStoreState>((set) => ({
     })),
   setDialog: (content) => set({ dialogActive: true, dialogContent: content }),
   clearDialog: () => set({ dialogActive: false, dialogContent: null }),
-
-  // Inventory actions
-  addToInventory: (itemId) =>
-    set((state) => ({
-      inventory: state.inventory.includes(itemId) ? state.inventory : [...state.inventory, itemId],
-    })),
-  removeFromInventory: (itemId) =>
-    set((state) => ({
-      inventory: state.inventory.filter((id) => id !== itemId),
-    })),
 
   // Alert / stealth actions
   setAlertLevel: (level) => set({ alertLevel: level }),
@@ -245,7 +220,6 @@ export const useGameStore = create<GameStoreState>((set) => ({
       level: 1,
       currentFloor: 0,
       visitedRooms: [],
-      pickedUpItems: [],
       storyFlags: {},
       narrativeLog: [],
       availableActions: [],
@@ -256,7 +230,6 @@ export const useGameStore = create<GameStoreState>((set) => ({
       unlockedFloors: [0],
       dialogActive: false,
       dialogContent: null,
-      inventory: [],
       alertLevel: 0,
       gameCompleted: false,
     }),

@@ -34,7 +34,6 @@ export const floor07Rooms: Room[] = [
         dialogId: 'foreman_ulrich_intro',
       },
     ],
-    items: [],
     terminals: [
       {
         id: 'mfg_terminal_01',
@@ -89,7 +88,6 @@ export const floor07Rooms: Room[] = [
         dialogId: 'qa_inspector_vera_intro',
       },
     ],
-    items: [],
     terminals: [
       {
         id: 'mfg_terminal_04',
@@ -149,7 +147,6 @@ export const floor07Rooms: Room[] = [
         dialogId: 'warehouse_manager_wendy_intro',
       },
     ],
-    items: [],
     terminals: [
       {
         id: 'mfg_terminal_07',

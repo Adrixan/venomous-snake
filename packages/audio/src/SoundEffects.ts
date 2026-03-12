@@ -20,7 +20,6 @@ export const SFX = {
   // Game world
   DOOR_OPEN: 'sfx_door_open',
   DOOR_LOCKED: 'sfx_door_locked',
-  ITEM_PICKUP: 'sfx_item_pickup',
   FOOTSTEP: 'sfx_footstep',
   NPC_ALERT: 'sfx_npc_alert',
 

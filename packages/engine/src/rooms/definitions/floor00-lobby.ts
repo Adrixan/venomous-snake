@@ -24,7 +24,6 @@ export const floor00Rooms: Room[] = [
         dialogId: 'guard_jenkins_intro',
       },
     ],
-    items: [],
     terminals: [
       {
         id: 'lobby_terminal_01',
@@ -95,7 +94,6 @@ export const floor00Rooms: Room[] = [
         dialogId: 'receptionist_alice_intro',
       },
     ],
-    items: [],
     terminals: [
       {
         id: 'lobby_terminal_04',
@@ -139,7 +137,6 @@ export const floor00Rooms: Room[] = [
         dialogId: 'techie_bob_intro',
       },
     ],
-    items: [],
     terminals: [
       {
         id: 'lobby_terminal_07',

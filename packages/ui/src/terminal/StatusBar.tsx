@@ -2,7 +2,7 @@ import React, { useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 
 export interface StatusBarProps {
-  onOpenPanel: (panel: 'inventory' | 'questlog' | 'map' | 'settings') => void;
+  onOpenPanel: (panel: 'questlog' | 'map' | 'settings') => void;
   onSave: () => void;
   onPause: () => void;
 }
@@ -19,20 +19,11 @@ interface ToolbarButton {
 function StatusBarInner({ onOpenPanel, onSave, onPause }: StatusBarProps): React.JSX.Element {
   const { t } = useTranslation('ui');
 
-  const handleInventory = useCallback(() => onOpenPanel('inventory'), [onOpenPanel]);
   const handleQuests = useCallback(() => onOpenPanel('questlog'), [onOpenPanel]);
   const handleMap = useCallback(() => onOpenPanel('map'), [onOpenPanel]);
   const handleSettings = useCallback(() => onOpenPanel('settings'), [onOpenPanel]);
 
   const buttons: ToolbarButton[] = [
-    {
-      id: 'inventory',
-      icon: '📦',
-      labelKey: 'storyTerminal.inventory',
-      fallback: 'Inventory',
-      shortcut: 'I',
-      action: handleInventory,
-    },
     {
       id: 'quests',
       icon: '📋',
@@ -75,10 +66,7 @@ function StatusBarInner({ onOpenPanel, onSave, onPause }: StatusBarProps): React
       if (tag === 'INPUT' || tag === 'TEXTAREA') return;
 
       const key = e.key.toLowerCase();
-      if (key === 'i' && !e.ctrlKey && !e.metaKey) {
-        e.preventDefault();
-        handleInventory();
-      } else if (key === 'q' && !e.ctrlKey && !e.metaKey) {
+      if (key === 'q' && !e.ctrlKey && !e.metaKey) {
         e.preventDefault();
         handleQuests();
       } else if (key === 'm' && !e.ctrlKey && !e.metaKey) {
@@ -95,7 +83,7 @@ function StatusBarInner({ onOpenPanel, onSave, onPause }: StatusBarProps): React
 
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [handleInventory, handleQuests, handleMap, onPause, onSave]);
+  }, [handleQuests, handleMap, onPause, onSave]);
 
   return (
     <div

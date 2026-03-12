@@ -38,7 +38,6 @@ export function GameControllerProvider({
   children,
 }: GameControllerProviderProps): React.JSX.Element {
   const localRef = useRef<GameController | null>(null);
-  const hasFirstPickupRef = useRef(false);
 
   if (localRef.current === null) {
     localRef.current =
@@ -91,17 +90,6 @@ export function GameControllerProvider({
           // Future: surface as toast notification
           console.info('[Achievement unlocked]', event.payload.nameKey);
           break;
-
-        case 'ITEM_PICKUP': {
-          if (!hasFirstPickupRef.current) {
-            hasFirstPickupRef.current = true;
-            EventBus.emit({
-              type: 'ACHIEVEMENT_UNLOCKED',
-              payload: { id: 'first_pickup', nameKey: 'achievements.first_pickup' },
-            });
-          }
-          break;
-        }
 
         case 'FLOOR_UNLOCKED': {
           store.unlockFloor(event.payload.floor);

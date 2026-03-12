@@ -34,7 +34,6 @@ export const floor10Rooms: Room[] = [
         dialogId: 'penthouse_butler_davis_intro',
       },
     ],
-    items: [],
     terminals: [
       {
         id: 'pent_terminal_01',
@@ -89,7 +88,6 @@ export const floor10Rooms: Room[] = [
         dialogId: 'ceo_morgan_intro',
       },
     ],
-    items: [],
     terminals: [
       {
         id: 'pent_terminal_04',
@@ -149,7 +147,6 @@ export const floor10Rooms: Room[] = [
         dialogId: 'lab_ai_echo_intro',
       },
     ],
-    items: [],
     terminals: [
       {
         id: 'pent_terminal_07',

@@ -34,7 +34,6 @@ export const floor03Rooms: Room[] = [
         dialogId: 'security_chief_ivan_intro',
       },
     ],
-    items: [],
     terminals: [
       {
         id: 'surv_terminal_01',
@@ -90,7 +89,6 @@ export const floor03Rooms: Room[] = [
         dialogId: 'analyst_jade_intro',
       },
     ],
-    items: [],
     terminals: [
       {
         id: 'surv_terminal_04',
@@ -158,7 +156,6 @@ export const floor03Rooms: Room[] = [
         dialogId: 'archivist_kai_intro',
       },
     ],
-    items: [],
     terminals: [
       {
         id: 'surv_terminal_08',

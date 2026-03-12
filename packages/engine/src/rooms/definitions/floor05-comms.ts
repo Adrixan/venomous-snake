@@ -30,7 +30,6 @@ export const floor05Rooms: Room[] = [
         dialogId: 'radio_operator_oscar_intro',
       },
     ],
-    items: [],
     terminals: [
       {
         id: 'comms_terminal_01',
@@ -86,7 +85,6 @@ export const floor05Rooms: Room[] = [
         dialogId: 'signal_analyst_petra_intro',
       },
     ],
-    items: [],
     terminals: [
       {
         id: 'comms_terminal_04',
@@ -154,7 +152,6 @@ export const floor05Rooms: Room[] = [
         dialogId: 'comms_tech_quinn_intro',
       },
     ],
-    items: [],
     terminals: [
       {
         id: 'comms_terminal_08',

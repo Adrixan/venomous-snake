@@ -11,7 +11,7 @@ export interface StoryTerminalProps {
   narrativeLog: NarrativeEntry[];
   availableActions: GameAction[];
   onAction: (action: GameAction) => void;
-  onOpenPanel: (panel: 'inventory' | 'questlog' | 'map' | 'settings') => void;
+  onOpenPanel: (panel: 'questlog' | 'map' | 'settings') => void;
   onSave: () => void;
   onPause: () => void;
   playerName: string;

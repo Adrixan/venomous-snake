@@ -45,7 +45,6 @@ export class TextAdventureEngine {
       this.state = {
         currentRoomId: this.world.getStartingRoomId(),
         visitedRooms: [],
-        pickedUpItems: [],
         storyFlags: {},
         narrativeLog: [],
       };
@@ -124,7 +123,7 @@ export class TextAdventureEngine {
     EventBus.emit({ type: 'ROOM_ENTER', payload: { roomId, firstVisit } });
   }
 
-  getAvailableActions(completedChallenges: string[], inventory: string[]): GameAction[] {
+  getAvailableActions(completedChallenges: string[]): GameAction[] {
     const room = this.getCurrentRoom();
     if (!room) return [];
 
@@ -153,7 +152,7 @@ export class TextAdventureEngine {
 
     // Move actions per connection
     for (const conn of room.connections) {
-      const unlocked = this.isConnectionUnlocked(conn, mergedChallenges, inventory);
+      const unlocked = this.isConnectionUnlocked(conn, mergedChallenges);
       const targetName = humanizeRoomId(conn.targetRoomId);
       const moveAction: GameAction = {
         id: `move_${conn.targetRoomId}`,
@@ -163,7 +162,13 @@ export class TextAdventureEngine {
       };
       if (!unlocked) {
         moveAction.disabled = true;
-        moveAction.disabledReason = 'Access locked — complete required challenges first';
+        const remaining = (conn.requiredChallenges ?? []).filter(
+          (id) => !mergedChallenges.includes(id),
+        );
+        moveAction.disabledReason =
+          remaining.length > 0
+            ? `🔒 Locked — solve ${String(remaining.length)} more challenge${remaining.length === 1 ? '' : 's'} to proceed`
+            : '🔒 Access locked';
       }
       actions.push(moveAction);
     }
@@ -171,9 +176,15 @@ export class TextAdventureEngine {
     return actions;
   }
 
-  executeAction(action: GameAction, completedChallenges: string[], inventory: string[]): void {
+  executeAction(action: GameAction, completedChallenges: string[]): void {
     const room = this.getCurrentRoom();
     if (!room) return;
+
+    // Safety: never execute disabled actions
+    if (action.disabled) {
+      this.addNarrative('system', action.disabledReason ?? 'That action is not available.');
+      return;
+    }
 
     const mergedChallenges = [...new Set([...completedChallenges, ...this.completedChallenges])];
 
@@ -204,7 +215,7 @@ export class TextAdventureEngine {
       case 'move': {
         const conn = room.connections.find((c) => c.targetRoomId === action.targetId);
         if (!conn) break;
-        if (!this.isConnectionUnlocked(conn, mergedChallenges, inventory)) {
+        if (!this.isConnectionUnlocked(conn, mergedChallenges)) {
           this.addNarrative('system', 'Access locked — complete required challenges first.');
           EventBus.emit({
             type: 'ACCESS_DENIED',
@@ -363,23 +374,19 @@ export class TextAdventureEngine {
     return this.state;
   }
 
-  isConnectionUnlocked(
-    connection: RoomConnection,
-    completedChallenges: string[],
-    inventory: string[],
-  ): boolean {
+  isConnectionUnlocked(connection: RoomConnection, completedChallenges: string[]): boolean {
     if (!connection.locked) return true;
 
-    if (connection.requiredChallenges) {
-      const allDone = connection.requiredChallenges.every((id) => completedChallenges.includes(id));
-      if (!allDone) return false;
+    // Locked connection: all required challenges must be completed
+    if (
+      connection.requiredChallenges &&
+      connection.requiredChallenges.every((id) => completedChallenges.includes(id))
+    ) {
+      return true;
     }
 
-    if (connection.requiredItem) {
-      if (!inventory.includes(connection.requiredItem)) return false;
-    }
-
-    return true;
+    // Locked by default — no requirements met or no requirements defined
+    return false;
   }
 
   getNarrativeLog(): NarrativeEntry[] {

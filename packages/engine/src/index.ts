@@ -8,7 +8,6 @@ export type {
   Room,
   RoomConnection,
   RoomNPC,
-  RoomItem,
   RoomTerminal,
   GameAction,
   NarrativeEntry,

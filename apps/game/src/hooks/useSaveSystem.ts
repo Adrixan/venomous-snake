@@ -45,13 +45,7 @@ function buildSaveData(
     playerPosition: { x: 0, y: 0 },
     curriculumProgress,
     narrativeState,
-    inventory: state.inventory.map((id) => ({
-      id,
-      type: 'datafile' as const,
-      nameKey: `items.${id}.name`,
-      descriptionKey: `items.${id}.description`,
-      iconId: 'datafile',
-    })),
+    inventory: [],
     settings: {
       language: 'en',
       volumeMaster: 1,
@@ -66,7 +60,6 @@ function buildSaveData(
     gameCompleted: state.gameCompleted,
     storyFlags: state.storyFlags,
     visitedRooms: state.visitedRooms,
-    pickedUpItems: state.pickedUpItems,
   };
 }
 

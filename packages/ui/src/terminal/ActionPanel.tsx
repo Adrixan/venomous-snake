@@ -11,12 +11,9 @@ const ACTION_ICONS: Record<GameAction['type'], string> = {
   move: '→',
   talk: '💬',
   hack: '💻',
-  pickup: '📦',
   look: '👁',
   examine: '🔍',
-  inventory: '📦',
   help: '❓',
-  use_item: '🔧',
 };
 
 function ActionPanelInner({ actions, onAction }: ActionPanelProps): React.JSX.Element {
@@ -114,7 +111,12 @@ function ActionPanelInner({ actions, onAction }: ActionPanelProps): React.JSX.El
             <span className="story-action-icon" aria-hidden="true">
               {icon}
             </span>
-            <span className="story-action-label">{action.label}</span>
+            <span className="story-action-label">
+              {action.label}
+              {isDisabled && action.disabledReason && (
+                <span className="story-action-reason">{action.disabledReason}</span>
+              )}
+            </span>
             {i < 9 && (
               <span className="story-action-key" aria-hidden="true">
                 {i + 1}
