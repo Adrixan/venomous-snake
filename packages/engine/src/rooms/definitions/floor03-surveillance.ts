@@ -12,7 +12,12 @@ export const floor03Rooms: Room[] = [
         direction: 'north',
         targetRoomId: 'surveillance_center',
         descriptionKey: 'rooms.surveillance_lobby.connections.north',
-        locked: false,
+        locked: true,
+        requiredChallenges: [
+          'ch04_01_simple_for_loop',
+          'ch04_02_range_basics',
+          'ch04_03_for_with_range',
+        ],
       },
       {
         direction: 'down',
@@ -68,7 +73,13 @@ export const floor03Rooms: Room[] = [
         direction: 'east',
         targetRoomId: 'surveillance_archive',
         descriptionKey: 'rooms.surveillance_center.connections.east',
-        locked: false,
+        locked: true,
+        requiredChallenges: [
+          'ch04_04_while_basics',
+          'ch04_05_while_condition',
+          'ch04_06_break_statement',
+          'ch04_07_continue_statement',
+        ],
       },
     ],
     npcs: [
@@ -79,14 +90,7 @@ export const floor03Rooms: Room[] = [
         dialogId: 'analyst_jade_intro',
       },
     ],
-    items: [
-      {
-        id: 'surveillance_footage',
-        nameKey: 'items.surveillance_footage.name',
-        descriptionKey: 'items.surveillance_footage.description',
-        itemType: 'datapad',
-      },
-    ],
+    items: [],
     terminals: [
       {
         id: 'surv_terminal_04',
@@ -154,14 +158,7 @@ export const floor03Rooms: Room[] = [
         dialogId: 'archivist_kai_intro',
       },
     ],
-    items: [
-      {
-        id: 'encrypted_tape',
-        nameKey: 'items.encrypted_tape.name',
-        descriptionKey: 'items.encrypted_tape.description',
-        itemType: 'datapad',
-      },
-    ],
+    items: [],
     terminals: [
       {
         id: 'surv_terminal_08',

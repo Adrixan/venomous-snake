@@ -12,7 +12,12 @@ export const floor06Rooms: Room[] = [
         direction: 'north',
         targetRoomId: 'executive_offices',
         descriptionKey: 'rooms.executive_lobby.connections.north',
-        locked: false,
+        locked: true,
+        requiredChallenges: [
+          'ch07_01_read_file',
+          'ch07_02_write_file',
+          'ch07_03_file_line_processing',
+        ],
       },
       {
         direction: 'down',
@@ -68,7 +73,12 @@ export const floor06Rooms: Room[] = [
         direction: 'east',
         targetRoomId: 'executive_boardroom',
         descriptionKey: 'rooms.executive_offices.connections.east',
-        locked: false,
+        locked: true,
+        requiredChallenges: [
+          'ch07_04_csv_parsing',
+          'ch07_05_string_split_join',
+          'ch07_06_with_statement',
+        ],
       },
     ],
     npcs: [
@@ -79,14 +89,7 @@ export const floor06Rooms: Room[] = [
         dialogId: 'cfo_stevens_intro',
       },
     ],
-    items: [
-      {
-        id: 'financial_report',
-        nameKey: 'items.financial_report.name',
-        descriptionKey: 'items.financial_report.description',
-        itemType: 'datapad',
-      },
-    ],
+    items: [],
     terminals: [
       {
         id: 'exec_terminal_04',
@@ -146,14 +149,7 @@ export const floor06Rooms: Room[] = [
         dialogId: 'board_member_tanaka_intro',
       },
     ],
-    items: [
-      {
-        id: 'executive_keycard_l7',
-        nameKey: 'items.executive_keycard_l7.name',
-        descriptionKey: 'items.executive_keycard_l7.description',
-        itemType: 'keycard',
-      },
-    ],
+    items: [],
     terminals: [
       {
         id: 'exec_terminal_07',

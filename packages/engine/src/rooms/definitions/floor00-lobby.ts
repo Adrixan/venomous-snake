@@ -12,7 +12,8 @@ export const floor00Rooms: Room[] = [
         direction: 'north',
         targetRoomId: 'lobby_hallway',
         descriptionKey: 'rooms.lobby_entrance.connections.north',
-        locked: false,
+        locked: true,
+        requiredChallenges: ['ch01_01_hello_world', 'ch01_02_variables', 'ch01_03_math_ops'],
       },
     ],
     npcs: [
@@ -23,14 +24,7 @@ export const floor00Rooms: Room[] = [
         dialogId: 'guard_jenkins_intro',
       },
     ],
-    items: [
-      {
-        id: 'visitor_badge',
-        nameKey: 'items.visitor_badge.name',
-        descriptionKey: 'items.visitor_badge.description',
-        itemType: 'keycard',
-      },
-    ],
+    items: [],
     terminals: [
       {
         id: 'lobby_terminal_01',
@@ -69,7 +63,12 @@ export const floor00Rooms: Room[] = [
         direction: 'east',
         targetRoomId: 'lobby_server_closet',
         descriptionKey: 'rooms.lobby_hallway.connections.east',
-        locked: false,
+        locked: true,
+        requiredChallenges: [
+          'ch01_04_string_types',
+          'ch01_05_float_calculations',
+          'ch01_06_string_concatenation',
+        ],
       },
       {
         direction: 'up',
@@ -140,14 +139,7 @@ export const floor00Rooms: Room[] = [
         dialogId: 'techie_bob_intro',
       },
     ],
-    items: [
-      {
-        id: 'usb_drive',
-        nameKey: 'items.usb_drive.name',
-        descriptionKey: 'items.usb_drive.description',
-        itemType: 'datapad',
-      },
-    ],
+    items: [],
     terminals: [
       {
         id: 'lobby_terminal_07',

@@ -12,7 +12,12 @@ export const floor02Rooms: Room[] = [
         direction: 'north',
         targetRoomId: 'lab_main',
         descriptionKey: 'rooms.lab_reception.connections.north',
-        locked: false,
+        locked: true,
+        requiredChallenges: [
+          'ch03_01_simple_if',
+          'ch03_02_if_else',
+          'ch03_03_comparison_operators',
+        ],
       },
       {
         direction: 'down',
@@ -68,7 +73,12 @@ export const floor02Rooms: Room[] = [
         direction: 'east',
         targetRoomId: 'lab_storage',
         descriptionKey: 'rooms.lab_main.connections.east',
-        locked: false,
+        locked: true,
+        requiredChallenges: [
+          'ch03_04_if_elif_else',
+          'ch03_05_logical_operators',
+          'ch03_06_nested_if',
+        ],
       },
     ],
     npcs: [
@@ -79,14 +89,7 @@ export const floor02Rooms: Room[] = [
         dialogId: 'scientist_grant_intro',
       },
     ],
-    items: [
-      {
-        id: 'lab_notebook',
-        nameKey: 'items.lab_notebook.name',
-        descriptionKey: 'items.lab_notebook.description',
-        itemType: 'datapad',
-      },
-    ],
+    items: [],
     terminals: [
       {
         id: 'lab_terminal_04',
@@ -146,14 +149,7 @@ export const floor02Rooms: Room[] = [
         dialogId: 'storage_clerk_hana_intro',
       },
     ],
-    items: [
-      {
-        id: 'chemical_manifest',
-        nameKey: 'items.chemical_manifest.name',
-        descriptionKey: 'items.chemical_manifest.description',
-        itemType: 'datapad',
-      },
-    ],
+    items: [],
     terminals: [
       {
         id: 'lab_terminal_07',

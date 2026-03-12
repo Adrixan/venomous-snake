@@ -12,7 +12,14 @@ export const floor11Rooms: Room[] = [
         direction: 'north',
         targetRoomId: 'rooftop_helipad',
         descriptionKey: 'rooms.rooftop_access.connections.north',
-        locked: false,
+        locked: true,
+        requiredChallenges: [
+          'ch12_01_generators',
+          'ch12_02_generator_expressions',
+          'ch12_03_decorators_basics',
+          'ch12_04_decorators_with_args',
+          'ch12_05_context_managers',
+        ],
       },
       {
         direction: 'down',
@@ -85,14 +92,7 @@ export const floor11Rooms: Room[] = [
         dialogId: 'pilot_ghost_intro',
       },
     ],
-    items: [
-      {
-        id: 'final_encryption_key',
-        nameKey: 'items.final_encryption_key.name',
-        descriptionKey: 'items.final_encryption_key.description',
-        itemType: 'keycard',
-      },
-    ],
+    items: [],
     terminals: [
       {
         id: 'roof_terminal_06',

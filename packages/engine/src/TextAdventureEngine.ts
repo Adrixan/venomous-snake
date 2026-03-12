@@ -25,6 +25,11 @@ function humanizeRoomId(id: string): string {
     .replace(/\b\w/g, (c) => c.toUpperCase());
 }
 
+/** Build the zero-padded floor key used in floorIntros (e.g. "floor_00"). */
+function floorKey(floor: number): string {
+  return `floor_${String(floor).padStart(2, '0')}`;
+}
+
 export class TextAdventureEngine {
   private world: GameWorld;
   private state: TextAdventureState;
@@ -55,15 +60,15 @@ export class TextAdventureEngine {
     this.state.currentRoomId = roomId;
 
     const narrative = roomNarratives[roomId];
+    const fKey = floorKey(room.floor);
 
     if (firstVisit) {
       this.state.visitedRooms.push(roomId);
 
       // Show floor intro on first visit to a floor's first room
-      const floorKey = `floor${String(room.floor)}`;
-      if (!this.state.storyFlags[`${floorKey}_arrived`]) {
-        this.state.storyFlags[`${floorKey}_arrived`] = true;
-        const intro = floorIntros[floorKey];
+      if (!this.state.storyFlags[`${fKey}_arrived`]) {
+        this.state.storyFlags[`${fKey}_arrived`] = true;
+        const intro = floorIntros[fKey];
         if (intro) {
           this.addNarrative('cipher', intro.arrival, 'CIPHER');
           this.addNarrative('cipher', intro.briefing, 'CIPHER');
@@ -74,6 +79,18 @@ export class TextAdventureEngine {
       const firstVisitText = narrative?.firstVisit ?? room.firstVisitKey;
       if (firstVisitText) {
         this.addNarrative('description', firstVisitText);
+      }
+
+      // Auto-trigger NPC greeting on first visit
+      for (const npc of room.npcs) {
+        const dialog = npcDialogs[npc.id];
+        if (dialog) {
+          this.addNarrative('dialog', dialog.greeting, humanizeRoomId(npc.id));
+          if (dialog.lines[0]) {
+            this.addNarrative('dialog', dialog.lines[0], humanizeRoomId(npc.id));
+          }
+          this.state.storyFlags[`npc_${npc.id}_line`] = 1;
+        }
       }
     } else {
       // Revisit text
@@ -86,6 +103,23 @@ export class TextAdventureEngine {
     // Room description
     const descText = narrative?.description ?? room.descriptionKey;
     this.addNarrative('description', descText);
+
+    // Guidance: tell the player what to do
+    const remaining = room.terminals.filter((t) => !this.completedChallenges.has(t.challengeId));
+    if (remaining.length > 0) {
+      const count = remaining.length;
+      this.addNarrative(
+        'cipher',
+        `I'm detecting ${String(count)} active terminal${count === 1 ? '' : 's'} in this area. Hack ${count === 1 ? 'it' : 'them all'} to proceed.`,
+        'CIPHER',
+      );
+    } else {
+      this.addNarrative(
+        'cipher',
+        'All terminals in this area are compromised. Move forward when ready.',
+        'CIPHER',
+      );
+    }
 
     EventBus.emit({ type: 'ROOM_ENTER', payload: { roomId, firstVisit } });
   }
@@ -105,6 +139,18 @@ export class TextAdventureEngine {
       label: 'Look around',
     });
 
+    // Hack actions per incomplete terminal (shown before move for clarity)
+    for (const terminal of room.terminals) {
+      if (mergedChallenges.includes(terminal.challengeId)) continue;
+
+      actions.push({
+        id: `hack_${terminal.id}`,
+        type: 'hack',
+        label: `Hack terminal [${terminal.challengeId}]`,
+        targetId: terminal.id,
+      });
+    }
+
     // Move actions per connection
     for (const conn of room.connections) {
       const unlocked = this.isConnectionUnlocked(conn, mergedChallenges, inventory);
@@ -122,45 +168,6 @@ export class TextAdventureEngine {
       actions.push(moveAction);
     }
 
-    // Talk actions per NPC
-    for (const npc of room.npcs) {
-      if (npc.appearsWhen?.some((f) => !this.state.storyFlags[f])) continue;
-      if (npc.disappearsWhen?.some((f) => this.state.storyFlags[f])) continue;
-
-      const npcName = npcDialogs[npc.id] ? humanizeRoomId(npc.id) : npc.nameKey;
-      actions.push({
-        id: `talk_${npc.id}`,
-        type: 'talk',
-        label: `Talk to ${npcName}`,
-        targetId: npc.id,
-      });
-    }
-
-    // Hack actions per incomplete terminal
-    for (const terminal of room.terminals) {
-      if (mergedChallenges.includes(terminal.challengeId)) continue;
-
-      actions.push({
-        id: `hack_${terminal.id}`,
-        type: 'hack',
-        label: `Hack terminal [${terminal.challengeId}]`,
-        targetId: terminal.id,
-      });
-    }
-
-    // Pickup actions per available item
-    for (const item of room.items) {
-      if (this.state.pickedUpItems.includes(item.id)) continue;
-      if (item.appearsWhen?.some((f) => !this.state.storyFlags[f])) continue;
-
-      actions.push({
-        id: `pickup_${item.id}`,
-        type: 'pickup',
-        label: `Pick up ${item.nameKey}`,
-        targetId: item.id,
-      });
-    }
-
     return actions;
   }
 
@@ -175,6 +182,22 @@ export class TextAdventureEngine {
         const narrative = roomNarratives[room.id];
         const descText = narrative?.description ?? room.descriptionKey;
         this.addNarrative('description', descText);
+
+        // Also show terminal status
+        const remaining = room.terminals.filter(
+          (t) =>
+            !this.completedChallenges.has(t.challengeId) &&
+            !mergedChallenges.includes(t.challengeId),
+        );
+        if (remaining.length > 0) {
+          this.addNarrative(
+            'cipher',
+            `${String(remaining.length)} terminal${remaining.length === 1 ? '' : 's'} still active in this area.`,
+            'CIPHER',
+          );
+        } else {
+          this.addNarrative('cipher', 'All terminals in this area are compromised.', 'CIPHER');
+        }
         break;
       }
 
@@ -182,7 +205,7 @@ export class TextAdventureEngine {
         const conn = room.connections.find((c) => c.targetRoomId === action.targetId);
         if (!conn) break;
         if (!this.isConnectionUnlocked(conn, mergedChallenges, inventory)) {
-          this.addNarrative('system', 'Access locked — complete required challenges first');
+          this.addNarrative('system', 'Access locked — complete required challenges first.');
           EventBus.emit({
             type: 'ACCESS_DENIED',
             payload: {
@@ -200,65 +223,15 @@ export class TextAdventureEngine {
         break;
       }
 
-      case 'talk': {
-        const npc = room.npcs.find((n) => n.id === action.targetId);
-        if (!npc) break;
-        const dialog = npcDialogs[npc.id];
-        if (dialog) {
-          // Check if floor challenges are done for postChallenge variant
-          const floorChallenges = this.getFloorChallengeIds(room.floor);
-          const allFloorDone = floorChallenges.every((id) => mergedChallenges.includes(id));
-          if (allFloorDone && dialog.postChallenge) {
-            this.addNarrative('dialog', dialog.postChallenge, humanizeRoomId(npc.id));
-          } else {
-            // Cycle through dialog lines
-            const flagKey = `npc_${npc.id}_line`;
-            const lineIdx = this.state.storyFlags[flagKey]
-              ? Number(this.state.storyFlags[flagKey])
-              : 0;
-            this.addNarrative('dialog', dialog.greeting, humanizeRoomId(npc.id));
-            if (dialog.lines[lineIdx]) {
-              this.addNarrative('dialog', dialog.lines[lineIdx], humanizeRoomId(npc.id));
-            }
-            this.state.storyFlags[flagKey] = (lineIdx + 1) % Math.max(dialog.lines.length, 1);
-          }
-        } else {
-          this.addNarrative('dialog', npc.descriptionKey, npc.nameKey);
-        }
-        EventBus.emit({
-          type: 'DIALOG_START',
-          payload: { npcId: npc.id, dialogId: npc.dialogId },
-        });
-        break;
-      }
-
       case 'hack': {
         const terminal = room.terminals.find((t) => t.id === action.targetId);
         if (!terminal) break;
-        this.addNarrative('action', `You approach the terminal and begin the hack sequence...`);
+        this.addNarrative('action', 'You approach the terminal and begin the hack sequence...');
         EventBus.emit({
           type: 'TERMINAL_OPEN',
           payload: {
             terminalId: terminal.id,
             challengeId: terminal.challengeId,
-          },
-        });
-        break;
-      }
-
-      case 'pickup': {
-        const item = room.items.find((i) => i.id === action.targetId);
-        if (!item) break;
-        if (this.state.pickedUpItems.includes(item.id)) break;
-        this.state.pickedUpItems.push(item.id);
-        this.addNarrative('action', item.descriptionKey);
-        EventBus.emit({
-          type: 'ITEM_PICKUP',
-          payload: {
-            itemId: item.id,
-            name: item.nameKey,
-            description: item.descriptionKey,
-            itemType: item.itemType,
           },
         });
         break;
@@ -279,11 +252,6 @@ export class TextAdventureEngine {
           this.addNarrative('description', terminal.descriptionKey);
           break;
         }
-        const item = room.items.find((i) => i.id === action.targetId);
-        if (item) {
-          this.addNarrative('description', item.descriptionKey);
-          break;
-        }
         this.addNarrative('system', 'Nothing notable to examine.');
         break;
       }
@@ -301,9 +269,9 @@ export class TextAdventureEngine {
   }
 
   /**
-   * Mark a challenge as complete. Checks whether all challenges on the
-   * current floor are now done and, if so, emits a FLOOR_COMPLETE event
-   * and adds a narrative entry about the next floor being unlocked.
+   * Mark a challenge as complete. Provides room-level progress feedback,
+   * checks floor-level completion, and auto-triggers NPC dialog as
+   * appropriate for the story progression.
    */
   completeChallenge(challengeId: string): void {
     if (this.completedChallenges.has(challengeId)) return;
@@ -312,6 +280,38 @@ export class TextAdventureEngine {
     const room = this.getCurrentRoom();
     if (!room) return;
 
+    // Room-level progress feedback
+    const roomChallengeIds = room.terminals.map((t) => t.challengeId);
+    const remainingInRoom = roomChallengeIds.filter((id) => !this.completedChallenges.has(id));
+
+    if (remainingInRoom.length > 0) {
+      this.addNarrative(
+        'cipher',
+        `${String(remainingInRoom.length)} terminal${remainingInRoom.length === 1 ? '' : 's'} remaining in this area.`,
+        'CIPHER',
+      );
+      return;
+    }
+
+    // All room terminals done — trigger NPC congratulation
+    for (const npc of room.npcs) {
+      const dialog = npcDialogs[npc.id];
+      if (!dialog) continue;
+      const flagKey = `npc_${npc.id}_line`;
+      const lineIdx = this.state.storyFlags[flagKey] ? Number(this.state.storyFlags[flagKey]) : 1;
+      if (dialog.lines[lineIdx]) {
+        this.addNarrative('dialog', dialog.lines[lineIdx], humanizeRoomId(npc.id));
+      }
+      this.state.storyFlags[flagKey] = Math.min(lineIdx + 1, dialog.lines.length);
+    }
+
+    this.addNarrative(
+      'cipher',
+      'All terminals in this area are compromised. The path forward is open.',
+      'CIPHER',
+    );
+
+    // Floor-level completion check
     const floorRooms = this.world.getRoomsForFloor(room.floor);
     const floorChallengeIds = floorRooms.flatMap((r) => r.terminals.map((t) => t.challengeId));
     if (floorChallengeIds.length === 0) return;
@@ -319,8 +319,19 @@ export class TextAdventureEngine {
     const allFloorComplete = floorChallengeIds.every((id) => this.completedChallenges.has(id));
     if (allFloorComplete) {
       const nextFloor = room.floor + 1;
-      const floorKey = `floor${String(room.floor)}`;
-      const intro = floorIntros[floorKey];
+      const fKey = floorKey(room.floor);
+      const intro = floorIntros[fKey];
+
+      // Auto-trigger NPC postChallenge for all NPCs on this floor
+      for (const floorRoom of floorRooms) {
+        for (const npc of floorRoom.npcs) {
+          const dialog = npcDialogs[npc.id];
+          if (dialog?.postChallenge) {
+            this.addNarrative('dialog', dialog.postChallenge, humanizeRoomId(npc.id));
+          }
+        }
+      }
+
       if (intro) {
         this.addNarrative('cipher', intro.completion, 'CIPHER');
       } else {

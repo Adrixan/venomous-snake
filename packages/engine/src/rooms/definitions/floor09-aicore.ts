@@ -12,7 +12,8 @@ export const floor09Rooms: Room[] = [
         direction: 'north',
         targetRoomId: 'aicore_main',
         descriptionKey: 'rooms.aicore_antechamber.connections.north',
-        locked: false,
+        locked: true,
+        requiredChallenges: ['ch10_01_simple_class', 'ch10_02_methods', 'ch10_03_init_constructor'],
       },
       {
         direction: 'down',
@@ -68,7 +69,13 @@ export const floor09Rooms: Room[] = [
         direction: 'east',
         targetRoomId: 'aicore_neural',
         descriptionKey: 'rooms.aicore_main.connections.east',
-        locked: false,
+        locked: true,
+        requiredChallenges: [
+          'ch10_04_str_repr',
+          'ch10_05_inheritance',
+          'ch10_06_method_override',
+          'ch10_07_encapsulation',
+        ],
       },
     ],
     npcs: [
@@ -79,14 +86,7 @@ export const floor09Rooms: Room[] = [
         dialogId: 'ai_operator_bella_intro',
       },
     ],
-    items: [
-      {
-        id: 'neural_schematic',
-        nameKey: 'items.neural_schematic.name',
-        descriptionKey: 'items.neural_schematic.description',
-        itemType: 'datapad',
-      },
-    ],
+    items: [],
     terminals: [
       {
         id: 'aicore_terminal_04',
@@ -154,14 +154,7 @@ export const floor09Rooms: Room[] = [
         dialogId: 'neural_engineer_cole_intro',
       },
     ],
-    items: [
-      {
-        id: 'aicore_keycard_l10',
-        nameKey: 'items.aicore_keycard_l10.name',
-        descriptionKey: 'items.aicore_keycard_l10.description',
-        itemType: 'keycard',
-      },
-    ],
+    items: [],
     terminals: [
       {
         id: 'aicore_terminal_08',

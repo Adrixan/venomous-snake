@@ -12,7 +12,12 @@ export const floor08Rooms: Room[] = [
         direction: 'north',
         targetRoomId: 'vault_main',
         descriptionKey: 'rooms.vault_entrance.connections.north',
-        locked: false,
+        locked: true,
+        requiredChallenges: [
+          'ch09_01_importing_modules',
+          'ch09_02_from_import',
+          'ch09_03_lambda_functions',
+        ],
       },
       {
         direction: 'down',
@@ -68,7 +73,13 @@ export const floor08Rooms: Room[] = [
         direction: 'east',
         targetRoomId: 'vault_deepstore',
         descriptionKey: 'rooms.vault_main.connections.east',
-        locked: false,
+        locked: true,
+        requiredChallenges: [
+          'ch09_04_map_function',
+          'ch09_05_filter_function',
+          'ch09_06_list_comprehension_conditionals',
+          'ch09_07_dictionary_comprehension',
+        ],
       },
     ],
     npcs: [
@@ -79,14 +90,7 @@ export const floor08Rooms: Room[] = [
         dialogId: 'researcher_yuki_intro',
       },
     ],
-    items: [
-      {
-        id: 'classified_dossier',
-        nameKey: 'items.classified_dossier.name',
-        descriptionKey: 'items.classified_dossier.description',
-        itemType: 'datapad',
-      },
-    ],
+    items: [],
     terminals: [
       {
         id: 'vault_terminal_04',
@@ -154,14 +158,7 @@ export const floor08Rooms: Room[] = [
         dialogId: 'deep_archivist_zara_intro',
       },
     ],
-    items: [
-      {
-        id: 'vault_keycard_l9',
-        nameKey: 'items.vault_keycard_l9.name',
-        descriptionKey: 'items.vault_keycard_l9.description',
-        itemType: 'keycard',
-      },
-    ],
+    items: [],
     terminals: [
       {
         id: 'vault_terminal_08',

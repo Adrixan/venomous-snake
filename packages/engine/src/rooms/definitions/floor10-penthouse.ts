@@ -12,7 +12,12 @@ export const floor10Rooms: Room[] = [
         direction: 'north',
         targetRoomId: 'penthouse_office',
         descriptionKey: 'rooms.penthouse_elevator.connections.north',
-        locked: false,
+        locked: true,
+        requiredChallenges: [
+          'ch11_01_type_hints',
+          'ch11_02_dataclasses',
+          'ch11_03_assert_statements',
+        ],
       },
       {
         direction: 'down',
@@ -68,7 +73,12 @@ export const floor10Rooms: Room[] = [
         direction: 'east',
         targetRoomId: 'penthouse_lab',
         descriptionKey: 'rooms.penthouse_office.connections.east',
-        locked: false,
+        locked: true,
+        requiredChallenges: [
+          'ch11_04_writing_simple_tests',
+          'ch11_05_docstrings',
+          'ch11_06_constants_enums',
+        ],
       },
     ],
     npcs: [
@@ -79,14 +89,7 @@ export const floor10Rooms: Room[] = [
         dialogId: 'ceo_morgan_intro',
       },
     ],
-    items: [
-      {
-        id: 'ceo_journal',
-        nameKey: 'items.ceo_journal.name',
-        descriptionKey: 'items.ceo_journal.description',
-        itemType: 'datapad',
-      },
-    ],
+    items: [],
     terminals: [
       {
         id: 'pent_terminal_04',
@@ -146,14 +149,7 @@ export const floor10Rooms: Room[] = [
         dialogId: 'lab_ai_echo_intro',
       },
     ],
-    items: [
-      {
-        id: 'penthouse_keycard_l11',
-        nameKey: 'items.penthouse_keycard_l11.name',
-        descriptionKey: 'items.penthouse_keycard_l11.description',
-        itemType: 'keycard',
-      },
-    ],
+    items: [],
     terminals: [
       {
         id: 'pent_terminal_07',

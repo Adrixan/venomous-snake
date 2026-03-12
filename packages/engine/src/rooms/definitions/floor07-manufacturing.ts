@@ -12,7 +12,12 @@ export const floor07Rooms: Room[] = [
         direction: 'east',
         targetRoomId: 'manufacturing_control',
         descriptionKey: 'rooms.manufacturing_floor.connections.east',
-        locked: false,
+        locked: true,
+        requiredChallenges: [
+          'ch08_01_try_except',
+          'ch08_02_multiple_except',
+          'ch08_03_try_except_else_finally',
+        ],
       },
       {
         direction: 'down',
@@ -68,7 +73,12 @@ export const floor07Rooms: Room[] = [
         direction: 'north',
         targetRoomId: 'manufacturing_warehouse',
         descriptionKey: 'rooms.manufacturing_control.connections.north',
-        locked: false,
+        locked: true,
+        requiredChallenges: [
+          'ch08_04_raising_exceptions',
+          'ch08_05_custom_exception_classes',
+          'ch08_06_input_validation_with_errors',
+        ],
       },
     ],
     npcs: [
@@ -79,14 +89,7 @@ export const floor07Rooms: Room[] = [
         dialogId: 'qa_inspector_vera_intro',
       },
     ],
-    items: [
-      {
-        id: 'quality_report',
-        nameKey: 'items.quality_report.name',
-        descriptionKey: 'items.quality_report.description',
-        itemType: 'datapad',
-      },
-    ],
+    items: [],
     terminals: [
       {
         id: 'mfg_terminal_04',
@@ -146,14 +149,7 @@ export const floor07Rooms: Room[] = [
         dialogId: 'warehouse_manager_wendy_intro',
       },
     ],
-    items: [
-      {
-        id: 'shipping_manifest',
-        nameKey: 'items.shipping_manifest.name',
-        descriptionKey: 'items.shipping_manifest.description',
-        itemType: 'datapad',
-      },
-    ],
+    items: [],
     terminals: [
       {
         id: 'mfg_terminal_07',

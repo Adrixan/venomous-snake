@@ -12,7 +12,12 @@ export const floor01Rooms: Room[] = [
         direction: 'east',
         targetRoomId: 'server_monitoring',
         descriptionKey: 'rooms.server_main.connections.east',
-        locked: false,
+        locked: true,
+        requiredChallenges: [
+          'ch02_01_string_methods',
+          'ch02_02_string_indexing',
+          'ch02_03_string_slicing',
+        ],
       },
       {
         direction: 'down',
@@ -68,7 +73,12 @@ export const floor01Rooms: Room[] = [
         direction: 'north',
         targetRoomId: 'server_cage',
         descriptionKey: 'rooms.server_monitoring.connections.north',
-        locked: false,
+        locked: true,
+        requiredChallenges: [
+          'ch02_04_fstrings_basics',
+          'ch02_05_input_basics',
+          'ch02_06_type_conversion',
+        ],
       },
     ],
     npcs: [
@@ -79,14 +89,7 @@ export const floor01Rooms: Room[] = [
         dialogId: 'monitor_tech_diana_intro',
       },
     ],
-    items: [
-      {
-        id: 'server_log_printout',
-        nameKey: 'items.server_log_printout.name',
-        descriptionKey: 'items.server_log_printout.description',
-        itemType: 'datapad',
-      },
-    ],
+    items: [],
     terminals: [
       {
         id: 'server_terminal_04',
@@ -146,14 +149,7 @@ export const floor01Rooms: Room[] = [
         dialogId: 'cage_guard_evan_intro',
       },
     ],
-    items: [
-      {
-        id: 'server_keycard_l2',
-        nameKey: 'items.server_keycard_l2.name',
-        descriptionKey: 'items.server_keycard_l2.description',
-        itemType: 'keycard',
-      },
-    ],
+    items: [],
     terminals: [
       {
         id: 'server_terminal_07',

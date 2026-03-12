@@ -12,7 +12,8 @@ export const floor05Rooms: Room[] = [
         direction: 'north',
         targetRoomId: 'comms_center',
         descriptionKey: 'rooms.comms_reception.connections.north',
-        locked: false,
+        locked: true,
+        requiredChallenges: ['ch06_01_create_list', 'ch06_02_list_methods', 'ch06_03_list_slicing'],
       },
       {
         direction: 'down',
@@ -68,7 +69,13 @@ export const floor05Rooms: Room[] = [
         direction: 'east',
         targetRoomId: 'comms_server',
         descriptionKey: 'rooms.comms_center.connections.east',
-        locked: false,
+        locked: true,
+        requiredChallenges: [
+          'ch06_04_list_comprehension',
+          'ch06_05_tuples',
+          'ch06_06_dictionaries',
+          'ch06_07_dict_methods',
+        ],
       },
     ],
     npcs: [
@@ -79,14 +86,7 @@ export const floor05Rooms: Room[] = [
         dialogId: 'signal_analyst_petra_intro',
       },
     ],
-    items: [
-      {
-        id: 'frequency_log',
-        nameKey: 'items.frequency_log.name',
-        descriptionKey: 'items.frequency_log.description',
-        itemType: 'datapad',
-      },
-    ],
+    items: [],
     terminals: [
       {
         id: 'comms_terminal_04',
@@ -154,14 +154,7 @@ export const floor05Rooms: Room[] = [
         dialogId: 'comms_tech_quinn_intro',
       },
     ],
-    items: [
-      {
-        id: 'satellite_codes',
-        nameKey: 'items.satellite_codes.name',
-        descriptionKey: 'items.satellite_codes.description',
-        itemType: 'datapad',
-      },
-    ],
+    items: [],
     terminals: [
       {
         id: 'comms_terminal_08',

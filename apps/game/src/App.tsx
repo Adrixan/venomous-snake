@@ -103,6 +103,8 @@ export function App(): React.JSX.Element {
 
   // Text adventure engine
   const engineRef = useRef<TextAdventureEngine | null>(null);
+  /** Tracks how many engine narrative entries have been synced to the store. */
+  const engineNarrativeSyncIndex = useRef(0);
 
   // Shared Python interpreter (Pyodide) — singleton
   const interpreterRef = useRef(getSharedInterpreter());
@@ -159,6 +161,7 @@ export function App(): React.JSX.Element {
       for (const entry of state.narrativeLog) {
         appendNarrative(entry);
       }
+      engineNarrativeSyncIndex.current = state.narrativeLog.length;
       const room = engineRef.current.getCurrentRoom();
       if (room) {
         addVisitedRoom(room.id);
@@ -187,11 +190,11 @@ export function App(): React.JSX.Element {
 
       // Sync narrative log
       const state = engineRef.current.getState();
-      const currentLogLength = useGameStore.getState().narrativeLog.length;
-      for (let i = currentLogLength; i < state.narrativeLog.length; i++) {
+      for (let i = engineNarrativeSyncIndex.current; i < state.narrativeLog.length; i++) {
         const entry = state.narrativeLog[i];
         if (entry) appendNarrative(entry);
       }
+      engineNarrativeSyncIndex.current = state.narrativeLog.length;
 
       // If room changed, update store
       const room = engineRef.current.getCurrentRoom();
@@ -267,11 +270,15 @@ export function App(): React.JSX.Element {
             engineRef.current.completeChallenge(event.payload.challengeId);
             // Sync any new narrative entries from the engine (e.g. floor unlock messages)
             const engineState = engineRef.current.getState();
-            const storeLogLength = useGameStore.getState().narrativeLog.length;
-            for (let i = storeLogLength; i < engineState.narrativeLog.length; i++) {
+            for (
+              let i = engineNarrativeSyncIndex.current;
+              i < engineState.narrativeLog.length;
+              i++
+            ) {
               const narEntry = engineState.narrativeLog[i];
               if (narEntry) appendNarrative(narEntry);
             }
+            engineNarrativeSyncIndex.current = engineState.narrativeLog.length;
           }
           // Refresh actions after challenge completion
           setTimeout(() => {
@@ -374,6 +381,7 @@ export function App(): React.JSX.Element {
       setSessionKey((k) => k + 1);
       engineRef.current = null;
       controllerRef.current = null;
+      engineNarrativeSyncIndex.current = 0;
       setPlayerName(name);
       setPlayerGender(gender);
       setGamePhase('playing');

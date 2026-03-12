@@ -12,7 +12,12 @@ export const floor04Rooms: Room[] = [
         direction: 'north',
         targetRoomId: 'archives_main',
         descriptionKey: 'rooms.archives_entrance.connections.north',
-        locked: false,
+        locked: true,
+        requiredChallenges: [
+          'ch05_01_simple_function',
+          'ch05_02_function_return',
+          'ch05_03_multiple_parameters',
+        ],
       },
       {
         direction: 'down',
@@ -68,7 +73,13 @@ export const floor04Rooms: Room[] = [
         direction: 'east',
         targetRoomId: 'archives_vault',
         descriptionKey: 'rooms.archives_main.connections.east',
-        locked: false,
+        locked: true,
+        requiredChallenges: [
+          'ch05_04_default_parameters',
+          'ch05_05_return_multiple',
+          'ch05_06_functions_calling_functions',
+          'ch05_07_scope',
+        ],
       },
     ],
     npcs: [
@@ -79,14 +90,7 @@ export const floor04Rooms: Room[] = [
         dialogId: 'data_curator_miles_intro',
       },
     ],
-    items: [
-      {
-        id: 'dusty_manual',
-        nameKey: 'items.dusty_manual.name',
-        descriptionKey: 'items.dusty_manual.description',
-        itemType: 'datapad',
-      },
-    ],
+    items: [],
     terminals: [
       {
         id: 'archive_terminal_04',
@@ -154,14 +158,7 @@ export const floor04Rooms: Room[] = [
         dialogId: 'vault_keeper_nina_intro',
       },
     ],
-    items: [
-      {
-        id: 'archive_keycard_l5',
-        nameKey: 'items.archive_keycard_l5.name',
-        descriptionKey: 'items.archive_keycard_l5.description',
-        itemType: 'keycard',
-      },
-    ],
+    items: [],
     terminals: [
       {
         id: 'archive_terminal_08',
