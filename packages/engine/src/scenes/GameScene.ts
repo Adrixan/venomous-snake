@@ -273,13 +273,15 @@ export class GameScene extends Phaser.Scene {
     const cx = Math.floor(ROOM_COLS / 2);
     const cy = Math.floor(ROOM_ROWS / 2);
 
-    const spawns: Array<[InteractiveObjectType, number, number]> = [
-      ['terminal', cx - 3, cy - 3],
+    const spawns: Array<[InteractiveObjectType, number, number, Record<string, unknown>?]> = [
+      ['terminal', cx - 3, cy - 3, { challengeId: 'ch01_01_hello_world', label: 'Test Terminal' }],
       ['item', cx + 3, cy + 3],
     ];
 
-    for (const [type, col, row] of spawns) {
-      const obj = new InteractiveObject(this, col * GRID + GRID / 2, row * GRID + GRID / 2, type);
+    for (const [type, col, row, props] of spawns) {
+      const obj = new InteractiveObject(
+        this, col * GRID + GRID / 2, row * GRID + GRID / 2, type, props,
+      );
       this.interactiveObjects.push(obj);
     }
   }

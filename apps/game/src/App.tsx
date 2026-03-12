@@ -12,7 +12,7 @@ import { useGameAudio } from './hooks/useGameAudio';
 import { useStoryFlow } from './hooks/useStoryFlow';
 import { useCurriculumProgress } from './hooks/useCurriculumProgress';
 import { RotateDeviceOverlay } from './components/RotateDeviceOverlay';
-import { MockInterpreter } from '@venomous-snake/python-runtime';
+import { getSharedInterpreter, initializeSharedInterpreter } from '@venomous-snake/python-runtime';
 import {
   MainMenu,
   NewGameFlow,
@@ -133,11 +133,13 @@ export function App(): React.JSX.Element {
   // Achievement notifications
   const [achievementNotifications, setAchievementNotifications] = useState<ToastNotification[]>([]);
 
-  // Stable interpreter — recreated on new game, persists across paused transitions
-  const interpreterRef = useRef<MockInterpreter | null>(null);
-  if (interpreterRef.current === null) {
-    interpreterRef.current = new MockInterpreter();
-  }
+  // Shared Python interpreter (Pyodide) — singleton, no recreation needed
+  const interpreterRef = useRef(getSharedInterpreter());
+
+  // Start Pyodide loading early so it's ready when a terminal opens
+  useEffect(() => {
+    initializeSharedInterpreter().catch(() => undefined);
+  }, []);
 
   // Ref exposed to GameControllerProvider so useSaveSystem can reach the controller
   const controllerRef = useRef<GameController | null>(null);
@@ -296,8 +298,7 @@ export function App(): React.JSX.Element {
       resetGameState();
       setSavedProgress(undefined);
       setSessionKey((k) => k + 1);
-      // Recreate interpreter for fresh execution environment
-      interpreterRef.current = new MockInterpreter();
+      // Shared interpreter persists — no recreation needed
       controllerRef.current = null;
       setPlayerName(name);
       setPlayerGender(gender);
@@ -373,7 +374,6 @@ export function App(): React.JSX.Element {
           setSavedProgress(data.curriculumProgress);
           setSessionKey((k) => k + 1);
           controllerRef.current = null;
-          interpreterRef.current = new MockInterpreter();
         }
         setGamePhase('playing');
       });

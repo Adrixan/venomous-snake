@@ -1,9 +1,9 @@
 import { useState, useCallback, useMemo, useRef, useEffect } from 'react';
-import type { Challenge, PythonOutput } from '@venomous-snake/shared-types';
+import type { Challenge, PythonOutput, PythonInterpreter } from '@venomous-snake/shared-types';
 import { challengeMap } from '@venomous-snake/challenges';
 import { ChallengeRunner, HintEngine } from '@venomous-snake/challenge-engine';
 import type { ChallengeResult } from '@venomous-snake/challenge-engine';
-import { MockInterpreter } from '@venomous-snake/python-runtime';
+import { getSharedInterpreter, initializeSharedInterpreter } from '@venomous-snake/python-runtime';
 
 export interface SubmitResult {
   passed: boolean;
@@ -21,7 +21,7 @@ export interface UseChallengeTerminalReturn {
   submitCode: (code: string) => Promise<void>;
   runCode: (code: string) => Promise<void>;
   resetState: () => void;
-  interpreter: MockInterpreter;
+  interpreter: PythonInterpreter;
 }
 
 export function useChallengeTerminal(challengeId: string | null): UseChallengeTerminalReturn {
@@ -36,15 +36,15 @@ export function useChallengeTerminal(challengeId: string | null): UseChallengeTe
   const [hints, setHints] = useState<string[]>([]);
   const [challengeResult, setChallengeResult] = useState<ChallengeResult | null>(null);
 
-  const interpreterRef = useRef<MockInterpreter>(new MockInterpreter());
+  const interpreterRef = useRef<PythonInterpreter>(getSharedInterpreter());
   const runnerRef = useRef<ChallengeRunner>(new ChallengeRunner(interpreterRef.current));
   const hintEngineRef = useRef<HintEngine>(new HintEngine());
 
   useEffect(() => {
     const interpreter = interpreterRef.current;
-    if (!interpreter.isReady()) {
-      interpreter.initialize().catch(() => undefined);
-    }
+
+    // Start async initialization (Pyodide WASM loading)
+    initializeSharedInterpreter().catch(() => undefined);
 
     const unsubOutput = interpreter.onOutput((output) => {
       setOutputs((prev) => [...prev, output]);
@@ -64,10 +64,7 @@ export function useChallengeTerminal(challengeId: string | null): UseChallengeTe
   }, [challengeId]);
 
   const ensureReady = useCallback(async (): Promise<void> => {
-    const interpreter = interpreterRef.current;
-    if (!interpreter.isReady()) {
-      await interpreter.initialize();
-    }
+    await initializeSharedInterpreter();
   }, []);
 
   const runCode = useCallback(

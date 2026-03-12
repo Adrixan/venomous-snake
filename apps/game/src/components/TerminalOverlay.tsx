@@ -1,5 +1,5 @@
-import React, { useRef, useEffect, useCallback, useState } from 'react';
-import { MockInterpreter } from '@venomous-snake/python-runtime';
+import React, { useEffect, useCallback, useState } from 'react';
+import { getSharedInterpreter, initializeSharedInterpreter } from '@venomous-snake/python-runtime';
 import { HackingTerminal, TerminalBootSequence } from '@venomous-snake/ui';
 import { useGameStore } from '../store/gameStore';
 import { EventBus } from '@venomous-snake/engine';
@@ -9,23 +9,19 @@ export const TerminalOverlay = React.memo(function TerminalOverlay(): React.JSX.
   const closeTerminal = useGameStore((s) => s.closeTerminal);
   const addXp = useGameStore((s) => s.addXp);
   const currentChallengeId = useGameStore((s) => s.currentChallengeId);
-  const interpreterRef = useRef<MockInterpreter | null>(null);
   const [bootDone, setBootDone] = useState(false);
 
-  if (!interpreterRef.current) {
-    interpreterRef.current = new MockInterpreter();
-  }
-
-  // Reset boot state each time the terminal opens so the sequence can run
+  // Start Pyodide initialization eagerly when the terminal opens
   useEffect(() => {
     if (terminalOpen) {
       setBootDone(false);
+      initializeSharedInterpreter().catch(() => undefined);
     }
   }, [terminalOpen]);
 
   useEffect(() => {
     return () => {
-      interpreterRef.current?.terminate().catch(() => undefined);
+      // Don't terminate the shared interpreter — other components may use it
     };
   }, []);
 
@@ -69,7 +65,7 @@ export const TerminalOverlay = React.memo(function TerminalOverlay(): React.JSX.
           />
         ) : (
           <HackingTerminal
-            interpreter={interpreterRef.current}
+            interpreter={getSharedInterpreter()}
             onClose={handleClose}
             initialCode={'# Write your Python code here\n'}
           />
