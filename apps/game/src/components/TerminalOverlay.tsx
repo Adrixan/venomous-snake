@@ -14,7 +14,6 @@ export const TerminalOverlay = React.memo(function TerminalOverlay(): React.JSX.
   // Start Pyodide initialization eagerly when the terminal opens
   useEffect(() => {
     if (terminalOpen) {
-      setBootDone(false);
       initializeSharedInterpreter().catch(() => undefined);
     }
   }, [terminalOpen]);
