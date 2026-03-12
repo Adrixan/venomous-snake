@@ -11,7 +11,7 @@
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
-    "phaser": "3"
+    "@venomous-snake/shared-types": "workspace:*"
   },
   "devDependencies": {
     "typescript": "^5.6.0",

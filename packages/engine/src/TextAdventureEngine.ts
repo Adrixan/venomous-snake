@@ -8,10 +8,22 @@ import type {
 import { EventBus } from './EventBus';
 import { GameWorld } from './rooms/world';
 import { allRooms } from './rooms/definitions';
+import { roomNarratives, npcDialogs, floorIntros, gameIntro, gameVictory } from './narrative';
 
 const ALL_CHALLENGE_IDS: string[] = allRooms.flatMap((room) =>
   room.terminals.map((t) => t.challengeId),
 );
+
+/** Human-readable room names derived from room IDs */
+function humanizeRoomId(id: string): string {
+  return id
+    .replace(
+      /^(floor\d+_|lobby_|server_|research_|surveillance_|archives_|comms_|executive_|manufacturing_|network_|ai_core_|rooftop_)/,
+      '',
+    )
+    .replace(/_/g, ' ')
+    .replace(/\b\w/g, (c) => c.toUpperCase());
+}
 
 export class TextAdventureEngine {
   private world: GameWorld;
@@ -42,14 +54,38 @@ export class TextAdventureEngine {
     const firstVisit = !this.state.visitedRooms.includes(roomId);
     this.state.currentRoomId = roomId;
 
+    const narrative = roomNarratives[roomId];
+
     if (firstVisit) {
       this.state.visitedRooms.push(roomId);
-      if (room.firstVisitKey) {
-        this.addNarrative('description', room.firstVisitKey);
+
+      // Show floor intro on first visit to a floor's first room
+      const floorKey = `floor${String(room.floor)}`;
+      if (!this.state.storyFlags[`${floorKey}_arrived`]) {
+        this.state.storyFlags[`${floorKey}_arrived`] = true;
+        const intro = floorIntros[floorKey];
+        if (intro) {
+          this.addNarrative('cipher', intro.arrival, 'CIPHER');
+          this.addNarrative('cipher', intro.briefing, 'CIPHER');
+        }
+      }
+
+      // First visit text
+      const firstVisitText = narrative?.firstVisit ?? room.firstVisitKey;
+      if (firstVisitText) {
+        this.addNarrative('description', firstVisitText);
+      }
+    } else {
+      // Revisit text
+      const revisitText = narrative?.revisit;
+      if (revisitText) {
+        this.addNarrative('description', revisitText);
       }
     }
 
-    this.addNarrative('description', room.descriptionKey);
+    // Room description
+    const descText = narrative?.description ?? room.descriptionKey;
+    this.addNarrative('description', descText);
 
     EventBus.emit({ type: 'ROOM_ENTER', payload: { roomId, firstVisit } });
   }
@@ -72,10 +108,11 @@ export class TextAdventureEngine {
     // Move actions per connection
     for (const conn of room.connections) {
       const unlocked = this.isConnectionUnlocked(conn, mergedChallenges, inventory);
+      const targetName = humanizeRoomId(conn.targetRoomId);
       const moveAction: GameAction = {
         id: `move_${conn.targetRoomId}`,
         type: 'move',
-        label: `Go ${conn.direction} to ${conn.targetRoomId}`,
+        label: `Go ${conn.direction} → ${targetName}`,
         targetId: conn.targetRoomId,
       };
       if (!unlocked) {
@@ -90,10 +127,11 @@ export class TextAdventureEngine {
       if (npc.appearsWhen?.some((f) => !this.state.storyFlags[f])) continue;
       if (npc.disappearsWhen?.some((f) => this.state.storyFlags[f])) continue;
 
+      const npcName = npcDialogs[npc.id] ? humanizeRoomId(npc.id) : npc.nameKey;
       actions.push({
         id: `talk_${npc.id}`,
         type: 'talk',
-        label: `Talk to ${npc.nameKey}`,
+        label: `Talk to ${npcName}`,
         targetId: npc.id,
       });
     }
@@ -105,7 +143,7 @@ export class TextAdventureEngine {
       actions.push({
         id: `hack_${terminal.id}`,
         type: 'hack',
-        label: `Hack ${terminal.nameKey}`,
+        label: `Hack terminal [${terminal.challengeId}]`,
         targetId: terminal.id,
       });
     }
@@ -134,7 +172,9 @@ export class TextAdventureEngine {
 
     switch (action.type) {
       case 'look': {
-        this.addNarrative('description', room.descriptionKey);
+        const narrative = roomNarratives[room.id];
+        const descText = narrative?.description ?? room.descriptionKey;
+        this.addNarrative('description', descText);
         break;
       }
 
@@ -163,7 +203,28 @@ export class TextAdventureEngine {
       case 'talk': {
         const npc = room.npcs.find((n) => n.id === action.targetId);
         if (!npc) break;
-        this.addNarrative('dialog', npc.descriptionKey, npc.nameKey);
+        const dialog = npcDialogs[npc.id];
+        if (dialog) {
+          // Check if floor challenges are done for postChallenge variant
+          const floorChallenges = this.getFloorChallengeIds(room.floor);
+          const allFloorDone = floorChallenges.every((id) => mergedChallenges.includes(id));
+          if (allFloorDone && dialog.postChallenge) {
+            this.addNarrative('dialog', dialog.postChallenge, humanizeRoomId(npc.id));
+          } else {
+            // Cycle through dialog lines
+            const flagKey = `npc_${npc.id}_line`;
+            const lineIdx = this.state.storyFlags[flagKey]
+              ? Number(this.state.storyFlags[flagKey])
+              : 0;
+            this.addNarrative('dialog', dialog.greeting, humanizeRoomId(npc.id));
+            if (dialog.lines[lineIdx]) {
+              this.addNarrative('dialog', dialog.lines[lineIdx], humanizeRoomId(npc.id));
+            }
+            this.state.storyFlags[flagKey] = (lineIdx + 1) % Math.max(dialog.lines.length, 1);
+          }
+        } else {
+          this.addNarrative('dialog', npc.descriptionKey, npc.nameKey);
+        }
         EventBus.emit({
           type: 'DIALOG_START',
           payload: { npcId: npc.id, dialogId: npc.dialogId },
@@ -174,7 +235,7 @@ export class TextAdventureEngine {
       case 'hack': {
         const terminal = room.terminals.find((t) => t.id === action.targetId);
         if (!terminal) break;
-        this.addNarrative('action', terminal.descriptionKey);
+        this.addNarrative('action', `You approach the terminal and begin the hack sequence...`);
         EventBus.emit({
           type: 'TERMINAL_OPEN',
           payload: {
@@ -258,10 +319,16 @@ export class TextAdventureEngine {
     const allFloorComplete = floorChallengeIds.every((id) => this.completedChallenges.has(id));
     if (allFloorComplete) {
       const nextFloor = room.floor + 1;
-      this.addNarrative(
-        'system',
-        `All challenges on floor ${room.floor} complete! Access to floor ${nextFloor} is now unlocked.`,
-      );
+      const floorKey = `floor${String(room.floor)}`;
+      const intro = floorIntros[floorKey];
+      if (intro) {
+        this.addNarrative('cipher', intro.completion, 'CIPHER');
+      } else {
+        this.addNarrative(
+          'system',
+          `All challenges on floor ${String(room.floor)} complete! Access to floor ${String(nextFloor)} is now unlocked.`,
+        );
+      }
       EventBus.emit({
         type: 'FLOOR_COMPLETE',
         payload: { floorNumber: room.floor },
@@ -310,6 +377,21 @@ export class TextAdventureEngine {
 
   isGameComplete(): boolean {
     return ALL_CHALLENGE_IDS.every((id) => this.completedChallenges.has(id));
+  }
+
+  /** Get all challenge IDs for a given floor number */
+  getFloorChallengeIds(floor: number): string[] {
+    return this.world.getRoomsForFloor(floor).flatMap((r) => r.terminals.map((t) => t.challengeId));
+  }
+
+  /** Get the game intro text lines */
+  static getGameIntro(): string[] {
+    return gameIntro;
+  }
+
+  /** Get the game victory text lines */
+  static getGameVictory(): string[] {
+    return gameVictory;
   }
 
   private addNarrative(type: NarrativeEntry['type'], text: string, speaker?: string): void {

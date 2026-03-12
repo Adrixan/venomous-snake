@@ -119,9 +119,7 @@ export function GameControllerProvider({
         }
 
         case 'FLOOR_CHANGE':
-          store.setCurrentFloor(
-            event.payload.targetFloor === 0 ? 'lobby' : `floor_${event.payload.targetFloor}`,
-          );
+          store.setCurrentFloor(event.payload.targetFloor);
           break;
 
         case 'DIALOG_TRIGGERED':

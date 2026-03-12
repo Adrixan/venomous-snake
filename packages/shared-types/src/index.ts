@@ -4,7 +4,9 @@
 export type Nullable<T> = T | null;
 export type Maybe<T> = T | null | undefined;
 
-export const SHARED_TYPES_VERSION = '0.0.1';
+export const SHARED_TYPES_VERSION = '0.1.0';
+
+// ─── Dialog & Narrative ─────────────────────────────────────────────────────
 
 /** Dialog content shown during NPC/narrative sequences */
 export interface DialogContent {
@@ -20,54 +22,143 @@ export interface ChallengeResultState {
   error?: string;
 }
 
-/** Event bus event types for Phaser↔React communication */
+// ─── Text Adventure: Room System ────────────────────────────────────────────
+
+/** A connection from one room to another */
+export interface RoomConnection {
+  direction: string;
+  targetRoomId: string;
+  descriptionKey: string;
+  locked: boolean;
+  /** Challenge IDs that must be completed to unlock this connection */
+  requiredChallenges?: string[];
+  /** Item ID required to unlock this connection */
+  requiredItem?: string;
+}
+
+/** A hackable terminal in a room */
+export interface RoomTerminal {
+  id: string;
+  challengeId: string;
+  nameKey: string;
+  descriptionKey: string;
+}
+
+/** An NPC present in a room */
+export interface RoomNPC {
+  id: string;
+  nameKey: string;
+  descriptionKey: string;
+  dialogId: string;
+  /** Only visible after these flags are set */
+  appearsWhen?: string[];
+  /** Disappears after these flags are set */
+  disappearsWhen?: string[];
+}
+
+/** An item that can be picked up in a room */
+export interface RoomItem {
+  id: string;
+  nameKey: string;
+  descriptionKey: string;
+  itemType: string;
+  /** Only visible after these flags are set */
+  appearsWhen?: string[];
+  /** Already picked up (tracked in state, not definition) */
+}
+
+/** A room in the text adventure world */
+export interface Room {
+  id: string;
+  floor: number;
+  nameKey: string;
+  descriptionKey: string;
+  /** Longer atmospheric text shown on first visit */
+  firstVisitKey?: string;
+  connections: RoomConnection[];
+  npcs: RoomNPC[];
+  items: RoomItem[];
+  terminals: RoomTerminal[];
+}
+
+// ─── Text Adventure: Game State ─────────────────────────────────────────────
+
+/** A single entry in the narrative log */
+export interface NarrativeEntry {
+  id: string;
+  type: 'description' | 'dialog' | 'action' | 'system' | 'cipher' | 'error';
+  text: string;
+  speaker?: string;
+  timestamp: number;
+}
+
+/** Available action the player can take */
+export interface GameAction {
+  id: string;
+  type:
+    | 'move'
+    | 'examine'
+    | 'talk'
+    | 'hack'
+    | 'pickup'
+    | 'use_item'
+    | 'look'
+    | 'inventory'
+    | 'help';
+  label: string;
+  targetId?: string;
+  disabled?: boolean;
+  disabledReason?: string;
+}
+
+/** Text adventure engine state */
+export interface TextAdventureState {
+  currentRoomId: string;
+  visitedRooms: string[];
+  pickedUpItems: string[];
+  storyFlags: Record<string, boolean | number>;
+  narrativeLog: NarrativeEntry[];
+}
+
+// ─── Event Bus ──────────────────────────────────────────────────────────────
+
+/** Event bus event types for engine↔UI communication */
 export type GameEvent =
-  // Existing events — kept for backwards compatibility
-  | { type: 'TERMINAL_OPEN'; payload: { terminalId: string; challengeId?: string } }
-  | { type: 'TERMINAL_CLOSE' }
-  | { type: 'DIALOG_OPEN'; payload: { dialogId: string; npcId: string } }
-  | { type: 'DIALOG_CLOSE' }
-  | { type: 'GAME_PAUSE' }
-  | { type: 'GAME_RESUME' }
-  | { type: 'PLAYER_MOVE'; payload: { x: number; y: number; direction: Direction } }
-  | { type: 'SCENE_CHANGE'; payload: { sceneKey: string } }
-  | { type: 'INTERACTION_PROMPT'; payload: { objectId: string; promptText: string } | null }
-  // Existing new events
-  | { type: 'PLAYER_INTERACT'; payload: { objectId: string; objectType: string } }
+  // Room/navigation events
+  | { type: 'ROOM_ENTER'; payload: { roomId: string; firstVisit: boolean } }
+  | { type: 'ROOM_TRANSITION'; payload: { from: string; to: string } }
+  // NPC events
   | { type: 'DIALOG_START'; payload: { npcId: string; dialogId?: string } }
   | { type: 'DIALOG_END' }
-  | { type: 'ROOM_TRANSITION'; payload: { from: string; to: string } }
-  | {
-      type: 'ITEM_PICKUP';
-      payload: { itemId: string; name: string; description: string; itemType: string };
-    }
-  | { type: 'SCENE_READY' }
-  | { type: 'OVERLAY_CHANGE'; payload: OverlayState }
-  // GameController challenge events
+  | { type: 'DIALOG_TRIGGERED'; payload: DialogContent }
+  | { type: 'DIALOG_DISMISSED' }
+  // Terminal/challenge events
+  | { type: 'TERMINAL_OPEN'; payload: { terminalId: string; challengeId?: string } }
+  | { type: 'TERMINAL_CLOSE' }
   | { type: 'CHALLENGE_STARTED'; payload: { challengeId: string; cipherIntro: string } }
   | { type: 'CHALLENGE_RESULT'; payload: ChallengeResultState & { xpEarned: number } }
   | { type: 'CHALLENGE_COMPLETED'; payload: { challengeId: string } }
   | { type: 'CHALLENGE_ABANDONED' }
+  // Item events
+  | {
+      type: 'ITEM_PICKUP';
+      payload: { itemId: string; name: string; description: string; itemType: string };
+    }
+  // Progression events
   | { type: 'XP_CHANGED'; payload: { xp: number; level: number } }
   | { type: 'ACHIEVEMENT_UNLOCKED'; payload: { id: string; nameKey: string } }
   | { type: 'FLOOR_UNLOCKED'; payload: { floor: number } }
   | { type: 'FLOOR_COMPLETE'; payload: { floorNumber: number } }
   | { type: 'FLOOR_CHANGE'; payload: { targetFloor: number } }
-  | { type: 'DIALOG_TRIGGERED'; payload: DialogContent }
-  | { type: 'DIALOG_DISMISSED' }
-  | { type: 'ACCESS_DENIED'; payload: { objectId: string; message: string } }
-  | { type: 'FLOOR_ARRIVED'; payload: { floor: number } };
-
-/** Player facing direction */
-export type Direction = 'up' | 'down' | 'left' | 'right';
-
-/** Player state in the game world */
-export interface PlayerState {
-  x: number;
-  y: number;
-  direction: Direction;
-  currentRoom: string;
-}
+  | { type: 'FLOOR_ARRIVED'; payload: { floor: number } }
+  // Game state events
+  | { type: 'GAME_PAUSE' }
+  | { type: 'GAME_RESUME' }
+  | { type: 'SCENE_READY' }
+  | { type: 'NARRATIVE_APPEND'; payload: NarrativeEntry }
+  | { type: 'ACTIONS_UPDATE'; payload: GameAction[] }
+  | { type: 'GAME_COMPLETE'; payload: { totalXp: number; totalTime: number } }
+  | { type: 'ACCESS_DENIED'; payload: { objectId: string; message: string } };
 
 /** Game overlay state - which UI panels are open */
 export interface OverlayState {
@@ -76,24 +167,28 @@ export interface OverlayState {
   menuOpen: boolean;
   inventoryOpen: boolean;
   mapOpen: boolean;
-  skillTreeOpen: boolean;
 }
 
 /** Core game store state */
 export interface GameStoreState {
-  player: PlayerState;
+  currentRoomId: string;
   overlay: OverlayState;
-  isPaused: boolean;
-  interactionPrompt: { objectId: string; promptText: string } | null;
 
   // UI shell state
-  gamePhase: 'menu' | 'playing' | 'paused' | 'tutorial';
-  activePanel: 'none' | 'inventory' | 'questlog' | 'map' | 'settings' | 'terminal';
+  gamePhase: 'menu' | 'playing' | 'paused';
+  activePanel: 'none' | 'inventory' | 'questlog' | 'map' | 'settings';
   playerName: string;
   playerGender: 'male' | 'female' | 'nonbinary';
   xp: number;
   level: number;
-  currentFloor: string;
+  currentFloor: number;
+
+  // Text adventure state
+  visitedRooms: string[];
+  pickedUpItems: string[];
+  storyFlags: Record<string, boolean | number>;
+  narrativeLog: NarrativeEntry[];
+  availableActions: GameAction[];
 
   // Challenge state
   activeChallengeId: string | null;
@@ -102,18 +197,15 @@ export interface GameStoreState {
   unlockedFloors: number[];
   dialogActive: boolean;
   dialogContent: DialogContent | null;
-
-  // Terminal challenge tracking
   currentChallengeId: string | null;
 
-  // Inventory — item IDs the player currently holds
+  // Inventory
   inventory: string[];
 
-  /**
-   * Current stealth/alert level across the whole facility.
-   * 0 = normal  1 = guards watchful  2 = high alert  3 = full lockdown
-   */
   alertLevel: 0 | 1 | 2 | 3;
+
+  // Game completion
+  gameCompleted: boolean;
 
   // Audio settings
   masterVolume: number;
@@ -122,9 +214,12 @@ export interface GameStoreState {
   isMuted: boolean;
 
   // Actions
-  setPlayerPosition: (x: number, y: number) => void;
-  setPlayerDirection: (direction: Direction) => void;
-  setCurrentRoom: (room: string) => void;
+  setCurrentRoom: (roomId: string) => void;
+  addVisitedRoom: (roomId: string) => void;
+  setStoryFlag: (flag: string, value: boolean) => void;
+  appendNarrative: (entry: NarrativeEntry) => void;
+  clearNarrative: () => void;
+  setAvailableActions: (actions: GameAction[]) => void;
   openTerminal: (terminalId: string, challengeId?: string) => void;
   closeTerminal: () => void;
   openDialog: (dialogId: string, npcId: string) => void;
@@ -132,25 +227,21 @@ export interface GameStoreState {
   toggleMenu: () => void;
   toggleInventory: () => void;
   toggleMap: () => void;
-  toggleSkillTree: () => void;
-  setPaused: (paused: boolean) => void;
-  setInteractionPrompt: (prompt: { objectId: string; promptText: string } | null) => void;
 
   // UI shell actions
-  setGamePhase: (phase: 'menu' | 'playing' | 'paused' | 'tutorial') => void;
-  setActivePanel: (
-    panel: 'none' | 'inventory' | 'questlog' | 'map' | 'settings' | 'terminal',
-  ) => void;
+  setGamePhase: (phase: 'menu' | 'playing' | 'paused') => void;
+  setActivePanel: (panel: 'none' | 'inventory' | 'questlog' | 'map' | 'settings') => void;
   setPlayerName: (name: string) => void;
   setPlayerGender: (gender: 'male' | 'female' | 'nonbinary') => void;
   addXp: (amount: number) => void;
   setLevel: (level: number) => void;
-  setCurrentFloor: (floor: string) => void;
+  setCurrentFloor: (floor: number) => void;
 
   // Challenge actions
   setActiveChallenge: (id: string | null) => void;
   setChallengeResult: (result: ChallengeResultState | null) => void;
   addCompletedChallenge: (id: string) => void;
+  addPickedUpItem: (itemId: string) => void;
   unlockFloor: (n: number) => void;
   setDialog: (content: DialogContent) => void;
   clearDialog: () => void;
@@ -163,6 +254,9 @@ export interface GameStoreState {
   // Alert / stealth actions
   setAlertLevel: (level: 0 | 1 | 2 | 3) => void;
   incrementAlertLevel: () => void;
+
+  // Game completion actions
+  setGameCompleted: (completed: boolean) => void;
 
   // Audio actions
   setMasterVolume: (volume: number) => void;

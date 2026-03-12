@@ -33,6 +33,10 @@ export interface SaveData {
   playTimeMs: number;
   xp: number;
   level: number;
+  gameCompleted?: boolean;
+  storyFlags?: Record<string, boolean | number>;
+  visitedRooms?: string[];
+  pickedUpItems?: string[];
 }
 
 export interface SaveSlot {

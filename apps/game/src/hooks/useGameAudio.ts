@@ -189,7 +189,7 @@ export function useGameAudio(): void {
   useEffect(() => {
     const unsub = EventBus.on((event): void => {
       switch (event.type) {
-        case 'PLAYER_MOVE': {
+        case 'ROOM_ENTER': {
           if (reducedMotion) break;
           const now = Date.now();
           if (now - lastFootstepRef.current < FOOTSTEP_THROTTLE_MS) break;
@@ -256,14 +256,13 @@ export function useGameAudio(): void {
           break;
         }
 
-        case 'ROOM_TRANSITION':
-        case 'SCENE_CHANGE': {
+        case 'ROOM_TRANSITION': {
           void ProceduralAudio.generateElevator().then((buf) => {
             if (buf !== null) playBuffer(buf, sfxVolume * 0.8);
           });
 
           // Switch ambient style depending on destination
-          const dest = event.type === 'ROOM_TRANSITION' ? event.payload.to : event.payload.sceneKey;
+          const dest = event.payload.to;
           const beatFloors = ['server_room', 'boss', 'executive'];
           const nextType = beatFloors.some((f) => dest.toLowerCase().includes(f)) ? 'beat' : 'hum';
           void startAmbient(nextType);

@@ -1,0 +1,304 @@
+/* ─── Victory Screen — Game Completion UI ────────────────────────────────── */
+
+/* ─── Main Container ─────────────────────────────────────────────────────── */
+
+.victory-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  background: #0a0a0f;
+  font-family: var(--term-font);
+  color: #e0e0e0;
+  overflow-y: auto;
+  position: relative;
+}
+
+/* Scanline overlay matching story-terminal */
+.victory-screen::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.06) 2px,
+    rgba(0, 0, 0, 0.06) 4px
+  );
+  z-index: 10;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .victory-screen::after {
+    display: none;
+  }
+}
+
+/* ─── Content Wrapper ────────────────────────────────────────────────────── */
+
+.victory-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 640px;
+  width: 100%;
+  padding: 32px 24px;
+  position: relative;
+  z-index: 1;
+}
+
+/* ─── ASCII Banner ───────────────────────────────────────────────────────── */
+
+.victory-ascii-banner {
+  color: #00ff41;
+  font-size: 7px;
+  line-height: 1.2;
+  text-align: center;
+  margin-bottom: 24px;
+  text-shadow: 0 0 12px rgba(0, 255, 65, 0.4);
+  white-space: pre;
+  overflow-x: auto;
+  max-width: 100%;
+}
+
+/* ─── Header ─────────────────────────────────────────────────────────────── */
+
+.victory-header {
+  color: #00ff41;
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  text-shadow: 0 0 20px rgba(0, 255, 65, 0.5);
+  margin: 0 0 8px;
+  text-align: center;
+}
+
+.victory-subheader {
+  color: #7dbe8a;
+  font-size: 14px;
+  margin: 0 0 20px;
+  text-align: center;
+}
+
+/* ─── Dividers ───────────────────────────────────────────────────────────── */
+
+.victory-divider {
+  color: #1a3a2a;
+  font-size: 12px;
+  text-align: center;
+  margin: 12px 0;
+  letter-spacing: 1px;
+  width: 100%;
+}
+
+/* ─── Agent / Rating Section ─────────────────────────────────────────────── */
+
+.victory-agent-section {
+  text-align: center;
+  margin: 8px 0;
+}
+
+.victory-agent-name {
+  color: #00d4ff;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  margin: 0 0 8px;
+  text-shadow: 0 0 10px rgba(0, 212, 255, 0.3);
+}
+
+.victory-rating {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  margin: 0;
+}
+
+.victory-rating--s {
+  color: #ffd700;
+  text-shadow: 0 0 16px rgba(255, 215, 0, 0.6);
+}
+
+.victory-rating--a {
+  color: #00ff41;
+  text-shadow: 0 0 12px rgba(0, 255, 65, 0.5);
+}
+
+.victory-rating--b {
+  color: #00d4ff;
+  text-shadow: 0 0 10px rgba(0, 212, 255, 0.4);
+}
+
+.victory-rating--c {
+  color: #b3b1ad;
+}
+
+/* ─── Stats ──────────────────────────────────────────────────────────────── */
+
+.victory-stats {
+  width: 100%;
+  max-width: 400px;
+  margin: 8px 0;
+}
+
+.victory-stat-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 0;
+  border-bottom: 1px solid rgba(26, 58, 42, 0.5);
+}
+
+.victory-stat-row:last-child {
+  border-bottom: none;
+}
+
+.victory-stat-label {
+  color: #3d4752;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.victory-stat-value {
+  color: #00ff41;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+/* ─── Free Mode Section ──────────────────────────────────────────────────── */
+
+.victory-freemode {
+  text-align: center;
+  margin: 16px 0 24px;
+}
+
+.victory-freemode-header {
+  color: #ffb000;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  margin: 0 0 8px;
+  text-shadow: 0 0 10px rgba(255, 176, 0, 0.3);
+}
+
+.victory-freemode-text {
+  color: #7dbe8a;
+  font-size: 13px;
+  line-height: 1.6;
+  margin: 0;
+  max-width: 420px;
+}
+
+/* ─── Action Buttons ─────────────────────────────────────────────────────── */
+
+.victory-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  max-width: 320px;
+}
+
+.victory-btn {
+  display: block;
+  width: 100%;
+  padding: 12px 24px;
+  background: transparent;
+  font-family: var(--term-font);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  transition: all 0.12s ease;
+  text-align: center;
+}
+
+.victory-btn--primary {
+  border: 1px solid #00ff41;
+  color: #00ff41;
+}
+
+.victory-btn--primary:hover {
+  background: rgba(0, 255, 65, 0.1);
+  box-shadow: 0 0 16px rgba(0, 255, 65, 0.25);
+}
+
+.victory-btn--primary:focus-visible {
+  outline: 1px solid #00ff41;
+  outline-offset: 2px;
+}
+
+.victory-btn--secondary {
+  border: 1px solid #1a3a2a;
+  color: #b3b1ad;
+}
+
+.victory-btn--secondary:hover {
+  border-color: #00ff41;
+  color: #00ff41;
+  box-shadow: 0 0 8px rgba(0, 255, 65, 0.15);
+}
+
+.victory-btn--secondary:focus-visible {
+  outline: 1px solid #00ff41;
+  outline-offset: 2px;
+}
+
+/* ─── Mobile Responsive ──────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+  .victory-content {
+    padding: 24px 16px;
+  }
+
+  .victory-ascii-banner {
+    font-size: 5px;
+  }
+
+  .victory-header {
+    font-size: 20px;
+  }
+
+  .victory-rating {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .victory-ascii-banner {
+    font-size: 3.5px;
+  }
+
+  .victory-header {
+    font-size: 16px;
+    letter-spacing: 0.1em;
+  }
+
+  .victory-subheader {
+    font-size: 12px;
+  }
+
+  .victory-agent-name {
+    font-size: 14px;
+  }
+
+  .victory-rating {
+    font-size: 14px;
+  }
+
+  .victory-stat-label {
+    font-size: 11px;
+  }
+
+  .victory-stat-value {
+    font-size: 12px;
+  }
+}

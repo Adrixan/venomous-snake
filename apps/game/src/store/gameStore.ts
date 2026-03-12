@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import type { GameStoreState } from '@venomous-snake/shared-types';
+import type { GameStoreState, NarrativeEntry } from '@venomous-snake/shared-types';
 
 const STORAGE_KEY = 'vs-settings';
 
@@ -48,12 +48,7 @@ function saveAudioToStorage(masterVolume: number, musicVolume: number, sfxVolume
 
 const initialAudio = loadAudioFromStorage();
 
-const INITIAL_PLAYER_STATE = {
-  x: 0,
-  y: 0,
-  direction: 'down' as const,
-  currentRoom: 'lobby',
-};
+const MAX_NARRATIVE_LOG = 500;
 
 const INITIAL_OVERLAY_STATE = {
   terminalOpen: false,
@@ -61,14 +56,11 @@ const INITIAL_OVERLAY_STATE = {
   menuOpen: false,
   inventoryOpen: false,
   mapOpen: false,
-  skillTreeOpen: false,
 };
 
 export const useGameStore = create<GameStoreState>((set) => ({
-  player: INITIAL_PLAYER_STATE,
+  currentRoomId: 'lobby_entrance',
   overlay: INITIAL_OVERLAY_STATE,
-  isPaused: false,
-  interactionPrompt: null,
 
   // UI shell state
   gamePhase: 'menu',
@@ -77,7 +69,14 @@ export const useGameStore = create<GameStoreState>((set) => ({
   playerGender: 'nonbinary',
   xp: 0,
   level: 1,
-  currentFloor: 'lobby',
+  currentFloor: 0,
+
+  // Text adventure state
+  visitedRooms: [],
+  pickedUpItems: [],
+  storyFlags: {},
+  narrativeLog: [],
+  availableActions: [],
 
   // Challenge state
   currentChallengeId: null,
@@ -94,42 +93,58 @@ export const useGameStore = create<GameStoreState>((set) => ({
   // Alert / stealth level
   alertLevel: 0 as 0 | 1 | 2 | 3,
 
+  // Game completion
+  gameCompleted: false,
+
   // Audio settings
   masterVolume: initialAudio.masterVolume,
   musicVolume: initialAudio.musicVolume,
   sfxVolume: initialAudio.sfxVolume,
   isMuted: false,
 
-  // Existing actions
-  setPlayerPosition: (x, y) => set((state) => ({ player: { ...state.player, x, y } })),
-  setPlayerDirection: (direction) => set((state) => ({ player: { ...state.player, direction } })),
-  setCurrentRoom: (room) => set((state) => ({ player: { ...state.player, currentRoom: room } })),
+  // Room/navigation actions
+  setCurrentRoom: (roomId) => set({ currentRoomId: roomId }),
+  addVisitedRoom: (roomId) =>
+    set((state) => ({
+      visitedRooms: state.visitedRooms.includes(roomId)
+        ? state.visitedRooms
+        : [...state.visitedRooms, roomId],
+    })),
+  setStoryFlag: (flag, value) =>
+    set((state) => ({
+      storyFlags: { ...state.storyFlags, [flag]: value },
+    })),
+  appendNarrative: (entry: NarrativeEntry) =>
+    set((state) => ({
+      narrativeLog:
+        state.narrativeLog.length >= MAX_NARRATIVE_LOG
+          ? [...state.narrativeLog.slice(-MAX_NARRATIVE_LOG + 1), entry]
+          : [...state.narrativeLog, entry],
+    })),
+  clearNarrative: () => set({ narrativeLog: [] }),
+  setAvailableActions: (actions) => set({ availableActions: actions }),
+
   openTerminal: (_terminalId, challengeId) =>
     set((state) => ({
       overlay: { ...state.overlay, terminalOpen: true },
-      isPaused: true,
       currentChallengeId: challengeId ?? null,
     })),
   closeTerminal: () =>
     set((state) => ({
       overlay: { ...state.overlay, terminalOpen: false },
-      isPaused: false,
       currentChallengeId: null,
     })),
   openDialog: (_dialogId, _npcId) =>
     set((state) => ({
       overlay: { ...state.overlay, dialogOpen: true },
-      isPaused: true,
     })),
   closeDialog: () =>
     set((state) => ({
       overlay: { ...state.overlay, dialogOpen: false },
-      isPaused: false,
     })),
   toggleMenu: () =>
     set((state) => ({
       overlay: { ...state.overlay, menuOpen: !state.overlay.menuOpen },
-      isPaused: !state.overlay.menuOpen,
     })),
   toggleInventory: () =>
     set((state) => ({
@@ -139,12 +154,6 @@ export const useGameStore = create<GameStoreState>((set) => ({
     set((state) => ({
       overlay: { ...state.overlay, mapOpen: !state.overlay.mapOpen },
     })),
-  toggleSkillTree: () =>
-    set((state) => ({
-      overlay: { ...state.overlay, skillTreeOpen: !state.overlay.skillTreeOpen },
-    })),
-  setPaused: (paused) => set({ isPaused: paused }),
-  setInteractionPrompt: (prompt) => set({ interactionPrompt: prompt }),
 
   // UI shell actions
   setGamePhase: (phase) => set({ gamePhase: phase }),
@@ -167,6 +176,12 @@ export const useGameStore = create<GameStoreState>((set) => ({
       completedChallenges: state.completedChallenges.includes(id)
         ? state.completedChallenges
         : [...state.completedChallenges, id],
+    })),
+  addPickedUpItem: (itemId) =>
+    set((state) => ({
+      pickedUpItems: state.pickedUpItems.includes(itemId)
+        ? state.pickedUpItems
+        : [...state.pickedUpItems, itemId],
     })),
   unlockFloor: (n) =>
     set((state) => ({
@@ -194,6 +209,9 @@ export const useGameStore = create<GameStoreState>((set) => ({
       alertLevel: Math.min(3, state.alertLevel + 1) as 0 | 1 | 2 | 3,
     })),
 
+  // Game completion actions
+  setGameCompleted: (completed) => set({ gameCompleted: completed }),
+
   // Audio actions
   setMasterVolume: (volume) => {
     const v = Math.max(0, Math.min(1, volume));
@@ -219,15 +237,18 @@ export const useGameStore = create<GameStoreState>((set) => ({
   toggleMute: () => set((state) => ({ isMuted: !state.isMuted })),
   resetGameState: () =>
     set({
-      player: INITIAL_PLAYER_STATE,
+      currentRoomId: 'lobby_entrance',
       overlay: INITIAL_OVERLAY_STATE,
-      isPaused: false,
-      interactionPrompt: null,
       gamePhase: 'menu',
       activePanel: 'none',
       xp: 0,
       level: 1,
-      currentFloor: 'lobby',
+      currentFloor: 0,
+      visitedRooms: [],
+      pickedUpItems: [],
+      storyFlags: {},
+      narrativeLog: [],
+      availableActions: [],
       currentChallengeId: null,
       activeChallengeId: null,
       challengeResult: null,
@@ -237,5 +258,6 @@ export const useGameStore = create<GameStoreState>((set) => ({
       dialogContent: null,
       inventory: [],
       alertLevel: 0,
+      gameCompleted: false,
     }),
 }));

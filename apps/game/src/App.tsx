@@ -24,6 +24,7 @@ import {
   ItemPickupToast,
   AchievementToast,
   StoryTerminal,
+  VictoryScreen,
 } from '@venomous-snake/ui';
 import type {
   AudioSettingsPanelProps,
@@ -70,6 +71,8 @@ export function App(): React.JSX.Element {
   const addToInventory = useGameStore((state) => state.addToInventory);
   const addPickedUpItem = useGameStore((state) => state.addPickedUpItem);
   const addCompletedChallenge = useGameStore((state) => state.addCompletedChallenge);
+  const gameCompleted = useGameStore((state) => state.gameCompleted);
+  const setGameCompleted = useGameStore((state) => state.setGameCompleted);
 
   // Audio store
   const masterVolume = useGameStore((s) => s.masterVolume);
@@ -144,6 +147,25 @@ export function App(): React.JSX.Element {
   useEffect(() => {
     if (gamePhase === 'playing' && engineRef.current === null) {
       engineRef.current = new TextAdventureEngine();
+
+      // Show game intro on new game (no completed challenges = fresh start)
+      if (completedChallenges.length === 0) {
+        const introLines = TextAdventureEngine.getGameIntro();
+        for (const line of introLines) {
+          const entry: NarrativeEntry = {
+            id: `intro_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
+            type: line.startsWith('[CIPHER]') ? 'cipher' : 'description',
+            text: line.startsWith('[CIPHER]') ? line.replace('[CIPHER] ', '') : line,
+            timestamp: Date.now(),
+          };
+          if (line.startsWith('[CIPHER]')) {
+            entry.speaker = 'CIPHER';
+          }
+          appendNarrative(entry);
+        }
+      }
+
+      // Sync completed challenges from store
       engineRef.current.syncCompletedChallenges(completedChallenges);
       engineRef.current.enterRoom(engineRef.current.getState().currentRoomId);
       // Sync initial state to store
@@ -267,7 +289,13 @@ export function App(): React.JSX.Element {
             }
           }
           // Refresh actions after challenge completion
-          setTimeout(() => refreshActions(), 100);
+          setTimeout(() => {
+            refreshActions();
+            // Check if all challenges are complete
+            if (engineRef.current?.isGameComplete()) {
+              setGameCompleted(true);
+            }
+          }, 100);
           break;
         }
       }
@@ -543,7 +571,7 @@ export function App(): React.JSX.Element {
           }}
         >
           {/* Main game view — the StoryTerminal */}
-          {!terminalOpen && (
+          {!terminalOpen && !gameCompleted && (
             <StoryTerminal
               currentRoom={roomInfo}
               narrativeLog={narrativeLog}
@@ -562,6 +590,19 @@ export function App(): React.JSX.Element {
 
           {/* Terminal overlay for challenges */}
           {terminalOpen && <TerminalOverlay />}
+
+          {/* Victory screen */}
+          {gameCompleted && (
+            <VictoryScreen
+              totalChallenges={118}
+              completedChallenges={completedChallenges.length}
+              totalXp={xp}
+              level={level}
+              playerName={playerName}
+              onContinue={() => setGameCompleted(false)}
+              onReturnToTitle={handleQuitToMenu}
+            />
+          )}
 
           {/* Notifications */}
           {pickupNotifications.length > 0 && (

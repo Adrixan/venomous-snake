@@ -40,12 +40,18 @@ function buildSaveData(
     timestamp: new Date().toISOString(),
     playerName: state.playerName,
     playerGender: state.playerGender,
-    currentFloor: state.currentFloor,
-    currentRoom: state.player.currentRoom,
-    playerPosition: { x: state.player.x, y: state.player.y },
+    currentFloor: String(state.currentFloor),
+    currentRoom: state.currentRoomId,
+    playerPosition: { x: 0, y: 0 },
     curriculumProgress,
     narrativeState,
-    inventory: [],
+    inventory: state.inventory.map((id) => ({
+      id,
+      type: 'datafile' as const,
+      nameKey: `items.${id}.name`,
+      descriptionKey: `items.${id}.description`,
+      iconId: 'datafile',
+    })),
     settings: {
       language: 'en',
       volumeMaster: 1,
@@ -57,6 +63,10 @@ function buildSaveData(
     playTimeMs: 0,
     xp: state.xp,
     level: state.level,
+    gameCompleted: state.gameCompleted,
+    storyFlags: state.storyFlags,
+    visitedRooms: state.visitedRooms,
+    pickedUpItems: state.pickedUpItems,
   };
 }
 
@@ -86,7 +96,7 @@ export function useSaveSystem(
   controllerRef?: React.RefObject<GameController | null>,
 ): SaveSystemHook {
   const prevCompletedLenRef = useRef(0);
-  const prevFloorRef = useRef('');
+  const prevFloorRef = useRef(-1);
 
   const save = useCallback(
     async (slotId?: string): Promise<void> => {
@@ -127,9 +137,8 @@ export function useSaveSystem(
     // Restore persisted state
     store.setPlayerName(data.playerName);
     store.setPlayerGender(data.playerGender);
-    store.setCurrentFloor(data.currentFloor);
+    store.setCurrentFloor(parseInt(data.currentFloor, 10) || 0);
     store.setCurrentRoom(data.currentRoom);
-    store.setPlayerPosition(data.playerPosition.x, data.playerPosition.y);
     store.setLevel(data.level);
     store.addXp(data.xp - useGameStore.getState().xp);
 
@@ -175,7 +184,7 @@ export function useSaveSystem(
   useEffect(() => {
     return useGameStore.subscribe((state) => {
       const floor = state.currentFloor;
-      if (prevFloorRef.current === '') {
+      if (prevFloorRef.current === -1) {
         prevFloorRef.current = floor;
         return;
       }
