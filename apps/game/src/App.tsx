@@ -7,20 +7,13 @@ import { useGameStore } from './store/gameStore';
 import { GameControllerProvider } from './hooks/useGameController';
 import { useSaveSystem } from './hooks/useSaveSystem';
 import { useGameAudio } from './hooks/useGameAudio';
-import { useStoryFlow } from './hooks/useStoryFlow';
-import { useCurriculumProgress } from './hooks/useCurriculumProgress';
 import { getSharedInterpreter, initializeSharedInterpreter } from '@venomous-snake/python-runtime';
 import {
   MainMenu,
   NewGameFlow,
   SettingsPanel,
   PauseMenu,
-  QuestLog,
-  InventoryPanel,
-  FloorMap,
   CRTEffect,
-  CutscenePlayer,
-  CreditsScreen,
   ItemPickupToast,
   AchievementToast,
   StoryTerminal,
@@ -31,7 +24,6 @@ import type {
   ItemPickupNotification,
   ToastNotification,
 } from '@venomous-snake/ui';
-import { chapters } from '@venomous-snake/challenges';
 import { ACHIEVEMENTS } from '@venomous-snake/challenge-engine';
 
 import { EventBus, TextAdventureEngine } from '@venomous-snake/engine';
@@ -51,7 +43,6 @@ export function App(): React.JSX.Element {
   const setActivePanel = useGameStore((state) => state.setActivePanel);
   const setPlayerName = useGameStore((state) => state.setPlayerName);
   const setPlayerGender = useGameStore((state) => state.setPlayerGender);
-  const currentFloor = useGameStore((state) => state.currentFloor);
   const setCurrentFloor = useGameStore((state) => state.setCurrentFloor);
   const reducedMotion = useReducedMotion();
   const terminalOpen = useGameStore((state) => state.overlay.terminalOpen);
@@ -59,7 +50,6 @@ export function App(): React.JSX.Element {
   const completedChallenges = useGameStore((state) => state.completedChallenges);
   const xp = useGameStore((state) => state.xp);
   const level = useGameStore((state) => state.level);
-  const unlockedFloors = useGameStore((state) => state.unlockedFloors);
   const playerName = useGameStore((state) => state.playerName);
   const setCurrentRoom = useGameStore((state) => state.setCurrentRoom);
   const addVisitedRoom = useGameStore((state) => state.addVisitedRoom);
@@ -86,9 +76,6 @@ export function App(): React.JSX.Element {
 
   // Wire audio to game events
   useGameAudio();
-
-  // Derive curriculum progress from live game store state
-  const curriculumProgress = useCurriculumProgress();
 
   const audioSettings: AudioSettingsPanelProps = {
     masterVolume,
@@ -130,8 +117,6 @@ export function App(): React.JSX.Element {
   const saveSystem = useSaveSystem(controllerRef);
 
   // Story flow: cutscenes, credits
-  const storyFlow = useStoryFlow(completedChallenges);
-
   // Refresh "has save data" flag
   const refreshHasSaveData = useCallback((): void => {
     void saveSystem.listSaves().then((slots) => {
@@ -392,9 +377,8 @@ export function App(): React.JSX.Element {
       setPlayerName(name);
       setPlayerGender(gender);
       setGamePhase('playing');
-      setTimeout(() => storyFlow.triggerNewGame(), 0);
     },
-    [resetGameState, setPlayerName, setPlayerGender, setGamePhase, storyFlow],
+    [resetGameState, setPlayerName, setPlayerGender, setGamePhase],
   );
 
   const handleNewGameBack = useCallback(() => {
@@ -437,14 +421,6 @@ export function App(): React.JSX.Element {
   const handleDismissAchievement = useCallback((id: string) => {
     setAchievementNotifications((prev) => prev.filter((n) => n.id !== id));
   }, []);
-
-  const handleFloorSelect = useCallback(
-    (floorId: string) => {
-      setCurrentFloor(parseInt(floorId.replace('floor_', ''), 10) || 0);
-      setActivePanel('none');
-    },
-    [setCurrentFloor, setActivePanel],
-  );
 
   const handleOpenPanel = useCallback(
     (panel: 'inventory' | 'questlog' | 'map' | 'settings') => {
@@ -643,58 +619,8 @@ export function App(): React.JSX.Element {
             <SettingsPanel onBack={handleClosePanel} audioSettings={audioSettings} />
           )}
 
-          {/* Side panels */}
-          <QuestLog
-            isOpen={activePanel === 'questlog'}
-            onClose={handleClosePanel}
-            curriculumProgress={curriculumProgress}
-            chapters={chapters}
-            currentFloor={String(currentFloor)}
-          />
-          <InventoryPanel
-            isOpen={activePanel === 'inventory'}
-            onClose={handleClosePanel}
-            items={[]}
-          />
-          <FloorMap
-            isOpen={activePanel === 'map'}
-            onClose={handleClosePanel}
-            currentFloor={String(currentFloor)}
-            unlockedFloors={['lobby']}
-            onFloorSelect={handleFloorSelect}
-          />
-
           <PWAUpdateNotifier />
           <PWAInstallPrompt />
-
-          {/* Cutscene player */}
-          {storyFlow.activeCutscene !== null && (
-            <CutscenePlayer
-              cutscene={storyFlow.activeCutscene}
-              onComplete={storyFlow.onCutsceneComplete}
-            />
-          )}
-
-          {/* Credits screen */}
-          {storyFlow.showCredits && (
-            <CreditsScreen
-              stats={{
-                challengesCompleted: completedChallenges.length,
-                totalXp: xp,
-                timePlayed: storyFlow.playTime,
-                achievementsUnlocked: 0,
-                floorsCleared: unlockedFloors.length,
-              }}
-              onNewGamePlus={() => {
-                storyFlow.onNewGamePlus();
-                handleQuitToMenu();
-              }}
-              onReturnToMenu={() => {
-                storyFlow.onCreditsClose();
-                handleQuitToMenu();
-              }}
-            />
-          )}
         </div>
       </CRTEffect>
     </GameControllerProvider>
