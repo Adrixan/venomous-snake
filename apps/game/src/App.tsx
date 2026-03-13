@@ -21,7 +21,7 @@ import {
 import type { AudioSettingsPanelProps, ToastNotification } from '@venomous-snake/ui';
 import { ACHIEVEMENTS } from '@venomous-snake/challenge-engine';
 
-import { EventBus, TextAdventureEngine } from '@venomous-snake/engine';
+import { EventBus, TextAdventureEngine, getRoomDisplayName } from '@venomous-snake/engine';
 import type { GameAction, NarrativeEntry } from '@venomous-snake/shared-types';
 import type { CurriculumProgress } from '@venomous-snake/shared-types';
 import type { GameController } from './GameController';
@@ -442,7 +442,11 @@ export function App(): React.JSX.Element {
   // Get current room info for StoryTerminal
   const currentRoom = engineRef.current?.getCurrentRoom();
   const roomInfo = currentRoom
-    ? { id: currentRoom.id, nameKey: currentRoom.nameKey, floor: currentRoom.floor }
+    ? {
+        id: currentRoom.id,
+        nameKey: getRoomDisplayName(currentRoom.id),
+        floor: currentRoom.floor,
+      }
     : null;
 
   // Menu phase

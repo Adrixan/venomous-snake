@@ -1,35 +1,35 @@
 {
   "ch01_01": {
     "title": "Erstkontakt",
-    "description": "Lass das Sicherheitsterminal die Nachricht 'Hello, World!' mit der print()-Funktion anzeigen."
+    "description": "Lass das Sicherheitsterminal die Nachricht 'Hello, World!' mit der print()-Funktion anzeigen.\n\nIn Python gibt print() Text auf dem Bildschirm aus. Text (ein sogenannter 'String') muss in Anführungszeichen stehen — entweder \"doppelte\" oder 'einfache'. Zum Beispiel: print(\"Hello\")"
   },
   "ch01_02": {
     "title": "Deckidentität",
-    "description": "Erstelle eine Variable namens 'codename' und weise ihr deinen Agentennamen als Zeichenkette zu. Gib sie dann aus."
+    "description": "Erstelle eine Variable namens 'codename', weise ihr deinen Agentennamen als Zeichenkette zu und gib sie dann aus.\n\nVariablen speichern Werte zur späteren Verwendung. Nutze das =-Zeichen, um einen Wert zuzuweisen: meine_variable = \"ein Text\". Du kannst den Variablennamen dann überall verwenden, wo du den Wert selbst nutzen würdest."
   },
   "ch01_03": {
     "title": "Zahlen knacken",
-    "description": "Der Sicherheitscode ist das Ergebnis einer Berechnung. Berechne und gib die Antwort mit Python-Mathematikoperatoren aus."
+    "description": "Berechne den Tresor-Sicherheitscode mit den vorgegebenen Variablen und gib das Ergebnis aus.\n\nPython unterstützt Rechenoperatoren: + (addieren), - (subtrahieren), * (multiplizieren), / (dividieren). Du kannst Variablen in Rechenausdrücken genauso wie Zahlen verwenden — zum Beispiel: ergebnis = preis * menge + steuer"
   },
   "ch01_04": {
     "title": "Daten-Aufklärung",
-    "description": "Verwende die type()-Funktion, um die Datentypen einer String- und einer Integer-Variable zu identifizieren."
+    "description": "Verwende die type()-Funktion, um die Datentypen verschiedener Variablen zu identifizieren.\n\nJeder Wert in Python hat einen Typ. Text ist vom Typ 'str' (String), ganze Zahlen sind 'int' (Integer). Die type()-Funktion zeigt den Typ eines Wertes — zum Beispiel: print(type(42)) gibt <class 'int'> aus."
   },
   "ch01_05": {
     "title": "Temperatur-Override",
-    "description": "Rechne die Serverraum-Temperatur von Celsius in Fahrenheit um."
+    "description": "Rechne die Serverraum-Temperatur von Celsius in Fahrenheit um mit der Formel: F = (C × 9/5) + 32.\n\nDivision mit / erzeugt immer eine Dezimalzahl (genannt 'float'), z.B. 9/5 = 1.8. Verwende Klammern (), um die Reihenfolge der Operationen zu steuern — genau wie im Matheunterricht."
   },
   "ch01_06": {
     "title": "Namens-Montage",
-    "description": "Kombiniere Vor- und Nachname zu einem vollständigen Namen mittels String-Verknüpfung."
+    "description": "Kombiniere Vor- und Nachname zu einem vollständigen Namen mittels String-Verknüpfung.\n\nIn Python verbindet der +-Operator Strings miteinander: \"Hallo\" + \" \" + \"Welt\" ergibt \"Hallo Welt\". Das nennt man Konkatenation. Vergiss nicht, Leerzeichen einzufügen, wo sie gebraucht werden!"
   },
   "ch01_07": {
     "title": "Terminal-Kunst",
-    "description": "Zeichne eine einfache ASCII-Kunst-Schlange mit mehreren print-Anweisungen auf dem Terminal."
+    "description": "Zeichne eine einfache ASCII-Kunst-Schlange mit mehreren print()-Anweisungen auf dem Terminal.\n\nJeder print()-Aufruf gibt Text in einer eigenen Zeile aus. Um mehrere Zeilen anzuzeigen, verwende mehrere print()-Anweisungen — eine für jede Zeile."
   },
   "ch01_08": {
     "title": "Code-Notizen",
-    "description": "Füge Kommentare hinzu, die erklären, was jede Codezeile tut. Kommentare helfen anderen Agenten, deine Arbeit zu verstehen."
+    "description": "Füge Kommentare hinzu, die erklären, was jede Codezeile tut. Kommentare helfen anderen Agenten, deine Arbeit zu verstehen.\n\nZeilen, die mit # beginnen, sind Kommentare — Python ignoriert sie vollständig. Kommentare sind Notizen für Menschen, die den Code lesen. Zum Beispiel: # Dies berechnet die Summe"
   },
   "ch02_01": {
     "title": "Groß-/Kleinschrift",

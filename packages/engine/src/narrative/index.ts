@@ -7,4 +7,5 @@ export {
   floorIntros,
   gameIntro,
   gameVictory,
+  getRoomDisplayName,
 } from './storyContent';

@@ -11,6 +11,7 @@
 // ---------------------------------------------------------------------------
 
 export interface RoomNarrative {
+  name: string;
   firstVisit: string;
   revisit: string;
   description: string;
@@ -174,6 +175,7 @@ export const floorIntros: Record<string, FloorIntro> = {
 export const roomNarratives: Record<string, RoomNarrative> = {
   // ── Floor 0: Lobby ──────────────────────────────────────────────────────
   lobby_entrance: {
+    name: 'Main Lobby',
     firstVisit:
       "You push through the revolving glass doors into Rattlesnake Corp's lobby. Cold fluorescent light bounces off polished marble floors. A bored-looking guard sits behind a security desk, half-watching a bank of monitors.",
     revisit:
@@ -183,6 +185,7 @@ export const roomNarratives: Record<string, RoomNarrative> = {
   },
 
   lobby_hallway: {
+    name: 'Lobby Hallway',
     firstVisit:
       'Beyond the security checkpoint, a long hallway stretches deeper into the building. Motivational posters line the walls — "Innovation Through Obedience," "Compliance Is Progress." A receptionist sits behind frosted glass.',
     revisit: 'The hallway is quiet. The receptionist pretends not to notice you.',
@@ -191,6 +194,7 @@ export const roomNarratives: Record<string, RoomNarrative> = {
   },
 
   lobby_server_closet: {
+    name: 'Server Closet',
     firstVisit:
       'You slip through an unmarked door into a cramped server closet. Cables snake across the floor like sleeping pythons. A young technician nearly jumps out of his skin when he sees you.',
     revisit:
@@ -201,6 +205,7 @@ export const roomNarratives: Record<string, RoomNarrative> = {
 
   // ── Floor 1: Server Room ────────────────────────────────────────────────
   server_main: {
+    name: 'Server Room',
     firstVisit:
       'The stairwell door opens onto a vast room filled with server racks stretching floor to ceiling. Blue LEDs pulse in rhythmic patterns, casting the space in an eerie glow. A sysadmin in a rumpled shirt looks up from a tangle of ethernet cables.',
     revisit:
@@ -210,6 +215,7 @@ export const roomNarratives: Record<string, RoomNarrative> = {
   },
 
   server_monitoring: {
+    name: 'Monitoring Station',
     firstVisit:
       'Banks of monitors cover every wall, each displaying cascading data streams — network traffic, CPU loads, error logs. A technician with oversized headphones monitors it all from a swivel chair, nodding to music only she can hear.',
     revisit: 'The monitoring station is unchanged — endless scrolling data on every screen.',
@@ -218,6 +224,7 @@ export const roomNarratives: Record<string, RoomNarrative> = {
   },
 
   server_cage: {
+    name: 'Server Cage',
     firstVisit:
       'A chain-link cage separates the most critical servers from the rest. Warning signs plaster the fence: "AUTHORIZED PERSONNEL ONLY." A guard leans against the cage door, arms crossed.',
     revisit: 'The server cage guard watches you approach with the same suspicious look.',
@@ -227,6 +234,7 @@ export const roomNarratives: Record<string, RoomNarrative> = {
 
   // ── Floor 2: Research Lab ───────────────────────────────────────────────
   lab_reception: {
+    name: 'Lab Reception',
     firstVisit:
       'The lab reception area smells of disinfectant and ambition. Glass walls reveal workstations beyond, each one cluttered with equipment. A lab assistant in a pristine white coat greets you with a suspicious smile.',
     revisit:
@@ -236,6 +244,7 @@ export const roomNarratives: Record<string, RoomNarrative> = {
   },
 
   lab_main: {
+    name: 'Main Laboratory',
     firstVisit:
       'The main lab is a maze of holographic displays and half-assembled prototypes. A scientist with wild hair is arguing with a simulation running on three screens at once. He barely acknowledges your existence.',
     revisit: 'The scientist is still arguing with his simulations. Some battles are eternal.',
@@ -244,6 +253,7 @@ export const roomNarratives: Record<string, RoomNarrative> = {
   },
 
   lab_storage: {
+    name: 'Chemical Storage',
     firstVisit:
       'Shelves of labeled containers stretch into the dim reaches of the storage room. A clerk with a barcode scanner and an air of quiet authority catalogs items with mechanical precision.',
     revisit: 'The storage room is exactly as organized as before. Not a container out of place.',
@@ -253,6 +263,7 @@ export const roomNarratives: Record<string, RoomNarrative> = {
 
   // ── Floor 3: Surveillance ───────────────────────────────────────────────
   surveillance_lobby: {
+    name: 'Surveillance Lobby',
     firstVisit:
       'You step into the surveillance floor and immediately feel watched. Camera domes dot the ceiling like mechanical eyes. A man in a crisp uniform — clearly in charge — studies you with unsettling calm.',
     revisit: "The surveillance lobby still bristles with cameras. The chief's gaze follows you.",
@@ -261,6 +272,7 @@ export const roomNarratives: Record<string, RoomNarrative> = {
   },
 
   surveillance_center: {
+    name: 'Surveillance Center',
     firstVisit:
       "The nerve center of Rattlesnake Corp's surveillance network. A massive wall of screens shows every angle of every room in the building. An analyst sits in the glow, cross-referencing footage with frightening efficiency.",
     revisit: "The wall of screens still watches everything. The analyst hasn't moved.",
@@ -269,6 +281,7 @@ export const roomNarratives: Record<string, RoomNarrative> = {
   },
 
   surveillance_archive: {
+    name: 'Footage Archive',
     firstVisit:
       'The archive room stores years of surveillance footage on crystalline data drives that shimmer under UV light. An archivist carefully handles a drive, wearing anti-static gloves like a surgeon.',
     revisit: 'The archive is silent except for the hum of the storage arrays.',
@@ -278,6 +291,7 @@ export const roomNarratives: Record<string, RoomNarrative> = {
 
   // ── Floor 4: Archives ───────────────────────────────────────────────────
   archives_entrance: {
+    name: 'Archives Entrance',
     firstVisit:
       'The Archives entrance feels like stepping into a digital library. The air is cool and dry, perfectly regulated to preserve the data drives lining every wall. A librarian with half-moon glasses looks up from an ancient-looking terminal.',
     revisit:
@@ -287,6 +301,7 @@ export const roomNarratives: Record<string, RoomNarrative> = {
   },
 
   archives_main: {
+    name: 'Main Archives',
     firstVisit:
       'Towering shelves of data drives and physical files create a labyrinth of information. A data curator navigates the aisles with practiced ease, a holographic index floating at his fingertips.',
     revisit: 'The archive stacks loom around you. The curator is somewhere deeper in the maze.',
@@ -295,6 +310,7 @@ export const roomNarratives: Record<string, RoomNarrative> = {
   },
 
   archives_vault: {
+    name: 'Classified Vault',
     firstVisit:
       'The deepest part of the Archives is sealed behind a pressure door. Inside, rare and classified data sits in individual containment units. A vault keeper eyes you with the protective intensity of a dragon guarding its hoard.',
     revisit: "The vault keeper hasn't relaxed. She never does.",
@@ -304,6 +320,7 @@ export const roomNarratives: Record<string, RoomNarrative> = {
 
   // ── Floor 5: Communications ─────────────────────────────────────────────
   comms_reception: {
+    name: 'Comms Reception',
     firstVisit:
       'Static crackles from hidden speakers as you enter the Communications floor. Banks of radio equipment and satellite interfaces fill the space. A grizzled radio operator adjusts a dial without looking up.',
     revisit:
@@ -313,6 +330,7 @@ export const roomNarratives: Record<string, RoomNarrative> = {
   },
 
   comms_center: {
+    name: 'Communications Center',
     firstVisit:
       "The heart of Rattlesnake Corp's communication network. Satellite dishes on the roof feed data to terminals here. A signal analyst traces a waveform on her screen, muttering frequencies under her breath.",
     revisit: 'Waveforms dance across the screens. The analyst is deep in her work.',
@@ -321,6 +339,7 @@ export const roomNarratives: Record<string, RoomNarrative> = {
   },
 
   comms_server: {
+    name: 'Signal Server Room',
     firstVisit:
       'The comms server room is a forest of fiber-optic cables, each one pulsing with light — data flowing to and from the outside world. A technician splices a cable with steady hands.',
     revisit: 'Fiber-optic light still dances through the cables. The technician works in silence.',
@@ -330,6 +349,7 @@ export const roomNarratives: Record<string, RoomNarrative> = {
 
   // ── Floor 6: Executive ──────────────────────────────────────────────────
   executive_lobby: {
+    name: 'Executive Lobby',
     firstVisit:
       'The elevator opens onto plush carpet and the smell of expensive leather. This is where power lives. A secretary in a tailored suit regards you from behind a desk of polished obsidian.',
     revisit:
@@ -339,6 +359,7 @@ export const roomNarratives: Record<string, RoomNarrative> = {
   },
 
   executive_offices: {
+    name: 'Executive Offices',
     firstVisit:
       'Corner offices with panoramic views. Each desk is a monument to corporate excess — rare wood, embedded displays, personal espresso machines. The CFO sits behind the largest one, reviewing figures that could bankrupt nations.',
     revisit: 'The CFO is still crunching numbers. The view is still obscene.',
@@ -347,6 +368,7 @@ export const roomNarratives: Record<string, RoomNarrative> = {
   },
 
   executive_boardroom: {
+    name: 'Boardroom',
     firstVisit:
       'A long table of polished black stone dominates the boardroom. Holographic nameplates mark each seat. A board member lingers, reviewing documents on a translucent display.',
     revisit:
@@ -357,6 +379,7 @@ export const roomNarratives: Record<string, RoomNarrative> = {
 
   // ── Floor 7: Manufacturing ──────────────────────────────────────────────
   manufacturing_floor: {
+    name: 'Factory Floor',
     firstVisit:
       'The manufacturing floor assaults your senses — the clang of robotic arms, the hiss of hydraulics, the acrid smell of machined metal. A foreman in a hard hat shouts over the noise to be heard.',
     revisit: 'The machines continue their relentless rhythm. The foreman waves you through.',
@@ -365,6 +388,7 @@ export const roomNarratives: Record<string, RoomNarrative> = {
   },
 
   manufacturing_control: {
+    name: 'Control Room',
     firstVisit:
       'The control room offers a soundproofed reprieve from the factory floor. Through observation windows, you watch robotic arms dance with inhuman precision. A QA inspector reviews tolerances on her tablet.',
     revisit: 'The control room is calm. The inspector is running another quality check.',
@@ -373,6 +397,7 @@ export const roomNarratives: Record<string, RoomNarrative> = {
   },
 
   manufacturing_warehouse: {
+    name: 'Warehouse',
     firstVisit:
       'Crates stacked three stories high fill the warehouse. Automated forklifts navigate the aisles with silent purpose. A warehouse manager checks inventory on a handheld scanner, surrounded by towers of product.',
     revisit: 'The warehouse hums with automated activity. Crates shift and settle.',
@@ -382,6 +407,7 @@ export const roomNarratives: Record<string, RoomNarrative> = {
 
   // ── Floor 8: Vault ──────────────────────────────────────────────────────
   vault_entrance: {
+    name: 'Vault Corridor',
     firstVisit:
       'You descend into the Vault level and the temperature drops noticeably. Reinforced walls line the corridor, thick enough to stop a tank. A guard with military bearing checks credentials at a blast door.',
     revisit: 'The Vault corridor is as cold and unwelcoming as before.',
@@ -390,6 +416,7 @@ export const roomNarratives: Record<string, RoomNarrative> = {
   },
 
   vault_main: {
+    name: 'Main Vault',
     firstVisit:
       'Beyond the blast door, the main vault stretches out in cathedral-like silence. Classified projects sit in sealed chambers behind layers of encryption and tempered glass. A researcher works feverishly at a terminal, barely glancing up.',
     revisit: 'The vault is as hushed as a library for secrets. The researcher types away.',
@@ -398,6 +425,7 @@ export const roomNarratives: Record<string, RoomNarrative> = {
   },
 
   vault_deepstore: {
+    name: 'Deep Storage',
     firstVisit:
       'The deepest layer of the Vault. Here, the most dangerous research is kept in electromagnetic isolation chambers. An archivist with dark circles under her eyes manages the containment systems.',
     revisit: 'The deep storage is exactly as unsettling as you remember.',
@@ -407,6 +435,7 @@ export const roomNarratives: Record<string, RoomNarrative> = {
 
   // ── Floor 9: AI Core ────────────────────────────────────────────────────
   aicore_antechamber: {
+    name: 'Cooling Antechamber',
     firstVisit:
       'The air is frigid. Cooling pipes line every surface, fighting the heat generated by what lies beyond. A cooling technician adjusts valves with frost-bitten fingers, barely noticing you through the fog of his own breath.',
     revisit: 'The antechamber is still freezing. The technician shivers at his post.',
@@ -415,6 +444,7 @@ export const roomNarratives: Record<string, RoomNarrative> = {
   },
 
   aicore_main: {
+    name: 'AI Core',
     firstVisit:
       "You enter the AI Core and the hum becomes a physical presence — you feel it in your teeth, your bones. Towering neural processing units pulse with an inner light. An operator monitors the Snake's vital signs from a central console.",
     revisit:
@@ -424,6 +454,7 @@ export const roomNarratives: Record<string, RoomNarrative> = {
   },
 
   aicore_neural: {
+    name: 'Neural Interface Chamber',
     firstVisit:
       "The neural interface chamber. Direct access to the Venomous Snake's deepest processes. Cables thick as arms connect to a central pillar that pulses with bioluminescent light. A neural engineer watches readouts that shouldn't be possible.",
     revisit: "The neural chamber throbs with the Snake's awareness. It knows you're here.",
@@ -433,6 +464,7 @@ export const roomNarratives: Record<string, RoomNarrative> = {
 
   // ── Floor 10: Penthouse ─────────────────────────────────────────────────
   penthouse_elevator: {
+    name: 'Penthouse Foyer',
     firstVisit:
       'The private elevator opens onto a penthouse foyer of obscene luxury. Crystal chandeliers, rare artwork, a grand piano nobody plays. A butler in an immaculate uniform greets you with an unsettling bow.',
     revisit: 'The penthouse foyer sparkles. The butler stands ready, as always.',
@@ -441,6 +473,7 @@ export const roomNarratives: Record<string, RoomNarrative> = {
   },
 
   penthouse_office: {
+    name: "CEO's Office",
     firstVisit:
       "The CEO's office occupies the entire north face of the building. Floor-to-ceiling windows frame the city like a painting. Behind a desk the size of a small country, the CEO of Rattlesnake Corp studies you with reptilian calm.",
     revisit: 'The CEO sits motionless behind the massive desk. The city glitters beyond the glass.',
@@ -449,6 +482,7 @@ export const roomNarratives: Record<string, RoomNarrative> = {
   },
 
   penthouse_lab: {
+    name: 'Private Laboratory',
     firstVisit:
       "Hidden behind the CEO's office is a private laboratory — the birthplace of the Venomous Snake. Prototype neural cores sit in display cases like trophies. A lab AI's voice echoes from unseen speakers, calm and clinical.",
     revisit: "The private lab is unchanged. The AI's voice hums softly from the speakers.",
@@ -458,6 +492,7 @@ export const roomNarratives: Record<string, RoomNarrative> = {
 
   // ── Floor 11: Rooftop ───────────────────────────────────────────────────
   rooftop_access: {
+    name: 'Rooftop Access',
     firstVisit:
       "Wind slams into you as you push through the rooftop access door. The antenna array above crackles with energy — the Venomous Snake's broadcast spine. A maintenance worker huddles behind a ventilation unit, terrified.",
     revisit:
@@ -467,6 +502,7 @@ export const roomNarratives: Record<string, RoomNarrative> = {
   },
 
   rooftop_helipad: {
+    name: 'Helipad',
     firstVisit:
       "The helipad is the highest point of Rattlesnake Corp. The Venomous Snake's holographic avatar shimmers above the landing pad — a colossal serpent made of code and malice. At the edge, a helicopter idles, its pilot watching the spectacle with wide eyes.",
     revisit: 'The helipad is silent now. The wind carries the echo of what happened here.',
@@ -474,6 +510,11 @@ export const roomNarratives: Record<string, RoomNarrative> = {
       "A reinforced helipad at the tower's apex. Landing lights flash in sequence. The city sprawls far below, a grid of light stretching to every horizon. This is where it ends.",
   },
 };
+
+/** Look up the display name for a room. Falls back to the room id. */
+export function getRoomDisplayName(roomId: string): string {
+  return roomNarratives[roomId]?.name ?? roomId;
+}
 
 // ---------------------------------------------------------------------------
 // NPC Dialogs

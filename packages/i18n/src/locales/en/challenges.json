@@ -1,35 +1,35 @@
 {
   "ch01_01": {
     "title": "First Contact",
-    "description": "Make the security terminal display the message 'Hello, World!' using the print() function."
+    "description": "Make the security terminal display the message 'Hello, World!' using the print() function.\n\nIn Python, print() outputs text to the screen. Text (called a 'string') must be wrapped in quotation marks — either \"double quotes\" or 'single quotes'. For example: print(\"Hello\")"
   },
   "ch01_02": {
     "title": "Cover Identity",
-    "description": "Create a variable called 'codename' and assign it your operative name as a string. Then print it."
+    "description": "Create a variable called 'codename' and assign it your operative name as a string, then print it.\n\nVariables store values for later use. Use the = sign to assign a value: my_variable = \"some text\". You can then use the variable name anywhere you'd use the value itself."
   },
   "ch01_03": {
     "title": "Cracking Numbers",
-    "description": "The security lock code is the result of a calculation. Compute and print the answer using Python math operators."
+    "description": "Compute the vault security code using the given variables and print the result.\n\nPython supports arithmetic operators: + (add), - (subtract), * (multiply), / (divide). You can use variables in math expressions just like numbers — for example: result = price * quantity + tax"
   },
   "ch01_04": {
     "title": "Data Recon",
-    "description": "Use the type() function to identify the data types of a string variable and an integer variable."
+    "description": "Use the type() function to identify the data types of different variables.\n\nEvery value in Python has a type. Text is type 'str' (string), whole numbers are 'int' (integer). The type() function reveals a value's type — for example: print(type(42)) outputs <class 'int'>."
   },
   "ch01_05": {
     "title": "Thermal Override",
-    "description": "Convert the server room temperature from Celsius to Fahrenheit using the conversion formula."
+    "description": "Convert the server room temperature from Celsius to Fahrenheit using the formula: F = (C × 9/5) + 32.\n\nDivision with / always produces a decimal number (called a 'float'), like 9/5 = 1.8. Use parentheses () to control the order of operations, just like in math class."
   },
   "ch01_06": {
     "title": "Name Assembly",
-    "description": "Combine a first name and last name into a full name using string concatenation."
+    "description": "Combine a first name and last name into a full name using string concatenation.\n\nIn Python, the + operator joins strings together: \"Hello\" + \" \" + \"World\" produces \"Hello World\". This is called concatenation. Remember to include spaces where needed!"
   },
   "ch01_07": {
     "title": "Terminal Art",
-    "description": "Print a simple ASCII art snake on the terminal using multiple print statements."
+    "description": "Print a simple ASCII art snake on the terminal using multiple print() statements.\n\nEach print() call outputs text on its own line. To display multiple lines of output, use multiple print() statements — one for each line."
   },
   "ch01_08": {
     "title": "Code Notes",
-    "description": "Add comments to explain what each line of code does. Comments help other operatives understand your work."
+    "description": "Add comments to explain what each line of code does. Comments help other operatives understand your work.\n\nLines starting with # are comments — Python ignores them completely. Comments are notes for humans reading the code. For example: # This calculates the total"
   },
   "ch02_01": {
     "title": "Case Shift",
