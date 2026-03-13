@@ -9,7 +9,7 @@
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/packages/python-runtime",
-        "tsConfig": "packages/python-runtime/tsconfig.json",
+        "tsConfig": "packages/python-runtime/tsconfig.lib.json",
         "main": "packages/python-runtime/src/index.ts"
       }
     },

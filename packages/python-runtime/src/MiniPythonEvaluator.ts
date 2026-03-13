@@ -1365,11 +1365,6 @@ class ExprParser {
     return mkList(items);
   }
 
-  private parseListComp(_expr: Val, env: Env): Val {
-    // Legacy path — should no longer be called but kept for safety
-    return this.parseListCompFull(env);
-  }
-
   private isDictOrSetComprehension(): boolean {
     // Scan forward to see if there's a 'for' keyword at depth 0 before hitting '}'
     let depth = 0;
@@ -2380,7 +2375,7 @@ class Executor {
                 const errObj: ObjVal = {
                   kind: 'obj',
                   cls: errCls,
-                  attrs: new Map([['message', mkStr(e.message)], ['args', mkTuple([mkStr(e.message)])]]),
+                  attrs: new Map<string, Val>([['message', mkStr(e.message)], ['args', mkTuple([mkStr(e.message)])]]),
                 };
                 env.set(clause.varName, errObj);
               }
@@ -2826,7 +2821,7 @@ class Executor {
       if (!init && cls.parentName) {
         let parentName: string | undefined = cls.parentName;
         while (!init && parentName) {
-          const parentCls = _env.get(parentName) ?? this.env.get(parentName);
+          const parentCls: Val | undefined = _env.get(parentName) ?? this.env.get(parentName);
           if (parentCls?.kind === 'class') {
             init = parentCls.methods.get('__init__');
             parentName = parentCls.parentName;
@@ -3083,7 +3078,6 @@ class Executor {
 
   private createIoModule(): ModuleVal {
     const attrs = new Map<string, Val>();
-    const self = this;
     // io.StringIO — a simple in-memory text stream
     const stringIOClass: ClassVal = {
       kind: 'class', name: 'StringIO', body: [], env: new Env(),
@@ -3468,7 +3462,7 @@ class Executor {
       return mkList(items.filter(item => pyBool(self.callValue(fn, [item], new Map(), env))));
     });
 
-    builtin('input', (args) => {
+    builtin('input', (_args) => {
       // Don't print prompt to stdout — challenge runner compares stdout directly
       return mkStr(self.inputQueue.shift() ?? '');
     });
@@ -3548,7 +3542,7 @@ class Executor {
       const initFunc: FuncVal = {
         kind: 'func', name: '__init__', params: [{ name: 'self' }, { name: 'message', defaultVal: mkStr('') }],
         body: [], closure: new Env(),
-        _builtin: (args: Val[]) => {
+        _builtin: (_args: Val[]) => {
           // self is the first arg (from bound method call)
           // message is in args[0] after self is bound
           return NONE;
