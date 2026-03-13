@@ -25,6 +25,20 @@ export const ch01_03_math_ops: Challenge = {
       expectedOutput: '73',
       hidden: false,
     },
+    {
+      id: 'tc02',
+      description: 'Works with different values',
+      setup: 'access_level = 5\noffset = 2',
+      expectedOutput: '52',
+      hidden: true,
+    },
+    {
+      id: 'tc03',
+      description: 'Works with other values',
+      setup: 'access_level = 3\noffset = 8',
+      expectedOutput: '38',
+      hidden: true,
+    },
   ],
 
   hints: [

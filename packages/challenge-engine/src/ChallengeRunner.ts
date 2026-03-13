@@ -43,7 +43,8 @@ export class ChallengeRunner {
         this.interpreter.provideInput(testCase.input);
       }
 
-      const result: ExecutionResult = await this.interpreter.execute(code);
+      const finalCode = this.applySetup(testCase, code);
+      const result: ExecutionResult = await this.interpreter.execute(finalCode);
       const executionTimeMs = performance.now() - startTime;
 
       if (testCase.expectsError !== undefined) {
@@ -86,5 +87,24 @@ export class ChallengeRunner {
         executionTimeMs: performance.now() - startTime,
       };
     }
+  }
+
+  /** Apply setup overrides by replacing matching variable assignments in the student code */
+  private applySetup(testCase: TestCase, code: string): string {
+    if (!testCase.setup) return code;
+
+    let result = code;
+    for (const setupLine of testCase.setup.split('\n')) {
+      const match = setupLine.match(/^(\w+)\s*=/);
+      if (match) {
+        const pattern = new RegExp(`^${match[1]}\\s*=.*$`, 'm');
+        if (pattern.test(result)) {
+          result = result.replace(pattern, setupLine);
+        } else {
+          result = `${setupLine}\n${result}`;
+        }
+      }
+    }
+    return result;
   }
 }

@@ -273,6 +273,8 @@ export interface TestCase {
   id: string;
   description: string;
   input?: string;
+  /** Optional setup code prepended before student code (e.g. variable overrides) */
+  setup?: string;
   expectedOutput: string;
   hidden: boolean;
   expectsError?: string;

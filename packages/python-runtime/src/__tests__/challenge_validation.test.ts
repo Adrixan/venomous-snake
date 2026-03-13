@@ -22,6 +22,7 @@ interface Challenge {
     id: string;
     expectedOutput: string;
     input?: string;
+    setup?: string;
   }>;
 }
 
@@ -31,6 +32,23 @@ const challenges = Object.values(allModules) as unknown as Challenge[];
 // MiniPythonEvaluator uses a simple LCG, not CPython's Mersenne Twister.
 // Challenges using random with seeds will produce different output.
 const SKIP_FOR_MINI_EVALUATOR = new Set(['ch09_01_importing_modules']);
+
+/** Apply setup overrides by replacing matching variable assignments in the code */
+function applySetup(setup: string, code: string): string {
+  let result = code;
+  for (const setupLine of setup.split('\n')) {
+    const match = setupLine.match(/^(\w+)\s*=/);
+    if (match) {
+      const pattern = new RegExp(`^${match[1]}\\s*=.*$`, 'm');
+      if (pattern.test(result)) {
+        result = result.replace(pattern, setupLine);
+      } else {
+        result = `${setupLine}\n${result}`;
+      }
+    }
+  }
+  return result;
+}
 
 describe('Challenge Validation — all solution codes produce expected output', () => {
   for (const challenge of challenges) {
@@ -46,7 +64,8 @@ describe('Challenge Validation — all solution codes produce expected output', 
             evaluator.queueInput(line);
           }
         }
-        const result = evaluator.execute(challenge.solutionCode);
+        const code = tc.setup ? applySetup(tc.setup, challenge.solutionCode) : challenge.solutionCode;
+        const result = evaluator.execute(code);
         const actual = result.stdout.trim();
         const expected = tc.expectedOutput.trim();
         if (result.error) {

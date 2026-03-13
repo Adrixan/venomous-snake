@@ -26,8 +26,16 @@ export const ch01_05_float_calculations: Challenge = {
     },
     {
       id: 'tc02',
-      description: 'Should use the correct conversion formula',
-      expectedOutput: '212.0',
+      description: 'Works with freezing point',
+      setup: 'celsius = 0',
+      expectedOutput: '32.0',
+      hidden: true,
+    },
+    {
+      id: 'tc03',
+      description: 'Works with body temperature',
+      setup: 'celsius = 37',
+      expectedOutput: '98.6',
       hidden: true,
     },
   ],
