@@ -2,7 +2,7 @@
   "name": "Venomous Snake - Python Hacking RPG",
   "short_name": "Venomous Snake",
   "description": "A cyberpunk noir 2D RPG that teaches Python programming through hacking challenges",
-  "start_url": "/",
+  "start_url": ".",
   "display": "standalone",
   "orientation": "landscape",
   "theme_color": "#0a0a0f",
@@ -12,7 +12,7 @@
   "dir": "ltr",
   "icons": [
     {
-      "src": "/icons/icon.svg",
+      "src": "./icons/icon.svg",
       "sizes": "any",
       "type": "image/svg+xml",
       "purpose": "any maskable"

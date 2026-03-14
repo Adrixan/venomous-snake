@@ -3,8 +3,8 @@ const STATIC_CACHE = `venomous-snake-static-${CACHE_VERSION}`;
 const DYNAMIC_CACHE = `venomous-snake-dynamic-${CACHE_VERSION}`;
 const PYODIDE_CACHE = `venomous-snake-pyodide-${CACHE_VERSION}`;
 
-// Shell assets cached on install
-const SHELL_ASSETS = ['/', '/index.html', '/manifest.json'];
+// Shell assets cached on install (relative to SW scope)
+const SHELL_ASSETS = ['./', './index.html', './manifest.json'];
 
 // Pyodide assets cached on first use
 const PYODIDE_PATTERNS = [/pyodide/, /\.whl$/, /\.wasm$/];
@@ -44,7 +44,7 @@ self.addEventListener('fetch', (event) => {
           caches.open(STATIC_CACHE).then((cache) => cache.put(event.request, clone));
           return response;
         })
-        .catch(() => caches.match('/index.html')),
+        .catch(() => caches.match(new URL('./index.html', self.registration.scope).href)),
     );
     return;
   }
