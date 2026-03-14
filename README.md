@@ -36,16 +36,16 @@ npm run dev
 npm run build
 ```
 
-The build output is written to **`dist/apps/game/`**. This directory contains a fully self-contained static site — no server-side runtime required.
+The build output is written to **`dist/`**. This directory contains a fully self-contained static site — no server-side runtime required.
 
 ## Deployment
 
 ### Shared Hosting / Any Static Server
 
-Upload the **contents** of `dist/apps/game/` to your web root (or any subdirectory). All asset paths are relative, so the game works from any URL path.
+Upload the **contents** of `dist/` to your web root (or any subdirectory). All asset paths are relative, so the game works from any URL path.
 
 ```
-dist/apps/game/
+dist/
 ├── index.html          ← entry point
 ├── manifest.json       ← PWA manifest
 ├── sw.js               ← service worker
@@ -63,7 +63,7 @@ dist/apps/game/
 
 ### GitHub Pages / Netlify / Vercel
 
-No special configuration needed. Point the build output directory to `dist/apps/game` and you're set. No server-side routing is required — the game is a single-page application with hash-based navigation.
+No special configuration needed. Point the build output directory to `dist` and you're set. No server-side routing is required — the game is a single-page application with hash-based navigation.
 
 ### CI/CD
 

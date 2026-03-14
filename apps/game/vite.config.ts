@@ -41,7 +41,7 @@ export default defineConfig({
     },
   },
   build: {
-    outDir: '../../dist/apps/game',
+    outDir: '../../dist',
     emptyOutDir: true,
     rollupOptions: {
       output: {

@@ -59,7 +59,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: game-build-manual-${{ github.run_id }}
-          path: dist/apps/game/
+          path: dist/
           retention-days: 7
 
   deploy:
