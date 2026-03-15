@@ -10,6 +10,8 @@ export interface GameSettings {
   reducedMotion: boolean;
   keyboardLayout?: 'qwerty' | 'qwertz';
   useNativeKeyboard?: boolean;
+  keyboardSize?: 'small' | 'medium' | 'large';
+  showDesktopKeyboard?: boolean;
 }
 
 export interface InventoryItem {

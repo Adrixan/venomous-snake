@@ -53,7 +53,12 @@
     "fullscreen": "Vollbild",
     "reduced_motion": "Reduzierte Bewegung",
     "keyboard_layout": "Tastaturlayout",
-    "native_keyboard": "Systemtastatur verwenden"
+    "native_keyboard": "Systemtastatur verwenden",
+    "keyboard_size": "Tastaturgröße",
+    "keyboard_size_small": "Klein",
+    "keyboard_size_medium": "Mittel",
+    "keyboard_size_large": "Groß",
+    "show_desktop_keyboard": "Bildschirmtastatur (Desktop)"
   },
   "hud": {
     "xp": "EP",

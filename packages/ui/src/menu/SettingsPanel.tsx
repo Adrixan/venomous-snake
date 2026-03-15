@@ -295,6 +295,37 @@ export function SettingsPanel({ onBack, audioSettings }: SettingsPanelProps): Re
           </div>
         </div>
 
+        {/* Keyboard Size */}
+        <div style={rowStyle}>
+          <span style={labelStyle}>{t('settings.keyboard_size')}</span>
+          <select
+            style={selectStyle}
+            value={settings.keyboardSize ?? 'medium'}
+            onChange={(e) =>
+              update({ keyboardSize: e.target.value as 'small' | 'medium' | 'large' })
+            }
+          >
+            <option value="small">{t('settings.keyboard_size_small')}</option>
+            <option value="medium">{t('settings.keyboard_size_medium')}</option>
+            <option value="large">{t('settings.keyboard_size_large')}</option>
+          </select>
+        </div>
+
+        {/* Desktop On-Screen Keyboard */}
+        <div style={rowStyle}>
+          <span style={labelStyle}>{t('settings.show_desktop_keyboard')}</span>
+          <div style={checkboxContainerStyle}>
+            <input
+              type="checkbox"
+              checked={settings.showDesktopKeyboard ?? false}
+              onChange={() =>
+                update({ showDesktopKeyboard: !(settings.showDesktopKeyboard ?? false) })
+              }
+              style={{ width: '20px', height: '20px', accentColor: '#00ff9d', cursor: 'pointer' }}
+            />
+          </div>
+        </div>
+
         <button style={buttonStyle} onClick={onBack}>
           {t('new_game.back')}
         </button>

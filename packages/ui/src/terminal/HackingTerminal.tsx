@@ -19,19 +19,31 @@ import './terminal.css';
 function useKeyboardSettings(): {
   keyboardLayout: 'qwerty' | 'qwertz';
   useNativeKeyboard: boolean;
+  keyboardSize: 'small' | 'medium' | 'large';
+  showDesktopKeyboard: boolean;
 } {
   const [settings, setSettings] = useState<{
     keyboardLayout: 'qwerty' | 'qwertz';
     useNativeKeyboard: boolean;
-  }>({ keyboardLayout: 'qwerty', useNativeKeyboard: false });
+    keyboardSize: 'small' | 'medium' | 'large';
+    showDesktopKeyboard: boolean;
+  }>({
+    keyboardLayout: 'qwerty',
+    useNativeKeyboard: false,
+    keyboardSize: 'medium',
+    showDesktopKeyboard: false,
+  });
   useEffect(() => {
     try {
       const raw = localStorage.getItem('vs-settings');
       if (raw) {
         const parsed = JSON.parse(raw) as Record<string, unknown>;
+        const size = parsed['keyboardSize'];
         setSettings({
           keyboardLayout: parsed['keyboardLayout'] === 'qwertz' ? 'qwertz' : 'qwerty',
           useNativeKeyboard: parsed['useNativeKeyboard'] === true,
+          keyboardSize: size === 'small' || size === 'medium' || size === 'large' ? size : 'medium',
+          showDesktopKeyboard: parsed['showDesktopKeyboard'] === true,
         });
       }
     } catch {
@@ -228,13 +240,15 @@ function FreeModeTerminal({
         </div>
       )}
 
-      {breakpoint === 'mobile' &&
+      {(breakpoint === 'mobile' || keyboardSettings.showDesktopKeyboard) &&
         status !== 'loading' &&
-        (isAndroid && !keyboardSettings.useNativeKeyboard ? (
+        ((isAndroid && !keyboardSettings.useNativeKeyboard) ||
+        (breakpoint !== 'mobile' && keyboardSettings.showDesktopKeyboard) ? (
           <CodeKeyboard
             onInput={handleSymbol}
             onBackspace={handleBackspace}
             keyboardLayout={keyboardSettings.keyboardLayout}
+            keyboardSize={keyboardSettings.keyboardSize}
           />
         ) : (
           <MobileSymbolBar onSymbol={handleSymbol} />
@@ -477,13 +491,15 @@ function ChallengeModeTerminal({
         </div>
       )}
 
-      {/* Mobile symbol bar */}
-      {breakpoint === 'mobile' &&
-        (isAndroid && !keyboardSettings.useNativeKeyboard ? (
+      {/* Mobile symbol bar / on-screen keyboard */}
+      {(breakpoint === 'mobile' || keyboardSettings.showDesktopKeyboard) &&
+        ((isAndroid && !keyboardSettings.useNativeKeyboard) ||
+        (breakpoint !== 'mobile' && keyboardSettings.showDesktopKeyboard) ? (
           <CodeKeyboard
             onInput={handleSymbol}
             onBackspace={handleBackspace}
             keyboardLayout={keyboardSettings.keyboardLayout}
+            keyboardSize={keyboardSettings.keyboardSize}
           />
         ) : (
           <MobileSymbolBar onSymbol={handleSymbol} />

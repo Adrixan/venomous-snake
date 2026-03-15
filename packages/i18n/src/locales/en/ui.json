@@ -53,7 +53,12 @@
     "fullscreen": "Fullscreen",
     "reduced_motion": "Reduced Motion",
     "keyboard_layout": "Keyboard Layout",
-    "native_keyboard": "Use Native Keyboard"
+    "native_keyboard": "Use Native Keyboard",
+    "keyboard_size": "Keyboard Size",
+    "keyboard_size_small": "Small",
+    "keyboard_size_medium": "Medium",
+    "keyboard_size_large": "Large",
+    "show_desktop_keyboard": "On-Screen Keyboard (Desktop)"
   },
   "hud": {
     "xp": "XP",

@@ -1,10 +1,11 @@
-import React, { useState, useCallback, useRef } from 'react';
+import React, { useState, useCallback, useRef, useMemo } from 'react';
 
 export interface CodeKeyboardProps {
   onInput: (text: string) => void;
   onBackspace: () => void;
   visible?: boolean;
   keyboardLayout?: 'qwerty' | 'qwertz';
+  keyboardSize?: 'small' | 'medium' | 'large';
 }
 
 /* ── Layout data ─────────────────────────────────────────────────────── */
@@ -60,90 +61,16 @@ const KEY_W = 'calc(10% - 4px)';
 const FONT_FAMILY = '"JetBrains Mono","Fira Code","Cascadia Code",monospace';
 const DOUBLE_TAP_MS = 300;
 
+const SIZE_SCALES: Record<string, number> = { small: 1, medium: 1.5, large: 2 };
+
 /* ── Styles ──────────────────────────────────────────────────────────── */
 
-const styles = {
-  container: {
-    display: 'flex',
-    flexDirection: 'column' as const,
-    background: '#080b10',
-    borderTop: '1px solid #1a2a3a',
-    padding: '4px 2px',
-    gap: '3px',
-    flexShrink: 0,
-    userSelect: 'none' as const,
-    WebkitUserSelect: 'none' as const,
-  },
-  row: {
-    display: 'flex',
-    flexDirection: 'row' as const,
-    justifyContent: 'center',
-    gap: '3px',
-  },
-  key: {
-    minWidth: KEY_W,
-    height: '40px',
-    background: '#0f1720',
-    border: '1px solid #1a2a3a',
-    borderRadius: '4px',
-    color: '#b3b1ad',
-    fontFamily: FONT_FAMILY,
-    fontSize: '14px',
-    cursor: 'pointer',
-    touchAction: 'manipulation' as const,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: '0 2px',
-    flexShrink: 0,
-    transition: 'background 0.08s, color 0.08s, border-color 0.08s',
-  },
+/** Color-only styles that don't need scaling */
+const activeStyles = {
   keyActive: {
     background: 'rgba(0,255,157,0.18)',
     borderColor: '#00ff9d',
     color: '#00ff9d',
-  },
-  keyNumber: {
-    height: '34px',
-    fontSize: '13px',
-  },
-  keyBackspace: {
-    background: '#0d1a24',
-    color: '#ffb454',
-    fontSize: '16px',
-    minWidth: 'calc(15% - 4px)',
-  },
-  keyEnter: {
-    background: 'rgba(0,255,157,0.08)',
-    borderColor: '#00ff9d',
-    color: '#00ff9d',
-    fontSize: '12px',
-    minWidth: '70px',
-    letterSpacing: '0.04em',
-  },
-  keySpace: {
-    flex: 1,
-    minWidth: 0,
-    background: '#0f1720',
-    borderColor: '#1a2a3a',
-    color: '#3d4752',
-    fontSize: '11px',
-    letterSpacing: '0.08em',
-  },
-  keyTab: {
-    background: '#0d1a24',
-    borderColor: '#1a2a3a',
-    color: '#00b4d8',
-    fontSize: '11px',
-    minWidth: '52px',
-    letterSpacing: '0.04em',
-  },
-  keyShift: {
-    background: '#0d1a24',
-    borderColor: '#1a2a3a',
-    color: '#3d4752',
-    fontSize: '16px',
-    minWidth: 'calc(15% - 4px)',
   },
   keyShiftActive: {
     background: 'rgba(0,255,157,0.12)',
@@ -156,47 +83,133 @@ const styles = {
     color: '#00ff9d',
     boxShadow: '0 0 6px rgba(0,255,157,0.35)',
   },
-  symbolBar: {
-    display: 'flex',
-    flexDirection: 'row' as const,
-    overflowX: 'auto' as const,
-    overflowY: 'hidden' as const,
-    flexShrink: 0,
-    WebkitOverflowScrolling: 'touch' as const,
-    scrollbarWidth: 'none' as const,
-    gap: '0px',
-  },
-  symbolKey: {
-    minWidth: '40px',
-    height: '44px',
-    padding: '0 4px',
-    background: 'transparent',
-    border: 'none',
-    borderRight: '1px solid #1a2a3a',
-    color: '#00ff9d',
-    fontFamily: FONT_FAMILY,
-    fontSize: '15px',
-    cursor: 'pointer',
-    flexShrink: 0,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    userSelect: 'none' as const,
-    WebkitUserSelect: 'none' as const,
-    touchAction: 'manipulation' as const,
-  },
-} as const;
+};
+
+/** Create dimension-scaled styles. scale: 1=small (current), 1.5=medium, 2=large */
+function createStyles(scale: number) {
+  const s = (v: number) => Math.round(v * scale);
+  return {
+    container: {
+      display: 'flex',
+      flexDirection: 'column' as const,
+      background: '#080b10',
+      borderTop: '1px solid #1a2a3a',
+      padding: `${s(4)}px ${s(2)}px`,
+      gap: `${s(3)}px`,
+      flexShrink: 0,
+      userSelect: 'none' as const,
+      WebkitUserSelect: 'none' as const,
+    },
+    row: {
+      display: 'flex',
+      flexDirection: 'row' as const,
+      justifyContent: 'center',
+      gap: `${s(3)}px`,
+    },
+    key: {
+      minWidth: KEY_W,
+      height: `${s(40)}px`,
+      background: '#0f1720',
+      border: '1px solid #1a2a3a',
+      borderRadius: `${s(4)}px`,
+      color: '#b3b1ad',
+      fontFamily: FONT_FAMILY,
+      fontSize: `${s(14)}px`,
+      cursor: 'pointer',
+      touchAction: 'manipulation' as const,
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      padding: `0 ${s(2)}px`,
+      flexShrink: 0,
+      transition: 'background 0.08s, color 0.08s, border-color 0.08s',
+    },
+    keyNumber: {
+      height: `${s(34)}px`,
+      fontSize: `${s(13)}px`,
+    },
+    keyBackspace: {
+      background: '#0d1a24',
+      color: '#ffb454',
+      fontSize: `${s(16)}px`,
+      minWidth: 'calc(15% - 4px)',
+    },
+    keyEnter: {
+      background: 'rgba(0,255,157,0.08)',
+      borderColor: '#00ff9d',
+      color: '#00ff9d',
+      fontSize: `${s(12)}px`,
+      minWidth: `${s(70)}px`,
+      letterSpacing: '0.04em',
+    },
+    keySpace: {
+      flex: 1,
+      minWidth: 0,
+      background: '#0f1720',
+      borderColor: '#1a2a3a',
+      color: '#3d4752',
+      fontSize: `${s(11)}px`,
+      letterSpacing: '0.08em',
+    },
+    keyTab: {
+      background: '#0d1a24',
+      borderColor: '#1a2a3a',
+      color: '#00b4d8',
+      fontSize: `${s(11)}px`,
+      minWidth: `${s(52)}px`,
+      letterSpacing: '0.04em',
+    },
+    keyShift: {
+      background: '#0d1a24',
+      borderColor: '#1a2a3a',
+      color: '#3d4752',
+      fontSize: `${s(16)}px`,
+      minWidth: 'calc(15% - 4px)',
+    },
+    symbolBar: {
+      display: 'flex',
+      flexDirection: 'row' as const,
+      overflowX: 'auto' as const,
+      overflowY: 'hidden' as const,
+      flexShrink: 0,
+      WebkitOverflowScrolling: 'touch' as const,
+      scrollbarWidth: 'none' as const,
+      gap: '0px',
+    },
+    symbolKey: {
+      minWidth: `${s(40)}px`,
+      height: `${s(44)}px`,
+      padding: `0 ${s(4)}px`,
+      background: 'transparent',
+      border: 'none',
+      borderRight: '1px solid #1a2a3a',
+      color: '#00ff9d',
+      fontFamily: FONT_FAMILY,
+      fontSize: `${s(15)}px`,
+      cursor: 'pointer',
+      flexShrink: 0,
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      userSelect: 'none' as const,
+      WebkitUserSelect: 'none' as const,
+      touchAction: 'manipulation' as const,
+    },
+  };
+}
 
 /* ── Key sub-component ───────────────────────────────────────────────── */
 
 function Key({
   label,
   ariaLabel,
+  baseKeyStyle,
   extraStyle,
   onPress,
 }: {
   label: string;
   ariaLabel?: string;
+  baseKeyStyle: React.CSSProperties;
   extraStyle?: React.CSSProperties;
   onPress: () => void;
 }): React.JSX.Element {
@@ -219,9 +232,9 @@ function Key({
       type="button"
       tabIndex={-1}
       style={{
-        ...styles.key,
+        ...baseKeyStyle,
         ...extraStyle,
-        ...(active ? styles.keyActive : {}),
+        ...(active ? activeStyles.keyActive : {}),
       }}
       onPointerDown={handlePointerDown}
       onPointerUp={handlePointerUp}
@@ -249,10 +262,14 @@ export function CodeKeyboard({
   onBackspace,
   visible = true,
   keyboardLayout = 'qwerty',
+  keyboardSize = 'medium',
 }: CodeKeyboardProps): React.JSX.Element | null {
   const [shiftActive, setShiftActive] = useState(false);
   const [capsLock, setCapsLock] = useState(false);
   const lastShiftTap = useRef<number>(0);
+
+  const scale = SIZE_SCALES[keyboardSize] ?? 1.5;
+  const styles = useMemo(() => createStyles(scale), [scale]);
 
   const letterRows = keyboardLayout === 'qwertz' ? QWERTZ_ROWS : QWERTY_ROWS;
 
@@ -293,7 +310,7 @@ export function CodeKeyboard({
   /* Compute shift key styling */
   const shiftStyle: React.CSSProperties = {
     ...styles.keyShift,
-    ...(capsLock ? styles.keyShiftCapsLock : shiftActive ? styles.keyShiftActive : {}),
+    ...(capsLock ? activeStyles.keyShiftCapsLock : shiftActive ? activeStyles.keyShiftActive : {}),
   };
 
   if (!visible) return null;
@@ -303,7 +320,13 @@ export function CodeKeyboard({
       {/* Always-visible number row */}
       <div style={styles.row}>
         {NUMBER_ROW.map((n) => (
-          <Key key={n} label={n} extraStyle={styles.keyNumber} onPress={() => onInput(n)} />
+          <Key
+            key={n}
+            label={n}
+            baseKeyStyle={styles.key}
+            extraStyle={styles.keyNumber}
+            onPress={() => onInput(n)}
+          />
         ))}
       </div>
 
@@ -334,6 +357,7 @@ export function CodeKeyboard({
             <Key
               label="⇧"
               ariaLabel={capsLock ? 'Caps lock on' : shiftActive ? 'Shift on' : 'Shift'}
+              baseKeyStyle={styles.key}
               extraStyle={shiftStyle}
               onPress={handleShift}
             />
@@ -342,6 +366,7 @@ export function CodeKeyboard({
             <Key
               key={ch}
               label={shiftActive || capsLock ? ch.toUpperCase() : ch}
+              baseKeyStyle={styles.key}
               onPress={() => handleChar(ch)}
             />
           ))}
@@ -350,6 +375,7 @@ export function CodeKeyboard({
             <Key
               label="⌫"
               ariaLabel="Backspace"
+              baseKeyStyle={styles.key}
               extraStyle={styles.keyBackspace}
               onPress={onBackspace}
             />
@@ -362,18 +388,21 @@ export function CodeKeyboard({
         <Key
           label="tab"
           ariaLabel="Tab"
+          baseKeyStyle={styles.key}
           extraStyle={styles.keyTab}
           onPress={() => onInput('    ')}
         />
         <Key
           label="space"
           ariaLabel="Space"
+          baseKeyStyle={styles.key}
           extraStyle={styles.keySpace}
           onPress={() => onInput(' ')}
         />
         <Key
           label="↵ enter"
           ariaLabel="Enter"
+          baseKeyStyle={styles.key}
           extraStyle={styles.keyEnter}
           onPress={() => onInput('\n')}
         />
