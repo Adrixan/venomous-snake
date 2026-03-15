@@ -16,6 +16,31 @@ import { useBreakpoint } from '../responsive/useBreakpoint';
 import { useIsAndroid } from './useIsAndroid';
 import './terminal.css';
 
+function useKeyboardSettings(): {
+  keyboardLayout: 'qwerty' | 'qwertz';
+  useNativeKeyboard: boolean;
+} {
+  const [settings, setSettings] = useState<{
+    keyboardLayout: 'qwerty' | 'qwertz';
+    useNativeKeyboard: boolean;
+  }>({ keyboardLayout: 'qwerty', useNativeKeyboard: false });
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem('vs-settings');
+      if (raw) {
+        const parsed = JSON.parse(raw) as Record<string, unknown>;
+        setSettings({
+          keyboardLayout: parsed['keyboardLayout'] === 'qwertz' ? 'qwertz' : 'qwerty',
+          useNativeKeyboard: parsed['useNativeKeyboard'] === true,
+        });
+      }
+    } catch {
+      /* ignore */
+    }
+  }, []);
+  return settings;
+}
+
 /** Convert keys like "challenges.ch01_02.title" to "challenges:ch01_02.title" for i18next namespace resolution */
 function nsKey(key: string): string {
   const dot = key.indexOf('.');
@@ -254,6 +279,7 @@ function ChallengeModeTerminal({
   const editorRef = useRef<TerminalEditorHandle>(null);
   const breakpoint = useBreakpoint();
   const isAndroid = useIsAndroid();
+  const keyboardSettings = useKeyboardSettings();
   const successTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // Force editor remount when challenge changes
@@ -412,7 +438,7 @@ function ChallengeModeTerminal({
             onRun={handleRun}
             onSubmit={handleSubmit}
             disabled={isDisabled}
-            {...(isAndroid ? { isAndroid } : {})}
+            {...(isAndroid && !keyboardSettings.useNativeKeyboard ? { isAndroid: true } : {})}
             {...(readOnlyRanges ? { readOnlyRanges } : {})}
           />
         </div>
@@ -448,8 +474,12 @@ function ChallengeModeTerminal({
 
       {/* Mobile symbol bar */}
       {breakpoint === 'mobile' &&
-        (isAndroid ? (
-          <CodeKeyboard onInput={handleSymbol} onBackspace={handleBackspace} />
+        (isAndroid && !keyboardSettings.useNativeKeyboard ? (
+          <CodeKeyboard
+            onInput={handleSymbol}
+            onBackspace={handleBackspace}
+            keyboardLayout={keyboardSettings.keyboardLayout}
+          />
         ) : (
           <MobileSymbolBar onSymbol={handleSymbol} />
         ))}

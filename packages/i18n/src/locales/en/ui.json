@@ -51,7 +51,9 @@
     "volume_music": "Music",
     "volume_sfx": "Sound Effects",
     "fullscreen": "Fullscreen",
-    "reduced_motion": "Reduced Motion"
+    "reduced_motion": "Reduced Motion",
+    "keyboard_layout": "Keyboard Layout",
+    "native_keyboard": "Use Native Keyboard"
   },
   "hud": {
     "xp": "XP",

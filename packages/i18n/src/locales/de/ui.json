@@ -51,7 +51,9 @@
     "volume_music": "Musik",
     "volume_sfx": "Soundeffekte",
     "fullscreen": "Vollbild",
-    "reduced_motion": "Reduzierte Bewegung"
+    "reduced_motion": "Reduzierte Bewegung",
+    "keyboard_layout": "Tastaturlayout",
+    "native_keyboard": "Systemtastatur verwenden"
   },
   "hud": {
     "xp": "EP",

@@ -269,6 +269,32 @@ export function SettingsPanel({ onBack, audioSettings }: SettingsPanelProps): Re
           </div>
         </div>
 
+        {/* Keyboard Layout */}
+        <div style={rowStyle}>
+          <span style={labelStyle}>{t('settings.keyboard_layout')}</span>
+          <select
+            style={selectStyle}
+            value={settings.keyboardLayout ?? 'qwerty'}
+            onChange={(e) => update({ keyboardLayout: e.target.value as 'qwerty' | 'qwertz' })}
+          >
+            <option value="qwerty">QWERTY</option>
+            <option value="qwertz">QWERTZ</option>
+          </select>
+        </div>
+
+        {/* Native Keyboard (Mobile) */}
+        <div style={rowStyle}>
+          <span style={labelStyle}>{t('settings.native_keyboard')}</span>
+          <div style={checkboxContainerStyle}>
+            <input
+              type="checkbox"
+              checked={settings.useNativeKeyboard ?? false}
+              onChange={() => update({ useNativeKeyboard: !(settings.useNativeKeyboard ?? false) })}
+              style={{ width: '20px', height: '20px', accentColor: '#00ff9d', cursor: 'pointer' }}
+            />
+          </div>
+        </div>
+
         <button style={buttonStyle} onClick={onBack}>
           {t('new_game.back')}
         </button>

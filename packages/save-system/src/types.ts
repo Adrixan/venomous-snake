@@ -8,6 +8,8 @@ export interface GameSettings {
   volumeSfx: number;
   fullscreen: boolean;
   reducedMotion: boolean;
+  keyboardLayout?: 'qwerty' | 'qwertz';
+  useNativeKeyboard?: boolean;
 }
 
 export interface InventoryItem {
@@ -46,4 +48,11 @@ export interface SaveSlot {
   createdAt: string;
   updatedAt: string;
   isAutoSave: boolean;
+}
+
+export interface SaveBundle {
+  version: number;
+  exportedAt: string;
+  saves: SaveSlot[];
+  signature: string;
 }
