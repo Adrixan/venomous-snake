@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef, useCallback } from 'react';
+import React, { useEffect, useState, useRef, useCallback, useMemo } from 'react';
 import { PWAInstallPrompt } from './pwa/PWAInstallPrompt';
 import { PWAUpdateNotifier } from './pwa/PWAUpdateNotifier';
 import { TerminalOverlay } from './components/TerminalOverlay';
@@ -17,15 +17,53 @@ import {
   AchievementToast,
   StoryTerminal,
   VictoryScreen,
+  QuestLog,
+  FloorMap,
 } from '@venomous-snake/ui';
 import type { AudioSettingsPanelProps, ToastNotification } from '@venomous-snake/ui';
 import { ACHIEVEMENTS } from '@venomous-snake/challenge-engine';
+import { chapters } from '@venomous-snake/challenges';
 
 import { EventBus, TextAdventureEngine, getRoomDisplayName } from '@venomous-snake/engine';
 import type { GameAction, NarrativeEntry } from '@venomous-snake/shared-types';
 import type { CurriculumProgress } from '@venomous-snake/shared-types';
 import type { GameController } from './GameController';
 import { useReducedMotion } from '@venomous-snake/ui';
+
+const FLOOR_NUM_TO_ID: Record<number, string> = {
+  0: 'lobby',
+  1: 'security-office',
+  2: 'server-room-b1',
+  3: 'server-room-b2',
+  4: 'network-hub',
+  5: 'data-center',
+  6: 'executive-floor',
+  7: 'research-lab',
+  8: 'ai-core',
+  9: 'mainframe',
+  10: 'quantum-vault',
+  11: 'apex-nexus',
+};
+
+const FLOOR_ID_TO_NUM: Record<string, number> = Object.fromEntries(
+  Object.entries(FLOOR_NUM_TO_ID).map(([num, id]) => [id, Number(num)]),
+);
+
+// First room on each floor, for floor navigation
+const FLOOR_FIRST_ROOM: Record<number, string> = {
+  0: 'lobby_entrance',
+  1: 'server_main',
+  2: 'lab_reception',
+  3: 'surveillance_lobby',
+  4: 'archives_entrance',
+  5: 'comms_reception',
+  6: 'executive_lobby',
+  7: 'manufacturing_floor',
+  8: 'vault_entrance',
+  9: 'aicore_antechamber',
+  10: 'penthouse_elevator',
+  11: 'rooftop_access',
+};
 
 type MenuView = 'main' | 'newgame' | 'settings';
 type SaveModalMode = 'save' | 'load' | null;
@@ -39,6 +77,8 @@ export function App(): React.JSX.Element {
   const setPlayerName = useGameStore((state) => state.setPlayerName);
   const setPlayerGender = useGameStore((state) => state.setPlayerGender);
   const setCurrentFloor = useGameStore((state) => state.setCurrentFloor);
+  const currentFloor = useGameStore((state) => state.currentFloor);
+  const unlockedFloors = useGameStore((state) => state.unlockedFloors);
   const reducedMotion = useReducedMotion();
   const terminalOpen = useGameStore((state) => state.overlay.terminalOpen);
   const openTerminal = useGameStore((state) => state.openTerminal);
@@ -392,6 +432,60 @@ export function App(): React.JSX.Element {
     [setActivePanel],
   );
 
+  // Derived floor IDs for FloorMap
+  const currentFloorId = FLOOR_NUM_TO_ID[currentFloor] ?? 'lobby';
+  const unlockedFloorIds = useMemo(
+    () => unlockedFloors.map((n) => FLOOR_NUM_TO_ID[n]).filter((id): id is string => id != null),
+    [unlockedFloors],
+  );
+
+  const handleFloorSelect = useCallback(
+    (floorId: string) => {
+      const floorNum = FLOOR_ID_TO_NUM[floorId];
+      if (floorNum == null) return;
+      const firstRoomId = FLOOR_FIRST_ROOM[floorNum];
+      if (!firstRoomId || !engineRef.current) return;
+      setCurrentFloor(floorNum);
+      engineRef.current.enterRoom(firstRoomId);
+      const state = engineRef.current.getState();
+      setCurrentRoom(state.currentRoomId);
+      for (let i = engineNarrativeSyncIndex.current; i < state.narrativeLog.length; i++) {
+        const entry = state.narrativeLog[i];
+        if (entry) appendNarrative(entry);
+      }
+      engineNarrativeSyncIndex.current = state.narrativeLog.length;
+      const room = engineRef.current.getCurrentRoom();
+      if (room) addVisitedRoom(room.id);
+      refreshActions();
+      setActivePanel('none');
+    },
+    [
+      setCurrentFloor,
+      setCurrentRoom,
+      appendNarrative,
+      addVisitedRoom,
+      refreshActions,
+      setActivePanel,
+    ],
+  );
+
+  // Build CurriculumProgress for QuestLog
+  const curriculumProgressForQuestLog = useMemo((): CurriculumProgress => {
+    if (savedProgress) return savedProgress;
+    return {
+      challenges: Object.fromEntries(
+        completedChallenges.map((id) => [
+          id,
+          { challengeId: id, completed: true, attempts: 1, hintsUsed: 0 },
+        ]),
+      ),
+      currentChapter: Math.max(1, currentFloor),
+      totalXp: xp,
+      completedChallenges: completedChallenges.length,
+      unlockedFloors: unlockedFloorIds,
+    };
+  }, [savedProgress, completedChallenges, currentFloor, xp, unlockedFloorIds]);
+
   const handleSave = useCallback(() => {
     setSaveModalMode('save');
   }, []);
@@ -581,6 +675,28 @@ export function App(): React.JSX.Element {
           {/* Settings panel */}
           {activePanel === 'settings' && gamePhase === 'playing' && (
             <SettingsPanel onBack={handleClosePanel} audioSettings={audioSettings} />
+          )}
+
+          {/* Quest log panel */}
+          {activePanel === 'questlog' && gamePhase === 'playing' && (
+            <QuestLog
+              isOpen={activePanel === 'questlog'}
+              onClose={handleClosePanel}
+              curriculumProgress={curriculumProgressForQuestLog}
+              chapters={chapters}
+              currentFloor={currentFloorId}
+            />
+          )}
+
+          {/* Floor map panel */}
+          {activePanel === 'map' && gamePhase === 'playing' && (
+            <FloorMap
+              isOpen={activePanel === 'map'}
+              onClose={handleClosePanel}
+              currentFloor={currentFloorId}
+              unlockedFloors={unlockedFloorIds}
+              onFloorSelect={handleFloorSelect}
+            />
           )}
 
           <PWAUpdateNotifier />

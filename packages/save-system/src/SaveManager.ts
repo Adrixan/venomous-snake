@@ -1,4 +1,5 @@
-import type { SaveSlot, SaveData } from './types';
+import type { SaveSlot, SaveData, SaveBundle } from './types';
+import { computeSignature, verifySignature } from './integrity';
 
 const DB_NAME = 'venomous-snake-saves';
 const DB_VERSION = 1;
@@ -120,7 +121,18 @@ class SaveManager {
     if (slot === undefined) {
       throw new Error(`Save slot "${id}" not found`);
     }
-    const json = JSON.stringify(slot, null, 2);
+
+    const savesJson = JSON.stringify([slot]);
+    const signature = await computeSignature(savesJson);
+
+    const bundle: SaveBundle = {
+      version: 1,
+      exportedAt: new Date().toISOString(),
+      saves: [slot],
+      signature,
+    };
+
+    const json = JSON.stringify(bundle, null, 2);
     const blob = new Blob([json], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -132,10 +144,87 @@ class SaveManager {
     URL.revokeObjectURL(url);
   }
 
+  async exportAllSaves(): Promise<void> {
+    const slots = await this.getSaveSlots();
+    if (slots.length === 0) {
+      throw new Error('No save files to export');
+    }
+
+    const savesJson = JSON.stringify(slots);
+    const signature = await computeSignature(savesJson);
+
+    const bundle: SaveBundle = {
+      version: 1,
+      exportedAt: new Date().toISOString(),
+      saves: slots,
+      signature,
+    };
+
+    const json = JSON.stringify(bundle, null, 2);
+    const blob = new Blob([json], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `venomous-snake-saves-${new Date().toISOString().slice(0, 10)}.json`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }
+
+  async importAllSaves(file: File): Promise<number> {
+    const text = await file.text();
+    const parsed: unknown = JSON.parse(text);
+
+    if (!isSaveBundle(parsed)) {
+      throw new Error('Invalid save bundle format');
+    }
+
+    const bundle = parsed;
+
+    // Verify HMAC signature
+    const savesJson = JSON.stringify(bundle.saves);
+    const valid = await verifySignature(savesJson, bundle.signature);
+    if (!valid) {
+      throw new Error('Save file integrity check failed — file may have been modified');
+    }
+
+    // Import all saves
+    for (const slot of bundle.saves) {
+      slot.updatedAt = new Date().toISOString();
+      await this.saveSaveSlot(slot);
+    }
+
+    return bundle.saves.length;
+  }
+
   async importSaveSlot(file: File): Promise<SaveSlot> {
     const text = await file.text();
     const parsed: unknown = JSON.parse(text);
 
+    // Handle new bundle format
+    if (isSaveBundle(parsed)) {
+      const savesJson = JSON.stringify(parsed.saves);
+      const valid = await verifySignature(savesJson, parsed.signature);
+      if (!valid) {
+        throw new Error('Save file integrity check failed — file may have been modified');
+      }
+      if (parsed.saves.length === 0) {
+        throw new Error('Save bundle contains no saves');
+      }
+      // Import all saves from bundle
+      for (const slot of parsed.saves) {
+        slot.updatedAt = new Date().toISOString();
+        await this.saveSaveSlot(slot);
+      }
+      const first = parsed.saves[0];
+      if (first === undefined) {
+        throw new Error('Save bundle contains no saves');
+      }
+      return first;
+    }
+
+    // Handle legacy plain SaveSlot format (no signature check for backwards compatibility)
     if (!isSaveSlot(parsed)) {
       throw new Error('Invalid save file format');
     }
@@ -187,6 +276,18 @@ function isSaveSlot(value: unknown): value is SaveSlot {
     typeof obj['createdAt'] === 'string' &&
     typeof obj['updatedAt'] === 'string' &&
     typeof obj['isAutoSave'] === 'boolean'
+  );
+}
+
+function isSaveBundle(value: unknown): value is SaveBundle {
+  if (typeof value !== 'object' || value === null) return false;
+  const obj = value as Record<string, unknown>;
+  return (
+    typeof obj['version'] === 'number' &&
+    typeof obj['exportedAt'] === 'string' &&
+    Array.isArray(obj['saves']) &&
+    typeof obj['signature'] === 'string' &&
+    (obj['saves'] as unknown[]).every((s) => isSaveSlot(s))
   );
 }
 

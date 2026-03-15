@@ -102,6 +102,7 @@ function FreeModeTerminal({
   const [editorKey] = useState(() => ++_freeEditorSessionId);
   const breakpoint = useBreakpoint();
   const isAndroid = useIsAndroid();
+  const keyboardSettings = useKeyboardSettings();
 
   useEffect(() => {
     const cleanups: Array<() => void> = [];
@@ -213,7 +214,7 @@ function FreeModeTerminal({
               initialCode={initialCode}
               onRun={handleRunSync}
               disabled={isDisabled}
-              {...(isAndroid ? { isAndroid } : {})}
+              {...(isAndroid && !keyboardSettings.useNativeKeyboard ? { isAndroid: true } : {})}
               {...(readOnlyRanges ? { readOnlyRanges } : {})}
             />
           </div>
@@ -229,8 +230,12 @@ function FreeModeTerminal({
 
       {breakpoint === 'mobile' &&
         status !== 'loading' &&
-        (isAndroid ? (
-          <CodeKeyboard onInput={handleSymbol} onBackspace={handleBackspace} />
+        (isAndroid && !keyboardSettings.useNativeKeyboard ? (
+          <CodeKeyboard
+            onInput={handleSymbol}
+            onBackspace={handleBackspace}
+            keyboardLayout={keyboardSettings.keyboardLayout}
+          />
         ) : (
           <MobileSymbolBar onSymbol={handleSymbol} />
         ))}

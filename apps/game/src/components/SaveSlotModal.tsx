@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import type { SaveSlot } from '@venomous-snake/save-system';
+import { saveManager } from '@venomous-snake/save-system';
 
 export interface SaveSlotModalProps {
   mode: 'save' | 'load';
@@ -309,10 +310,64 @@ export function SaveSlotModal({
         {/* Footer actions */}
         <div style={{ display: 'flex', gap: '8px', justifyContent: 'flex-end' }}>
           {mode === 'save' && (
-            <button style={btnStyle('#00ff9d')} onClick={() => void handleNewSave()} disabled={busy}>
+            <button
+              style={btnStyle('#00ff9d')}
+              onClick={() => void handleNewSave()}
+              disabled={busy}
+            >
               + NEW SAVE SLOT
             </button>
           )}
+          <button
+            style={btnStyle('#00b4d8')}
+            onClick={() => {
+              setBusy(true);
+              setError(null);
+              void saveManager
+                .exportAllSaves()
+                .then(() => setBusy(false))
+                .catch((err) => {
+                  setError(err instanceof Error ? err.message : 'Export failed');
+                  setBusy(false);
+                });
+            }}
+            disabled={busy || slots.length === 0}
+          >
+            ⬇ EXPORT ALL
+          </button>
+          <label
+            style={{
+              ...btnStyle('#00b4d8'),
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '4px',
+            }}
+          >
+            ⬆ IMPORT
+            <input
+              type="file"
+              accept=".json"
+              style={{ display: 'none' }}
+              onChange={(e) => {
+                const file = e.target.files?.[0];
+                if (!file) return;
+                setBusy(true);
+                setError(null);
+                void saveManager
+                  .importSaveSlot(file)
+                  .then(() => {
+                    refresh();
+                    setBusy(false);
+                  })
+                  .catch((err) => {
+                    setError(err instanceof Error ? err.message : 'Import failed');
+                    setBusy(false);
+                  });
+                e.target.value = '';
+              }}
+              disabled={busy}
+            />
+          </label>
           <button style={btnStyle('#888')} onClick={onClose} disabled={busy}>
             CLOSE
           </button>
