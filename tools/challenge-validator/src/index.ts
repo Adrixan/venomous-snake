@@ -1,3 +1,5 @@
 // @venomous-snake/challenge-validator
-// CLI tool for validating challenge definitions against the schema — implementation pending
-export const CHALLENGE_VALIDATOR_VERSION = '0.0.1';
+// Validation rules for challenge definitions; executed by the test suite and reusable from tooling.
+export { validateStructure, validateExecution } from './validate';
+export type { Violation } from './validate';
+export const CHALLENGE_VALIDATOR_VERSION = '0.1.0';

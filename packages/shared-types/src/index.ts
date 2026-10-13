@@ -245,6 +245,24 @@ export interface ExecutionResult {
   output: PythonOutput[];
   error?: PythonError;
   executionTimeMs: number;
+  /** True when the run was aborted because it exceeded the time limit. */
+  timedOut?: boolean;
+}
+
+/** Per-run options for {@link PythonInterpreter.execute}. */
+export interface ExecuteOptions {
+  /** Lines returned by successive `input()` calls. */
+  inputs?: string[];
+  /**
+   * When `true` and the program asks for input beyond `inputs`, the run pauses and
+   * `onInputRequest` fires. When `false` (graded runs) it raises `EOFError`, like a
+   * real program reading an empty stdin.
+   */
+  interactive?: boolean;
+  /** Write `input()` prompts (and the typed answer) to stdout, like a real terminal. */
+  echoPrompts?: boolean;
+  /** Override the default time limit for this run. */
+  timeoutMs?: number;
 }
 
 export type InterpreterStatus = 'uninitialized' | 'loading' | 'ready' | 'executing' | 'error';
@@ -252,7 +270,7 @@ export type InterpreterStatus = 'uninitialized' | 'loading' | 'ready' | 'executi
 export interface PythonInterpreter {
   initialize(): Promise<void>;
   isReady(): boolean;
-  execute(code: string): Promise<ExecutionResult>;
+  execute(code: string, options?: ExecuteOptions): Promise<ExecutionResult>;
   provideInput(value: string): void;
   onOutput(callback: (output: PythonOutput) => void): () => void;
   onInputRequest(callback: (prompt: string) => void): () => void;
@@ -275,6 +293,8 @@ export interface TestCase {
   input?: string;
   /** Optional setup code prepended before student code (e.g. variable overrides) */
   setup?: string;
+  /** Optional code appended after the student code (e.g. a call with different arguments). */
+  append?: string;
   expectedOutput: string;
   hidden: boolean;
   expectsError?: string;

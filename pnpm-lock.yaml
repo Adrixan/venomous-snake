@@ -99,9 +99,6 @@ importers:
 
   apps/game:
     dependencies:
-      phaser:
-        specifier: '3'
-        version: 3.90.0
       react:
         specifier: ^19.0.0
         version: 19.2.4
@@ -175,9 +172,9 @@ importers:
 
   packages/engine:
     dependencies:
-      phaser:
-        specifier: '3'
-        version: 3.90.0
+      '@venomous-snake/shared-types':
+        specifier: workspace:*
+        version: link:../shared-types
     devDependencies:
       typescript:
         specifier: ^5.6.0
@@ -270,6 +267,12 @@ importers:
       '@venomous-snake/challenge-engine':
         specifier: workspace:*
         version: link:../challenge-engine
+      '@venomous-snake/challenges':
+        specifier: workspace:*
+        version: link:../challenges
+      '@venomous-snake/python-runtime':
+        specifier: workspace:*
+        version: link:../python-runtime
       codemirror:
         specifier: ^6.0.2
         version: 6.0.2
@@ -294,6 +297,10 @@ importers:
         version: 2.1.9(@types/node@25.3.5)(terser@5.46.0)
 
   tools/challenge-validator:
+    dependencies:
+      pyodide:
+        specifier: ^0.29.3
+        version: 0.29.3
     devDependencies:
       typescript:
         specifier: ^5.6.0
@@ -3978,9 +3985,6 @@ packages:
   pathval@2.0.1:
     resolution: {integrity: sha512-//nshmD55c46FuFw26xV/xFAaB5HF9Xdap7HJBBnrKdAd6/GxDBaNA1870O79+9ueg61cZLSVc+OaFlfmObYVQ==}
     engines: {node: '>= 14.16'}
-
-  phaser@3.90.0:
-    resolution: {integrity: sha512-/cziz/5ZIn02uDkC9RzN8VF9x3Gs3XdFFf9nkiMEQT3p7hQlWuyjy4QWosU802qqno2YSLn2BfqwOKLv/sSVfQ==}
 
   picocolors@1.1.1:
     resolution: {integrity: sha512-xceH2snhtb5M9liqDsmEw56le376mTZkEX/jEb/RxNFyegNul7eNslCXP9FDj/Lcu0X8KEyMceP2ntpaHrDEVA==}
@@ -9306,10 +9310,6 @@ snapshots:
   pathe@1.1.2: {}
 
   pathval@2.0.1: {}
-
-  phaser@3.90.0:
-    dependencies:
-      eventemitter3: 5.0.4
 
   picocolors@1.1.1: {}
 
