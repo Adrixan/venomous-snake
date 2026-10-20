@@ -1,16 +1,16 @@
 # Session handoff
 
-Date: 2026-10-13
+Date: 2026-10-20
 
 ## Intent
 
-Understand the Venomous Snake application, find bugs and unnecessary complexity, propose steps to reach production quality.
+Dependency and content cleanup: update compatible dependencies, remove `challenges.json`, validate security and release checks, and push the result to `main`.
 
 ## State
 
-Review complete, no source files changed. Full findings: `.agents/production-readiness-review.md` (P0 to P2 with file:line evidence and a recommended order).
+Dependency refresh and i18n cleanup complete. Both localized `challenges.json` files were removed and their translations moved to TypeScript resource modules. Nx test targets use `@nx/vitest:test`; Pyodide 314 asset handling uses `pyodide.asm.mjs`. Tests, type-check, lint, build, and `pnpm audit` pass.
 
-Untracked helper material in `.scratch/` (consistency, closure and reachability scripts, CPython and Pyodide harnesses). `.scratch/` is not in `.gitignore`.
+Untracked helper material in `.scratch/` (consistency, closure and reachability scripts, CPython and Pyodide harnesses) is user-owned and retained. `.scratch/challenges.json` was explicitly removed per request.
 
 ## Pending decisions for the owner
 
@@ -21,7 +21,4 @@ Untracked helper material in `.scratch/` (consistency, closure and reachability 
 
 ## Next steps
 
-- Add a Pyodide-based challenge validation job (solutions pass, scaffolds fail, hidden tests differ from visible tests).
-- Fix input echo and multi-line input splitting.
-- Move Python execution to a Web Worker with terminate-on-timeout; self-host the Pyodide runtime.
-- Unify progression through `GameController` and introduce a single save snapshot with a round-trip test.
+- Commit the verified changes to `main` and push to `origin/main`.

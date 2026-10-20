@@ -14,7 +14,7 @@
       }
     },
     "test": {
-      "executor": "@nx/vite:test",
+      "executor": "@nx/vitest:test",
       "options": {
         "config": "packages/shared-types/vitest.config.ts"
       }

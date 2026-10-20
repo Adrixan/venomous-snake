@@ -110,6 +110,8 @@
   "scaffold": [
     "ch04_06_break_statement:scaffold-fails:the unmodified starter code already passes every test",
     "ch05_01_simple_function:scaffold-fails:the unmodified starter code already passes every test",
-    "ch11_05_docstrings:scaffold-fails:the unmodified starter code already passes every test"
+    "ch11_01_type_hints:scaffold-fails:the unmodified starter code already passes every test",
+    "ch11_05_docstrings:scaffold-fails:the unmodified starter code already passes every test",
+    "ch11_07_list_typing:scaffold-fails:the unmodified starter code already passes every test"
   ]
 }

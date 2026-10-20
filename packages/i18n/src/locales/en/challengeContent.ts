@@ -1,0 +1,477 @@
+export default {
+  ch01_01: {
+    title: 'First Contact',
+    description:
+      "Make the security terminal display the message 'Hello, World!' using the print() function.\n\nIn Python, print() outputs text to the screen. Text (called a 'string') must be wrapped in quotation marks — either \"double quotes\" or 'single quotes'. For example: print(\"Hello\")",
+  },
+  ch01_02: {
+    title: 'Cover Identity',
+    description:
+      "Create a variable called 'codename' and assign it your operative name as a string, then print it.\n\nVariables store values for later use. Use the = sign to assign a value: my_variable = \"some text\". You can then use the variable name anywhere you'd use the value itself.",
+  },
+  ch01_03: {
+    title: 'Cracking Numbers',
+    description:
+      'Compute the vault security code using the given variables and print the result.\n\nPython supports arithmetic operators: + (add), - (subtract), * (multiply), / (divide). You can use variables in math expressions just like numbers — for example: result = price * quantity + tax',
+  },
+  ch01_04: {
+    title: 'Data Recon',
+    description:
+      "Use the type() function to identify the data types of different variables.\n\nEvery value in Python has a type. Text is type 'str' (string), whole numbers are 'int' (integer). The type() function reveals a value's type — for example: print(type(42)) outputs <class 'int'>.",
+  },
+  ch01_05: {
+    title: 'Thermal Override',
+    description:
+      "Convert the server room temperature from Celsius to Fahrenheit using the formula: F = (C × 9/5) + 32.\n\nDivision with / always produces a decimal number (called a 'float'), like 9/5 = 1.8. Use parentheses () to control the order of operations, just like in math class.",
+  },
+  ch01_06: {
+    title: 'Name Assembly',
+    description:
+      'Combine a first name and last name into a full name using string concatenation.\n\nIn Python, the + operator joins strings together: "Hello" + " " + "World" produces "Hello World". This is called concatenation. Remember to include spaces where needed!',
+  },
+  ch01_07: {
+    title: 'Terminal Art',
+    description:
+      'Print a simple ASCII art snake on the terminal using multiple print() statements.\n\nEach print() call outputs text on its own line. To display multiple lines of output, use multiple print() statements — one for each line.',
+  },
+  ch01_08: {
+    title: 'Code Notes',
+    description:
+      'Add comments to explain what each line of code does. Comments help other operatives understand your work.\n\nLines starting with # are comments — Python ignores them completely. Comments are notes for humans reading the code. For example: # This calculates the total',
+  },
+  ch02_01: {
+    title: 'Case Shift',
+    description: 'Transform a codename using .upper(), .lower(), and .title() string methods.',
+  },
+  ch02_02: {
+    title: 'Code Extraction',
+    description: 'Extract specific characters from an access code using string indexing.',
+  },
+  ch02_03: {
+    title: 'Message Intercept',
+    description:
+      'Slice an intercepted message to extract different parts using string slicing notation.',
+  },
+  ch02_04: {
+    title: 'ID Forge',
+    description: 'Create a formatted ID card using f-strings to embed variables directly in text.',
+  },
+  ch02_05: {
+    title: 'Codename Entry',
+    description:
+      "Use the input() function to read the operative's codename and display a personalized greeting.",
+  },
+  ch02_06: {
+    title: 'Code Converter',
+    description:
+      'Read a door code as text input and convert it to a number to perform calculations.',
+  },
+  ch02_07: {
+    title: 'Status Report',
+    description: 'Build a complex mission status report using f-strings with multiple variables.',
+  },
+  ch02_08: {
+    title: 'Password Audit',
+    description:
+      "Check a password's length using len() and determine if it meets minimum requirements.",
+  },
+  ch03_01: {
+    title: 'Access Check',
+    description: 'Use an if statement to check if an access code matches the secret code.',
+  },
+  ch03_02: {
+    title: 'Door Protocol',
+    description: "Use if/else to check a door's locked status and print the appropriate message.",
+  },
+  ch03_03: {
+    title: 'Level Assessment',
+    description:
+      'Compare two clearance levels using comparison operators and print the boolean results.',
+  },
+  ch03_04: {
+    title: 'Threat Classifier',
+    description: 'Classify a threat score into categories using an if/elif/else chain.',
+  },
+  ch03_05: {
+    title: 'Security Gate',
+    description: 'Combine multiple security conditions using and, or, and not logical operators.',
+  },
+  ch03_06: {
+    title: 'Two-Factor Auth',
+    description: 'Implement a two-factor authentication check using nested if statements.',
+  },
+  ch03_07: {
+    title: 'Alarm Logic',
+    description: 'Use boolean variables and logical operators to determine alarm system status.',
+  },
+  ch03_08: {
+    title: 'Password Validator',
+    description:
+      'Write a password validator that checks length, digit, and letter requirements using complex conditions.',
+  },
+  ch04_01: {
+    title: 'Guard Roster',
+    description: "Use a for loop to print each guard's name from a patrol list.",
+  },
+  ch04_02: {
+    title: 'Camera Setup',
+    description: 'Use range() in a for loop to label security cameras numbered 0 through 4.',
+  },
+  ch04_03: {
+    title: 'Patrol Schedule',
+    description: 'Use range(start, stop) to print the guard rotation schedule for specific hours.',
+  },
+  ch04_04: {
+    title: 'Launch Countdown',
+    description: 'Use a while loop to count down from 5 to 1, then print LAUNCH!',
+  },
+  ch04_05: {
+    title: 'Password Loop',
+    description:
+      'Keep prompting for a password using a while loop until the correct one is entered.',
+  },
+  ch04_06: {
+    title: 'Target Search',
+    description: 'Search a list for a target and use break to stop when found.',
+  },
+  ch04_07: {
+    title: 'Camera Filter',
+    description: 'Skip disabled cameras using continue while printing all active ones.',
+  },
+  ch04_08: {
+    title: 'Grid Scan',
+    description: 'Generate all grid coordinates using nested for loops over rows and columns.',
+  },
+  ch04_09: {
+    title: 'Badge Tally',
+    description: 'Sum all badge numbers using the accumulator pattern with a for loop.',
+  },
+  ch04_10: {
+    title: 'Entry Points',
+    description: 'Number each access point using enumerate() with a starting index of 1.',
+  },
+  ch05_01: {
+    title: 'Greeting Protocol',
+    description: 'Define a function that takes a name parameter and returns a greeting message.',
+  },
+  ch05_02: {
+    title: 'Access Calculator',
+    description:
+      'Create a function that calculates an access level by multiplying clearance and rank.',
+  },
+  ch05_03: {
+    title: 'ID Card Printer',
+    description: "Write a function with three parameters to format an operative's ID card.",
+  },
+  ch05_04: {
+    title: 'Alert System',
+    description: 'Create an alert function with a default severity level parameter.',
+  },
+  ch05_05: {
+    title: 'Coordinate Decoder',
+    description: 'Write a function that decodes encoded coordinates and returns multiple values.',
+  },
+  ch05_06: {
+    title: 'Verification Chain',
+    description: 'Build a multi-step verification system where functions call other functions.',
+  },
+  ch05_07: {
+    title: 'Scope Mission',
+    description:
+      'Understand local vs global variable scope by calling a function that uses local variables.',
+  },
+  ch05_08: {
+    title: 'Activity Logger',
+    description: 'Create a function that accepts any number of arguments using *args.',
+  },
+  ch05_09: {
+    title: 'Terminal Config',
+    description:
+      'Create a function that accepts keyword arguments using **kwargs to configure a terminal.',
+  },
+  ch05_10: {
+    title: 'Guard Sorter',
+    description: 'Sort a list of guards by their level using a lambda function as the sort key.',
+  },
+  ch06_01: {
+    title: 'Tool Inventory',
+    description: 'Create a list of hacking tools and access each item by its index.',
+  },
+  ch06_02: {
+    title: 'Inventory Update',
+    description: 'Use .append() and .remove() to modify a list of tools.',
+  },
+  ch06_03: {
+    title: 'Message Archive',
+    description: 'Use list slicing to extract recent messages and first messages from a log.',
+  },
+  ch06_04: {
+    title: 'Camera Filter Pro',
+    description:
+      'Use a list comprehension to filter active camera IDs from a list of dictionaries.',
+  },
+  ch06_05: {
+    title: 'Coordinate Pairs',
+    description: 'Store location coordinates as tuples and unpack them into separate variables.',
+  },
+  ch06_06: {
+    title: 'Employee File',
+    description: 'Create a dictionary to store employee profile data and access values by key.',
+  },
+  ch06_07: {
+    title: 'Profile Editor',
+    description: 'Add new keys and update existing values in a dictionary using dict methods.',
+  },
+  ch06_08: {
+    title: 'Floor Plan',
+    description: 'Navigate nested dictionaries to access deeply stored floor plan data.',
+  },
+  ch06_09: {
+    title: 'Badge Scanner',
+    description: 'Use sets and their union/intersection methods to analyze badge scan data.',
+  },
+  ch06_10: {
+    title: 'Intel Merge',
+    description: 'Merge two dictionaries using spread syntax and iterate over sorted results.',
+  },
+  ch07_01: {
+    title: 'Intel File Reader',
+    description: "Read classified intel from a simulated file using Python's io.StringIO module.",
+  },
+  ch07_02: {
+    title: 'Mission Logger',
+    description:
+      'Write mission log entries to a simulated file using io.StringIO and retrieve the content.',
+  },
+  ch07_03: {
+    title: 'Line Scrubber',
+    description: 'Process raw file lines by stripping whitespace and filtering out empty lines.',
+  },
+  ch07_04: {
+    title: 'CSV Decoder',
+    description: 'Parse comma-separated asset data by splitting the string on delimiters.',
+  },
+  ch07_05: {
+    title: 'Signal Splitter',
+    description: 'Split a colon-delimited message into parts and rejoin them with a new delimiter.',
+  },
+  ch07_06: {
+    title: 'Secure Reader',
+    description:
+      'Use a with statement (context manager) to safely read from an io.StringIO object.',
+  },
+  ch07_07: {
+    title: 'JSON Intel',
+    description:
+      'Parse a JSON-formatted intelligence string into a Python dictionary and access its fields.',
+  },
+  ch07_08: {
+    title: 'Data Transform',
+    description: 'Parse JSON data and transform the results using a list comprehension.',
+  },
+  ch08_01: {
+    title: 'Error Trap',
+    description:
+      'Use try/except to catch a ValueError when converting invalid input to an integer.',
+  },
+  ch08_02: {
+    title: 'Multi-Catch',
+    description:
+      'Handle different exception types (KeyError, TypeError) with multiple except blocks.',
+  },
+  ch08_03: {
+    title: 'Full Protocol',
+    description:
+      'Use the complete try/except/else/finally pattern to handle a signal decoding operation.',
+  },
+  ch08_04: {
+    title: 'Raise the Alarm',
+    description: 'Use the raise keyword to throw a ValueError when input validation fails.',
+  },
+  ch08_05: {
+    title: 'Custom Alert',
+    description: 'Create a custom MissionError exception class that stores a mission ID.',
+  },
+  ch08_06: {
+    title: 'ID Validator',
+    description:
+      'Write a validation function that raises ValueError for improperly formatted agent IDs.',
+  },
+  ch08_07: {
+    title: 'Graceful Fallback',
+    description:
+      'Implement a function that gracefully returns a default value when a key is missing.',
+  },
+  ch08_08: {
+    title: 'Batch Recovery',
+    description:
+      'Process a list of values inside a loop, recovering from errors on each iteration.',
+  },
+  ch09_01: {
+    title: 'Module Recon',
+    description: 'Import and use the math and random standard library modules.',
+  },
+  ch09_02: {
+    title: 'Selective Import',
+    description: 'Use from...import to bring specific names (pi, ceil, floor) into scope.',
+  },
+  ch09_03: {
+    title: 'Lambda Sorter',
+    description: 'Sort a list of agent tuples by level using a lambda function as the sort key.',
+  },
+  ch09_04: {
+    title: 'Map Encoder',
+    description: 'Transform a list of codes using map() with a lambda function.',
+  },
+  ch09_05: {
+    title: 'Signal Filter',
+    description: 'Filter a list of signal values using filter() with a lambda condition.',
+  },
+  ch09_06: {
+    title: 'Conditional Sweep',
+    description: 'Use a list comprehension with compound conditions to find specific multiples.',
+  },
+  ch09_07: {
+    title: 'Clearance Map',
+    description: 'Build a dictionary from a list using dictionary comprehension.',
+  },
+  ch09_08: {
+    title: 'Ops Report',
+    description:
+      'Format a table with aligned columns using advanced f-string format specifications.',
+  },
+  ch09_09: {
+    title: 'Pattern Scanner',
+    description: 'Extract agent IDs and timestamps from a log string using regular expressions.',
+  },
+  ch09_10: {
+    title: 'Tool Chain',
+    description: 'Chain map, filter, and sorted together with lambdas to process score data.',
+  },
+  ch10_01: {
+    title: 'Bot Blueprint',
+    description: 'Define a simple class with class-level attributes and create an instance.',
+  },
+  ch10_02: {
+    title: 'Bot Commands',
+    description: 'Add methods to a class that accept parameters and return formatted strings.',
+  },
+  ch10_03: {
+    title: 'Bot Factory',
+    description: 'Use __init__ to create bots with custom names and threat levels.',
+  },
+  ch10_04: {
+    title: 'Bot Identity',
+    description:
+      'Implement __str__ and __repr__ to give your bot human-readable and developer-friendly representations.',
+  },
+  ch10_05: {
+    title: 'Agent Lineage',
+    description:
+      'Create an Agent subclass that inherits from Person and extends its behavior using super().',
+  },
+  ch10_06: {
+    title: 'Alert Override',
+    description: 'Override the alert() method in subclasses to customize bot behavior.',
+  },
+  ch10_07: {
+    title: 'Clearance Lock',
+    description:
+      'Use name mangling (__attribute) and getter/setter methods to protect private data.',
+  },
+  ch10_08: {
+    title: 'Mission Control',
+    description:
+      'Use @classmethod to track instance count and @staticmethod for utility validation.',
+  },
+  ch10_09: {
+    title: 'Tower Builder',
+    description: 'Compose a Building class from Floor objects to model a has-a relationship.',
+  },
+  ch10_10: {
+    title: 'Bot Patrol',
+    description: 'Demonstrate polymorphism by calling the same method on different bot types.',
+  },
+  ch11_01: {
+    title: 'Type Annotations',
+    description: 'Add type hints to function parameters and return values.',
+  },
+  ch11_02: {
+    title: 'Data Blueprints',
+    description: 'Use @dataclass to auto-generate __init__, __repr__, and __eq__ methods.',
+  },
+  ch11_03: {
+    title: 'Assert Guard',
+    description:
+      'Use assert statements to validate function inputs with descriptive error messages.',
+  },
+  ch11_04: {
+    title: 'Cipher Test',
+    description: 'Write test functions using assert to verify a Caesar cipher encryption function.',
+  },
+  ch11_05: {
+    title: 'Field Docs',
+    description:
+      'Write proper docstrings with Args and Returns sections for a threat analysis function.',
+  },
+  ch11_06: {
+    title: 'Threat Levels',
+    description: 'Organize magic values using Enum classes and module-level constants.',
+  },
+  ch11_07: {
+    title: 'Typed Arsenal',
+    description:
+      'Use List, Dict, and Optional from the typing module to annotate complex data types.',
+  },
+  ch11_08: {
+    title: 'Pro Module',
+    description:
+      'Combine dataclasses, enums, type hints, and filtering into a professional Python module.',
+  },
+  ch12_01: {
+    title: 'Signal Stream',
+    description: 'Create a generator function using yield to produce a sequence of signal values.',
+  },
+  ch12_02: {
+    title: 'Lazy Compute',
+    description: 'Use generator expressions for memory-efficient lazy computation.',
+  },
+  ch12_03: {
+    title: 'Logged Ops',
+    description: 'Build a decorator that logs function calls with entry and exit messages.',
+  },
+  ch12_04: {
+    title: 'Clearance Gate',
+    description: 'Create a parameterized decorator that enforces minimum clearance levels.',
+  },
+  ch12_05: {
+    title: 'Secure Channel',
+    description:
+      'Implement the context manager protocol (__enter__/__exit__) for a secure channel class.',
+  },
+  ch12_06: {
+    title: 'Async Intel',
+    description:
+      'Use async/await and asyncio.gather to run concurrent intelligence-gathering operations.',
+  },
+  ch12_07: {
+    title: 'Signal Classifier',
+    description:
+      'Use Python 3.10+ match/case structural pattern matching to classify signal types.',
+  },
+  ch12_08: {
+    title: 'Walrus Scanner',
+    description:
+      'Use the walrus operator (:=) in a list comprehension to assign and filter simultaneously.',
+  },
+  ch12_09: {
+    title: 'Deep Scan',
+    description:
+      'Use nested list comprehensions to flatten matrices and generate floor-room pairs.',
+  },
+  ch12_10: {
+    title: 'Final Showdown',
+    description:
+      'Combine regex, dataclasses, typing, comprehensions, and sorting to analyze vulnerability logs.',
+  },
+};

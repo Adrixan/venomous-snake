@@ -18,7 +18,7 @@
       }
     },
     "test": {
-      "executor": "@nx/vite:test",
+      "executor": "@nx/vitest:test",
       "options": {
         "config": "apps/game/vitest.config.ts"
       }

@@ -14,7 +14,7 @@
       }
     },
     "test": {
-      "executor": "@nx/vite:test",
+      "executor": "@nx/vitest:test",
       "options": {
         "config": "packages/python-runtime/vitest.config.ts"
       }

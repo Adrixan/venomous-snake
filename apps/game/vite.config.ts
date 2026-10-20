@@ -11,7 +11,7 @@ const root = path.resolve(__dirname, '../..');
 
 /** Files the Pyodide loader fetches at runtime. */
 const PYODIDE_FILES = [
-  'pyodide.asm.js',
+  'pyodide.asm.mjs',
   'pyodide.asm.wasm',
   'python_stdlib.zip',
   'pyodide-lock.json',

@@ -1,0 +1,514 @@
+export default {
+  ch01_01: {
+    title: 'Erstkontakt',
+    description:
+      "Lass das Sicherheitsterminal die Nachricht 'Hello, World!' mit der print()-Funktion anzeigen.\n\nIn Python gibt print() Text auf dem Bildschirm aus. Text (ein sogenannter 'String') muss in Anführungszeichen stehen — entweder \"doppelte\" oder 'einfache'. Zum Beispiel: print(\"Hello\")",
+  },
+  ch01_02: {
+    title: 'Deckidentität',
+    description:
+      'Erstelle eine Variable namens \'codename\', weise ihr deinen Agentennamen als Zeichenkette zu und gib sie dann aus.\n\nVariablen speichern Werte zur späteren Verwendung. Nutze das =-Zeichen, um einen Wert zuzuweisen: meine_variable = "ein Text". Du kannst den Variablennamen dann überall verwenden, wo du den Wert selbst nutzen würdest.',
+  },
+  ch01_03: {
+    title: 'Zahlen knacken',
+    description:
+      'Berechne den Tresor-Sicherheitscode mit den vorgegebenen Variablen und gib das Ergebnis aus.\n\nPython unterstützt Rechenoperatoren: + (addieren), - (subtrahieren), * (multiplizieren), / (dividieren). Du kannst Variablen in Rechenausdrücken genauso wie Zahlen verwenden — zum Beispiel: ergebnis = preis * menge + steuer',
+  },
+  ch01_04: {
+    title: 'Daten-Aufklärung',
+    description:
+      "Verwende die type()-Funktion, um die Datentypen verschiedener Variablen zu identifizieren.\n\nJeder Wert in Python hat einen Typ. Text ist vom Typ 'str' (String), ganze Zahlen sind 'int' (Integer). Die type()-Funktion zeigt den Typ eines Wertes — zum Beispiel: print(type(42)) gibt <class 'int'> aus.",
+  },
+  ch01_05: {
+    title: 'Temperatur-Override',
+    description:
+      "Rechne die Serverraum-Temperatur von Celsius in Fahrenheit um mit der Formel: F = (C × 9/5) + 32.\n\nDivision mit / erzeugt immer eine Dezimalzahl (genannt 'float'), z.B. 9/5 = 1.8. Verwende Klammern (), um die Reihenfolge der Operationen zu steuern — genau wie im Matheunterricht.",
+  },
+  ch01_06: {
+    title: 'Namens-Montage',
+    description:
+      'Kombiniere Vor- und Nachname zu einem vollständigen Namen mittels String-Verknüpfung.\n\nIn Python verbindet der +-Operator Strings miteinander: "Hallo" + " " + "Welt" ergibt "Hallo Welt". Das nennt man Konkatenation. Vergiss nicht, Leerzeichen einzufügen, wo sie gebraucht werden!',
+  },
+  ch01_07: {
+    title: 'Terminal-Kunst',
+    description:
+      'Zeichne eine einfache ASCII-Kunst-Schlange mit mehreren print()-Anweisungen auf dem Terminal.\n\nJeder print()-Aufruf gibt Text in einer eigenen Zeile aus. Um mehrere Zeilen anzuzeigen, verwende mehrere print()-Anweisungen — eine für jede Zeile.',
+  },
+  ch01_08: {
+    title: 'Code-Notizen',
+    description:
+      'Füge Kommentare hinzu, die erklären, was jede Codezeile tut. Kommentare helfen anderen Agenten, deine Arbeit zu verstehen.\n\nZeilen, die mit # beginnen, sind Kommentare — Python ignoriert sie vollständig. Kommentare sind Notizen für Menschen, die den Code lesen. Zum Beispiel: # Dies berechnet die Summe',
+  },
+  ch02_01: {
+    title: 'Groß-/Kleinschrift',
+    description:
+      'Transformiere einen Codenamen mit den String-Methoden .upper(), .lower() und .title().',
+  },
+  ch02_02: {
+    title: 'Code-Extraktion',
+    description: 'Extrahiere bestimmte Zeichen aus einem Zugangscode mittels String-Indizierung.',
+  },
+  ch02_03: {
+    title: 'Nachricht abfangen',
+    description: 'Schneide eine abgefangene Nachricht in Teile mittels String-Slicing-Notation.',
+  },
+  ch02_04: {
+    title: 'Ausweis-Fälschung',
+    description:
+      'Erstelle einen formatierten Ausweis mit f-Strings, um Variablen direkt in Text einzubetten.',
+  },
+  ch02_05: {
+    title: 'Codename-Eingabe',
+    description:
+      'Verwende die input()-Funktion, um den Codenamen des Agenten zu lesen und eine personalisierte Begrüßung anzuzeigen.',
+  },
+  ch02_06: {
+    title: 'Code-Konverter',
+    description:
+      'Lies einen Türcode als Texteingabe und wandle ihn in eine Zahl um, um Berechnungen durchzuführen.',
+  },
+  ch02_07: {
+    title: 'Statusbericht',
+    description:
+      'Erstelle einen komplexen Missions-Statusbericht mit f-Strings und mehreren Variablen.',
+  },
+  ch02_08: {
+    title: 'Passwort-Prüfung',
+    description:
+      'Prüfe die Länge eines Passworts mit len() und bestimme, ob es die Mindestanforderungen erfüllt.',
+  },
+  ch03_01: {
+    title: 'Zugangsprüfung',
+    description:
+      'Verwende eine if-Anweisung, um zu prüfen, ob ein Zugangscode mit dem Geheimcode übereinstimmt.',
+  },
+  ch03_02: {
+    title: 'Tür-Protokoll',
+    description:
+      'Verwende if/else, um den Verriegelungsstatus einer Tür zu prüfen und die passende Nachricht auszugeben.',
+  },
+  ch03_03: {
+    title: 'Stufen-Bewertung',
+    description:
+      'Vergleiche zwei Freigabestufen mit Vergleichsoperatoren und gib die booleschen Ergebnisse aus.',
+  },
+  ch03_04: {
+    title: 'Bedrohungs-Klassifikation',
+    description: 'Klassifiziere einen Bedrohungswert in Kategorien mit einer if/elif/else-Kette.',
+  },
+  ch03_05: {
+    title: 'Sicherheitsschleuse',
+    description:
+      'Kombiniere mehrere Sicherheitsbedingungen mit den logischen Operatoren and, or und not.',
+  },
+  ch03_06: {
+    title: 'Zwei-Faktor-Auth',
+    description:
+      'Implementiere eine Zwei-Faktor-Authentifizierung mit verschachtelten if-Anweisungen.',
+  },
+  ch03_07: {
+    title: 'Alarm-Logik',
+    description:
+      'Verwende boolesche Variablen und logische Operatoren, um den Alarmstatus zu bestimmen.',
+  },
+  ch03_08: {
+    title: 'Passwort-Validator',
+    description:
+      'Schreibe einen Passwort-Validator, der Länge, Ziffern und Buchstaben mit komplexen Bedingungen prüft.',
+  },
+  ch04_01: {
+    title: 'Wach-Liste',
+    description:
+      'Verwende eine for-Schleife, um jeden Wachmann aus einer Patrouillenliste auszugeben.',
+  },
+  ch04_02: {
+    title: 'Kamera-Setup',
+    description:
+      'Verwende range() in einer for-Schleife, um Sicherheitskameras von 0 bis 4 zu nummerieren.',
+  },
+  ch04_03: {
+    title: 'Patrouillen-Plan',
+    description: 'Verwende range(start, stop), um den Wachplan für bestimmte Stunden auszugeben.',
+  },
+  ch04_04: {
+    title: 'Start-Countdown',
+    description:
+      'Verwende eine while-Schleife, um von 5 bis 1 herunterzuzählen und dann START! auszugeben.',
+  },
+  ch04_05: {
+    title: 'Passwort-Schleife',
+    description:
+      'Frage wiederholt nach einem Passwort mit einer while-Schleife, bis das richtige eingegeben wird.',
+  },
+  ch04_06: {
+    title: 'Zielsuche',
+    description:
+      'Durchsuche eine Liste nach einem Ziel und verwende break, um bei Fund zu stoppen.',
+  },
+  ch04_07: {
+    title: 'Kamera-Filter',
+    description: 'Überspringe deaktivierte Kameras mit continue und gib alle aktiven aus.',
+  },
+  ch04_08: {
+    title: 'Raster-Scan',
+    description:
+      'Generiere alle Rasterkoordinaten mit verschachtelten for-Schleifen über Zeilen und Spalten.',
+  },
+  ch04_09: {
+    title: 'Ausweis-Summe',
+    description: 'Summiere alle Ausweisnummern mit dem Akkumulator-Muster in einer for-Schleife.',
+  },
+  ch04_10: {
+    title: 'Zugangspunkte',
+    description: 'Nummeriere jeden Zugangspunkt mit enumerate() und einem Startindex von 1.',
+  },
+  ch05_01: {
+    title: 'Begrüßungsprotokoll',
+    description:
+      'Definiere eine Funktion, die einen Namen annimmt und eine Begrüßungsnachricht zurückgibt.',
+  },
+  ch05_02: {
+    title: 'Zugangs-Rechner',
+    description:
+      'Erstelle eine Funktion, die eine Zugangsstufe durch Multiplikation von Freigabe und Rang berechnet.',
+  },
+  ch05_03: {
+    title: 'Ausweis-Drucker',
+    description:
+      'Schreibe eine Funktion mit drei Parametern, um den Ausweis eines Agenten zu formatieren.',
+  },
+  ch05_04: {
+    title: 'Alarmsystem',
+    description: 'Erstelle eine Alarm-Funktion mit einem Standard-Schweregrad-Parameter.',
+  },
+  ch05_05: {
+    title: 'Koordinaten-Decoder',
+    description:
+      'Schreibe eine Funktion, die kodierte Koordinaten entschlüsselt und mehrere Werte zurückgibt.',
+  },
+  ch05_06: {
+    title: 'Verifikationskette',
+    description:
+      'Baue ein mehrstufiges Verifikationssystem, bei dem Funktionen andere Funktionen aufrufen.',
+  },
+  ch05_07: {
+    title: 'Scope-Mission',
+    description:
+      'Verstehe lokale vs. globale Variablen-Sichtbarkeit durch Aufruf einer Funktion mit lokalen Variablen.',
+  },
+  ch05_08: {
+    title: 'Aktivitäts-Logger',
+    description: 'Erstelle eine Funktion, die beliebig viele Argumente mit *args akzeptiert.',
+  },
+  ch05_09: {
+    title: 'Terminal-Konfiguration',
+    description:
+      'Erstelle eine Funktion, die Schlüsselwort-Argumente mit **kwargs akzeptiert, um ein Terminal zu konfigurieren.',
+  },
+  ch05_10: {
+    title: 'Wach-Sortierung',
+    description:
+      'Sortiere eine Liste von Wachleuten nach ihrer Stufe mit einer Lambda-Funktion als Sortierschlüssel.',
+  },
+  ch06_01: {
+    title: 'Werkzeug-Inventar',
+    description:
+      'Erstelle eine Liste von Hacking-Tools und greife auf jedes Element über seinen Index zu.',
+  },
+  ch06_02: {
+    title: 'Inventar-Update',
+    description: 'Verwende .append() und .remove(), um eine Liste von Werkzeugen zu ändern.',
+  },
+  ch06_03: {
+    title: 'Nachrichten-Archiv',
+    description:
+      'Verwende Listen-Slicing, um aktuelle und erste Nachrichten aus einem Protokoll zu extrahieren.',
+  },
+  ch06_04: {
+    title: 'Kamera-Filter Pro',
+    description:
+      'Verwende eine List Comprehension, um aktive Kamera-IDs aus einer Liste von Dictionaries zu filtern.',
+  },
+  ch06_05: {
+    title: 'Koordinaten-Paare',
+    description: 'Speichere Standortkoordinaten als Tupel und entpacke sie in separate Variablen.',
+  },
+  ch06_06: {
+    title: 'Mitarbeiter-Akte',
+    description:
+      'Erstelle ein Dictionary, um Mitarbeiterprofildaten zu speichern, und greife auf Werte per Schlüssel zu.',
+  },
+  ch06_07: {
+    title: 'Profil-Editor',
+    description: 'Füge neue Schlüssel hinzu und aktualisiere bestehende Werte in einem Dictionary.',
+  },
+  ch06_08: {
+    title: 'Etagenplan',
+    description:
+      'Navigiere in verschachtelten Dictionaries, um tief gespeicherte Etagenplan-Daten abzurufen.',
+  },
+  ch06_09: {
+    title: 'Ausweis-Scanner',
+    description:
+      'Verwende Sets und deren union/intersection-Methoden, um Ausweis-Scan-Daten zu analysieren.',
+  },
+  ch06_10: {
+    title: 'Intel-Zusammenführung',
+    description:
+      'Führe zwei Dictionaries mit Spread-Syntax zusammen und iteriere über sortierte Ergebnisse.',
+  },
+  ch07_01: {
+    title: 'Intel-Dateileser',
+    description:
+      'Lies klassifizierte Intel aus einer simulierten Datei mit Pythons io.StringIO-Modul.',
+  },
+  ch07_02: {
+    title: 'Missions-Logger',
+    description:
+      'Schreibe Missionslogeinträge in eine simulierte Datei mit io.StringIO und rufe den Inhalt ab.',
+  },
+  ch07_03: {
+    title: 'Zeilen-Bereiniger',
+    description:
+      'Verarbeite rohe Dateizeilen durch Entfernen von Leerzeichen und Filtern leerer Zeilen.',
+  },
+  ch07_04: {
+    title: 'CSV-Decoder',
+    description: 'Parse kommagetrennte Daten durch Aufteilen des Strings an Trennzeichen.',
+  },
+  ch07_05: {
+    title: 'Signal-Splitter',
+    description:
+      'Teile eine doppelpunktgetrennte Nachricht in Teile und füge sie mit einem neuen Trennzeichen zusammen.',
+  },
+  ch07_06: {
+    title: 'Sicherer Leser',
+    description:
+      'Verwende eine with-Anweisung (Kontextmanager), um sicher aus einem io.StringIO-Objekt zu lesen.',
+  },
+  ch07_07: {
+    title: 'JSON-Intel',
+    description:
+      'Parse einen JSON-formatierten Geheimdienststring in ein Python-Dictionary und greife auf dessen Felder zu.',
+  },
+  ch07_08: {
+    title: 'Datentransformation',
+    description: 'Parse JSON-Daten und transformiere die Ergebnisse mit einer List Comprehension.',
+  },
+  ch08_01: {
+    title: 'Fehlerfalle',
+    description:
+      'Verwende try/except, um einen ValueError beim Konvertieren ungültiger Eingaben abzufangen.',
+  },
+  ch08_02: {
+    title: 'Multi-Fang',
+    description:
+      'Behandle verschiedene Ausnahmetypen (KeyError, TypeError) mit mehreren except-Blöcken.',
+  },
+  ch08_03: {
+    title: 'Vollprotokoll',
+    description:
+      'Verwende das vollständige try/except/else/finally-Muster für eine Signaldekodierungsoperation.',
+  },
+  ch08_04: {
+    title: 'Alarm auslösen',
+    description:
+      'Verwende das raise-Schlüsselwort, um einen ValueError bei fehlgeschlagener Validierung auszulösen.',
+  },
+  ch08_05: {
+    title: 'Benutzerdefinierter Alarm',
+    description: 'Erstelle eine benutzerdefinierte MissionError-Ausnahmeklasse mit Missions-ID.',
+  },
+  ch08_06: {
+    title: 'ID-Validator',
+    description:
+      'Schreibe eine Validierungsfunktion, die ValueError für fehlerhafte Agenten-IDs auslöst.',
+  },
+  ch08_07: {
+    title: 'Eleganter Fallback',
+    description:
+      'Implementiere eine Funktion, die bei fehlendem Schlüssel einen Standardwert zurückgibt.',
+  },
+  ch08_08: {
+    title: 'Batch-Wiederherstellung',
+    description:
+      'Verarbeite eine Werteliste in einer Schleife mit Fehlerwiederherstellung bei jeder Iteration.',
+  },
+  ch09_01: {
+    title: 'Modul-Aufklärung',
+    description: 'Importiere und verwende die Standardbibliotheksmodule math und random.',
+  },
+  ch09_02: {
+    title: 'Selektiver Import',
+    description:
+      'Verwende from...import, um bestimmte Namen (pi, ceil, floor) direkt zu importieren.',
+  },
+  ch09_03: {
+    title: 'Lambda-Sortierer',
+    description:
+      'Sortiere eine Liste von Agenten-Tupeln nach Level mit einer Lambda-Funktion als Sortierschlüssel.',
+  },
+  ch09_04: {
+    title: 'Map-Encoder',
+    description: 'Transformiere eine Codeliste mit map() und einer Lambda-Funktion.',
+  },
+  ch09_05: {
+    title: 'Signalfilter',
+    description: 'Filtere eine Liste von Signalwerten mit filter() und einer Lambda-Bedingung.',
+  },
+  ch09_06: {
+    title: 'Bedingter Scan',
+    description:
+      'Verwende eine List Comprehension mit zusammengesetzten Bedingungen, um bestimmte Vielfache zu finden.',
+  },
+  ch09_07: {
+    title: 'Freigabe-Map',
+    description: 'Erstelle ein Dictionary aus einer Liste mit Dictionary Comprehension.',
+  },
+  ch09_08: {
+    title: 'Einsatzbericht',
+    description:
+      'Formatiere eine Tabelle mit ausgerichteten Spalten mit erweiterten f-String-Formatspezifikationen.',
+  },
+  ch09_09: {
+    title: 'Muster-Scanner',
+    description:
+      'Extrahiere Agenten-IDs und Zeitstempel aus einem Logstring mit regulären Ausdrücken.',
+  },
+  ch09_10: {
+    title: 'Werkzeugkette',
+    description: 'Verkette map, filter und sorted mit Lambdas zur Verarbeitung von Punktedaten.',
+  },
+  ch10_01: {
+    title: 'Bot-Bauplan',
+    description: 'Definiere eine einfache Klasse mit Klassenattributen und erstelle eine Instanz.',
+  },
+  ch10_02: {
+    title: 'Bot-Befehle',
+    description:
+      'Füge einer Klasse Methoden hinzu, die Parameter akzeptieren und formatierte Strings zurückgeben.',
+  },
+  ch10_03: {
+    title: 'Bot-Fabrik',
+    description:
+      'Verwende __init__, um Bots mit individuellen Namen und Bedrohungsstufen zu erstellen.',
+  },
+  ch10_04: {
+    title: 'Bot-Identität',
+    description:
+      'Implementiere __str__ und __repr__ für lesbare und entwicklerfreundliche Darstellungen.',
+  },
+  ch10_05: {
+    title: 'Agenten-Abstammung',
+    description:
+      'Erstelle eine Agent-Unterklasse, die von Person erbt und deren Verhalten mit super() erweitert.',
+  },
+  ch10_06: {
+    title: 'Alarm-Override',
+    description: 'Überschreibe die alert()-Methode in Unterklassen, um Bot-Verhalten anzupassen.',
+  },
+  ch10_07: {
+    title: 'Freigabe-Sperre',
+    description:
+      'Verwende Name-Mangling (__attribut) und Getter/Setter-Methoden zum Schutz privater Daten.',
+  },
+  ch10_08: {
+    title: 'Missionskontrolle',
+    description: 'Verwende @classmethod zur Instanzzählung und @staticmethod für Hilfsvalidierung.',
+  },
+  ch10_09: {
+    title: 'Turm-Baumeister',
+    description: 'Komponiere eine Building-Klasse aus Floor-Objekten für eine Hat-ein-Beziehung.',
+  },
+  ch10_10: {
+    title: 'Bot-Patrouille',
+    description:
+      'Demonstriere Polymorphismus durch Aufruf derselben Methode auf verschiedenen Bot-Typen.',
+  },
+  ch11_01: {
+    title: 'Typ-Annotationen',
+    description: 'Füge Typhinweise zu Funktionsparametern und Rückgabewerten hinzu.',
+  },
+  ch11_02: {
+    title: 'Daten-Baupläne',
+    description:
+      'Verwende @dataclass zur automatischen Generierung von __init__, __repr__ und __eq__.',
+  },
+  ch11_03: {
+    title: 'Assert-Wächter',
+    description:
+      'Verwende assert-Anweisungen zur Validierung von Funktionseingaben mit aussagekräftigen Fehlermeldungen.',
+  },
+  ch11_04: {
+    title: 'Chiffre-Test',
+    description:
+      'Schreibe Testfunktionen mit assert zur Überprüfung einer Caesar-Verschlüsselungsfunktion.',
+  },
+  ch11_05: {
+    title: 'Felddokumentation',
+    description:
+      'Schreibe ordentliche Docstrings mit Args- und Returns-Abschnitten für eine Bedrohungsanalysefunktion.',
+  },
+  ch11_06: {
+    title: 'Bedrohungsstufen',
+    description: 'Organisiere magische Werte mit Enum-Klassen und Modulkonstanten.',
+  },
+  ch11_07: {
+    title: 'Typisiertes Arsenal',
+    description:
+      'Verwende List, Dict und Optional aus dem typing-Modul für komplexe Typannotationen.',
+  },
+  ch11_08: {
+    title: 'Profi-Modul',
+    description:
+      'Kombiniere Dataclasses, Enums, Typhinweise und Filterung zu einem professionellen Python-Modul.',
+  },
+  ch12_01: {
+    title: 'Signalstrom',
+    description:
+      'Erstelle eine Generatorfunktion mit yield zur Erzeugung einer Signalwertesequenz.',
+  },
+  ch12_02: {
+    title: 'Faule Berechnung',
+    description: 'Verwende Generatorausdrücke für speichereffiziente verzögerte Berechnung.',
+  },
+  ch12_03: {
+    title: 'Protokollierte Ops',
+    description:
+      'Baue einen Dekorator, der Funktionsaufrufe mit Ein- und Ausstiegsmeldungen protokolliert.',
+  },
+  ch12_04: {
+    title: 'Freigabe-Tor',
+    description: 'Erstelle einen parametrisierten Dekorator, der Mindestfreigabestufen erzwingt.',
+  },
+  ch12_05: {
+    title: 'Sicherer Kanal',
+    description:
+      'Implementiere das Kontextmanager-Protokoll (__enter__/__exit__) für eine sichere Kanalklasse.',
+  },
+  ch12_06: {
+    title: 'Async-Intel',
+    description:
+      'Verwende async/await und asyncio.gather für gleichzeitige Geheimdienstoperationen.',
+  },
+  ch12_07: {
+    title: 'Signal-Klassifizierer',
+    description:
+      'Verwende Python 3.10+ match/case Structural Pattern Matching zur Signaltypklassifizierung.',
+  },
+  ch12_08: {
+    title: 'Walross-Scanner',
+    description:
+      'Verwende den Walross-Operator (:=) in einer List Comprehension zum gleichzeitigen Zuweisen und Filtern.',
+  },
+  ch12_09: {
+    title: 'Tiefen-Scan',
+    description:
+      'Verwende verschachtelte List Comprehensions zum Flachklopfen von Matrizen und Erzeugen von Etage-Raum-Paaren.',
+  },
+  ch12_10: {
+    title: 'Finaler Showdown',
+    description:
+      'Kombiniere Regex, Dataclasses, Typing, Comprehensions und Sortierung zur Analyse von Schwachstellenprotokollen.',
+  },
+};

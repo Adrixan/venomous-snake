@@ -2,7 +2,7 @@
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "outDir": "../../dist/packages/i18n",
-    "rootDir": ".",
+    "rootDir": "../..",
     "resolveJsonModule": true
   },
   "include": ["src/**/*"],

@@ -14,7 +14,7 @@
       }
     },
     "test": {
-      "executor": "@nx/vite:test",
+      "executor": "@nx/vitest:test",
       "options": {
         "config": "packages/i18n/vitest.config.ts"
       }
