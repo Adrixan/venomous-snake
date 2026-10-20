@@ -4,9 +4,9 @@
  */
 export class ChallengeTimer {
   private startTime: number | null = null;
-  private pausedTime: number = 0;
+  private pausedTime = 0;
   private pauseStart: number | null = null;
-  private paused: boolean = false;
+  private paused = false;
 
   start(): void {
     this.startTime = Date.now();

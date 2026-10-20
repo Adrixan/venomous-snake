@@ -1,294 +1,181 @@
-import type { SaveSlot, SaveData, SaveBundle } from './types';
-import { computeSignature, verifySignature } from './integrity';
-
-const DB_NAME = 'venomous-snake-saves';
-const DB_VERSION = 1;
-const STORE_NAME = 'saves';
+import { SAVE_FORMAT_VERSION } from './types';
+import type { SaveBundle, SaveData, SaveSlot } from './types';
+import { InvalidSaveError, parseSaveSlot } from './schema';
+import { IndexedDbSaveStore } from './storage';
+import type { SaveStore } from './storage';
 
 export const MAX_SAVE_SLOTS = 20;
 export const MAX_AUTOSAVE_SLOTS = 3;
+/** Imported files larger than this are rejected before parsing. */
+export const MAX_IMPORT_BYTES = 5 * 1024 * 1024;
 
-class SaveManager {
-  private dbPromise: Promise<IDBDatabase> | null = null;
+async function sha256Hex(text: string): Promise<string> {
+  const digest = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text));
+  return Array.from(new Uint8Array(digest))
+    .map((b) => b.toString(16).padStart(2, '0'))
+    .join('');
+}
 
-  private openDB(): Promise<IDBDatabase> {
-    if (this.dbPromise) return this.dbPromise;
+function newId(prefix: string): string {
+  return `${prefix}-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`;
+}
 
-    this.dbPromise = new Promise<IDBDatabase>((resolve, reject) => {
-      const request = indexedDB.open(DB_NAME, DB_VERSION);
+export class SaveManager {
+  /** Serialises writes so concurrent autosaves cannot pick the same slot. */
+  private writes: Promise<unknown> = Promise.resolve();
 
-      request.onupgradeneeded = () => {
-        const db = request.result;
-        if (!db.objectStoreNames.contains(STORE_NAME)) {
-          db.createObjectStore(STORE_NAME, { keyPath: 'id' });
+  constructor(private readonly store: SaveStore = new IndexedDbSaveStore()) {}
+
+  private serial<T>(task: () => Promise<T>): Promise<T> {
+    const run = this.writes.then(task, task);
+    this.writes = run.catch(() => undefined);
+    return run;
+  }
+
+  /** All valid slots, newest first. Records that fail validation are skipped. */
+  async listSlots(): Promise<SaveSlot[]> {
+    const raw = await this.store.getAll();
+    const slots: SaveSlot[] = [];
+    for (const record of raw) {
+      try {
+        slots.push(parseSaveSlot(record));
+      } catch {
+        // A corrupt record must not hide the others.
+      }
+    }
+    return slots.sort((a, b) => b.updatedAt.localeCompare(a.updatedAt));
+  }
+
+  async getSlot(id: string): Promise<SaveSlot | undefined> {
+    const raw = await this.store.get(id);
+    return raw === undefined ? undefined : parseSaveSlot(raw);
+  }
+
+  /** The most recently written slot of any kind. */
+  async getLatest(): Promise<SaveSlot | undefined> {
+    return (await this.listSlots())[0];
+  }
+
+  /** Writes a manual save; overwrites `id` when given, otherwise creates a slot. */
+  save(name: string, data: SaveData, id?: string): Promise<SaveSlot> {
+    return this.serial(async () => {
+      const slots = await this.listSlots();
+      const existing = id === undefined ? undefined : slots.find((s) => s.id === id);
+      const manualCount = slots.filter((s) => !s.isAutoSave).length;
+      if (existing === undefined && manualCount >= MAX_SAVE_SLOTS) {
+        throw new Error(`At most ${String(MAX_SAVE_SLOTS)} saves are allowed. Delete one first.`);
+      }
+      const now = new Date().toISOString();
+      const slot: SaveSlot = {
+        id: existing?.id ?? newId('save'),
+        name: name.slice(0, 80),
+        data,
+        createdAt: existing?.createdAt ?? now,
+        updatedAt: now,
+        isAutoSave: false,
+      };
+      await this.store.put(slot);
+      return slot;
+    });
+  }
+
+  /** Writes to the oldest of the rotating autosave slots. */
+  autosave(name: string, data: SaveData): Promise<SaveSlot> {
+    return this.serial(async () => {
+      const autos = (await this.listSlots())
+        .filter((s) => s.isAutoSave)
+        .sort((a, b) => a.updatedAt.localeCompare(b.updatedAt));
+      const free = Array.from(
+        { length: MAX_AUTOSAVE_SLOTS },
+        (_, i) => `autosave-${String(i + 1)}`,
+      ).find((id) => !autos.some((s) => s.id === id));
+      const target = free ?? autos[0]?.id ?? 'autosave-1';
+      const now = new Date().toISOString();
+      const slot: SaveSlot = {
+        id: target,
+        name,
+        data,
+        createdAt: now,
+        updatedAt: now,
+        isAutoSave: true,
+      };
+      await this.store.put(slot);
+      return slot;
+    });
+  }
+
+  deleteSlot(id: string): Promise<void> {
+    return this.serial(() => this.store.delete(id));
+  }
+
+  async renameSlot(id: string, name: string): Promise<void> {
+    const slot = await this.getSlot(id);
+    if (slot === undefined) throw new Error(`Save slot "${id}" not found`);
+    await this.serial(() =>
+      this.store.put({ ...slot, name: name.slice(0, 80), updatedAt: new Date().toISOString() }),
+    );
+  }
+
+  /** Serialises the given slots (or all) into an export file. */
+  async exportSlots(ids?: string[]): Promise<string> {
+    const all = await this.listSlots();
+    const saves = ids === undefined ? all : all.filter((s) => ids.includes(s.id));
+    if (saves.length === 0) throw new Error('No saves to export');
+    const bundle: SaveBundle = {
+      format: 'venomous-snake-saves',
+      version: SAVE_FORMAT_VERSION,
+      exportedAt: new Date().toISOString(),
+      saves,
+      checksum: await sha256Hex(JSON.stringify(saves)),
+    };
+    return JSON.stringify(bundle, null, 2);
+  }
+
+  /**
+   * Imports saves from an exported file (current or earlier format, or a single
+   * slot). Every save is validated; imported saves get fresh ids so they never
+   * overwrite existing ones. Returns the imported slots.
+   */
+  async importFile(text: string): Promise<SaveSlot[]> {
+    if (text.length > MAX_IMPORT_BYTES) throw new InvalidSaveError('file is too large');
+    let parsed: unknown;
+    try {
+      parsed = JSON.parse(text);
+    } catch {
+      throw new InvalidSaveError('file is not valid JSON');
+    }
+
+    let candidates: unknown[];
+    if (
+      typeof parsed === 'object' &&
+      parsed !== null &&
+      Array.isArray((parsed as { saves?: unknown }).saves)
+    ) {
+      const bundle = parsed as { saves: unknown[]; checksum?: unknown; format?: unknown };
+      if (bundle.format === 'venomous-snake-saves') {
+        const expected = typeof bundle.checksum === 'string' ? bundle.checksum : '';
+        if (expected !== (await sha256Hex(JSON.stringify(bundle.saves)))) {
+          throw new InvalidSaveError('file is damaged (checksum mismatch)');
         }
-      };
-
-      request.onsuccess = () => {
-        resolve(request.result);
-      };
-
-      request.onerror = () => {
-        this.dbPromise = null;
-        reject(request.error);
-      };
-    });
-
-    return this.dbPromise;
-  }
-
-  async getSaveSlots(): Promise<SaveSlot[]> {
-    const db = await this.openDB();
-    return new Promise<SaveSlot[]>((resolve, reject) => {
-      const tx = db.transaction(STORE_NAME, 'readonly');
-      const store = tx.objectStore(STORE_NAME);
-      const request = store.getAll();
-
-      request.onsuccess = () => {
-        resolve(request.result as SaveSlot[]);
-      };
-
-      request.onerror = () => {
-        reject(request.error);
-      };
-    });
-  }
-
-  async getSaveSlot(id: string): Promise<SaveSlot | undefined> {
-    const db = await this.openDB();
-    return new Promise<SaveSlot | undefined>((resolve, reject) => {
-      const tx = db.transaction(STORE_NAME, 'readonly');
-      const store = tx.objectStore(STORE_NAME);
-      const request = store.get(id);
-
-      request.onsuccess = () => {
-        const result = request.result as SaveSlot | undefined;
-        resolve(result);
-      };
-
-      request.onerror = () => {
-        reject(request.error);
-      };
-    });
-  }
-
-  async saveSaveSlot(slot: SaveSlot): Promise<void> {
-    const db = await this.openDB();
-    return new Promise<void>((resolve, reject) => {
-      const tx = db.transaction(STORE_NAME, 'readwrite');
-      const store = tx.objectStore(STORE_NAME);
-      const request = store.put(slot);
-
-      request.onsuccess = () => {
-        resolve();
-      };
-
-      request.onerror = () => {
-        reject(request.error);
-      };
-    });
-  }
-
-  async deleteSaveSlot(id: string): Promise<void> {
-    const db = await this.openDB();
-    return new Promise<void>((resolve, reject) => {
-      const tx = db.transaction(STORE_NAME, 'readwrite');
-      const store = tx.objectStore(STORE_NAME);
-      const request = store.delete(id);
-
-      request.onsuccess = () => {
-        resolve();
-      };
-
-      request.onerror = () => {
-        reject(request.error);
-      };
-    });
-  }
-
-  async renameSaveSlot(id: string, name: string): Promise<void> {
-    const slot = await this.getSaveSlot(id);
-    if (slot === undefined) {
-      throw new Error(`Save slot "${id}" not found`);
-    }
-    slot.name = name;
-    slot.updatedAt = new Date().toISOString();
-    await this.saveSaveSlot(slot);
-  }
-
-  async exportSaveSlot(id: string): Promise<void> {
-    const slot = await this.getSaveSlot(id);
-    if (slot === undefined) {
-      throw new Error(`Save slot "${id}" not found`);
-    }
-
-    const savesJson = JSON.stringify([slot]);
-    const signature = await computeSignature(savesJson);
-
-    const bundle: SaveBundle = {
-      version: 1,
-      exportedAt: new Date().toISOString(),
-      saves: [slot],
-      signature,
-    };
-
-    const json = JSON.stringify(bundle, null, 2);
-    const blob = new Blob([json], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `venomous-snake-save-${slot.id}.json`;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-  }
-
-  async exportAllSaves(): Promise<void> {
-    const slots = await this.getSaveSlots();
-    if (slots.length === 0) {
-      throw new Error('No save files to export');
-    }
-
-    const savesJson = JSON.stringify(slots);
-    const signature = await computeSignature(savesJson);
-
-    const bundle: SaveBundle = {
-      version: 1,
-      exportedAt: new Date().toISOString(),
-      saves: slots,
-      signature,
-    };
-
-    const json = JSON.stringify(bundle, null, 2);
-    const blob = new Blob([json], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `venomous-snake-saves-${new Date().toISOString().slice(0, 10)}.json`;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-  }
-
-  async importAllSaves(file: File): Promise<number> {
-    const text = await file.text();
-    const parsed: unknown = JSON.parse(text);
-
-    if (!isSaveBundle(parsed)) {
-      throw new Error('Invalid save bundle format');
-    }
-
-    const bundle = parsed;
-
-    // Verify HMAC signature
-    const savesJson = JSON.stringify(bundle.saves);
-    const valid = await verifySignature(savesJson, bundle.signature);
-    if (!valid) {
-      throw new Error('Save file integrity check failed — file may have been modified');
-    }
-
-    // Import all saves
-    for (const slot of bundle.saves) {
-      slot.updatedAt = new Date().toISOString();
-      await this.saveSaveSlot(slot);
-    }
-
-    return bundle.saves.length;
-  }
-
-  async importSaveSlot(file: File): Promise<SaveSlot> {
-    const text = await file.text();
-    const parsed: unknown = JSON.parse(text);
-
-    // Handle new bundle format
-    if (isSaveBundle(parsed)) {
-      const savesJson = JSON.stringify(parsed.saves);
-      const valid = await verifySignature(savesJson, parsed.signature);
-      if (!valid) {
-        throw new Error('Save file integrity check failed — file may have been modified');
       }
-      if (parsed.saves.length === 0) {
-        throw new Error('Save bundle contains no saves');
-      }
-      // Import all saves from bundle
-      for (const slot of parsed.saves) {
-        slot.updatedAt = new Date().toISOString();
-        await this.saveSaveSlot(slot);
-      }
-      const first = parsed.saves[0];
-      if (first === undefined) {
-        throw new Error('Save bundle contains no saves');
-      }
-      return first;
-    }
-
-    // Handle legacy plain SaveSlot format (no signature check for backwards compatibility)
-    if (!isSaveSlot(parsed)) {
-      throw new Error('Invalid save file format');
-    }
-
-    const slot = parsed;
-    slot.updatedAt = new Date().toISOString();
-    await this.saveSaveSlot(slot);
-    return slot;
-  }
-
-  async createAutoSave(data: SaveData): Promise<void> {
-    const slots = await this.getSaveSlots();
-    const autoSaves = slots
-      .filter((s) => s.isAutoSave)
-      .sort((a, b) => a.updatedAt.localeCompare(b.updatedAt));
-
-    let targetId: string;
-
-    if (autoSaves.length < MAX_AUTOSAVE_SLOTS) {
-      targetId = `autosave-${String(autoSaves.length + 1)}`;
+      candidates = bundle.saves;
     } else {
-      // Rotate: overwrite the oldest autosave
-      const oldest = autoSaves[0];
-      targetId = oldest !== undefined ? oldest.id : 'autosave-1';
+      candidates = [parsed];
     }
+    if (candidates.length === 0) throw new InvalidSaveError('file contains no saves');
 
+    const slots = candidates.map((c) => parseSaveSlot(c));
     const now = new Date().toISOString();
-    const slot: SaveSlot = {
-      id: targetId,
-      name: `Auto Save`,
-      data,
-      createdAt: now,
-      updatedAt: now,
-      isAutoSave: true,
-    };
-
-    await this.saveSaveSlot(slot);
+    return this.serial(async () => {
+      const imported: SaveSlot[] = [];
+      for (const slot of slots) {
+        const fresh: SaveSlot = { ...slot, id: newId('import'), isAutoSave: false, updatedAt: now };
+        await this.store.put(fresh);
+        imported.push(fresh);
+      }
+      return imported;
+    });
   }
-}
-
-function isSaveSlot(value: unknown): value is SaveSlot {
-  if (typeof value !== 'object' || value === null) return false;
-  const obj = value as Record<string, unknown>;
-  return (
-    typeof obj['id'] === 'string' &&
-    typeof obj['name'] === 'string' &&
-    typeof obj['data'] === 'object' &&
-    obj['data'] !== null &&
-    typeof obj['createdAt'] === 'string' &&
-    typeof obj['updatedAt'] === 'string' &&
-    typeof obj['isAutoSave'] === 'boolean'
-  );
-}
-
-function isSaveBundle(value: unknown): value is SaveBundle {
-  if (typeof value !== 'object' || value === null) return false;
-  const obj = value as Record<string, unknown>;
-  return (
-    typeof obj['version'] === 'number' &&
-    typeof obj['exportedAt'] === 'string' &&
-    Array.isArray(obj['saves']) &&
-    typeof obj['signature'] === 'string' &&
-    (obj['saves'] as unknown[]).every((s) => isSaveSlot(s))
-  );
 }
 
 export const saveManager = new SaveManager();

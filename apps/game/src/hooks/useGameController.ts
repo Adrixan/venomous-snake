@@ -9,6 +9,8 @@ import type {
   ChallengeResultState,
 } from '@venomous-snake/shared-types';
 import type { StartChallengeResult, SubmitResult, HintResult } from '../GameController';
+import { ChallengeSessionContext } from '@venomous-snake/ui';
+import type { ChallengeResult } from '@venomous-snake/challenge-engine';
 
 // ── Context ──────────────────────────────────────────────────────────────────
 
@@ -126,7 +128,54 @@ export function GameControllerProvider({
     return unsubscribe;
   }, []);
 
-  return React.createElement(GameControllerContext.Provider, { value: localRef.current }, children);
+  return React.createElement(
+    GameControllerContext.Provider,
+    { value: localRef.current },
+    React.createElement(GameChallengeSessionBridge, null, children),
+  );
+}
+
+function GameChallengeSessionBridge({
+  children,
+}: {
+  children: React.ReactNode;
+}): React.JSX.Element {
+  const controller = useGameController();
+  const challengeId = useGameStore((state) => state.currentChallengeId);
+  useEffect(() => {
+    if (challengeId !== null) controller.startChallenge(challengeId);
+  }, [challengeId, controller]);
+
+  const session = React.useMemo(
+    () => ({
+      evaluate: async (code: string): Promise<ChallengeResult & { xpEarned: number }> => {
+        const result: SubmitResult = await controller.submitCode(code);
+        if (result.passed && challengeId !== null) {
+          EventBus.emit({
+            type: 'CHALLENGE_COMPLETED',
+            payload: { challengeId, xpEarned: result.xpEarned },
+          });
+        }
+        for (const achievement of result.achievements) {
+          EventBus.emit({
+            type: 'ACHIEVEMENT_UNLOCKED',
+            payload: { id: achievement.id, nameKey: achievement.nameKey },
+          });
+        }
+        return {
+          challengeId: challengeId ?? '',
+          allPassed: result.passed,
+          testResults: result.testResults,
+          totalTimeMs: 0,
+          xpEarned: result.xpEarned,
+        };
+      },
+      requestHint: () => controller.getHint()?.hint ?? null,
+    }),
+    [challengeId, controller],
+  );
+
+  return React.createElement(ChallengeSessionContext.Provider, { value: session }, children);
 }
 
 // ── Hook ─────────────────────────────────────────────────────────────────────
@@ -188,7 +237,10 @@ export function useGameActions(): {
     });
 
     if (result.passed && challengeId !== null) {
-      EventBus.emit({ type: 'CHALLENGE_COMPLETED', payload: { challengeId } });
+      EventBus.emit({
+        type: 'CHALLENGE_COMPLETED',
+        payload: { challengeId, xpEarned: result.xpEarned },
+      });
 
       const newLevel = result.newLevel;
       if (newLevel !== null) {

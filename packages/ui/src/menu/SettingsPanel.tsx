@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { i18n } from '@venomous-snake/i18n';
-import type { GameSettings } from '@venomous-snake/save-system';
+import type { GameSettings } from '@venomous-snake/shared-types';
 import { AudioSettingsPanel } from '../panels/AudioSettingsPanel';
 import type { AudioSettingsPanelProps } from '../panels/AudioSettingsPanel';
 
@@ -21,6 +21,12 @@ const DEFAULT_SETTINGS: GameSettings = {
   volumeSfx: 70,
   fullscreen: false,
   reducedMotion: false,
+  muted: false,
+  textSpeed: 'instant',
+  keyboardLayout: 'qwerty',
+  useNativeKeyboard: false,
+  keyboardSize: 'medium',
+  showDesktopKeyboard: false,
 };
 
 function loadSettings(): GameSettings {

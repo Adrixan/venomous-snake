@@ -1,4 +1,9 @@
-import type { Challenge, TestCase, ExecutionResult, PythonInterpreter } from '@venomous-snake/shared-types';
+import type {
+  Challenge,
+  TestCase,
+  ExecutionResult,
+  PythonInterpreter,
+} from '@venomous-snake/shared-types';
 
 export interface TestResult {
   testCase: TestCase;
@@ -14,6 +19,9 @@ export interface ChallengeResult {
   testResults: TestResult[];
   totalTimeMs: number;
 }
+
+/** Upper bound for a single test run; correct beginner programs finish in milliseconds. */
+const TEST_TIMEOUT_MS = 5_000;
 
 export class ChallengeRunner {
   constructor(private interpreter: PythonInterpreter) {}
@@ -39,12 +47,22 @@ export class ChallengeRunner {
     const startTime = performance.now();
 
     try {
-      if (testCase.input !== undefined) {
-        this.interpreter.provideInput(testCase.input);
+      const finalCode = this.buildProgram(testCase, code);
+      const inputs = testCase.input === undefined ? [] : testCase.input.split('\n');
+      const result: ExecutionResult = await this.interpreter.execute(finalCode, {
+        inputs,
+        interactive: false,
+        echoPrompts: false,
+        timeoutMs: TEST_TIMEOUT_MS,
+      });
+      if (result.timedOut === true) {
+        return {
+          testCase,
+          passed: false,
+          error: 'Your program ran too long and was stopped. Check for a loop that never ends.',
+          executionTimeMs: performance.now() - startTime,
+        };
       }
-
-      const finalCode = this.applySetup(testCase, code);
-      const result: ExecutionResult = await this.interpreter.execute(finalCode);
       const executionTimeMs = performance.now() - startTime;
 
       if (testCase.expectsError !== undefined) {
@@ -89,6 +107,12 @@ export class ChallengeRunner {
     }
   }
 
+  /** Student code with the test's variable overrides applied and its call appended. */
+  private buildProgram(testCase: TestCase, code: string): string {
+    const withSetup = this.applySetup(testCase, code);
+    return testCase.append ? `${withSetup}\n${testCase.append}\n` : withSetup;
+  }
+
   /** Apply setup overrides by replacing matching variable assignments in the student code */
   private applySetup(testCase: TestCase, code: string): string {
     if (!testCase.setup) return code;
@@ -99,7 +123,7 @@ export class ChallengeRunner {
       if (match) {
         const pattern = new RegExp(`^${match[1]}\\s*=.*$`, 'm');
         if (pattern.test(result)) {
-          result = result.replace(pattern, setupLine);
+          result = result.replace(pattern, () => setupLine);
         } else {
           result = `${setupLine}\n${result}`;
         }

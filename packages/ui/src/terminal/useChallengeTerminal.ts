@@ -1,4 +1,5 @@
-import { useState, useCallback, useMemo, useRef, useEffect } from 'react';
+import { useState, useCallback, useMemo, useRef, useEffect, useContext } from 'react';
+import { ChallengeSessionContext } from './ChallengeSession';
 import type { Challenge, PythonOutput, PythonInterpreter } from '@venomous-snake/shared-types';
 import { challengeMap } from '@venomous-snake/challenges';
 import { ChallengeRunner, HintEngine } from '@venomous-snake/challenge-engine';
@@ -9,6 +10,7 @@ export interface SubmitResult {
   passed: boolean;
   output: string;
   error: string | undefined;
+  xpEarned?: number;
 }
 
 export interface UseChallengeTerminalReturn {
@@ -21,10 +23,13 @@ export interface UseChallengeTerminalReturn {
   submitCode: (code: string) => Promise<void>;
   runCode: (code: string) => Promise<void>;
   resetState: () => void;
+  requestHint: () => void;
   interpreter: PythonInterpreter;
 }
 
 export function useChallengeTerminal(challengeId: string | null): UseChallengeTerminalReturn {
+  const session = useContext(ChallengeSessionContext);
+  const busy = useRef(false);
   const challenge = useMemo<Challenge | null>(
     () => (challengeId !== null ? (challengeMap[challengeId] ?? null) : null),
     [challengeId],
@@ -69,21 +74,25 @@ export function useChallengeTerminal(challengeId: string | null): UseChallengeTe
 
   const runCode = useCallback(
     async (code: string): Promise<void> => {
-      await ensureReady();
+      if (busy.current) return;
+      busy.current = true;
       setIsRunning(true);
       setOutputs([]);
       try {
-        const execResult = await interpreterRef.current.execute(code);
-        if (execResult.error !== undefined) {
-          const errText =
-            execResult.error.traceback ?? `${execResult.error.type}: ${execResult.error.message}`;
-          setOutputs((prev) => [...prev, { type: 'stderr' as const, text: errText }]);
-        }
+        await ensureReady();
+        await interpreterRef.current.execute(code, {
+          inputs: challenge?.testCases[0]?.input?.split('\n') ?? [],
+        });
+      } catch (error) {
+        setOutputs([
+          { type: 'stderr', text: error instanceof Error ? error.message : String(error) },
+        ]);
       } finally {
+        busy.current = false;
         setIsRunning(false);
       }
     },
-    [ensureReady],
+    [ensureReady, challenge],
   );
 
   const submitCode = useCallback(
@@ -93,15 +102,19 @@ export function useChallengeTerminal(challengeId: string | null): UseChallengeTe
         return;
       }
 
-      await ensureReady();
+      if (busy.current) return;
+      busy.current = true;
       setIsRunning(true);
       setOutputs([]);
       setResult(null);
       setHints([]);
 
       try {
+        await ensureReady();
         const runner = runnerRef.current;
-        const cResult = await runner.runChallenge(challenge, code);
+        const cResult = session
+          ? await session.evaluate(code)
+          : await runner.runChallenge(challenge, code);
         setChallengeResult(cResult);
 
         const outputLines = cResult.testResults
@@ -121,14 +134,15 @@ export function useChallengeTerminal(challengeId: string | null): UseChallengeTe
               text: `✓ All ${cResult.testResults.length} test(s) passed!\n`,
             },
           ]);
-          setResult({ passed: true, output: outputLines, error: undefined });
+          setResult({
+            passed: true,
+            output: outputLines,
+            error: undefined,
+            xpEarned: 'xpEarned' in cResult ? Number(cResult.xpEarned) : challenge.xpReward,
+          });
         } else {
           const firstFailed = cResult.testResults.find((t) => !t.passed);
           const failCount = cResult.testResults.filter((t) => !t.passed).length;
-
-          const hintResult = hintEngineRef.current.getHint(challenge);
-          const newHints: string[] = hintResult !== null ? [hintResult.hint] : [];
-          setHints(newHints);
 
           setOutputs((prev) => [
             ...prev,
@@ -139,11 +153,16 @@ export function useChallengeTerminal(challengeId: string | null): UseChallengeTe
           ]);
           setResult({ passed: false, output: outputLines, error: firstFailed?.error });
         }
+      } catch (error) {
+        const message = error instanceof Error ? error.message : String(error);
+        setOutputs([{ type: 'stderr', text: message }]);
+        setResult({ passed: false, output: '', error: message });
       } finally {
+        busy.current = false;
         setIsRunning(false);
       }
     },
-    [challenge, runCode, ensureReady],
+    [challenge, runCode, ensureReady, session],
   );
 
   const resetState = useCallback(() => {
@@ -163,6 +182,11 @@ export function useChallengeTerminal(challengeId: string | null): UseChallengeTe
     submitCode,
     runCode,
     resetState,
+    requestHint: () => {
+      if (!challenge) return;
+      const hint = session ? session.requestHint() : hintEngineRef.current.getHint(challenge)?.hint;
+      if (hint) setHints((previous) => [...previous, hint]);
+    },
     interpreter: interpreterRef.current,
   };
 }

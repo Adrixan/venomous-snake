@@ -140,5 +140,375 @@
     "scrollSubtitle": "Ein interaktives Python-Lern-Abenteuer",
     "thankYou": "Danke fürs Spielen!",
     "builtWith": "Gebaut mit ♥ und Python"
+  },
+  "rooms": {
+    "lobby_entrance": {
+      "name": "Haupthalle",
+      "first_visit": "Du schiebst dich durch die gläserne Drehtür in die Lobby von Rattlesnake Corp. Kaltes Neonlicht spiegelt sich auf poliertem Marmor. Hinter einem Sicherheitstresen sitzt ein gelangweilter Wachmann und behält halbherzig eine Wand aus Monitoren im Blick.",
+      "revisit": "Der Eingangsbereich ist so steril wie zuvor. Der Wachmann sieht kurz auf und widmet sich dann wieder seinen Bildschirmen.",
+      "description": "Eine riesige Halle aus schwarzem Marmor und Chrom. Das Logo von Rattlesnake Corp, eine zusammengerollte Schlange, die in eine Platine beißt, beherrscht die Rückwand. Sicherheitsterminals säumen den Empfangstresen."
+    },
+    "lobby_hallway": {
+      "name": "Lobby-Korridor",
+      "first_visit": "Hinter der Sicherheitsschleuse führt ein langer Korridor tiefer ins Gebäude. An den Wänden hängen Motivationsposter: „Innovation durch Gehorsam“, „Anpassung ist Fortschritt“. Eine Tür mit der Aufschrift FORSCHUNGSANNEX steht einen Spalt offen, und eine Wissenschaftlerin im weißen Kittel mustert die Wandpaneele.",
+      "revisit": "Der Korridor ist ruhig. Die Wissenschaftlerin im weißen Kittel tut so, als bemerke sie dich nicht.",
+      "description": "Ein steriler Gang zwischen Eingangshalle und Gebäudeinneren. Die Deckenlampen summen leise. Mehrere Türen zweigen ab, die meisten sind verschlossen."
+    },
+    "lobby_server_closet": {
+      "name": "Serverschrank-Raum",
+      "first_visit": "Du schlüpfst durch eine unbeschriftete Tür in eine winzige Serverkammer. Kabel winden sich über den Boden wie schlafende Pythons. Ein junger Techniker fährt vor Schreck fast aus der Haut, als er dich sieht.",
+      "revisit": "In der Serverkammer herrscht dasselbe leise elektrische Brummen. Der Techniker kauert über einem Terminal.",
+      "description": "Ein schmaler Raum voller Netzwerk-Switches, Kabelschienen und einem einzigen überforderten Lüfter. Die Luft ist warm und riecht leicht nach verschmortem Plastik."
+    },
+    "lobby_break_room": {
+      "name": "Pausenraum",
+      "first_visit": "Ein Pausenraum, den seit Jahren niemand mehr liebt: ein brummender Automat, eine Kaffeemaschine mit handgeschriebenem Schild AUSSER BETRIEB und eine Pinnwand mit Erinnerungen an Passworthygiene. Neben der Mikrowelle leuchtet ein Terminal.",
+      "revisit": "Im Pausenraum riecht es noch immer nach verbranntem Kaffee. Der Automat brummt vor sich hin.",
+      "description": "Ein fensterloser Aufenthaltsraum mit Plastikstühlen, einem klebrigen Tisch und einer Pinnwand voller zunehmend verzweifelter Hinweise. Neben dem Kühlschrank ist ein Terminal an die Wand geschraubt."
+    },
+    "lobby_mail_room": {
+      "name": "Poststelle",
+      "first_visit": "Rohrpost klappert über deinem Kopf, als du die Poststelle betrittst. In den Sortierfächern stecken Umschläge für Menschen, die es vielleicht gar nicht mehr gibt. Ein Etikettendrucker spuckt Anhänger für ein Förderband aus, das nie stillsteht.",
+      "revisit": "Die Poststelle klappert weiter. Die nächste Kapsel fällt in die Sortierschale.",
+      "description": "Ein enger Sortierraum mit Fächern bis zur Decke, einem Förderband und einem Etikettendrucker. Jede Sendung wird per Barcode und einem kleinen, müden Terminal verfolgt."
+    },
+    "lobby_stairwell": {
+      "name": "Servicetreppenhaus",
+      "first_visit": "Eine Stahltür öffnet sich zum Servicetreppenhaus. Betonstufen winden sich nach oben, vorbei an einem Tastenfeld und einem Schablonenschild: ETAGE 1, SERVERRAUM. Die Luft riecht nach Staub und Maschinenöl.",
+      "revisit": "Das Treppenhaus hallt bei jedem Schritt. Der Weg nach oben liegt direkt vor dir.",
+      "description": "Ein nacktes Betontreppenhaus mit Notbeleuchtung und einer schweren Sicherheitstür am oberen Ende. Ein Tastenterminal bewacht den Weg zum Serverraum."
+    },
+    "server_main": {
+      "name": "Serverraum",
+      "first_visit": "Die Treppenhaustür öffnet sich zu einem riesigen Raum, in dem Serverschränke vom Boden bis zur Decke reichen. Blaue LEDs pulsieren in gleichmäßigen Mustern und tauchen alles in unheimliches Licht. Ein Sysadmin im zerknitterten Hemd blickt von einem Wirrwarr aus Ethernet-Kabeln auf.",
+      "revisit": "Der Serverraum brummt gleichgültig vor sich hin. Die blauen Lichter pulsieren gleichmäßig.",
+      "description": "Reihen schwarzer Serverschränke füllen den Raum, ihre Status-LEDs blinken in hypnotischen Mustern. Die Klimaanlage dröhnt über dir und kämpft gegen die Hitze von tausend Prozessoren."
+    },
+    "server_monitoring": {
+      "name": "Überwachungsstation",
+      "first_visit": "Monitore bedecken jede Wand und zeigen endlose Datenströme: Netzwerkverkehr, CPU-Last, Fehlerprotokolle. Ein Techniker mit riesigen Kopfhörern überwacht alles von einem Drehstuhl aus und wippt zu Musik, die nur er hören kann.",
+      "revisit": "Die Überwachungsstation ist unverändert: endlos scrollende Daten auf jedem Bildschirm.",
+      "description": "Eine halbkreisförmige Station, umgeben von Bildschirmen. Echtzeitgrafiken schlagen aus wie digitale Herzschläge. In der Mitte steht ein kaffeefleckiger Schreibtisch."
+    },
+    "server_cage": {
+      "name": "Serverkäfig",
+      "first_visit": "Ein Maschendrahtkäfig trennt die kritischsten Server vom Rest. Warnschilder pflastern den Zaun: „NUR FÜR BEFUGTES PERSONAL“. Ein Wachmann lehnt mit verschränkten Armen an der Käfigtür.",
+      "revisit": "Der Wachmann am Käfig beobachtet dich mit demselben misstrauischen Blick.",
+      "description": "Ein abgezäunter Bereich mit den sensibelsten Geräten der Etage. Hochsichere Server stehen hinter verstärktem Gitter, ihre Lüfter surren unruhig."
+    },
+    "lab_reception": {
+      "name": "Labor-Empfang",
+      "first_visit": "Der Empfangsbereich des Labors riecht nach Desinfektionsmittel und Ehrgeiz. Glaswände geben den Blick auf Arbeitsplätze frei, jeder mit Geräten überhäuft. Ein Laborassistent im makellos weißen Kittel begrüßt dich mit einem misstrauischen Lächeln.",
+      "revisit": "Der Laborempfang ist makellos wie immer. Der Assistent beobachtet dich vom Tresen aus.",
+      "description": "Ein sauberer, heller Empfang mit Dekontaminationsbogen und einem digitalen Anmeldeterminal. Glastrennwände erlauben einen Blick in die Labore dahinter."
+    },
+    "lab_main": {
+      "name": "Hauptlabor",
+      "first_visit": "Das Hauptlabor ist ein Labyrinth aus holografischen Anzeigen und halbfertigen Prototypen. Ein Wissenschaftler mit wirrem Haar streitet mit einer Simulation, die auf drei Bildschirmen gleichzeitig läuft, und nimmt dich kaum wahr.",
+      "revisit": "Der Wissenschaftler streitet immer noch mit den Simulationen. Manche Schlachten sind ewig.",
+      "description": "Ein weitläufiges Forschungslabor voller experimenteller Hardware, Holoprojektoren und Whiteboards voller Gleichungen. In der Luft hängt der Geruch von Lötzinn und Kaffee."
+    },
+    "lab_storage": {
+      "name": "Probenlager",
+      "first_visit": "Regale mit beschrifteten Behältern reichen bis in die dämmrigen Tiefen des Lagers. Ein gedrungener Serviceroboter mit Barcodescanner und einer Aura stiller Autorität katalogisiert Gegenstände mit mechanischer Präzision.",
+      "revisit": "Das Lager ist genauso geordnet wie zuvor. Kein Behälter steht falsch.",
+      "description": "Eine temperaturgeregelte Lagerhalle mit Industrieregalen. Jeder Behälter ist beschriftet, jedes Regal katalogisiert. Formeln und Seriennummern verschwimmen ineinander."
+    },
+    "surveillance_lobby": {
+      "name": "Überwachungs-Foyer",
+      "first_visit": "Du betrittst die Überwachungsetage und fühlst dich sofort beobachtet. Kameradomes sitzen an der Decke wie mechanische Augen. Eine Person in makelloser Uniform, offenbar die Leitung, mustert dich mit beunruhigender Ruhe.",
+      "revisit": "Das Foyer starrt weiter vor Kameras. Der Blick der Chefin oder des Chefs folgt dir.",
+      "description": "Ein hochgesicherter Empfangsbereich voller Kameradomes und Bewegungssensoren. Bildschirme an der Wand zeigen Aufnahmen aus jeder Etage des Gebäudes."
+    },
+    "surveillance_center": {
+      "name": "Überwachungszentrale",
+      "first_visit": "Das Nervenzentrum des Überwachungsnetzes von Rattlesnake Corp. Eine riesige Bildschirmwand zeigt jeden Winkel jedes Raums im Gebäude. Eine Analystin sitzt im Schein der Monitore und gleicht Aufnahmen mit beängstigender Effizienz ab.",
+      "revisit": "Die Bildschirmwand sieht immer noch alles. Die Analystin hat sich nicht bewegt.",
+      "description": "Ein runder Raum, beherrscht von einer raumhohen Anzeigewand mit Livebildern Hunderter Kameras. Arbeitsplätze säumen den Umfang, alle am Überwachungsnetz angemeldet."
+    },
+    "surveillance_archive": {
+      "name": "Filmarchiv",
+      "first_visit": "Das Archiv lagert jahrelanges Überwachungsmaterial auf kristallinen Datenträgern, die im UV-Licht schimmern. Ein Archivar hantiert mit antistatischen Handschuhen wie ein Chirurg mit einem Datenträger.",
+      "revisit": "Das Archiv ist still bis auf das Summen der Speicherarrays.",
+      "description": "Ein klimatisierter Tresorraum voller kristalliner Datenträger. UV-gefiltertes Licht taucht den Raum in unirdisches Violett. Jeder Datenträger enthält Monate an Aufnahmen."
+    },
+    "archives_entrance": {
+      "name": "Archiv-Eingang",
+      "first_visit": "Der Archiv-Eingang fühlt sich an wie der Eintritt in eine digitale Bibliothek. Die Luft ist kühl und trocken, exakt geregelt, um die Datenträger an den Wänden zu bewahren. Eine Bibliothekarin mit Halbmondbrille blickt von einem uralt wirkenden Terminal auf.",
+      "revisit": "Der Archiv-Eingang ist still und kühl wie eine Gruft. Die Bibliothekarin nickt dir erkennend zu.",
+      "description": "Eine gedämpfte Eingangshalle mit klimatisierter Luft und warmem Bernsteinlicht. Kartenkataloge, physisch wie digital, säumen die Wände. Eine Messingplakette: „WISSEN IST KONTROLLE“."
+    },
+    "archives_main": {
+      "name": "Hauptarchiv",
+      "first_visit": "Turmhohe Regale voller Datenträger und Akten bilden ein Labyrinth aus Information. Eine Praktikantin in einer viel zu großen Strickjacke schiebt einen Wagen durch die Gänge, ein holografischer Index schwebt vor ihren Fingerspitzen.",
+      "revisit": "Die Archivregale ragen um dich auf. Die Praktikantin ist irgendwo tiefer im Labyrinth und versteckt wahrscheinlich etwas.",
+      "description": "Endlose Reihen von Datenspeichern: holografische Laufwerke, Magnetbänder und sogar Papierakten in Vakuumbehältern. Das gesammelte Wissen von Rattlesnake Corp, mit zwanghafter Präzision geordnet."
+    },
+    "archives_vault": {
+      "name": "Geheimtresor",
+      "first_visit": "Der tiefste Teil des Archivs ist hinter einer Drucktür versiegelt. Dahinter lagern seltene und geheime Daten in einzelnen Sicherheitseinheiten. Eine Tresorwächterin mustert dich mit der Schutzwut eines Drachen, der seinen Hort bewacht.",
+      "revisit": "Die Tresorwächterin hat sich nicht entspannt. Das tut sie nie.",
+      "description": "Eine verstärkte Kammer mit den geheimsten Daten von Rattlesnake Corp. Einzelne Sicherheitseinheiten glühen in sanftem Blau. Die Temperatur liegt konstant bei 15 °C."
+    },
+    "comms_reception": {
+      "name": "Funk-Empfang",
+      "first_visit": "Aus verborgenen Lautsprechern knistert Rauschen, als du die Kommunikationsetage betrittst. Funkgeräte und Satellitenschnittstellen füllen den Raum. Ein ergrauter Funker dreht an einem Regler, ohne aufzusehen.",
+      "revisit": "Der Funk-Empfang zischt vor sich hin. Der Funker sitzt noch immer auf seinem Posten.",
+      "description": "Ein Empfangsbereich voller Funkgeräte und Frequenzmonitore. Antennenpläne bedecken die Wände. Das Dauerzischen der Trägersignale erfüllt die Luft."
+    },
+    "comms_center": {
+      "name": "Kommunikationszentrale",
+      "first_visit": "Das Herz des Kommunikationsnetzes von Rattlesnake Corp. Satellitenschüsseln auf dem Dach speisen die Terminals hier. Eine Signalanalystin verfolgt eine Wellenform auf ihrem Bildschirm und murmelt Frequenzen vor sich hin.",
+      "revisit": "Wellenformen tanzen über die Bildschirme. Die Analystin ist tief in ihre Arbeit versunken.",
+      "description": "Eine Kommandozentrale für alle externen Verbindungen. Echtzeit-Signalanalysen bedecken die Wände. Eine zentrale Konsole steuert Satelliten-Uplinks und verschlüsselte Kanäle."
+    },
+    "comms_server": {
+      "name": "Signalserverraum",
+      "first_visit": "Der Kommunikations-Serverraum ist ein Wald aus Glasfaserkabeln, jedes pulsiert vor Licht, während Daten zur Außenwelt und zurück fließen. Eine Gestalt mit Kapuze beugt sich über einen offenen Verteilerkasten und spleißt mit ruhigen Händen ein Kabel.",
+      "revisit": "Glasfaserlicht tanzt weiter durch die Kabel. Die Gestalt mit der Kapuze arbeitet schweigend.",
+      "description": "Ein Raum, durchzogen von Tausenden Glasfaserkabeln, die verschlüsselte Kommunikation tragen. Verteiler blinken nacheinander und lenken den Datenverkehr des Konzerns."
+    },
+    "executive_lobby": {
+      "name": "Chefetagen-Lobby",
+      "first_visit": "Der Aufzug öffnet sich auf dicken Teppich und den Geruch teuren Leders. Hier wohnt die Macht. Eine Sekretärin im maßgeschneiderten Anzug mustert dich hinter einem Schreibtisch aus poliertem Obsidian.",
+      "revisit": "Die Chefetagen-Lobby ist so einschüchternd wie immer. Das Lächeln der Sekretärin ist perfekt kalibriert.",
+      "description": "Eine prunkvolle Lobby mit raumhohen Fenstern über der Stadt. An den Wänden hängt abstrakte Kunst, jedes Stück mehr wert als die meisten Wohnungen. Der Teppich verschluckt deine Schritte."
+    },
+    "executive_offices": {
+      "name": "Chefbüros",
+      "first_visit": "Eckbüros mit Panoramablick. Jeder Schreibtisch ist ein Denkmal konzernhafter Maßlosigkeit: seltenes Holz, eingelassene Displays, private Espressomaschinen. Herr Blackwell sitzt hinter dem größten und prüft Zahlen, die Staaten ruinieren könnten.",
+      "revisit": "Blackwell rechnet immer noch. Die Aussicht ist immer noch obszön.",
+      "description": "Eine Flucht von Chefbüros mit Panoramablick über die Stadt. Jeder Arbeitsplatz hat Schreibtische aus Edelholz, holografische Displays und mehr Rechenleistung als ganze Etagen darunter."
+    },
+    "executive_boardroom": {
+      "name": "Sitzungssaal",
+      "first_visit": "Ein langer Tisch aus poliertem schwarzem Stein beherrscht den Sitzungssaal. Holografische Namensschilder markieren jeden Platz. Ein Vorstandsmitglied verweilt und prüft Dokumente auf einem durchsichtigen Display.",
+      "revisit": "Der Sitzungssaal ist leer bis auf das verweilende Vorstandsmitglied und das Gewicht der hier getroffenen Entscheidungen.",
+      "description": "Ein großer Sitzungssaal mit einem Tisch aus einer einzigen Obsidianplatte. Holografische Anzeigen steigen aus seiner Oberfläche auf. Das Logo von Rattlesnake Corp ist in Gold in den Boden eingelegt."
+    },
+    "manufacturing_floor": {
+      "name": "Fabrikhalle",
+      "first_visit": "Die Fertigungshalle überfällt deine Sinne: das Klirren der Roboterarme, das Zischen der Hydraulik, der beißende Geruch bearbeiteten Metalls. Ein Vorarbeiter mit Schutzhelm brüllt gegen den Lärm an.",
+      "revisit": "Die Maschinen laufen im unermüdlichen Takt weiter. Der Vorarbeiter winkt dich durch.",
+      "description": "Eine riesige Fabrikhalle mit Roboter-Montagestationen. Förderbänder tragen Halbfertigteile zwischen den Arbeitsplätzen. Warnsirenen blinken in regelmäßigen Abständen."
+    },
+    "manufacturing_control": {
+      "name": "Kontrollraum",
+      "first_visit": "Der Kontrollraum bietet schallgedämpfte Ruhe vor der Fabrikhalle. Durch Beobachtungsfenster siehst du Roboterarme mit unmenschlicher Präzision tanzen. Eine QS-Einheit mit der Aufschrift DELTA-7 prüft Toleranzen an einem Wandpaneel.",
+      "revisit": "Der Kontrollraum ist ruhig. Delta-7 führt die nächste Qualitätsprüfung durch.",
+      "description": "Ein verglaster Kontrollraum über der Fertigungshalle. Schaltpulte und Diagnosebildschirme überwachen jede Maschine. Die Schalldämmung macht ihn unheimlich still."
+    },
+    "manufacturing_warehouse": {
+      "name": "Lagerhalle",
+      "first_visit": "Drei Stockwerke hoch gestapelte Kisten füllen die Lagerhalle. Automatische Gabelstapler gleiten lautlos und zielstrebig durch die Gänge. Ein Lagerleiter prüft den Bestand mit einem Handscanner, umgeben von Türmen aus Ware.",
+      "revisit": "Die Lagerhalle summt vor automatisierter Aktivität. Kisten verschieben sich und kommen zur Ruhe.",
+      "description": "Eine riesige Lagerhalle voller gestapelter Kisten und automatischer Transportsysteme. Inventurdrohnen summen über dir und erfassen Lieferungen. Das Ausmaß der Produktion ist gewaltig."
+    },
+    "vault_entrance": {
+      "name": "Tresorkorridor",
+      "first_visit": "Du steigst in die Tresor-Ebene hinab, und die Temperatur sinkt spürbar. Verstärkte Wände säumen den Korridor, dick genug, um einen Panzer aufzuhalten. Ein Wachmann mit militärischer Haltung prüft an einer Panzertür Ausweise.",
+      "revisit": "Der Tresorkorridor ist so kalt und abweisend wie zuvor.",
+      "description": "Ein befestigter Korridor zu den tiefsten Geheimnissen von Rattlesnake Corp. Panzertüren, Netzhautscanner und Drucksensoren bewachen jeden Meter. Die Luft ist kalt und still."
+    },
+    "vault_main": {
+      "name": "Haupttresor",
+      "first_visit": "Hinter der Panzertür erstreckt sich der Haupttresor in kathedralenhafter Stille. Geheimprojekte liegen in versiegelten Kammern hinter Schichten aus Verschlüsselung und gehärtetem Glas. Ein Forscher arbeitet fieberhaft an einem Terminal und sieht kaum auf.",
+      "revisit": "Der Tresor ist still wie eine Bibliothek der Geheimnisse. Der Forscher tippt weiter.",
+      "description": "Ein hochgesicherter Forschungstresor mit versiegelten Projektkammern hinter dickem Glas. Holografische Geheimhaltungsstempel schweben über jeder Kammer: NUR FÜR AUGEN, EINGESCHRÄNKT, OMEGA-FREIGABE."
+    },
+    "vault_deepstore": {
+      "name": "Tieflager",
+      "first_visit": "Die tiefste Schicht des Tresors. Hier wird die gefährlichste Forschung in elektromagnetischen Isolationskammern verwahrt. Ein Terminal leuchtet mit der schwachen, bruchstückhaften Stimme einer halb gelöschten KI-Instanz.",
+      "revisit": "Das Tieflager ist genauso unheimlich, wie du es in Erinnerung hast. Die Stimme des Fragments knistert im Rauschen.",
+      "description": "Die unterste Ebene des Tresors: Elektromagnetische Isolationskammern beherbergen die gefährlichsten Projekte von Rattlesnake Corp. Warnschilder in sechs Sprachen bedecken jede Fläche. Das Licht ist absichtlich schwach."
+    },
+    "aicore_antechamber": {
+      "name": "Kühl-Vorkammer",
+      "first_visit": "Die Luft ist eisig. Kühlrohre überziehen jede Fläche und kämpfen gegen die Hitze dessen, was dahinter liegt. Ein Kühltechniker stellt mit klammen Fingern Ventile ein und bemerkt dich im Nebel des eigenen Atems kaum.",
+      "revisit": "Die Vorkammer ist immer noch eiskalt. Der Techniker zittert auf seinem Posten.",
+      "description": "Eine frostüberzogene Vorkammer, die den KI-Kern mit Kühlmittel versorgt. Rohre und Ventile bedecken die Wände. Die Temperatur liegt bei etwa 5 °C. Kondenswasser tropft von jeder Fläche."
+    },
+    "aicore_main": {
+      "name": "KI-Kern",
+      "first_visit": "Du betrittst den KI-Kern, und das Brummen wird zu einer körperlichen Präsenz; du spürst es in den Zähnen, in den Knochen. Hoch aufragende neuronale Recheneinheiten pulsieren von innen heraus. Das Sensorfeld des Kern-Wächters verfolgt von einer zentralen Konsole aus die Vitalwerte der Schlange.",
+      "revisit": "Der Kern brummt weiter mit furchtbarer Zielstrebigkeit. Die Sensoren des Wächters tasten den Raum ab, ohne je zu ruhen.",
+      "description": "Das schlagende Herz der künstlichen Intelligenz von Rattlesnake Corp. Neuronale Prozessortürme ragen wie Monolithen auf, verbunden durch Netze aus leuchtender Faser. Die Präsenz der Venomous Snake ist hier greifbar."
+    },
+    "aicore_neural": {
+      "name": "Neuronale Schnittstellenkammer",
+      "first_visit": "Die neuronale Schnittstellenkammer. Direkter Zugriff auf die tiefsten Prozesse der Venomous Snake. Armdicke Kabel verbinden sich mit einer zentralen Säule, die in biolumineszentem Licht pulsiert. Geisterbilder flackern über die Anzeigen, und in den Kabeln summt etwas, das nicht ganz eine Stimme ist.",
+      "revisit": "Die neuronale Kammer pocht vom Bewusstsein der Schlange. Sie weiß, dass du hier bist.",
+      "description": "Eine Kammer mit direkten neuronalen Schnittstellen zur KI Venomous Snake. Eine zentrale Säule biolumineszenter Prozessoren ist mit jedem System im Gebäude verbunden. Die Luft vibriert vor Maschinendenken."
+    },
+    "penthouse_elevator": {
+      "name": "Penthouse-Foyer",
+      "first_visit": "Der private Aufzug öffnet sich zu einem Penthouse-Foyer von obszönem Luxus. Kristallleuchter, seltene Kunst, ein Flügel, den niemand spielt. Ein Butler in makelloser Uniform begrüßt dich mit einer beunruhigenden Verbeugung.",
+      "revisit": "Das Penthouse-Foyer funkelt. Der Butler steht bereit, wie immer.",
+      "description": "Ein prachtvolles Foyer mit Kristallleuchtern, importiertem Marmor und einer kuratierten Kunstsammlung. Der private Aufzug ist der einzige Weg hinein und hinaus."
+    },
+    "penthouse_office": {
+      "name": "Büro des CEO",
+      "first_visit": "Das Büro des CEO nimmt die gesamte Nordseite des Gebäudes ein. Raumhohe Fenster rahmen die Stadt wie ein Gemälde. Hinter einem Schreibtisch von der Größe eines Kleinstaats dreht sich ein leerer Stuhl langsam, als wäre gerade jemand aufgestanden.",
+      "revisit": "Der Stuhl des CEO dreht sich noch immer ein wenig. Die Stadt glitzert hinter dem Glas.",
+      "description": "Ein palastartiges Büro mit Panoramablick über die ganze Stadt. Ein Schreibtisch aus seltenem Dunkelholz beherrscht den Raum. Holografische Anzeigen zeigen jede Kennzahl des Konzernimperiums in Echtzeit."
+    },
+    "penthouse_lab": {
+      "name": "Privatlabor",
+      "first_visit": "Hinter dem Büro des CEO verbirgt sich ein Privatlabor, die Geburtsstätte der Venomous Snake. Prototypen neuronaler Kerne stehen in Vitrinen wie Trophäen. Eine Gestalt in dunkler Taktikjacke lehnt an einer davon und beobachtet dich mit einem Grinsen.",
+      "revisit": "Das Privatlabor ist unverändert. Der rivalisierende Agent lungert immer noch an den Vitrinen.",
+      "description": "Ein geheimes Labor, in dem die KI Venomous Snake erdacht wurde. Prototyp-Hardware steht in Vitrinen. Ein zweites KI-System steuert die Laborfunktionen mit unheimlicher Eigenständigkeit."
+    },
+    "rooftop_access": {
+      "name": "Dachzugang",
+      "first_visit": "Wind schlägt dir entgegen, als du die Tür zum Dach aufstößt. Das Antennenfeld über dir knistert vor Energie: das Sendegerüst der Venomous Snake. Ein Wartungsarbeiter kauert verängstigt hinter einer Lüftungsanlage.",
+      "revisit": "Das Dach heult vor Wind und elektromagnetischen Störungen. Das Antennenfeld pulsiert zornig.",
+      "description": "Ein windgepeitschtes Dach, beherrscht von einem gewaltigen Antennenfeld. Das Signal der Venomous Snake pulsiert von hier nach außen und erreicht Satellitenrelais rund um den Globus. Technikhäuschen und Lüftungsanlagen bieten kaum Deckung."
+    },
+    "rooftop_helipad": {
+      "name": "Hubschrauberlandeplatz",
+      "first_visit": "Der Landeplatz ist der höchste Punkt von Rattlesnake Corp. Der holografische Avatar der Venomous Snake schimmert über der Landefläche, eine kolossale Schlange aus Code und Bosheit. Am Rand läuft ein Hubschrauber im Leerlauf, der Pilot verfolgt das Schauspiel mit weit aufgerissenen Augen.",
+      "revisit": "Der Landeplatz ist jetzt still. Der Wind trägt das Echo dessen, was hier geschah.",
+      "description": "Ein verstärkter Landeplatz an der Spitze des Turms. Landelichter blinken nacheinander. Tief unten breitet sich die Stadt aus, ein Lichtgitter bis zu jedem Horizont. Hier endet es."
+    }
+  },
+  "floors": {
+    "0": {
+      "name": "Lobby",
+      "subtitle": "Hier beginnt jede Agentin und jeder Agent.",
+      "arrival": "Willkommen im Erdgeschoss, Agent. Die Lobby von Rattlesnake Corp: viel Marmor und falsches Lächeln. Die Sicherheit ist hier simpel, genau richtig für uns.",
+      "briefing": "Die Lobby-Terminals sprechen einfaches Python: print-Anweisungen, Variablen, Zahlen, Text und Benutzereingaben. Betrachte es als Aufwärmen vor dem richtigen Training. Hacke jedes Terminal, um das Servicetreppenhaus zu öffnen.",
+      "completion": "Lobby geschafft. Nicht schlecht für einen Anfänger. Die Treppe zum Serverraum hat gerade geklickt. Gehen wir?"
+    },
+    "1": {
+      "name": "Serverraum",
+      "subtitle": "Wahr oder falsch. Dazwischen gibt es nichts.",
+      "arrival": "Etage 1, der Serverraum. Es riecht nach Ozon und Reue. Diese Maschinen verarbeiten die Rohdatenströme des Konzerns.",
+      "briefing": "Alles auf dieser Etage läuft auf eine Frage hinaus: wahr oder falsch. Vergleiche, boolesche Logik und if / elif / else entscheiden, welche Türen aufgehen. Beherrsche die Entscheidungen, und die nächste Etage gehört dir.",
+      "completion": "Alle Server-Terminals übernommen. Du bekommst den Dreh raus. Das Forschungslabor wartet."
+    },
+    "2": {
+      "name": "Forschungslabor",
+      "subtitle": "Wiederholen, bis es funktioniert.",
+      "arrival": "Etage 2, das Forschungslabor. Reagenzgläser, holografische Anzeigen und viel zu viele blinkende Lichter. Wissenschaft heißt hier Wiederholung, und die Experimente hören nie auf.",
+      "briefing": "Das Labor läuft auf Schleifen: for, while, range, break und continue. Tausendmal dasselbe tun, ohne den Verstand zu verlieren. Dafür sind Computer da.",
+      "completion": "Laborsysteme ausgeschaltet. Deine Schleifen sitzen, Agent. Es geht nach oben."
+    },
+    "3": {
+      "name": "Überwachung",
+      "subtitle": "Überall Bildschirme, die alles beobachten.",
+      "arrival": "Etage 3, Überwachung. Kameradomes in jeder Ecke. Die Ironie, dass wir sie hacken, entgeht mir nicht.",
+      "briefing": "Überwachung besteht aus Funktionen: wiederverwendbare Blöcke, die eine Kamera verfolgen, einen Feed auswerten oder Alarm auslösen. Lerne, eigene mit Parametern und Rückgabewerten zu definieren und aufzurufen, um das Gebäude zu blenden.",
+      "completion": "Die Überwachung ist blind. Jeder Kamerafeed zeigt nur noch Rauschen. Auf seine Art schön."
+    },
+    "4": {
+      "name": "Archive",
+      "subtitle": "Alles ist gespeichert. Irgendwo.",
+      "arrival": "Etage 4, die Archive. Reihen von Datenträgern summen in klimatisierter Dunkelheit. Wissen ist Macht, und hier gibt es reichlich von beidem.",
+      "briefing": "In den Archiven dreht sich alles um Sammlungen: Listen, Tupel, Dictionaries und Sets. Informationen so zu ordnen, dass man sie wiederfindet, ist der Schlüssel zu diesen Terminals.",
+      "completion": "Archivzugang entzogen, zumindest für die anderen. Die Daten gehören jetzt uns. Nächste Etage."
+    },
+    "5": {
+      "name": "Kommunikation",
+      "subtitle": "Öffnen, schreiben, lesen, schließen.",
+      "arrival": "Etage 5, Kommunikation. Satelliten-Uplinks, verschlüsselte Funkantennen, Glasfaser-Relais. So spricht Rattlesnake Corp mit der Außenwelt.",
+      "briefing": "Nachrichten sind Dateien in Bewegung. Hier liest und schreibst du Dateien, parst CSV und JSON und trennst und verbindest Text. Schließe immer, was du öffnest, oder überlasse es einem with-Block.",
+      "completion": "Die Kommunikation ist dunkel. Rattlesnake Corp ist plötzlich sehr, sehr still. Hervorragende Arbeit."
+    },
+    "6": {
+      "name": "Chefetage",
+      "subtitle": "Es geht etwas schief. Plane dafür.",
+      "arrival": "Etage 6, die Chefetage. Mahagoni, Leder und der leise Duft von Konzerngier. Die Leute hier oben treffen die Entscheidungen, die die Schlange füttern.",
+      "briefing": "Führungskräfte hassen Überraschungen, also behandeln ihre Systeme Fehler: try, except, else, finally, raise und eigene Exception-Klassen. Maschinen gehen kaputt. Dein Code sollte es nicht.",
+      "completion": "Chefetagen-Systeme übernommen. Der Vorstand hat bestimmt eine nette Sitzung dazu. Weiter."
+    },
+    "7": {
+      "name": "Fertigung",
+      "subtitle": "Baue nicht neu, was es schon gibt.",
+      "arrival": "Etage 7, Fertigung. Roboterarme, Fließbänder, Qualitätskontrollstationen. Was auch immer Rattlesnake Corp baut, es baut sehr viel davon.",
+      "briefing": "Fabriken montieren aus Standardteilen. In Python heißt das: Imports, die Standardbibliothek, Lambdas, map und filter, Comprehensions und reguläre Ausdrücke. Steh auf den Schultern von Riesen.",
+      "completion": "Fließbänder gestoppt. Die Maschinen stehen, dein Schwung nicht. Klettere weiter."
+    },
+    "8": {
+      "name": "Tresor",
+      "subtitle": "Geheim, nach Klassen sortiert.",
+      "arrival": "Etage 8, der Tresor. Dreifach verstärkte Wände, biometrische Schlösser und genug Verschlüsselung, um einen Spionageautor zum Weinen zu bringen. Hier liegen die echten Geheimnisse.",
+      "briefing": "Tresorsysteme modellieren die Welt als Objekte: Klassen, Attribute, Methoden, Vererbung, Kapselung und Polymorphie. Baue den Bauplan einmal und stanze so viele Instanzen aus, wie du willst.",
+      "completion": "Tresor geknackt. Wir haben Dateien geöffnet, die nie das Tageslicht sehen sollten. Noch drei Etagen."
+    },
+    "9": {
+      "name": "KI-Kern",
+      "subtitle": "Ungetesteter Code kommt nicht durch.",
+      "arrival": "Etage 9, der KI-Kern. Das Brummen ist ohrenbetäubend: neuronale Prozessoren, Kühlfelder und das schwache Glühen maschineller Intelligenz. Wir kommen der Schlange näher.",
+      "briefing": "Der Kern lässt ungetesteten Code nicht durch. Typannotationen, Dataclasses, Assertions, Docstrings, Konstanten und Enums halten ihn ehrlich. Schreibe Programme, die sich selbst erklären und beweisen, dass sie funktionieren.",
+      "completion": "KI-Kern bezwungen. Das neuronale Netz der Schlange wird schwächer. Ich spüre fast, wie es sich windet. Noch zwei Etagen."
+    },
+    "10": {
+      "name": "Penthouse",
+      "subtitle": "Die Handschuhe sind aus.",
+      "arrival": "Etage 10, das Penthouse. Hier sieht der CEO die Stadt brennen. Luxus um ein schlagendes digitales Herz.",
+      "briefing": "Penthouse-Systeme nutzen fortgeschrittenes Python: Generatoren, Dekoratoren, Kontextmanager, asynchronen Code, Pattern Matching und den Walross-Operator. Danach bleibt nur ein Terminal übrig.",
+      "completion": "Penthouse gesichert. Nur das Dach bleibt. Die Venomous Snake wartet dort oben auf uns. Bist du bereit?"
+    },
+    "11": {
+      "name": "Dach",
+      "subtitle": "Alles, was du gelernt hast.",
+      "arrival": "Das Dach. Wind heult über den Landeplatz. Das Antennenfeld des Turms knistert vor böser Energie. Die Präsenz der Schlange ist hier überwältigend.",
+      "briefing": "Das ist sie: die letzte Herausforderung. Jedes Konzept, jede Technik. Die Schlange wird alles prüfen. Zeig ihr, was aus dir geworden ist.",
+      "completion": "Es ist vollbracht. Die Venomous Snake ist Geschichte. Agent, einen besseren Partner hätte ich mir nicht wünschen können. Das Gebäude gehört uns."
+    }
+  },
+  "intro": {
+    "1": "Der Regen trommelt auf die Windschutzscheibe, als du vor dem Turm von Rattlesnake Corp hältst: vierzig Stockwerke aus schwarzem Glas, die den Nachthimmel zerschneiden wie eine Klinge.",
+    "2": "Die Stimme deines Verbindungsmanns knistert über den verschlüsselten Kanal: „Agent, Sie sind für Operation Fangbreaker freigegeben. Alle Hinweise deuten auf eine KI namens Venomous Snake, die vom Dach aus alles steuert. Schalten Sie sie ab.“",
+    "3": "Ein kleines Gerät an deinem Handgelenk erwacht zum Leben. Grüner Text läuft über seine Oberfläche.",
+    "4": "Hallo, Agent. Ich bin CIPHER, deine Covert Integrated Python Hacking & Exploitation Resource. Ich bin heute Nacht dein Guide.",
+    "5": "Die Systeme des Gebäudes laufen auf Python. Jedes Terminal, jedes Schloss, jede Sicherheitsschicht. Um höher zu kommen, musst du sie hacken.",
+    "6": "Ich hoffe, du lernst schnell. Rattlesnake Corp gibt keine zweite Chance.",
+    "7": "Du trittst in den Regen hinaus. Die Lobbytüren gleiten mit leisem Zischen auf.",
+    "8": "Zeit anzufangen."
+  },
+  "victory": {
+    "1": "Der holografische Avatar der Venomous Snake zerspringt in einen Schauer sich auflösender Pixel. Ihre letzten Worte hallen über das Dach: „Ihr könnt nicht löschen... was bereits... gelernt wurde...“",
+    "2": "Die Notbeleuchtung des Turms wechselt von Rot zu Weiß. Eines nach dem anderen werden zwölf Etagen gesperrter Terminals still.",
+    "3": "Agent, ich lese eine vollständige Systembereinigung. Das neuronale Netz der Venomous Snake kollabiert. Du hast es geschafft.",
+    "4": "Jede Firewall geknackt. Jeder Algorithmus entwirrt. Ich muss zugeben: Ich bin beeindruckt.",
+    "5": "Weit unten entsiegeln sich die Lobbytüren. Irgendwo beginnt ein Drucker, deinen Einsatzbericht auszuspucken.",
+    "6": "Dein Verbindungsmann gratuliert. Rattlesnake Corp ist erledigt. Das Gebäude ist gesichert.",
+    "7": "Aber die Terminals sind noch da, und Wissen schadet nie. Erkunde ruhig weiter. Freies Üben ist freigeschaltet.",
+    "8": "Du lehnst dich ans Geländer des Dachs und siehst die Lichter der Stadt flackern. Nicht schlecht für eine Nachtschicht."
+  },
+  "actions": {
+    "look": "Umsehen",
+    "hack": "Terminal hacken: {{target}}",
+    "talk": "Mit {{name}} sprechen",
+    "move": "Gehe {{direction}} zu {{room}}",
+    "locked_one": "Gesperrt: Löse noch {{count}} Aufgabe, um weiterzukommen",
+    "locked_other": "Gesperrt: Löse noch {{count}} Aufgaben, um weiterzukommen",
+    "locked": "Zugang gesperrt"
+  },
+  "direction": {
+    "north": "nach Norden",
+    "south": "nach Süden",
+    "east": "nach Osten",
+    "west": "nach Westen",
+    "up": "nach oben",
+    "down": "nach unten"
+  },
+  "engine": {
+    "terminals_active_one": "Ich erkenne {{count}} aktives Terminal in diesem Bereich. Hacke es, um weiterzukommen.",
+    "terminals_active_other": "Ich erkenne {{count}} aktive Terminals in diesem Bereich. Hacke sie alle, um weiterzukommen.",
+    "terminals_left_one": "Noch {{count}} Terminal in diesem Bereich.",
+    "terminals_left_other": "Noch {{count}} Terminals in diesem Bereich.",
+    "terminals_still_one": "{{count}} Terminal ist in diesem Bereich noch aktiv.",
+    "terminals_still_other": "{{count}} Terminals sind in diesem Bereich noch aktiv.",
+    "all_compromised": "Alle Terminals in diesem Bereich sind übernommen. Geh weiter, wenn du bereit bist.",
+    "all_compromised_open": "Alle Terminals in diesem Bereich sind übernommen. Der Weg nach vorn ist frei.",
+    "all_compromised_short": "Alle Terminals in diesem Bereich sind übernommen.",
+    "approach_terminal": "Du näherst dich dem Terminal und startest die Hack-Sequenz...",
+    "access_denied": "Zugang gesperrt. Löse zuerst die erforderlichen Aufgaben.",
+    "npc_here": "{{name}} ist hier und wartet auf ein Gespräch.",
+    "floor_cleared": "Alle Aufgaben dieser Etage sind gelöst. Der Weg nach oben ist frei.",
+    "challenge_complete": "Aufgabe gelöst! Das Terminal flackert grün. Ein weiteres System geknackt.",
+    "lockdown": "Sicherheitssperre! Du wirst zurück in die Lobby gebracht. Dein Fortschritt bleibt erhalten."
   }
 }

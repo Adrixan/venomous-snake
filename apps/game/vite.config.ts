@@ -1,44 +1,75 @@
 import { defineConfig } from 'vite';
+import type { Plugin } from 'vite';
 import react from '@vitejs/plugin-react';
 import compression from 'vite-plugin-compression';
+import fs from 'node:fs';
 import path from 'node:path';
+import { createRequire } from 'node:module';
+import { workspaceAliases } from '../../vite.aliases';
 
 const root = path.resolve(__dirname, '../..');
+
+/** Files the Pyodide loader fetches at runtime. */
+const PYODIDE_FILES = [
+  'pyodide.asm.js',
+  'pyodide.asm.wasm',
+  'python_stdlib.zip',
+  'pyodide-lock.json',
+];
+
+const MIME: Record<string, string> = {
+  '.js': 'text/javascript',
+  '.wasm': 'application/wasm',
+  '.zip': 'application/zip',
+  '.json': 'application/json',
+};
+
+/**
+ * Serves the Pyodide runtime from this origin (dev server and build output) so the
+ * game works offline and never depends on a third-party CDN.
+ */
+function selfHostedPyodide(): Plugin {
+  const requireFromRuntime = createRequire(
+    path.resolve(root, 'packages/python-runtime/package.json'),
+  );
+  const pyodideDir = path.dirname(requireFromRuntime.resolve('pyodide/package.json'));
+
+  return {
+    name: 'self-hosted-pyodide',
+    configureServer(server) {
+      server.middlewares.use('/pyodide/', (req, res, next) => {
+        const name = path.basename((req.url ?? '').split('?')[0] ?? '');
+        if (!PYODIDE_FILES.includes(name)) return next();
+        res.setHeader('Content-Type', MIME[path.extname(name)] ?? 'application/octet-stream');
+        fs.createReadStream(path.join(pyodideDir, name)).pipe(res);
+      });
+    },
+    generateBundle() {
+      for (const name of PYODIDE_FILES) {
+        this.emitFile({
+          type: 'asset',
+          fileName: `pyodide/${name}`,
+          source: fs.readFileSync(path.join(pyodideDir, name)),
+        });
+      }
+    },
+  };
+}
 
 export default defineConfig({
   base: './',
   plugins: [
     react(),
-    // Gzip pre-compression
-    compression({
-      algorithm: 'gzip',
-      ext: '.gz',
-      threshold: 1024,
-    }),
-    // Brotli pre-compression
-    compression({
-      algorithm: 'brotliCompress',
-      ext: '.br',
-      threshold: 1024,
-    }),
+    selfHostedPyodide(),
+    compression({ algorithm: 'gzip', ext: '.gz', threshold: 1024 }),
+    compression({ algorithm: 'brotliCompress', ext: '.br', threshold: 1024 }),
   ],
   root: __dirname,
   resolve: {
-    alias: {
-      '@venomous-snake/engine': path.resolve(root, 'packages/engine/src/index.ts'),
-      '@venomous-snake/ui': path.resolve(root, 'packages/ui/src/index.ts'),
-      '@venomous-snake/python-runtime': path.resolve(root, 'packages/python-runtime/src/index.ts'),
-      '@venomous-snake/challenge-engine': path.resolve(
-        root,
-        'packages/challenge-engine/src/index.ts',
-      ),
-      '@venomous-snake/challenges': path.resolve(root, 'packages/challenges/src/index.ts'),
-      '@venomous-snake/narrative': path.resolve(root, 'packages/narrative/src/index.ts'),
-      '@venomous-snake/audio': path.resolve(root, 'packages/audio/src/index.ts'),
-      '@venomous-snake/i18n': path.resolve(root, 'packages/i18n/src/index.ts'),
-      '@venomous-snake/save-system': path.resolve(root, 'packages/save-system/src/index.ts'),
-      '@venomous-snake/shared-types': path.resolve(root, 'packages/shared-types/src/index.ts'),
-    },
+    alias: workspaceAliases(root),
+  },
+  worker: {
+    format: 'es',
   },
   build: {
     outDir: '../../dist',
@@ -46,7 +77,6 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks(id: string) {
-          if (id.includes('/phaser/')) return 'vendor-phaser';
           if (id.includes('/react/') || id.includes('/react-dom/')) return 'vendor-react';
           if (
             id.includes('/@codemirror/') ||
@@ -54,13 +84,12 @@ export default defineConfig({
             id.includes('/@lezer/')
           )
             return 'vendor-codemirror';
-          if (id.includes('/pyodide/')) return 'vendor-pyodide';
           if (id.includes('/i18next/') || id.includes('/react-i18next/')) return 'vendor-i18n';
           return undefined;
         },
       },
     },
-    chunkSizeWarningLimit: 800, // Phaser is ~1.6MB, expected
+    chunkSizeWarningLimit: 800,
   },
   server: {
     port: 4200,

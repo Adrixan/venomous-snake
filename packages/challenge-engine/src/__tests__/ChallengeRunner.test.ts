@@ -46,7 +46,9 @@ describe('ChallengeRunner', () => {
     };
     const runner = new ChallengeRunner(makeInterpreter(result));
     const challenge = makeChallenge({
-      testCases: [{ id: 'tc1', description: 'print hello', expectedOutput: 'hello', hidden: false }],
+      testCases: [
+        { id: 'tc1', description: 'print hello', expectedOutput: 'hello', hidden: false },
+      ],
     });
 
     const res = await runner.runChallenge(challenge, 'print("hello")');
@@ -64,7 +66,9 @@ describe('ChallengeRunner', () => {
     };
     const runner = new ChallengeRunner(makeInterpreter(result));
     const challenge = makeChallenge({
-      testCases: [{ id: 'tc1', description: 'print hello', expectedOutput: 'hello', hidden: false }],
+      testCases: [
+        { id: 'tc1', description: 'print hello', expectedOutput: 'hello', hidden: false },
+      ],
     });
 
     const res = await runner.runChallenge(challenge, 'print("wrong")');
@@ -178,5 +182,70 @@ describe('ChallengeRunner', () => {
     expect(res.allPassed).toBe(false);
     expect(res.testResults[0]!.passed).toBe(true);
     expect(res.testResults[1]!.passed).toBe(false);
+  });
+
+  it('splits multi-line test input into separate input() answers', async () => {
+    const executed: Array<{ code: string; inputs: string[] | undefined }> = [];
+    const interpreter = makeInterpreter({ success: true, output: [], executionTimeMs: 1 });
+    (interpreter.execute as ReturnType<typeof vi.fn>).mockImplementation(
+      (code: string, options?: { inputs?: string[] }) => {
+        executed.push({ code, inputs: options?.inputs });
+        return Promise.resolve({ success: true, output: [], executionTimeMs: 1 });
+      },
+    );
+    const runner = new ChallengeRunner(interpreter);
+    const challenge = makeChallenge({
+      testCases: [
+        { id: 'tc1', description: 'x', input: 'snake\nviper', expectedOutput: '', hidden: false },
+      ],
+    });
+    await runner.runChallenge(challenge, 'pass');
+    expect(executed[0]?.inputs).toEqual(['snake', 'viper']);
+  });
+
+  it('appends the test call after the student code', async () => {
+    let program = '';
+    const interpreter = makeInterpreter({ success: true, output: [], executionTimeMs: 1 });
+    (interpreter.execute as ReturnType<typeof vi.fn>).mockImplementation((code: string) => {
+      program = code;
+      return Promise.resolve({
+        success: true,
+        output: [{ type: 'stdout', text: '5\n' }],
+        executionTimeMs: 1,
+      });
+    });
+    const runner = new ChallengeRunner(interpreter);
+    const challenge = makeChallenge({
+      testCases: [
+        {
+          id: 'tc1',
+          description: 'x',
+          append: 'print(add(2, 3))',
+          expectedOutput: '5',
+          hidden: true,
+        },
+      ],
+    });
+    const res = await runner.runChallenge(challenge, 'def add(a, b):\n    return a + b');
+    expect(program).toContain('print(add(2, 3))');
+    expect(program.indexOf('def add')).toBeLessThan(program.indexOf('print(add'));
+    expect(res.allPassed).toBe(true);
+  });
+
+  it('fails a test with a friendly message when the program times out', async () => {
+    const result: ExecutionResult = {
+      success: false,
+      output: [],
+      executionTimeMs: 5000,
+      timedOut: true,
+      error: { type: 'TimeoutError', message: 'stopped' },
+    };
+    const runner = new ChallengeRunner(makeInterpreter(result));
+    const challenge = makeChallenge({
+      testCases: [{ id: 'tc1', description: 'x', expectedOutput: 'a', hidden: false }],
+    });
+    const res = await runner.runChallenge(challenge, 'while True: pass');
+    expect(res.allPassed).toBe(false);
+    expect(res.testResults[0]?.error).toMatch(/ran too long/);
   });
 });

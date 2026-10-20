@@ -1,22 +1,17 @@
 export { EventBus } from './EventBus';
 export { TextAdventureEngine } from './TextAdventureEngine';
-export { GameWorld } from './rooms/world';
-export { allRooms } from './rooms/definitions';
 export {
-  roomNarratives,
-  npcDialogs,
-  floorIntros,
-  gameIntro,
-  gameVictory,
+  allRooms,
+  getRoomById,
   getRoomDisplayName,
-} from './narrative';
-export type { RoomNarrative, NPCDialogTree, FloorIntro } from './narrative';
-export type {
-  Room,
-  RoomConnection,
-  RoomNPC,
-  RoomTerminal,
-  GameAction,
-  NarrativeEntry,
-  TextAdventureState,
-} from '@venomous-snake/shared-types';
+  getRoomsForFloor,
+  getFirstRoomOfFloor,
+  ALL_CHALLENGE_IDS,
+  START_ROOM_ID,
+  FLOOR_COUNT,
+} from './rooms/world';
+export { ITEMS, getItem, getItemsGrantedBy } from './items';
+export type { ItemDefinition } from './items';
+export { GAME_INTRO, GAME_VICTORY } from './narrative/intro';
+export type { ScriptedLine } from './narrative/intro';
+export type { Room, RoomConnection, RoomNPC, RoomTerminal } from '@venomous-snake/shared-types';

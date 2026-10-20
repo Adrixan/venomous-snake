@@ -29,6 +29,10 @@ export default tseslint.config(
     },
   },
   {
+    files: ['**/vite.config.ts', '**/vitest.config.ts', 'vite.aliases.ts'],
+    rules: { '@nx/enforce-module-boundaries': 'off' },
+  },
+  {
     files: ['**/*.ts', '**/*.tsx'],
     rules: {
       '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],

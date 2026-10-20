@@ -48,6 +48,7 @@ export interface RoomNPC {
   nameKey: string;
   descriptionKey: string;
   dialogId: string;
+  portraitId?: string;
   /** Only visible after these flags are set */
   appearsWhen?: string[];
   /** Disappears after these flags are set */
@@ -69,11 +70,22 @@ export interface Room {
 
 // ─── Text Adventure: Game State ─────────────────────────────────────────────
 
+/**
+ * Interpolation values for a translation key. A parameter whose name ends in
+ * `Key` holds another translation key and is translated before interpolation
+ * (the value is substituted under the name without the suffix).
+ */
+export type TextParams = Record<string, string | number>;
+
 /** A single entry in the narrative log */
 export interface NarrativeEntry {
   id: string;
   type: 'description' | 'dialog' | 'action' | 'system' | 'cipher' | 'error';
+  /** Fallback text, used when no `textKey` is set. */
   text: string;
+  /** Translation key (`namespace.path.to.key`), resolved at render time. */
+  textKey?: string;
+  textParams?: TextParams;
   speaker?: string;
   timestamp: number;
 }
@@ -82,10 +94,15 @@ export interface NarrativeEntry {
 export interface GameAction {
   id: string;
   type: 'move' | 'examine' | 'talk' | 'hack' | 'look' | 'help';
+  /** Fallback label, used when no `labelKey` is set. */
   label: string;
+  labelKey?: string;
+  labelParams?: TextParams;
   targetId?: string;
   disabled?: boolean;
   disabledReason?: string;
+  disabledReasonKey?: string;
+  disabledReasonParams?: TextParams;
 }
 
 /** Text adventure engine state */
@@ -96,42 +113,35 @@ export interface TextAdventureState {
   narrativeLog: NarrativeEntry[];
 }
 
-// ─── Event Bus ──────────────────────────────────────────────────────────────
+/** Progression state owned by the game controller. */
+export interface ProgressSnapshot {
+  challenges: Record<string, ChallengeProgress>;
+  /** XP earned in total; never decreases. Level is derived from it. */
+  totalXp: number;
+  /** XP spent on skills; spendable XP is `totalXp - spentSkillXp`. */
+  spentSkillXp: number;
+  achievements: string[];
+  skills: string[];
+  inventory: string[];
+  /** Consecutive challenges solved on the first attempt. */
+  streak: number;
+}
 
-/** Event bus event types for engine↔UI communication */
-export type GameEvent =
-  // Room/navigation events
-  | { type: 'ROOM_ENTER'; payload: { roomId: string; firstVisit: boolean } }
-  | { type: 'ROOM_TRANSITION'; payload: { from: string; to: string } }
-  // NPC events
-  | { type: 'DIALOG_START'; payload: { npcId: string; dialogId?: string } }
-  | { type: 'DIALOG_END' }
-  | { type: 'DIALOG_TRIGGERED'; payload: DialogContent }
-  | { type: 'DIALOG_DISMISSED' }
-  // Terminal/challenge events
-  | { type: 'TERMINAL_OPEN'; payload: { terminalId: string; challengeId?: string } }
-  | { type: 'TERMINAL_CLOSE' }
-  | { type: 'CHALLENGE_STARTED'; payload: { challengeId: string; cipherIntro: string } }
-  | { type: 'CHALLENGE_RESULT'; payload: ChallengeResultState & { xpEarned: number } }
-  | { type: 'CHALLENGE_COMPLETED'; payload: { challengeId: string } }
-  | { type: 'CHALLENGE_ABANDONED' }
-  // Progression events
-  | { type: 'XP_CHANGED'; payload: { xp: number; level: number } }
-  | { type: 'ACHIEVEMENT_UNLOCKED'; payload: { id: string; nameKey: string } }
-  | { type: 'FLOOR_UNLOCKED'; payload: { floor: number } }
-  | { type: 'FLOOR_COMPLETE'; payload: { floorNumber: number } }
-  | { type: 'FLOOR_CHANGE'; payload: { targetFloor: number } }
-  | { type: 'FLOOR_ARRIVED'; payload: { floor: number } }
-  // Game state events
-  | { type: 'GAME_PAUSE' }
-  | { type: 'GAME_RESUME' }
-  | { type: 'SCENE_READY' }
-  | { type: 'NARRATIVE_APPEND'; payload: NarrativeEntry }
-  | { type: 'ACTIONS_UPDATE'; payload: GameAction[] }
-  | { type: 'GAME_COMPLETE'; payload: { totalXp: number; totalTime: number } }
-  | { type: 'ACCESS_DENIED'; payload: { objectId: string; message: string } };
+/** Dialog memory: flags set by conversations and the dialogs already finished. */
+export interface NarrativeSnapshot {
+  flags: Record<string, boolean | string | number>;
+  completedDialogs: string[];
+}
 
-/** Game overlay state - which UI panels are open */
+/** Compatibility view used by the curriculum panels and progression manager. */
+export interface CurriculumProgress {
+  challenges: Record<string, ChallengeProgress>;
+  currentChapter: number;
+  totalXp: number;
+  completedChallenges: number;
+  unlockedFloors: string[];
+}
+
 export interface OverlayState {
   terminalOpen: boolean;
   dialogOpen: boolean;
@@ -139,12 +149,10 @@ export interface OverlayState {
   mapOpen: boolean;
 }
 
-/** Core game store state */
+/** Zustand read model and its UI actions. */
 export interface GameStoreState {
   currentRoomId: string;
   overlay: OverlayState;
-
-  // UI shell state
   gamePhase: 'menu' | 'playing' | 'paused';
   activePanel: 'none' | 'questlog' | 'map' | 'settings';
   playerName: string;
@@ -152,37 +160,26 @@ export interface GameStoreState {
   xp: number;
   level: number;
   currentFloor: number;
-
-  // Text adventure state
   visitedRooms: string[];
   storyFlags: Record<string, boolean | number>;
   narrativeLog: NarrativeEntry[];
   availableActions: GameAction[];
-
-  // Challenge state
   activeChallengeId: string | null;
+  currentChallengeId: string | null;
   challengeResult: ChallengeResultState | null;
   completedChallenges: string[];
   unlockedFloors: number[];
   dialogActive: boolean;
   dialogContent: DialogContent | null;
-  currentChallengeId: string | null;
-
   alertLevel: 0 | 1 | 2 | 3;
-
-  // Game completion
   gameCompleted: boolean;
-
-  // Audio settings
   masterVolume: number;
   musicVolume: number;
   sfxVolume: number;
   isMuted: boolean;
-
-  // Actions
   setCurrentRoom: (roomId: string) => void;
   addVisitedRoom: (roomId: string) => void;
-  setStoryFlag: (flag: string, value: boolean) => void;
+  setStoryFlag: (flag: string, value: boolean | number) => void;
   appendNarrative: (entry: NarrativeEntry) => void;
   clearNarrative: () => void;
   setAvailableActions: (actions: GameAction[]) => void;
@@ -192,8 +189,6 @@ export interface GameStoreState {
   closeDialog: () => void;
   toggleMenu: () => void;
   toggleMap: () => void;
-
-  // UI shell actions
   setGamePhase: (phase: 'menu' | 'playing' | 'paused') => void;
   setActivePanel: (panel: 'none' | 'questlog' | 'map' | 'settings') => void;
   setPlayerName: (name: string) => void;
@@ -201,8 +196,6 @@ export interface GameStoreState {
   addXp: (amount: number) => void;
   setLevel: (level: number) => void;
   setCurrentFloor: (floor: number) => void;
-
-  // Challenge actions
   setActiveChallenge: (id: string | null) => void;
   setChallengeResult: (result: ChallengeResultState | null) => void;
   addCompletedChallenge: (id: string) => void;
@@ -210,19 +203,90 @@ export interface GameStoreState {
   setDialog: (content: DialogContent) => void;
   clearDialog: () => void;
   resetGameState: () => void;
-
-  // Alert / stealth actions
   setAlertLevel: (level: 0 | 1 | 2 | 3) => void;
   incrementAlertLevel: () => void;
-
-  // Game completion actions
   setGameCompleted: (completed: boolean) => void;
-
-  // Audio actions
   setMasterVolume: (volume: number) => void;
   setMusicVolume: (volume: number) => void;
   setSfxVolume: (volume: number) => void;
   toggleMute: () => void;
+}
+
+/** The persistent part of the text adventure, restored when a game is loaded. */
+export interface EngineSnapshot {
+  currentRoomId: string;
+  visitedRooms: string[];
+  storyFlags: Record<string, boolean | number>;
+  completedChallenges: string[];
+}
+
+// ─── Event Bus ──────────────────────────────────────────────────────────────
+
+/**
+ * Domain events for presentation concerns (audio, cutscenes, toasts, overlays).
+ * Game state itself lives in the session and is published to the UI store;
+ * listeners must not mutate game state in response to these events.
+ */
+export type GameEvent =
+  // Room/navigation events
+  | { type: 'ROOM_ENTER'; payload: { roomId: string; firstVisit: boolean } }
+  | { type: 'ROOM_TRANSITION'; payload: { from: string; to: string } }
+  | { type: 'FLOOR_ARRIVED'; payload: { floor: number } }
+  | { type: 'ACCESS_DENIED'; payload: { objectId: string; message: string } }
+  // NPC events
+  | { type: 'DIALOG_START'; payload: { npcId: string; dialogId: string } }
+  | { type: 'DIALOG_END'; payload: { dialogId: string } }
+  // Terminal/challenge events
+  | { type: 'TERMINAL_OPEN'; payload: { terminalId: string; challengeId: string } }
+  | { type: 'TERMINAL_CLOSE' }
+  | { type: 'CHALLENGE_FAILED'; payload: { challengeId: string; attempts: number } }
+  | { type: 'CHALLENGE_STARTED'; payload: { challengeId: string; cipherIntro: string } }
+  | { type: 'CHALLENGE_RESULT'; payload: ChallengeResultState & { xpEarned: number } }
+  | { type: 'CHALLENGE_ABANDONED' }
+  | { type: 'XP_CHANGED'; payload: { xp: number; level: number } }
+  | { type: 'FLOOR_CHANGE'; payload: { targetFloor: number } }
+  | { type: 'DIALOG_TRIGGERED'; payload: DialogContent }
+  | { type: 'DIALOG_DISMISSED' }
+  | { type: 'CHALLENGE_COMPLETED'; payload: { challengeId: string; xpEarned: number } }
+  // Progression events
+  | { type: 'LEVEL_UP'; payload: { level: number; titleKey: string } }
+  | { type: 'ACHIEVEMENT_UNLOCKED'; payload: { id: string; nameKey?: string } }
+  | { type: 'ITEM_ACQUIRED'; payload: { itemId: string; firstTime: boolean } }
+  | { type: 'SKILL_UNLOCKED'; payload: { skillId: string } }
+  | { type: 'FLOOR_COMPLETE'; payload: { floor: number } }
+  | { type: 'FLOOR_UNLOCKED'; payload: { floor: number } }
+  | { type: 'ALERT_CHANGED'; payload: { level: number } }
+  | { type: 'LOCKDOWN' }
+  | { type: 'GAME_COMPLETE' };
+
+// ─── Settings & Inventory ───────────────────────────────────────────────────
+
+export type TextSpeed = 'instant' | 'fast' | 'normal';
+
+/** Per-device player preferences (stored outside save games). */
+export interface GameSettings {
+  language: string;
+  /** 0..1 */
+  volumeMaster: number;
+  volumeMusic: number;
+  volumeSfx: number;
+  muted: boolean;
+  fullscreen: boolean;
+  reducedMotion: boolean;
+  textSpeed: TextSpeed;
+  keyboardLayout: 'qwerty' | 'qwertz';
+  useNativeKeyboard: boolean;
+  keyboardSize: 'small' | 'medium' | 'large';
+  showDesktopKeyboard: boolean;
+}
+
+export interface InventoryItem {
+  id: string;
+  type: 'tool' | 'keycard' | 'datafile';
+  /** Translation key (`namespace.path`). */
+  nameKey: string;
+  descriptionKey: string;
+  iconId: string;
 }
 
 // ─── Python Runtime Interfaces ──────────────────────────────────────────────
@@ -245,6 +309,24 @@ export interface ExecutionResult {
   output: PythonOutput[];
   error?: PythonError;
   executionTimeMs: number;
+  /** True when the run was aborted because it exceeded the time limit. */
+  timedOut?: boolean;
+}
+
+/** Per-run options for {@link PythonInterpreter.execute}. */
+export interface ExecuteOptions {
+  /** Lines returned by successive `input()` calls. */
+  inputs?: string[];
+  /**
+   * When `true` and the program asks for input beyond `inputs`, the run pauses and
+   * `onInputRequest` fires. When `false` (graded runs) it raises `EOFError`, like a
+   * real program reading an empty stdin.
+   */
+  interactive?: boolean;
+  /** Write `input()` prompts (and the typed answer) to stdout, like a real terminal. */
+  echoPrompts?: boolean;
+  /** Override the default time limit for this run. */
+  timeoutMs?: number;
 }
 
 export type InterpreterStatus = 'uninitialized' | 'loading' | 'ready' | 'executing' | 'error';
@@ -252,7 +334,7 @@ export type InterpreterStatus = 'uninitialized' | 'loading' | 'ready' | 'executi
 export interface PythonInterpreter {
   initialize(): Promise<void>;
   isReady(): boolean;
-  execute(code: string): Promise<ExecutionResult>;
+  execute(code: string, options?: ExecuteOptions): Promise<ExecutionResult>;
   provideInput(value: string): void;
   onOutput(callback: (output: PythonOutput) => void): () => void;
   onInputRequest(callback: (prompt: string) => void): () => void;
@@ -275,6 +357,8 @@ export interface TestCase {
   input?: string;
   /** Optional setup code prepended before student code (e.g. variable overrides) */
   setup?: string;
+  /** Optional code appended after the student code (e.g. a call with different arguments). */
+  append?: string;
   expectedOutput: string;
   hidden: boolean;
   expectsError?: string;
@@ -352,13 +436,4 @@ export interface ChallengeProgress {
   hintsUsed: number;
   completedAt?: string;
   lastCode?: string;
-}
-
-/** Overall curriculum progress */
-export interface CurriculumProgress {
-  challenges: Record<string, ChallengeProgress>;
-  currentChapter: number;
-  totalXp: number;
-  completedChallenges: number;
-  unlockedFloors: string[];
 }

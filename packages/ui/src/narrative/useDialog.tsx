@@ -137,7 +137,7 @@ export function useDialog(options: UseDialogOptions = {}): UseDialogReturn {
         setCurrentNode(null);
         setAvailableChoices([]);
         setDisplayChoices([]);
-        EventBus.emit({ type: 'DIALOG_END' });
+        EventBus.emit({ type: 'DIALOG_END', payload: { dialogId: '' } });
       }
     });
   }, [onAlertRaised]);
@@ -164,7 +164,7 @@ export function useDialog(options: UseDialogOptions = {}): UseDialogReturn {
       } catch (err) {
         console.warn('[useDialog] Failed to start dialog:', dialogId, err);
         // Emit DIALOG_END so GameScene unfreezes the player
-        EventBus.emit({ type: 'DIALOG_END' });
+        EventBus.emit({ type: 'DIALOG_END', payload: { dialogId } });
       }
     });
   }, []);

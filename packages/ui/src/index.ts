@@ -24,3 +24,5 @@ export * from './narrative';
 export * from './i18n';
 export * from './effects/CRTEffect';
 export * from './tutor';
+export { ChallengeSessionContext } from './terminal/ChallengeSession';
+export type { ChallengeSession } from './terminal/ChallengeSession';

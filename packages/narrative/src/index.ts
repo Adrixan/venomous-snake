@@ -50,3 +50,5 @@ export {
 } from './cutscenes';
 export { TutorialManager, TUTORIAL_STEPS } from './tutorial';
 export type { TutorialStep, TutorialTrigger } from './tutorial';
+export { ALL_DIALOGS, getDialogTree, getNpcInfo } from './dialogs/registry';
+export type { NpcInfo } from './dialogs/registry';

@@ -117,6 +117,7 @@ export class GameController {
       );
 
       this.progression.markCompleted(challenge, timeMs, hintsUsed, code);
+      this.progression.addBonusXp(xpEarned - challenge.xpReward);
 
       const progressAfter = this.progression.getProgress();
       const levelAfter = this.xpSystem.getLevelForXP(progressAfter.totalXp);
@@ -149,7 +150,7 @@ export class GameController {
       if (floorGateResult !== null) {
         EventBus.emit({
           type: 'FLOOR_COMPLETE',
-          payload: { floorNumber: floorGateResult.completedFloorNumber },
+          payload: { floor: floorGateResult.completedFloorNumber },
         });
         if (floorGateResult.nextFloorUnlocked !== null) {
           EventBus.emit({

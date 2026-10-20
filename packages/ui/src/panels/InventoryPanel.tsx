@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import type { InventoryItem } from '@venomous-snake/save-system';
+import type { InventoryItem } from '@venomous-snake/shared-types';
 
 export interface InventoryPanelProps {
   isOpen: boolean;

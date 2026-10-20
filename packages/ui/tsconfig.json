@@ -3,12 +3,6 @@
   "compilerOptions": {
     "outDir": "../../dist/packages/ui"
   },
-  "include": [
-    "src/**/*",
-    "vitest.config.ts"
-  ],
-  "exclude": [
-    "node_modules",
-    "dist"
-  ]
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist"]
 }
