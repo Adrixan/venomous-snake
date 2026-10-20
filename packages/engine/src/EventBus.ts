@@ -7,7 +7,11 @@ class GameEventBus {
 
   emit(event: GameEvent): void {
     for (const handler of this.handlers) {
-      handler(event);
+      try {
+        handler(event);
+      } catch (error) {
+        console.error(`[EventBus] handler failed for ${event.type}`, error);
+      }
     }
   }
 
