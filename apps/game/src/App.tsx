@@ -22,29 +22,23 @@ import {
 } from '@venomous-snake/ui';
 import type { AudioSettingsPanelProps, ToastNotification } from '@venomous-snake/ui';
 import { ACHIEVEMENTS } from '@venomous-snake/challenge-engine';
-import { chapters, TOTAL_CHALLENGES, floorIdFromNumber } from '@venomous-snake/challenges';
+import { chapters, FLOORS, TOTAL_CHALLENGES, floorIdFromNumber } from '@venomous-snake/challenges';
 import type { SaveData } from '@venomous-snake/save-system';
 
-import { EventBus, TextAdventureEngine, getRoomDisplayName } from '@venomous-snake/engine';
+import {
+  EventBus,
+  TextAdventureEngine,
+  getRoomDisplayName,
+  getFirstRoomOfFloor,
+} from '@venomous-snake/engine';
 import type { GameAction, NarrativeEntry } from '@venomous-snake/shared-types';
 import type { CurriculumProgress } from '@venomous-snake/shared-types';
 import type { GameController } from './GameController';
 import { useReducedMotion } from '@venomous-snake/ui';
 
-const FLOOR_NUM_TO_ID: Record<number, string> = {
-  0: 'lobby',
-  1: 'security-office',
-  2: 'server-room-b1',
-  3: 'server-room-b2',
-  4: 'network-hub',
-  5: 'data-center',
-  6: 'executive-floor',
-  7: 'research-lab',
-  8: 'ai-core',
-  9: 'mainframe',
-  10: 'quantum-vault',
-  11: 'apex-nexus',
-};
+const FLOOR_NUM_TO_ID: Record<number, string> = Object.fromEntries(
+  FLOORS.map((floor) => [floor.number, floor.id]),
+);
 
 const FLOOR_ID_TO_NUM: Record<string, number> = Object.fromEntries(
   Object.entries(FLOOR_NUM_TO_ID).map(([num, id]) => [id, Number(num)]),
@@ -52,34 +46,26 @@ const FLOOR_ID_TO_NUM: Record<string, number> = Object.fromEntries(
 
 function toCurriculumProgress(data: SaveData): CurriculumProgress {
   const completed = Object.values(data.progress.challenges).filter((p) => p.completed).length;
-  const unlockedMax =
-    data.engine.completedChallenges.length === 0
-      ? 0
-      : Math.max(0, Math.min(11, Math.floor(completed / 8)));
+  const completedIds = new Set(data.engine.completedChallenges);
+  let unlockedMax = 0;
+  for (const floor of FLOORS) {
+    if (floor.challengeIds.every((id) => completedIds.has(id))) unlockedMax = floor.number + 1;
+    else break;
+  }
+  const currentChapter =
+    FLOORS.find((floor) => floor.challengeIds.some((id) => !completedIds.has(id)))?.chapterId ??
+    FLOORS[FLOORS.length - 1]?.chapterId ??
+    1;
   return {
     challenges: data.progress.challenges,
-    currentChapter: Math.max(1, Math.min(12, unlockedMax + 1)),
+    currentChapter,
     totalXp: data.progress.totalXp,
     completedChallenges: completed,
-    unlockedFloors: Array.from({ length: unlockedMax + 1 }, (_, n) => floorIdFromNumber(n)),
+    unlockedFloors: Array.from({ length: Math.min(unlockedMax + 1, FLOORS.length) }, (_, n) =>
+      floorIdFromNumber(n),
+    ),
   };
 }
-
-// First room on each floor, for floor navigation
-const FLOOR_FIRST_ROOM: Record<number, string> = {
-  0: 'lobby_entrance',
-  1: 'server_main',
-  2: 'lab_reception',
-  3: 'surveillance_lobby',
-  4: 'archives_entrance',
-  5: 'comms_reception',
-  6: 'executive_lobby',
-  7: 'manufacturing_floor',
-  8: 'vault_entrance',
-  9: 'aicore_antechamber',
-  10: 'penthouse_elevator',
-  11: 'rooftop_access',
-};
 
 type MenuView = 'main' | 'newgame' | 'settings';
 type SaveModalMode = 'save' | 'load' | null;
@@ -165,9 +151,13 @@ export function App(): React.JSX.Element {
   // Story flow: cutscenes, credits
   // Refresh "has save data" flag
   const refreshHasSaveData = useCallback((): void => {
-    void saveSystem.listSaves().then((slots) => {
-      setHasSaveData(slots.length > 0);
-    });
+    void saveSystem
+      .listSaves()
+      .then((slots) => setHasSaveData(slots.length > 0))
+      .catch((error: unknown) => {
+        setHasSaveData(false);
+        console.error('Unable to check saved games', error);
+      });
   }, [saveSystem]);
 
   useEffect(() => {
@@ -177,7 +167,13 @@ export function App(): React.JSX.Element {
   // Initialize the text adventure engine when entering playing phase
   useEffect(() => {
     if (gamePhase === 'playing' && engineRef.current === null) {
-      engineRef.current = new TextAdventureEngine();
+      const session = useGameStore.getState();
+      engineRef.current = new TextAdventureEngine({
+        currentRoomId: session.currentRoomId,
+        visitedRooms: session.visitedRooms,
+        storyFlags: session.storyFlags,
+        completedChallenges: session.completedChallenges,
+      });
 
       // Show game intro on new game (no completed challenges = fresh start)
       if (completedChallenges.length === 0) {
@@ -221,7 +217,7 @@ export function App(): React.JSX.Element {
     if (!engineRef.current) return;
     const actions = engineRef.current.getAvailableActions();
     setAvailableActions(actions);
-  }, [completedChallenges, setAvailableActions]);
+  }, [setAvailableActions]);
 
   useEffect(() => {
     refreshActions();
@@ -253,14 +249,7 @@ export function App(): React.JSX.Element {
 
       refreshActions();
     },
-    [
-      completedChallenges,
-      appendNarrative,
-      setCurrentRoom,
-      addVisitedRoom,
-      setCurrentFloor,
-      refreshActions,
-    ],
+    [appendNarrative, setCurrentRoom, addVisitedRoom, setCurrentFloor, refreshActions],
   );
 
   // Listen for EventBus events
@@ -320,7 +309,7 @@ export function App(): React.JSX.Element {
       }
     });
     return unsub;
-  }, [openTerminal, addCompletedChallenge, appendNarrative, refreshActions]);
+  }, [openTerminal, addCompletedChallenge, appendNarrative, refreshActions, setGameCompleted]);
 
   // Keyboard shortcuts
   useEffect(() => {
@@ -355,23 +344,29 @@ export function App(): React.JSX.Element {
   }, []);
 
   const handleContinue = useCallback(() => {
-    void saveSystem.listSaves().then((slots) => {
-      const autoSaves = slots
-        .filter((s) => s.isAutoSave)
-        .sort((a, b) => b.updatedAt.localeCompare(a.updatedAt));
-      const latest = autoSaves[0];
-      if (latest !== undefined) {
-        void saveSystem.load(latest.id).then((data) => {
-          if (data !== undefined) {
-            setSavedProgress(toCurriculumProgress(data));
-            setSessionKey((k) => k + 1);
-          }
+    void saveSystem
+      .listSaves()
+      .then((slots) => {
+        const autoSaves = slots
+          .filter((s) => s.isAutoSave)
+          .sort((a, b) => b.updatedAt.localeCompare(a.updatedAt));
+        const latest = autoSaves[0];
+        if (latest !== undefined) {
+          void saveSystem.load(latest.id).then((data) => {
+            if (data !== undefined) {
+              setSavedProgress(toCurriculumProgress(data));
+              setSessionKey((k) => k + 1);
+            }
+            setGamePhase('playing');
+          });
+        } else {
           setGamePhase('playing');
-        });
-      } else {
-        setGamePhase('playing');
-      }
-    });
+        }
+      })
+      .catch((error: unknown) => {
+        console.error('Unable to load the latest autosave', error);
+        setHasSaveData(false);
+      });
   }, [saveSystem, setGamePhase]);
 
   const handleLoadGame = useCallback(() => {
@@ -460,8 +455,8 @@ export function App(): React.JSX.Element {
     (floorId: string) => {
       const floorNum = FLOOR_ID_TO_NUM[floorId];
       if (floorNum == null) return;
-      const firstRoomId = FLOOR_FIRST_ROOM[floorNum];
-      if (!firstRoomId || !engineRef.current) return;
+      const firstRoomId = getFirstRoomOfFloor(floorNum)?.id;
+      if (!firstRoomId || !engineRef.current || !unlockedFloors.includes(floorNum)) return;
       setCurrentFloor(floorNum);
       engineRef.current.enterRoom(firstRoomId);
       const state = engineRef.current.getState();

@@ -66,7 +66,7 @@ export class ProgressionManager {
   }
 
   getProgress(): CurriculumProgress {
-    return { ...this.progress };
+    return structuredClone(this.progress);
   }
 
   getChallengeProgress(challengeId: string): ChallengeProgress | undefined {

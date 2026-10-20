@@ -1,5 +1,7 @@
 import React, { useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
+import { FLOORS } from '@venomous-snake/challenges';
+import { translateText } from '../i18n/translateText';
 
 interface FloorDefinition {
   id: string;
@@ -18,20 +20,12 @@ export interface FloorMapProps {
 
 const FONT_FAMILY = "'JetBrains Mono', 'Fira Code', monospace";
 
-const floors: FloorDefinition[] = [
-  { id: 'lobby', name: 'Lobby / Entry Point', chapterNum: 1, floorNum: 1 },
-  { id: 'security-office', name: 'Security Office', chapterNum: 1, floorNum: 2 },
-  { id: 'server-room-b1', name: 'Server Room B1', chapterNum: 2, floorNum: 3 },
-  { id: 'server-room-b2', name: 'Server Room B2', chapterNum: 2, floorNum: 4 },
-  { id: 'network-hub', name: 'Network Hub', chapterNum: 3, floorNum: 5 },
-  { id: 'data-center', name: 'Data Center', chapterNum: 3, floorNum: 6 },
-  { id: 'executive-floor', name: 'Executive Floor', chapterNum: 4, floorNum: 7 },
-  { id: 'research-lab', name: 'Research Lab', chapterNum: 5, floorNum: 8 },
-  { id: 'ai-core', name: 'AI Core', chapterNum: 6, floorNum: 9 },
-  { id: 'mainframe', name: 'Mainframe', chapterNum: 7, floorNum: 10 },
-  { id: 'quantum-vault', name: 'Quantum Vault', chapterNum: 8, floorNum: 11 },
-  { id: 'apex-nexus', name: 'APEX NEXUS', chapterNum: 9, floorNum: 12 },
-];
+const floors: FloorDefinition[] = FLOORS.map((floor) => ({
+  id: floor.id,
+  name: `story.floors.${String(floor.number)}.name`,
+  chapterNum: floor.chapterId,
+  floorNum: floor.number + 1,
+}));
 
 // Display bottom-to-top
 const floorsReversed = [...floors].reverse();
@@ -43,7 +37,7 @@ export function FloorMap({
   unlockedFloors,
   onFloorSelect,
 }: FloorMapProps): React.JSX.Element {
-  const { t } = useTranslation('ui');
+  const { t } = useTranslation(['ui', 'story']);
 
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
@@ -147,7 +141,7 @@ export function FloorMap({
                   }}
                 >
                   {isLocked ? '🔒 ' : ''}
-                  {floor.name}
+                  {translateText(t, floor.name)}
                 </div>
                 <div style={{ color: '#666', fontSize: '10px', marginTop: '2px' }}>
                   {t('floor_map.floor', { num: floor.floorNum })} · Ch.{floor.chapterNum}

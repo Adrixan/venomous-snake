@@ -1,4 +1,3 @@
-/* eslint-disable @nx/enforce-module-boundaries */
 import { useCallback, useEffect, useRef } from 'react';
 import type React from 'react';
 import { saveManager } from '@venomous-snake/save-system';
@@ -8,7 +7,7 @@ import { downloadTextFile } from '@venomous-snake/save-system';
 import { useGameStore } from '../store/gameStore';
 import type { GameController } from '../GameController';
 import { TextAdventureEngine, getRoomById } from '@venomous-snake/engine';
-import { challengeMap } from '@venomous-snake/challenges';
+import { FLOORS } from '@venomous-snake/challenges';
 
 function buildSaveData(
   state: ReturnType<typeof useGameStore.getState>,
@@ -73,11 +72,9 @@ function restore(data: SaveData): void {
   state.addXp(data.progress.totalXp);
   state.setAlertLevel(data.alertLevel as 0 | 1 | 2 | 3);
   state.setGameCompleted(data.gameCompleted);
-  for (let floor = 0; floor <= 11; floor++) {
-    const ids = Object.values(challengeMap)
-      .filter((c) => c.chapter <= floor + 1)
-      .map((c) => c.id);
-    if (ids.every((id) => completed.includes(id))) state.unlockFloor(floor);
+  for (const floor of FLOORS) {
+    if (floor.challengeIds.every((id) => completed.includes(id))) state.unlockFloor(floor.number);
+    else break;
   }
   state.setGamePhase('playing');
 }

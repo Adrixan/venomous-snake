@@ -24,22 +24,6 @@ export interface StoryTerminalProps {
   inputEnabled?: boolean;
 }
 
-/** Floor name lookup — will be replaced with i18n/data lookup later */
-const FLOOR_NAMES: Record<number, string> = {
-  0: 'LOBBY',
-  1: 'MAIL ROOM',
-  2: 'IT DEPARTMENT',
-  3: 'ANALYTICS',
-  4: 'COMMUNICATIONS',
-  5: 'R&D LABS',
-  6: 'ARCHIVES',
-  7: 'SECURITY',
-  8: 'NETWORK OPS',
-  9: 'SERVER FARM',
-  10: 'EXECUTIVE SUITE',
-  11: 'ROOFTOP',
-};
-
 function StoryTerminalInner({
   currentRoom,
   narrativeLog,
@@ -57,7 +41,7 @@ function StoryTerminalInner({
   const { t } = useTranslation('story');
   const floorNumber = currentRoom?.floor ?? 0;
   const floorName = t(`floors.${String(floorNumber)}.name`, {
-    defaultValue: FLOOR_NAMES[floorNumber] ?? String(floorNumber),
+    defaultValue: String(floorNumber),
   });
   const roomName = currentRoom ? translateText(t, currentRoom.nameKey) : '...';
 

@@ -175,6 +175,7 @@ export class GameController {
 
     // Failed attempt — record it but keep challenge active
     this.progression.recordAttempt(challenge.id, code);
+    this.timer.start();
     const currentProgress = this.progression.getChallengeProgress(challenge.id);
     const attempts = currentProgress?.attempts ?? 1;
 

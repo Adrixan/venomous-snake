@@ -194,10 +194,11 @@ export function parseSaveSlot(raw: unknown): SaveSlot {
   const id = str(raw['id'], 'id');
   if (!ID_PATTERN.test(id)) throw new InvalidSaveError('invalid save id');
   const now = new Date().toISOString();
+  const parsedData = parseSaveData(raw['data']);
   return {
     id,
     name: str(raw['name'], 'name', 'Save').slice(0, 80),
-    data: parseSaveData(raw['data']),
+    data: parsedData,
     createdAt: str(raw['createdAt'], 'createdAt', now),
     updatedAt: str(raw['updatedAt'], 'updatedAt', now),
     isAutoSave: bool(raw['isAutoSave'], false),
