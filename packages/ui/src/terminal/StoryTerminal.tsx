@@ -5,6 +5,8 @@ import { NarrativePanel } from './NarrativePanel';
 import { ActionPanel } from './ActionPanel';
 import { StatusBar } from './StatusBar';
 import './story-terminal.css';
+import { useTranslation } from 'react-i18next';
+import { translateText } from '../i18n/translateText';
 
 export interface StoryTerminalProps {
   currentRoom: { id: string; nameKey: string; floor: number } | null;
@@ -19,6 +21,7 @@ export interface StoryTerminalProps {
   level: number;
   completedChallenges: number;
   totalChallenges: number;
+  inputEnabled?: boolean;
 }
 
 /** Floor name lookup — will be replaced with i18n/data lookup later */
@@ -49,10 +52,14 @@ function StoryTerminalInner({
   level,
   completedChallenges,
   totalChallenges,
+  inputEnabled = true,
 }: StoryTerminalProps): React.JSX.Element {
+  const { t } = useTranslation('story');
   const floorNumber = currentRoom?.floor ?? 0;
-  const floorName = FLOOR_NAMES[floorNumber] ?? `FLOOR ${String(floorNumber)}`;
-  const roomName = currentRoom?.nameKey ?? '???';
+  const floorName = t(`floors.${String(floorNumber)}.name`, {
+    defaultValue: FLOOR_NAMES[floorNumber] ?? String(floorNumber),
+  });
+  const roomName = currentRoom ? translateText(t, currentRoom.nameKey) : '...';
 
   return (
     <div className="story-terminal">
@@ -68,7 +75,7 @@ function StoryTerminalInner({
 
       <NarrativePanel entries={narrativeLog} />
 
-      <ActionPanel actions={availableActions} onAction={onAction} />
+      <ActionPanel actions={availableActions} onAction={onAction} enabled={inputEnabled} />
 
       <StatusBar onOpenPanel={onOpenPanel} onSave={onSave} onPause={onPause} />
     </div>

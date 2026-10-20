@@ -1,10 +1,12 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { GameAction } from '@venomous-snake/shared-types';
+import { translateText } from '../i18n/translateText';
 
 export interface ActionPanelProps {
   actions: GameAction[];
   onAction: (action: GameAction) => void;
+  enabled?: boolean;
 }
 
 const ACTION_ICONS: Record<GameAction['type'], string> = {
@@ -16,8 +18,17 @@ const ACTION_ICONS: Record<GameAction['type'], string> = {
   help: '❓',
 };
 
-function ActionPanelInner({ actions, onAction }: ActionPanelProps): React.JSX.Element {
-  const { t } = useTranslation('ui');
+function ActionPanelInner({
+  actions,
+  onAction,
+  enabled = true,
+}: ActionPanelProps): React.JSX.Element {
+  const { t } = useTranslation(['ui', 'story', 'dialog', 'challenges']);
+  const translate = (key: string, params?: Record<string, string | number>): string => {
+    return translateText(t, key, params);
+  };
+  const displayLabel = (action: GameAction): string =>
+    action.labelKey ? translate(action.labelKey, action.labelParams) : action.label;
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   // Clamp selected index when actions change
@@ -27,16 +38,23 @@ function ActionPanelInner({ actions, onAction }: ActionPanelProps): React.JSX.El
 
   const activateAction = useCallback(
     (action: GameAction) => {
-      if (action.disabled !== true) {
+      if (enabled && action.disabled !== true) {
         onAction(action);
       }
     },
-    [onAction],
+    [enabled, onAction],
   );
 
   // Keyboard navigation
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
+      if (!enabled || e.defaultPrevented || e.altKey || e.ctrlKey || e.metaKey) return;
+      if (
+        e.target instanceof HTMLElement &&
+        (e.target.isContentEditable ||
+          e.target.closest('input, textarea, select, button, [role="dialog"]'))
+      )
+        return;
       if (actions.length === 0) return;
 
       if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
@@ -66,7 +84,7 @@ function ActionPanelInner({ actions, onAction }: ActionPanelProps): React.JSX.El
 
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [actions, selectedIndex, activateAction]);
+  }, [actions, selectedIndex, activateAction, enabled]);
 
   if (actions.length === 0) {
     return (
@@ -106,15 +124,19 @@ function ActionPanelInner({ actions, onAction }: ActionPanelProps): React.JSX.El
             onClick={() => activateAction(action)}
             disabled={isDisabled}
             title={isDisabled ? (action.disabledReason ?? '') : undefined}
-            aria-label={action.label}
+            aria-label={displayLabel(action)}
           >
             <span className="story-action-icon" aria-hidden="true">
               {icon}
             </span>
             <span className="story-action-label">
-              {action.label}
-              {isDisabled && action.disabledReason && (
-                <span className="story-action-reason">{action.disabledReason}</span>
+              {displayLabel(action)}
+              {isDisabled && (action.disabledReasonKey || action.disabledReason) && (
+                <span className="story-action-reason">
+                  {action.disabledReasonKey
+                    ? translate(action.disabledReasonKey, action.disabledReasonParams)
+                    : action.disabledReason}
+                </span>
               )}
             </span>
             {i < 9 && (

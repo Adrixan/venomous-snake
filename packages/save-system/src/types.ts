@@ -1,46 +1,30 @@
-import type { CurriculumProgress } from '@venomous-snake/shared-types';
-import type { NarrativeState } from '@venomous-snake/narrative';
+import type {
+  EngineSnapshot,
+  NarrativeSnapshot,
+  ProgressSnapshot,
+} from '@venomous-snake/shared-types';
 
-export interface GameSettings {
-  language: string;
-  volumeMaster: number;
-  volumeMusic: number;
-  volumeSfx: number;
-  fullscreen: boolean;
-  reducedMotion: boolean;
-  keyboardLayout?: 'qwerty' | 'qwertz';
-  useNativeKeyboard?: boolean;
-  keyboardSize?: 'small' | 'medium' | 'large';
-  showDesktopKeyboard?: boolean;
-}
+export const SAVE_FORMAT_VERSION = 2;
 
-export interface InventoryItem {
-  id: string;
-  type: 'tool' | 'keycard' | 'datafile';
-  nameKey: string;
-  descriptionKey: string;
-  iconId: string;
-}
+export type PlayerGender = 'male' | 'female' | 'nonbinary';
 
+/** Everything needed to resume a game exactly where it was left. */
 export interface SaveData {
-  version: string;
-  timestamp: string;
+  version: typeof SAVE_FORMAT_VERSION;
+  savedAt: string;
   playerName: string;
-  playerGender: 'male' | 'female' | 'nonbinary';
-  currentFloor: string;
-  currentRoom: string;
-  playerPosition: { x: number; y: number };
-  curriculumProgress: CurriculumProgress;
-  narrativeState: NarrativeState;
-  inventory: InventoryItem[];
-  settings: GameSettings;
+  playerGender: PlayerGender;
   playTimeMs: number;
-  xp: number;
-  level: number;
-  gameCompleted?: boolean;
-  storyFlags?: Record<string, boolean | number>;
-  visitedRooms?: string[];
-  pickedUpItems?: string[];
+  engine: EngineSnapshot;
+  progress: ProgressSnapshot;
+  narrative: NarrativeSnapshot;
+  /** 0 (calm) to 3 (lockdown). */
+  alertLevel: number;
+  gameCompleted: boolean;
+  /** Cutscene ids already shown, so they are not replayed after loading. */
+  seenCutscenes: string[];
+  /** New Game+ cycle; 0 for the first playthrough. */
+  newGamePlus: number;
 }
 
 export interface SaveSlot {
@@ -52,9 +36,12 @@ export interface SaveSlot {
   isAutoSave: boolean;
 }
 
+/** File format for exported saves. */
 export interface SaveBundle {
-  version: number;
+  format: 'venomous-snake-saves';
+  version: typeof SAVE_FORMAT_VERSION;
   exportedAt: string;
   saves: SaveSlot[];
-  signature: string;
+  /** SHA-256 of `JSON.stringify(saves)`; detects truncated or corrupted files. */
+  checksum: string;
 }

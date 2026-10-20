@@ -4,266 +4,196 @@ import type {
   GameAction,
   NarrativeEntry,
   TextAdventureState,
+  EngineSnapshot,
+  TextParams,
 } from '@venomous-snake/shared-types';
+import { FLOORS } from '@venomous-snake/challenges';
 import { EventBus } from './EventBus';
-import { GameWorld } from './rooms/world';
-import { allRooms } from './rooms/definitions';
-import { roomNarratives, npcDialogs, floorIntros, gameIntro, gameVictory } from './narrative';
+import { getRoomById, START_ROOM_ID, ALL_CHALLENGE_IDS } from './rooms/world';
+import { GAME_INTRO, GAME_VICTORY } from './narrative/intro';
+import type { ScriptedLine } from './narrative/intro';
 
-const ALL_CHALLENGE_IDS: string[] = allRooms.flatMap((room) =>
-  room.terminals.map((t) => t.challengeId),
-);
-
-/** Human-readable room names derived from room IDs */
-function humanizeRoomId(id: string): string {
-  return id
-    .replace(
-      /^(floor\d+_|lobby_|server_|research_|surveillance_|archives_|comms_|executive_|manufacturing_|network_|ai_core_|rooftop_)/,
-      '',
-    )
-    .replace(/_/g, ' ')
-    .replace(/\b\w/g, (c) => c.toUpperCase());
+function floorArrivedFlag(floor: number): string {
+  return `floor_${String(floor)}_arrived`;
 }
 
-/** Build the zero-padded floor key used in floorIntros (e.g. "floor_00"). */
-function floorKey(floor: number): string {
-  return `floor_${String(floor).padStart(2, '0')}`;
-}
-
+/**
+ * The text adventure: rooms, movement, terminals and conversations. All player
+ * facing text is emitted as translation keys, so the log re-renders correctly
+ * when the language changes.
+ */
 export class TextAdventureEngine {
-  private world: GameWorld;
   private state: TextAdventureState;
-  private completedChallenges: Set<string> = new Set();
+  private readonly completed: Set<string>;
 
-  constructor(savedState?: TextAdventureState) {
-    this.world = new GameWorld();
-    allRooms.forEach((room) => this.world.registerRoom(room));
-
-    if (savedState) {
-      this.state = savedState;
-    } else {
-      this.state = {
-        currentRoomId: this.world.getStartingRoomId(),
-        visitedRooms: [],
-        storyFlags: {},
-        narrativeLog: [],
-      };
-    }
+  constructor(snapshot?: EngineSnapshot) {
+    this.completed = new Set(snapshot?.completedChallenges ?? []);
+    const room = snapshot !== undefined && getRoomById(snapshot.currentRoomId) !== undefined;
+    this.state = {
+      currentRoomId: room && snapshot !== undefined ? snapshot.currentRoomId : START_ROOM_ID,
+      visitedRooms: [...(snapshot?.visitedRooms ?? [])],
+      storyFlags: { ...(snapshot?.storyFlags ?? {}) },
+      narrativeLog: [],
+    };
   }
 
+  /** The persistent state, ready to be saved. */
+  toSnapshot(): EngineSnapshot {
+    return {
+      currentRoomId: this.state.currentRoomId,
+      visitedRooms: [...this.state.visitedRooms],
+      storyFlags: { ...this.state.storyFlags },
+      completedChallenges: [...this.completed],
+    };
+  }
+
+  /** Puts the player into a room and narrates the arrival. */
   enterRoom(roomId: string): void {
-    const room = this.world.getRoom(roomId);
-    if (!room) return;
+    const room = getRoomById(roomId);
+    if (room === undefined) return;
 
     const firstVisit = !this.state.visitedRooms.includes(roomId);
     this.state.currentRoomId = roomId;
 
-    const narrative = roomNarratives[roomId];
-    const fKey = floorKey(room.floor);
-
     if (firstVisit) {
       this.state.visitedRooms.push(roomId);
-
-      // Show floor intro on first visit to a floor's first room
-      if (!this.state.storyFlags[`${fKey}_arrived`]) {
-        this.state.storyFlags[`${fKey}_arrived`] = true;
-        const intro = floorIntros[fKey];
-        if (intro) {
-          this.addNarrative('cipher', intro.arrival, 'CIPHER');
-          this.addNarrative('cipher', intro.briefing, 'CIPHER');
-        }
-      }
-
-      // First visit text
-      const firstVisitText = narrative?.firstVisit ?? room.firstVisitKey;
-      if (firstVisitText) {
-        this.addNarrative('description', firstVisitText);
-      }
-
-      // Auto-trigger NPC greeting on first visit
-      for (const npc of room.npcs) {
-        const dialog = npcDialogs[npc.id];
-        if (dialog) {
-          this.addNarrative('dialog', dialog.greeting, humanizeRoomId(npc.id));
-          if (dialog.lines[0]) {
-            this.addNarrative('dialog', dialog.lines[0], humanizeRoomId(npc.id));
-          }
-          this.state.storyFlags[`npc_${npc.id}_line`] = 1;
-        }
-      }
-    } else {
-      // Revisit text
-      const revisitText = narrative?.revisit;
-      if (revisitText) {
-        this.addNarrative('description', revisitText);
-      }
     }
 
-    // Room description
-    const descText = narrative?.description ?? room.descriptionKey;
-    this.addNarrative('description', descText);
+    this.announceFloorIfNew(room);
 
-    // Guidance: tell the player what to do
-    const remaining = room.terminals.filter((t) => !this.completedChallenges.has(t.challengeId));
-    if (remaining.length > 0) {
-      const count = remaining.length;
-      this.addNarrative(
-        'cipher',
-        `I'm detecting ${String(count)} active terminal${count === 1 ? '' : 's'} in this area. Hack ${count === 1 ? 'it' : 'them all'} to proceed.`,
-        'CIPHER',
-      );
+    if (firstVisit) {
+      this.say('description', `story.rooms.${roomId}.first_visit`);
+      for (const npc of room.npcs) {
+        this.say('system', 'story.engine.npc_here', { nameKey: npc.nameKey });
+      }
     } else {
-      this.addNarrative(
-        'cipher',
-        'All terminals in this area are compromised. Move forward when ready.',
-        'CIPHER',
-      );
+      this.say('description', `story.rooms.${roomId}.revisit`);
+    }
+    this.say('description', `story.rooms.${roomId}.description`);
+
+    const remaining = this.remainingTerminals(room);
+    if (remaining > 0) {
+      this.say('cipher', 'story.engine.terminals_active', { count: remaining });
+    } else if (room.terminals.length > 0) {
+      this.say('cipher', 'story.engine.all_compromised');
     }
 
     EventBus.emit({ type: 'ROOM_ENTER', payload: { roomId, firstVisit } });
   }
 
-  getAvailableActions(completedChallenges: string[]): GameAction[] {
+  getAvailableActions(): GameAction[] {
     const room = this.getCurrentRoom();
-    if (!room) return [];
+    if (room === undefined) return [];
 
-    const mergedChallenges = [...new Set([...completedChallenges, ...this.completedChallenges])];
+    const actions: GameAction[] = [
+      { id: `look_${room.id}`, type: 'look', label: 'Look around', labelKey: 'story.actions.look' },
+    ];
 
-    const actions: GameAction[] = [];
+    for (const npc of room.npcs) {
+      actions.push({
+        id: `talk_${npc.id}`,
+        type: 'talk',
+        label: npc.id,
+        labelKey: 'story.actions.talk',
+        labelParams: { nameKey: npc.nameKey },
+        targetId: npc.id,
+      });
+    }
 
-    // Look action
-    actions.push({
-      id: `look_${room.id}`,
-      type: 'look',
-      label: 'Look around',
-    });
-
-    // Hack actions per incomplete terminal (shown before move for clarity)
     for (const terminal of room.terminals) {
-      if (mergedChallenges.includes(terminal.challengeId)) continue;
-
+      if (this.completed.has(terminal.challengeId)) continue;
       actions.push({
         id: `hack_${terminal.id}`,
         type: 'hack',
-        label: `Hack terminal [${terminal.challengeId}]`,
+        label: terminal.challengeId,
+        labelKey: 'story.actions.hack',
+        labelParams: { targetKey: terminal.nameKey },
         targetId: terminal.id,
       });
     }
 
-    // Move actions per connection
-    for (const conn of room.connections) {
-      const unlocked = this.isConnectionUnlocked(conn, mergedChallenges);
-      const targetName = humanizeRoomId(conn.targetRoomId);
-      const moveAction: GameAction = {
-        id: `move_${conn.targetRoomId}`,
+    for (const connection of room.connections) {
+      const target = getRoomById(connection.targetRoomId);
+      const action: GameAction = {
+        id: `move_${connection.targetRoomId}`,
         type: 'move',
-        label: `Go ${conn.direction} → ${targetName}`,
-        targetId: conn.targetRoomId,
+        label: connection.targetRoomId,
+        labelKey: 'story.actions.move',
+        labelParams: {
+          directionKey: `story.direction.${connection.direction}`,
+          roomKey: target?.nameKey ?? connection.targetRoomId,
+        },
+        targetId: connection.targetRoomId,
       };
-      if (!unlocked) {
-        moveAction.disabled = true;
-        const remaining = (conn.requiredChallenges ?? []).filter(
-          (id) => !mergedChallenges.includes(id),
+      if (!this.isConnectionUnlocked(connection)) {
+        const missing = (connection.requiredChallenges ?? []).filter(
+          (id) => !this.completed.has(id),
         );
-        moveAction.disabledReason =
-          remaining.length > 0
-            ? `🔒 Locked — solve ${String(remaining.length)} more challenge${remaining.length === 1 ? '' : 's'} to proceed`
-            : '🔒 Access locked';
+        action.disabled = true;
+        action.disabledReason = 'Locked';
+        action.disabledReasonKey = 'story.actions.locked';
+        if (missing.length > 0) action.disabledReasonParams = { count: missing.length };
       }
-      actions.push(moveAction);
+      actions.push(action);
     }
 
     return actions;
   }
 
-  executeAction(action: GameAction, completedChallenges: string[]): void {
+  syncCompletedChallenges(challenges: string[]): void {
+    for (const id of challenges) this.completed.add(id);
+  }
+
+  executeAction(action: GameAction): void {
     const room = this.getCurrentRoom();
-    if (!room) return;
-
-    // Safety: never execute disabled actions
-    if (action.disabled) {
-      this.addNarrative('system', action.disabledReason ?? 'That action is not available.');
-      return;
-    }
-
-    const mergedChallenges = [...new Set([...completedChallenges, ...this.completedChallenges])];
+    if (room === undefined || action.disabled === true) return;
 
     switch (action.type) {
       case 'look': {
-        const narrative = roomNarratives[room.id];
-        const descText = narrative?.description ?? room.descriptionKey;
-        this.addNarrative('description', descText);
-
-        // Also show terminal status
-        const remaining = room.terminals.filter(
-          (t) =>
-            !this.completedChallenges.has(t.challengeId) &&
-            !mergedChallenges.includes(t.challengeId),
-        );
-        if (remaining.length > 0) {
-          this.addNarrative(
-            'cipher',
-            `${String(remaining.length)} terminal${remaining.length === 1 ? '' : 's'} still active in this area.`,
-            'CIPHER',
-          );
-        } else {
-          this.addNarrative('cipher', 'All terminals in this area are compromised.', 'CIPHER');
+        this.say('description', `story.rooms.${room.id}.description`);
+        const remaining = this.remainingTerminals(room);
+        if (remaining > 0) {
+          this.say('cipher', 'story.engine.terminals_still', { count: remaining });
+        } else if (room.terminals.length > 0) {
+          this.say('cipher', 'story.engine.all_compromised_short');
         }
         break;
       }
 
       case 'move': {
-        const conn = room.connections.find((c) => c.targetRoomId === action.targetId);
-        if (!conn) break;
-        if (!this.isConnectionUnlocked(conn, mergedChallenges)) {
-          this.addNarrative('system', 'Access locked — complete required challenges first.');
+        const connection = room.connections.find((c) => c.targetRoomId === action.targetId);
+        if (connection === undefined) break;
+        if (!this.isConnectionUnlocked(connection)) {
+          this.say('system', 'story.engine.access_denied');
           EventBus.emit({
             type: 'ACCESS_DENIED',
-            payload: {
-              objectId: conn.targetRoomId,
-              message: 'Connection locked',
-            },
+            payload: { objectId: connection.targetRoomId, message: 'Connection locked' },
           });
           break;
         }
         EventBus.emit({
           type: 'ROOM_TRANSITION',
-          payload: { from: this.state.currentRoomId, to: conn.targetRoomId },
+          payload: { from: this.state.currentRoomId, to: connection.targetRoomId },
         });
-        this.enterRoom(conn.targetRoomId);
+        this.enterRoom(connection.targetRoomId);
         break;
       }
 
       case 'hack': {
         const terminal = room.terminals.find((t) => t.id === action.targetId);
-        if (!terminal) break;
-        this.addNarrative('action', 'You approach the terminal and begin the hack sequence...');
+        if (terminal === undefined || this.completed.has(terminal.challengeId)) break;
+        this.say('action', 'story.engine.approach_terminal');
         EventBus.emit({
           type: 'TERMINAL_OPEN',
-          payload: {
-            terminalId: terminal.id,
-            challengeId: terminal.challengeId,
-          },
+          payload: { terminalId: terminal.id, challengeId: terminal.challengeId },
         });
         break;
       }
 
-      case 'examine': {
-        if (!action.targetId) {
-          this.addNarrative('description', room.descriptionKey);
-          break;
-        }
+      case 'talk': {
         const npc = room.npcs.find((n) => n.id === action.targetId);
-        if (npc) {
-          this.addNarrative('description', npc.descriptionKey);
-          break;
-        }
-        const terminal = room.terminals.find((t) => t.id === action.targetId);
-        if (terminal) {
-          this.addNarrative('description', terminal.descriptionKey);
-          break;
-        }
-        this.addNarrative('system', 'Nothing notable to examine.');
+        if (npc === undefined) break;
+        EventBus.emit({ type: 'DIALOG_START', payload: { npcId: npc.id, dialogId: npc.dialogId } });
         break;
       }
 
@@ -272,157 +202,99 @@ export class TextAdventureEngine {
     }
   }
 
-  /** Seed internal challenge tracking from external state (e.g. store or save). */
-  syncCompletedChallenges(challenges: string[]): void {
-    for (const id of challenges) {
-      this.completedChallenges.add(id);
+  /**
+   * Records a solved challenge and narrates the consequences for the room and the
+   * floor. Progression events are emitted by the game controller, not here.
+   */
+  completeChallenge(challengeId: string): void {
+    if (this.completed.has(challengeId)) return;
+    this.completed.add(challengeId);
+
+    const room = this.getCurrentRoom();
+    if (room === undefined) return;
+    if (!room.terminals.some((t) => t.challengeId === challengeId)) return;
+
+    const remaining = this.remainingTerminals(room);
+    if (remaining > 0) {
+      this.say('cipher', 'story.engine.terminals_left', { count: remaining });
+      return;
+    }
+    this.say('cipher', 'story.engine.all_compromised_open');
+
+    if (this.isFloorComplete(room.floor)) {
+      this.say('cipher', `story.floors.${String(room.floor)}.completion`);
     }
   }
 
-  /**
-   * Mark a challenge as complete. Provides room-level progress feedback,
-   * checks floor-level completion, and auto-triggers NPC dialog as
-   * appropriate for the story progression.
-   */
-  completeChallenge(challengeId: string): void {
-    if (this.completedChallenges.has(challengeId)) return;
-    this.completedChallenges.add(challengeId);
-
-    const room = this.getCurrentRoom();
-    if (!room) return;
-
-    // Room-level progress feedback
-    const roomChallengeIds = room.terminals.map((t) => t.challengeId);
-    const remainingInRoom = roomChallengeIds.filter((id) => !this.completedChallenges.has(id));
-
-    if (remainingInRoom.length > 0) {
-      this.addNarrative(
-        'cipher',
-        `${String(remainingInRoom.length)} terminal${remainingInRoom.length === 1 ? '' : 's'} remaining in this area.`,
-        'CIPHER',
-      );
-      return;
-    }
-
-    // All room terminals done — trigger NPC congratulation
-    for (const npc of room.npcs) {
-      const dialog = npcDialogs[npc.id];
-      if (!dialog) continue;
-      const flagKey = `npc_${npc.id}_line`;
-      const lineIdx = this.state.storyFlags[flagKey] ? Number(this.state.storyFlags[flagKey]) : 1;
-      if (dialog.lines[lineIdx]) {
-        this.addNarrative('dialog', dialog.lines[lineIdx], humanizeRoomId(npc.id));
-      }
-      this.state.storyFlags[flagKey] = Math.min(lineIdx + 1, dialog.lines.length);
-    }
-
-    this.addNarrative(
-      'cipher',
-      'All terminals in this area are compromised. The path forward is open.',
-      'CIPHER',
+  isFloorComplete(floor: number): boolean {
+    const definition = FLOORS[floor];
+    return (
+      definition !== undefined && definition.challengeIds.every((id) => this.completed.has(id))
     );
-
-    // Floor-level completion check
-    const floorRooms = this.world.getRoomsForFloor(room.floor);
-    const floorChallengeIds = floorRooms.flatMap((r) => r.terminals.map((t) => t.challengeId));
-    if (floorChallengeIds.length === 0) return;
-
-    const allFloorComplete = floorChallengeIds.every((id) => this.completedChallenges.has(id));
-    if (allFloorComplete) {
-      const nextFloor = room.floor + 1;
-      const fKey = floorKey(room.floor);
-      const intro = floorIntros[fKey];
-
-      // Auto-trigger NPC postChallenge for all NPCs on this floor
-      for (const floorRoom of floorRooms) {
-        for (const npc of floorRoom.npcs) {
-          const dialog = npcDialogs[npc.id];
-          if (dialog?.postChallenge) {
-            this.addNarrative('dialog', dialog.postChallenge, humanizeRoomId(npc.id));
-          }
-        }
-      }
-
-      if (intro) {
-        this.addNarrative('cipher', intro.completion, 'CIPHER');
-      } else {
-        this.addNarrative(
-          'system',
-          `All challenges on floor ${String(room.floor)} complete! Access to floor ${String(nextFloor)} is now unlocked.`,
-        );
-      }
-      EventBus.emit({
-        type: 'FLOOR_COMPLETE',
-        payload: { floorNumber: room.floor },
-      });
-      EventBus.emit({
-        type: 'FLOOR_UNLOCKED',
-        payload: { floor: nextFloor },
-      });
-    }
   }
 
   getCompletedChallenges(): string[] {
-    return Array.from(this.completedChallenges);
+    return [...this.completed];
   }
 
   getCurrentRoom(): Room | undefined {
-    return this.world.getRoom(this.state.currentRoomId);
+    return getRoomById(this.state.currentRoomId);
   }
 
   getState(): TextAdventureState {
     return this.state;
   }
 
-  isConnectionUnlocked(connection: RoomConnection, completedChallenges: string[]): boolean {
-    if (!connection.locked) return true;
-
-    // Locked connection: all required challenges must be completed
-    if (
-      connection.requiredChallenges &&
-      connection.requiredChallenges.every((id) => completedChallenges.includes(id))
-    ) {
-      return true;
-    }
-
-    // Locked by default — no requirements met or no requirements defined
-    return false;
+  /** Narrative entries produced since the last call; the engine keeps no history. */
+  drainNarrative(): NarrativeEntry[] {
+    const entries = this.state.narrativeLog;
+    this.state.narrativeLog = [];
+    return entries;
   }
 
-  getNarrativeLog(): NarrativeEntry[] {
-    return this.state.narrativeLog;
+  isConnectionUnlocked(connection: RoomConnection): boolean {
+    if (!connection.locked) return true;
+    const required = connection.requiredChallenges ?? [];
+    return required.length > 0 && required.every((id) => this.completed.has(id));
   }
 
   isGameComplete(): boolean {
-    return ALL_CHALLENGE_IDS.every((id) => this.completedChallenges.has(id));
+    return ALL_CHALLENGE_IDS.every((id) => this.completed.has(id));
   }
 
-  /** Get all challenge IDs for a given floor number */
-  getFloorChallengeIds(floor: number): string[] {
-    return this.world.getRoomsForFloor(floor).flatMap((r) => r.terminals.map((t) => t.challengeId));
+  /** Narrative lines for the start of a new game. */
+  static getGameIntro(): ScriptedLine[] {
+    return GAME_INTRO;
   }
 
-  /** Get the game intro text lines */
-  static getGameIntro(): string[] {
-    return gameIntro;
+  static getGameVictory(): ScriptedLine[] {
+    return GAME_VICTORY;
   }
 
-  /** Get the game victory text lines */
-  static getGameVictory(): string[] {
-    return gameVictory;
-  }
-
-  private addNarrative(type: NarrativeEntry['type'], text: string, speaker?: string): void {
+  /** Appends a keyed entry to the narrative log. */
+  say(type: NarrativeEntry['type'], key: string, params?: TextParams): void {
     const entry: NarrativeEntry = {
       id: `nar_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
       type,
-      text,
+      text: key,
+      textKey: key,
       timestamp: Date.now(),
+      ...(type === 'cipher' ? { speaker: 'CIPHER' } : {}),
+      ...(params !== undefined ? { textParams: params } : {}),
     };
-    if (speaker !== undefined) {
-      entry.speaker = speaker;
-    }
     this.state.narrativeLog.push(entry);
-    EventBus.emit({ type: 'NARRATIVE_APPEND', payload: entry });
+  }
+
+  private announceFloorIfNew(room: Room): void {
+    const flag = floorArrivedFlag(room.floor);
+    if (this.state.storyFlags[flag] === true) return;
+    this.state.storyFlags[flag] = true;
+    this.say('cipher', `story.floors.${String(room.floor)}.arrival`);
+    this.say('cipher', `story.floors.${String(room.floor)}.briefing`);
+    EventBus.emit({ type: 'FLOOR_ARRIVED', payload: { floor: room.floor } });
+  }
+
+  private remainingTerminals(room: Room): number {
+    return room.terminals.filter((t) => !this.completed.has(t.challengeId)).length;
   }
 }

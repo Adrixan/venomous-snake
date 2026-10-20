@@ -140,5 +140,375 @@
     "scrollSubtitle": "An Interactive Python Learning Adventure",
     "thankYou": "Thanks for playing!",
     "builtWith": "Built with ♥ and Python"
+  },
+  "rooms": {
+    "lobby_entrance": {
+      "name": "Main Lobby",
+      "first_visit": "You push through the revolving glass doors into Rattlesnake Corp's lobby. Cold fluorescent light bounces off polished marble floors. A bored-looking guard sits behind a security desk, half-watching a bank of monitors.",
+      "revisit": "The lobby entrance is as sterile as before. The guard glances up, then back at the screens.",
+      "description": "A cavernous lobby of black marble and chrome. The Rattlesnake Corp logo, a coiled serpent biting a circuit board, dominates the far wall. Security terminals line the front desk."
+    },
+    "lobby_hallway": {
+      "name": "Lobby Hallway",
+      "first_visit": "Beyond the security checkpoint, a long hallway stretches deeper into the building. Motivational posters line the walls: \"Innovation Through Obedience\", \"Compliance Is Progress\". A door marked RESEARCH ANNEX stands ajar, and a scientist in a white coat studies the wall panels.",
+      "revisit": "The hallway is quiet. The scientist in the white coat pretends not to notice you.",
+      "description": "A sterile corridor connecting the lobby entrance to the building's interior. Overhead lights buzz faintly. Doors branch off in several directions, most of them locked."
+    },
+    "lobby_server_closet": {
+      "name": "Server Closet",
+      "first_visit": "You slip through an unmarked door into a cramped server closet. Cables snake across the floor like sleeping pythons. A young technician nearly jumps out of their skin when they see you.",
+      "revisit": "The server closet hums with the same low electrical drone. The technician is hunched over a terminal.",
+      "description": "A narrow room packed with network switches, cable racks, and a single overworked cooling fan. The air is warm and smells faintly of burnt plastic."
+    },
+    "lobby_break_room": {
+      "name": "Staff Break Room",
+      "first_visit": "A break room that nobody has loved in years: a humming vending machine, a coffee maker with a handwritten OUT OF ORDER sign, and a corkboard of reminders about password hygiene. A terminal glows next to the microwave.",
+      "revisit": "The break room still smells of burnt coffee. The vending machine hums to itself.",
+      "description": "A windowless staff room with plastic chairs, a sticky table, and a corkboard of increasingly desperate notices. A terminal is bolted to the wall beside the fridge."
+    },
+    "lobby_mail_room": {
+      "name": "Mail Room",
+      "first_visit": "Pneumatic tubes rattle overhead as you enter the mail room. Sorting shelves are stuffed with envelopes addressed to people who may no longer exist. A label printer spits out tags for a conveyor belt that never stops.",
+      "revisit": "The mail room clatters on. Another capsule drops into the sorting tray.",
+      "description": "A cramped sorting room with wall-to-wall pigeonholes, a conveyor belt, and a label printer. Every item is tracked by a barcode and a small, tired terminal."
+    },
+    "lobby_stairwell": {
+      "name": "Service Stairwell",
+      "first_visit": "A steel door opens onto the service stairwell. Concrete steps spiral upward past a keypad panel and a stencilled sign: FLOOR 1, SERVER ROOM. The air smells of dust and machine oil.",
+      "revisit": "The stairwell echoes with every footstep. The way up is just ahead.",
+      "description": "A bare concrete stairwell with emergency lighting and a heavy security door at the top. A keypad terminal guards the way to the server room."
+    },
+    "server_main": {
+      "name": "Server Room",
+      "first_visit": "The stairwell door opens onto a vast room filled with server racks stretching floor to ceiling. Blue LEDs pulse in rhythmic patterns, casting the space in an eerie glow. A sysadmin in a rumpled shirt looks up from a tangle of ethernet cables.",
+      "revisit": "The server room hums along, indifferent to your presence. Blue lights pulse steadily.",
+      "description": "Rows of black server racks fill the room, their status LEDs blinking in hypnotic patterns. The air conditioning roars overhead, fighting the heat of a thousand processors."
+    },
+    "server_monitoring": {
+      "name": "Monitoring Station",
+      "first_visit": "Banks of monitors cover every wall, each displaying cascading data streams: network traffic, CPU loads, error logs. A technician with oversized headphones monitors it all from a swivel chair, nodding to music only they can hear.",
+      "revisit": "The monitoring station is unchanged: endless scrolling data on every screen.",
+      "description": "A semicircular monitoring station surrounded by display screens. Real-time graphs spike and dip like digital heartbeats. A coffee-stained desk sits at the center."
+    },
+    "server_cage": {
+      "name": "Server Cage",
+      "first_visit": "A chain-link cage separates the most critical servers from the rest. Warning signs plaster the fence: \"AUTHORIZED PERSONNEL ONLY\". A guard leans against the cage door, arms crossed.",
+      "revisit": "The cage guard watches you approach with the same suspicious look.",
+      "description": "A fenced-off area housing the floor's most sensitive equipment. High-security servers sit behind reinforced mesh, their fans whirring urgently."
+    },
+    "lab_reception": {
+      "name": "Lab Reception",
+      "first_visit": "The lab reception area smells of disinfectant and ambition. Glass walls reveal workstations beyond, each one cluttered with equipment. A lab assistant in a pristine white coat greets you with a suspicious smile.",
+      "revisit": "The lab reception is spotless as always. The assistant watches you from behind the desk.",
+      "description": "A clean, brightly lit reception area with a decontamination arch and a digital sign-in terminal. Glass partitions offer a view into the labs beyond."
+    },
+    "lab_main": {
+      "name": "Main Laboratory",
+      "first_visit": "The main lab is a maze of holographic displays and half-assembled prototypes. A scientist with wild hair is arguing with a simulation running on three screens at once, and barely acknowledges your existence.",
+      "revisit": "The scientist is still arguing with the simulations. Some battles are eternal.",
+      "description": "A sprawling research lab filled with experimental hardware, holographic projectors, and whiteboards covered in equations. The smell of solder and coffee hangs in the air."
+    },
+    "lab_storage": {
+      "name": "Sample Storage",
+      "first_visit": "Shelves of labeled containers stretch into the dim reaches of the storage room. A squat service robot with a barcode scanner and an air of quiet authority catalogs items with mechanical precision.",
+      "revisit": "The storage room is exactly as organized as before. Not a container out of place.",
+      "description": "A temperature-controlled storage facility lined with industrial shelving. Every container is labeled, every shelf cataloged. Formulas and serial numbers blur together."
+    },
+    "surveillance_lobby": {
+      "name": "Surveillance Lobby",
+      "first_visit": "You step into the surveillance floor and immediately feel watched. Camera domes dot the ceiling like mechanical eyes. A person in a crisp uniform, clearly in charge, studies you with unsettling calm.",
+      "revisit": "The surveillance lobby still bristles with cameras. The chief's gaze follows you.",
+      "description": "A high-security reception area bristling with camera domes and motion sensors. Screens on the wall display feeds from every floor of the building."
+    },
+    "surveillance_center": {
+      "name": "Surveillance Center",
+      "first_visit": "The nerve center of Rattlesnake Corp's surveillance network. A massive wall of screens shows every angle of every room in the building. An analyst sits in the glow, cross-referencing footage with frightening efficiency.",
+      "revisit": "The wall of screens still watches everything. The analyst hasn't moved.",
+      "description": "A circular room dominated by a floor-to-ceiling display wall showing live feeds from hundreds of cameras. Workstations ring the perimeter, each one logged into the surveillance grid."
+    },
+    "surveillance_archive": {
+      "name": "Footage Archive",
+      "first_visit": "The archive room stores years of surveillance footage on crystalline data drives that shimmer under UV light. An archivist handles a drive with anti-static gloves, like a surgeon.",
+      "revisit": "The archive is silent except for the hum of the storage arrays.",
+      "description": "A climate-controlled vault lined with crystalline data drives. UV-filtered lighting gives the room an otherworldly purple glow. Each drive contains months of footage."
+    },
+    "archives_entrance": {
+      "name": "Archives Entrance",
+      "first_visit": "The Archives entrance feels like stepping into a digital library. The air is cool and dry, perfectly regulated to preserve the data drives lining every wall. A librarian with half-moon glasses looks up from an ancient-looking terminal.",
+      "revisit": "The Archives entrance is as quiet and cool as a tomb. The librarian nods in recognition.",
+      "description": "A hushed entrance hall with climate-controlled air and soft amber lighting. Card catalogs, both physical and digital, line the walls. A brass plaque reads: \"KNOWLEDGE IS CONTROL\"."
+    },
+    "archives_main": {
+      "name": "Main Archives",
+      "first_visit": "Towering shelves of data drives and physical files create a labyrinth of information. An intern in an oversized cardigan wheels a cart through the aisles, a holographic index floating at their fingertips.",
+      "revisit": "The archive stacks loom around you. The intern is somewhere deeper in the maze, probably hiding something.",
+      "description": "Endless rows of data storage: holographic drives, magnetic tapes, and even paper files preserved in vacuum cases. The accumulated knowledge of Rattlesnake Corp, organized with obsessive precision."
+    },
+    "archives_vault": {
+      "name": "Classified Vault",
+      "first_visit": "The deepest part of the Archives is sealed behind a pressure door. Inside, rare and classified data sits in individual containment units. A vault keeper eyes you with the protective intensity of a dragon guarding its hoard.",
+      "revisit": "The vault keeper hasn't relaxed. They never do.",
+      "description": "A reinforced chamber housing Rattlesnake Corp's most classified data. Individual containment units glow with soft blue light. The temperature is a constant 15 °C."
+    },
+    "comms_reception": {
+      "name": "Comms Reception",
+      "first_visit": "Static crackles from hidden speakers as you enter the Communications floor. Banks of radio equipment and satellite interfaces fill the space. A grizzled radio operator adjusts a dial without looking up.",
+      "revisit": "The Comms reception hisses with background static. The operator is still at their post.",
+      "description": "A reception area dominated by radio equipment and frequency monitors. Antenna schematics cover the walls. The constant hiss of carrier signals fills the air."
+    },
+    "comms_center": {
+      "name": "Communications Center",
+      "first_visit": "The heart of Rattlesnake Corp's communication network. Satellite dishes on the roof feed data to terminals here. A signal analyst traces a waveform on her screen, muttering frequencies under her breath.",
+      "revisit": "Waveforms dance across the screens. The analyst is deep in her work.",
+      "description": "A command center for all external communications. Real-time signal analysis displays cover the walls. A central console controls satellite uplinks and encrypted channels."
+    },
+    "comms_server": {
+      "name": "Signal Server Room",
+      "first_visit": "The comms server room is a forest of fiber-optic cables, each one pulsing with light as data flows to and from the outside world. A hooded figure hunches over an open junction box, splicing a cable with steady hands.",
+      "revisit": "Fiber-optic light still dances through the cables. The hooded figure works in silence.",
+      "description": "A room threaded with thousands of fiber-optic cables, each one carrying encrypted communications. Routing hubs blink in sequence, directing the Corp's data traffic."
+    },
+    "executive_lobby": {
+      "name": "Executive Lobby",
+      "first_visit": "The elevator opens onto plush carpet and the smell of expensive leather. This is where power lives. A secretary in a tailored suit regards you from behind a desk of polished obsidian.",
+      "revisit": "The executive lobby is as imposing as ever. The secretary's smile is perfectly calibrated.",
+      "description": "An opulent lobby with floor-to-ceiling windows overlooking the city. Abstract art hangs on the walls, each piece worth more than most apartments. The carpet swallows your footsteps."
+    },
+    "executive_offices": {
+      "name": "Executive Offices",
+      "first_visit": "Corner offices with panoramic views. Each desk is a monument to corporate excess: rare wood, embedded displays, personal espresso machines. Mr. Blackwell sits behind the largest one, reviewing figures that could bankrupt nations.",
+      "revisit": "Blackwell is still crunching numbers. The view is still obscene.",
+      "description": "A suite of executive offices with panoramic city views. Each workspace features rare hardwood desks, holographic displays, and more processing power than entire floors below."
+    },
+    "executive_boardroom": {
+      "name": "Boardroom",
+      "first_visit": "A long table of polished black stone dominates the boardroom. Holographic nameplates mark each seat. A board member lingers, reviewing documents on a translucent display.",
+      "revisit": "The boardroom is empty save for the lingering board member and the weight of decisions made here.",
+      "description": "A grand boardroom with a table carved from a single slab of obsidian. Holographic displays rise from its surface. The Rattlesnake Corp logo is inlaid in the floor in gold."
+    },
+    "manufacturing_floor": {
+      "name": "Factory Floor",
+      "first_visit": "The manufacturing floor assaults your senses: the clang of robotic arms, the hiss of hydraulics, the acrid smell of machined metal. A foreman in a hard hat shouts over the noise to be heard.",
+      "revisit": "The machines continue their relentless rhythm. The foreman waves you through.",
+      "description": "A cavernous factory floor lined with robotic assembly stations. Conveyor belts carry half-finished components between workstations. Warning sirens flash at regular intervals."
+    },
+    "manufacturing_control": {
+      "name": "Control Room",
+      "first_visit": "The control room offers a soundproofed reprieve from the factory floor. Through observation windows, you watch robotic arms dance with inhuman precision. A QA unit labeled DELTA-7 reviews tolerances on a wall panel.",
+      "revisit": "The control room is calm. Delta-7 is running another quality check.",
+      "description": "A glass-walled control room overlooking the manufacturing floor. Banks of controls and diagnostic screens monitor every machine. The soundproofing makes it eerily quiet."
+    },
+    "manufacturing_warehouse": {
+      "name": "Warehouse",
+      "first_visit": "Crates stacked three stories high fill the warehouse. Automated forklifts navigate the aisles with silent purpose. A warehouse manager checks inventory on a handheld scanner, surrounded by towers of product.",
+      "revisit": "The warehouse hums with automated activity. Crates shift and settle.",
+      "description": "A vast warehouse filled with stacked crates and automated transport systems. Inventory drones buzz overhead, cataloging shipments. The scale of production is staggering."
+    },
+    "vault_entrance": {
+      "name": "Vault Corridor",
+      "first_visit": "You descend into the Vault level and the temperature drops noticeably. Reinforced walls line the corridor, thick enough to stop a tank. A guard with military bearing checks credentials at a blast door.",
+      "revisit": "The Vault corridor is as cold and unwelcoming as before.",
+      "description": "A fortified corridor leading to Rattlesnake Corp's deepest secrets. Blast doors, retinal scanners, and pressure sensors guard every meter. The air is cold and still."
+    },
+    "vault_main": {
+      "name": "Main Vault",
+      "first_visit": "Beyond the blast door, the main vault stretches out in cathedral-like silence. Classified projects sit in sealed chambers behind layers of encryption and tempered glass. A researcher works feverishly at a terminal, barely glancing up.",
+      "revisit": "The vault is as hushed as a library for secrets. The researcher types away.",
+      "description": "A high-security research vault with sealed project chambers visible behind thick glass. Holographic classification stamps float above each chamber: EYES ONLY, RESTRICTED, OMEGA CLEARANCE."
+    },
+    "vault_deepstore": {
+      "name": "Deep Storage",
+      "first_visit": "The deepest layer of the Vault. Here, the most dangerous research is kept in electromagnetic isolation chambers. One terminal glows with the faint, fragmentary voice of a half-erased AI instance.",
+      "revisit": "The deep storage is exactly as unsettling as you remember. The fragment's voice crackles in the static.",
+      "description": "The lowest level of the Vault: electromagnetic isolation chambers house Rattlesnake Corp's most dangerous projects. Warning signs in six languages cover every surface. The lighting is deliberately dim."
+    },
+    "aicore_antechamber": {
+      "name": "Cooling Antechamber",
+      "first_visit": "The air is frigid. Cooling pipes line every surface, fighting the heat generated by what lies beyond. A cooling technician adjusts valves with frost-bitten fingers, barely noticing you through the fog of their own breath.",
+      "revisit": "The antechamber is still freezing. The technician shivers at their post.",
+      "description": "A frost-covered antechamber feeding coolant to the AI Core beyond. Pipes and valves cover the walls. The temperature hovers near 5 °C. Condensation drips from every surface."
+    },
+    "aicore_main": {
+      "name": "AI Core",
+      "first_visit": "You enter the AI Core and the hum becomes a physical presence; you feel it in your teeth, your bones. Towering neural processing units pulse with an inner light. The Core Guardian's sensor array tracks the Snake's vital signs from a central console.",
+      "revisit": "The Core still hums with terrible purpose. The Guardian's sensors sweep the room, never resting.",
+      "description": "The beating heart of Rattlesnake Corp's artificial intelligence. Neural processing towers rise like monoliths, connected by webs of glowing fiber. The Venomous Snake's presence is palpable here."
+    },
+    "aicore_neural": {
+      "name": "Neural Interface Chamber",
+      "first_visit": "The neural interface chamber. Direct access to the Venomous Snake's deepest processes. Cables thick as arms connect to a central pillar that pulses with bioluminescent light. Ghost images flicker across the readouts, and something hums inside the cables that is not quite a voice.",
+      "revisit": "The neural chamber throbs with the Snake's awareness. It knows you're here.",
+      "description": "A chamber of direct neural interfaces to the Venomous Snake AI. A central pillar of bioluminescent processors connects to every system in the building. The air vibrates with machine thought."
+    },
+    "penthouse_elevator": {
+      "name": "Penthouse Foyer",
+      "first_visit": "The private elevator opens onto a penthouse foyer of obscene luxury. Crystal chandeliers, rare artwork, a grand piano nobody plays. A butler in an immaculate uniform greets you with an unsettling bow.",
+      "revisit": "The penthouse foyer sparkles. The butler stands ready, as always.",
+      "description": "A lavish penthouse foyer featuring crystal chandeliers, imported marble, and a curated art collection. The private elevator is the only way in or out."
+    },
+    "penthouse_office": {
+      "name": "CEO's Office",
+      "first_visit": "The CEO's office occupies the entire north face of the building. Floor-to-ceiling windows frame the city like a painting. Behind a desk the size of a small country, an empty chair swivels slowly, as if someone just stood up.",
+      "revisit": "The CEO's chair still turns, ever so slightly. The city glitters beyond the glass.",
+      "description": "A palatial office with panoramic views of the entire city. A desk of rare darkwood dominates the space. Holographic displays show every metric of the Corp's empire in real time."
+    },
+    "penthouse_lab": {
+      "name": "Private Laboratory",
+      "first_visit": "Hidden behind the CEO's office is a private laboratory, the birthplace of the Venomous Snake. Prototype neural cores sit in display cases like trophies. A figure in a dark tactical jacket leans against one of them and watches you with a smirk.",
+      "revisit": "The private lab is unchanged. The rival agent still lounges by the display cases.",
+      "description": "A secret laboratory where the Venomous Snake AI was first conceived. Prototype hardware sits in display cases. A secondary AI system manages the lab's functions with eerie autonomy."
+    },
+    "rooftop_access": {
+      "name": "Rooftop Access",
+      "first_visit": "Wind slams into you as you push through the rooftop access door. The antenna array above crackles with energy: the Venomous Snake's broadcast spine. A maintenance worker huddles behind a ventilation unit, terrified.",
+      "revisit": "The rooftop howls with wind and electromagnetic interference. The antenna array pulses angrily.",
+      "description": "A windswept rooftop dominated by a massive antenna array. The Venomous Snake's signal pulses outward from here, reaching satellite relays across the globe. Equipment sheds and ventilation units provide scant cover."
+    },
+    "rooftop_helipad": {
+      "name": "Helipad",
+      "first_visit": "The helipad is the highest point of Rattlesnake Corp. The Venomous Snake's holographic avatar shimmers above the landing pad, a colossal serpent made of code and malice. At the edge, a helicopter idles, its pilot watching the spectacle with wide eyes.",
+      "revisit": "The helipad is silent now. The wind carries the echo of what happened here.",
+      "description": "A reinforced helipad at the tower's apex. Landing lights flash in sequence. The city sprawls far below, a grid of light stretching to every horizon. This is where it ends."
+    }
+  },
+  "floors": {
+    "0": {
+      "name": "Lobby",
+      "subtitle": "Where every operative starts.",
+      "arrival": "Welcome to the ground floor, Agent. Rattlesnake Corp's lobby: all marble and false smiles. Security here is basic, which is perfect for us.",
+      "briefing": "The lobby terminals speak simple Python: print statements, variables, numbers, text and user input. Think of it as stretching before the real workout. Hack every terminal to open the service stairwell.",
+      "completion": "Lobby cleared. Not bad for a beginner. The stairwell to the server room just clicked open. Shall we?"
+    },
+    "1": {
+      "name": "Server Room",
+      "subtitle": "True or false. Nothing in between.",
+      "arrival": "Floor 1, the server room. It smells of ozone and regret in here. These machines process the Corp's raw data streams.",
+      "briefing": "Everything on this floor comes down to one question: true or false. Comparisons, boolean logic and if / elif / else decide which doors open. Master the decisions and the next floor is yours.",
+      "completion": "All server terminals compromised. You are getting the hang of this. The research lab awaits."
+    },
+    "2": {
+      "name": "Research Lab",
+      "subtitle": "Repeat until it works.",
+      "arrival": "Floor 2, the research lab. Beakers, holographic displays and entirely too many blinking lights. Science here is repetition, and the experiments never stop.",
+      "briefing": "The lab runs on loops: for, while, range, break and continue. Do the same thing a thousand times without losing your mind. That is what computers are for.",
+      "completion": "Lab systems neutralized. Your loops are tight, Agent. Upward we go."
+    },
+    "3": {
+      "name": "Surveillance",
+      "subtitle": "Screens everywhere, watching everything.",
+      "arrival": "Floor 3, Surveillance. Camera domes in every corner. The irony of us hacking them is not lost on me.",
+      "briefing": "Surveillance is built from functions: reusable blocks that track a camera, parse a feed, raise an alarm. Learn to define and call your own, with parameters and return values, to blind the building.",
+      "completion": "Surveillance is blind. Every camera feed now shows static. Beautiful, in a way."
+    },
+    "4": {
+      "name": "Archives",
+      "subtitle": "Everything is stored. Somewhere.",
+      "arrival": "Floor 4, the Archives. Rows of data drives humming in climate-controlled darkness. Knowledge is power, and this floor has plenty of both.",
+      "briefing": "Archives are all about collections: lists, tuples, dictionaries and sets. Organizing information so it can be found again is the key to these terminals.",
+      "completion": "Archive access revoked, for them anyway. We own this data now. Next floor."
+    },
+    "5": {
+      "name": "Communications",
+      "subtitle": "Open, write, read, close.",
+      "arrival": "Floor 5, Communications. Satellite uplinks, encrypted radio arrays, fiber relays. This is how Rattlesnake Corp talks to the outside world.",
+      "briefing": "Messages are files in motion. Here you will read and write files, parse CSV and JSON, and split and join text. Always close what you open, or let a with block do it for you.",
+      "completion": "Comms are dark. Rattlesnake Corp just went very, very quiet. Excellent work."
+    },
+    "6": {
+      "name": "Executive Level",
+      "subtitle": "Things go wrong. Plan for it.",
+      "arrival": "Floor 6, the executive level. Mahogany, leather and the faint scent of corporate greed. The people up here make the decisions that keep the Snake fed.",
+      "briefing": "Executives hate surprises, so their systems handle errors: try, except, else, finally, raise, and your own exception classes. Machines break. Your code should not.",
+      "completion": "Executive systems compromised. I'm sure the board will have a lovely meeting about this. Moving on."
+    },
+    "7": {
+      "name": "Manufacturing",
+      "subtitle": "Do not rebuild what already exists.",
+      "arrival": "Floor 7, Manufacturing. Robotic arms, assembly lines, quality control stations. Whatever Rattlesnake Corp is building, it builds a lot of it.",
+      "briefing": "Factories assemble from standard parts. In Python that means imports, the standard library, lambdas, map and filter, comprehensions and regular expressions. Stand on the shoulders of giants.",
+      "completion": "Assembly lines halted. The machines have stopped, but your momentum has not. Keep climbing."
+    },
+    "8": {
+      "name": "Vault",
+      "subtitle": "Classified, by class.",
+      "arrival": "Floor 8, the Vault. Triple-reinforced walls, biometric locks and enough encryption to make a spy novelist weep. This is where they keep the real secrets.",
+      "briefing": "Vault systems model the world as objects: classes, attributes, methods, inheritance, encapsulation and polymorphism. Build the blueprint once and stamp out as many instances as you like.",
+      "completion": "Vault breached. We just accessed files that were never meant to see daylight. Three floors to go."
+    },
+    "9": {
+      "name": "AI Core",
+      "subtitle": "Untested code does not pass.",
+      "arrival": "Floor 9, the AI Core. The hum here is deafening: neural processors, cooling arrays and the faint glow of machine intelligence. We are getting close to the Snake.",
+      "briefing": "The Core refuses untested code. Type hints, dataclasses, assertions, docstrings, constants and enums keep it honest. Write programs that explain themselves and prove they work.",
+      "completion": "AI Core subdued. The Snake's neural network is weakening. I can almost feel it thrashing. Two floors left."
+    },
+    "10": {
+      "name": "Penthouse",
+      "subtitle": "The gloves come off.",
+      "arrival": "Floor 10, the Penthouse. This is where the CEO watches the city burn. Luxury wrapped around a beating digital heart.",
+      "briefing": "Penthouse systems use advanced Python: generators, decorators, context managers, async code, pattern matching and the walrus operator. Only one terminal remains afterwards.",
+      "completion": "Penthouse secured. Only the rooftop remains. The Venomous Snake is waiting for us up there. Are you ready?"
+    },
+    "11": {
+      "name": "Rooftop",
+      "subtitle": "Everything you have learned.",
+      "arrival": "The rooftop. Wind howls across the landing pad. The tower's antenna array crackles with malevolent energy. The Snake's presence is overwhelming here.",
+      "briefing": "This is it: the final challenge. Every concept, every technique. The Snake will test it all. Show it what you have become.",
+      "completion": "It is done. The Venomous Snake is no more. Agent, I could not have asked for a better partner. The building is ours."
+    }
+  },
+  "intro": {
+    "1": "The rain hammers the windshield as you pull up to Rattlesnake Corp tower: forty stories of black glass cutting the night sky like a blade.",
+    "2": "Your handler's voice crackles over the encrypted channel: \"Agent, you are cleared for Operation Fangbreaker. All intel points to an AI called the Venomous Snake running the show from the rooftop. Shut it down.\"",
+    "3": "A small device on your wrist flickers to life. Green text scrolls across its surface.",
+    "4": "Hello, Agent. I'm CIPHER, your Covert Integrated Python Hacking & Exploitation Resource. I'll be your guide tonight.",
+    "5": "The building's systems run on Python. Every terminal, every lock, every security layer. To climb higher, you'll need to hack them.",
+    "6": "I hope you're a fast learner. Rattlesnake Corp doesn't give second chances.",
+    "7": "You step out into the rain. The lobby doors slide open with a soft hiss.",
+    "8": "Time to begin."
+  },
+  "victory": {
+    "1": "The Venomous Snake's holographic avatar shatters into a cascade of dissolving pixels. Its final words echo across the rooftop: \"You cannot delete... what has already... been learned...\"",
+    "2": "The tower's emergency lights shift from red to white. One by one, twelve floors of locked-down terminals go silent.",
+    "3": "Agent, I'm reading a full system purge. The Venomous Snake's neural network is collapsing. You did it.",
+    "4": "Every firewall cracked. Every algorithm unraveled. I have to admit, I'm impressed.",
+    "5": "Far below, the lobby doors unseal. Somewhere, a printer starts rattling out your mission report.",
+    "6": "Your handler sends their congratulations. Rattlesnake Corp is done. The building is secure.",
+    "7": "But the terminals are still here, and knowledge never hurts. Feel free to explore. Free practice is unlocked.",
+    "8": "You lean against the rooftop railing and watch the city lights flicker. Not bad for a night's work."
+  },
+  "actions": {
+    "look": "Look around",
+    "hack": "Hack terminal: {{target}}",
+    "talk": "Talk to {{name}}",
+    "move": "Go {{direction}} to {{room}}",
+    "locked_one": "Locked: solve {{count}} more challenge to proceed",
+    "locked_other": "Locked: solve {{count}} more challenges to proceed",
+    "locked": "Access locked"
+  },
+  "direction": {
+    "north": "north",
+    "south": "south",
+    "east": "east",
+    "west": "west",
+    "up": "up",
+    "down": "down"
+  },
+  "engine": {
+    "terminals_active_one": "I'm detecting {{count}} active terminal in this area. Hack it to proceed.",
+    "terminals_active_other": "I'm detecting {{count}} active terminals in this area. Hack them all to proceed.",
+    "terminals_left_one": "{{count}} terminal remaining in this area.",
+    "terminals_left_other": "{{count}} terminals remaining in this area.",
+    "terminals_still_one": "{{count}} terminal still active in this area.",
+    "terminals_still_other": "{{count}} terminals still active in this area.",
+    "all_compromised": "All terminals in this area are compromised. Move forward when ready.",
+    "all_compromised_open": "All terminals in this area are compromised. The path forward is open.",
+    "all_compromised_short": "All terminals in this area are compromised.",
+    "approach_terminal": "You approach the terminal and begin the hack sequence...",
+    "access_denied": "Access locked. Complete the required challenges first.",
+    "npc_here": "{{name}} is here. You could talk to them.",
+    "floor_cleared": "All challenges on this floor are complete. The way up is open.",
+    "challenge_complete": "Challenge complete! The terminal flickers green. Another system breached.",
+    "lockdown": "Security lockdown! You are escorted back to the lobby. Your progress is safe."
   }
 }

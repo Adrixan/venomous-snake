@@ -1,4 +1,9 @@
-import type { Challenge, ChallengeProgress, CurriculumProgress, Chapter } from '@venomous-snake/shared-types';
+import type {
+  Challenge,
+  ChallengeProgress,
+  CurriculumProgress,
+  Chapter,
+} from '@venomous-snake/shared-types';
 
 export class ProgressionManager {
   private progress: CurriculumProgress;
@@ -24,9 +29,8 @@ export class ProgressionManager {
     const existing = this.progress.challenges[challenge.id];
     const attempts = (existing?.attempts ?? 0) + 1;
 
-    const bestTime = existing?.bestTime !== undefined
-      ? Math.min(existing.bestTime, timeMs)
-      : timeMs;
+    const bestTime =
+      existing?.bestTime !== undefined ? Math.min(existing.bestTime, timeMs) : timeMs;
 
     this.progress.challenges[challenge.id] = {
       challengeId: challenge.id,
@@ -42,6 +46,10 @@ export class ProgressionManager {
       this.progress.totalXp += challenge.xpReward;
       this.progress.completedChallenges += 1;
     }
+  }
+
+  addBonusXp(amount: number): void {
+    if (amount > 0) this.progress.totalXp += amount;
   }
 
   recordAttempt(challengeId: string, code: string): void {

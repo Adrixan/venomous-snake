@@ -22,7 +22,8 @@ import {
 } from '@venomous-snake/ui';
 import type { AudioSettingsPanelProps, ToastNotification } from '@venomous-snake/ui';
 import { ACHIEVEMENTS } from '@venomous-snake/challenge-engine';
-import { chapters } from '@venomous-snake/challenges';
+import { chapters, TOTAL_CHALLENGES, floorIdFromNumber } from '@venomous-snake/challenges';
+import type { SaveData } from '@venomous-snake/save-system';
 
 import { EventBus, TextAdventureEngine, getRoomDisplayName } from '@venomous-snake/engine';
 import type { GameAction, NarrativeEntry } from '@venomous-snake/shared-types';
@@ -48,6 +49,21 @@ const FLOOR_NUM_TO_ID: Record<number, string> = {
 const FLOOR_ID_TO_NUM: Record<string, number> = Object.fromEntries(
   Object.entries(FLOOR_NUM_TO_ID).map(([num, id]) => [id, Number(num)]),
 );
+
+function toCurriculumProgress(data: SaveData): CurriculumProgress {
+  const completed = Object.values(data.progress.challenges).filter((p) => p.completed).length;
+  const unlockedMax =
+    data.engine.completedChallenges.length === 0
+      ? 0
+      : Math.max(0, Math.min(11, Math.floor(completed / 8)));
+  return {
+    challenges: data.progress.challenges,
+    currentChapter: Math.max(1, Math.min(12, unlockedMax + 1)),
+    totalXp: data.progress.totalXp,
+    completedChallenges: completed,
+    unlockedFloors: Array.from({ length: unlockedMax + 1 }, (_, n) => floorIdFromNumber(n)),
+  };
+}
 
 // First room on each floor, for floor navigation
 const FLOOR_FIRST_ROOM: Record<number, string> = {
@@ -169,11 +185,12 @@ export function App(): React.JSX.Element {
         for (const line of introLines) {
           const entry: NarrativeEntry = {
             id: `intro_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
-            type: line.startsWith('[CIPHER]') ? 'cipher' : 'description',
-            text: line.startsWith('[CIPHER]') ? line.replace('[CIPHER] ', '') : line,
+            type: line.type,
+            text: line.key,
+            textKey: line.key,
             timestamp: Date.now(),
           };
-          if (line.startsWith('[CIPHER]')) {
+          if (line.type === 'cipher') {
             entry.speaker = 'CIPHER';
           }
           appendNarrative(entry);
@@ -202,7 +219,7 @@ export function App(): React.JSX.Element {
   // Refresh available actions whenever relevant state changes
   const refreshActions = useCallback(() => {
     if (!engineRef.current) return;
-    const actions = engineRef.current.getAvailableActions(completedChallenges);
+    const actions = engineRef.current.getAvailableActions();
     setAvailableActions(actions);
   }, [completedChallenges, setAvailableActions]);
 
@@ -216,7 +233,7 @@ export function App(): React.JSX.Element {
       if (!engineRef.current) return;
       // Safety: ignore disabled actions even if UI didn't prevent the click
       if (action.disabled) return;
-      engineRef.current.executeAction(action, completedChallenges);
+      engineRef.current.executeAction(action);
 
       // Sync narrative log
       const state = engineRef.current.getState();
@@ -346,7 +363,7 @@ export function App(): React.JSX.Element {
       if (latest !== undefined) {
         void saveSystem.load(latest.id).then((data) => {
           if (data !== undefined) {
-            setSavedProgress(data.curriculumProgress);
+            setSavedProgress(toCurriculumProgress(data));
             setSessionKey((k) => k + 1);
           }
           setGamePhase('playing');
@@ -508,7 +525,7 @@ export function App(): React.JSX.Element {
       void saveSystem.load(slotId).then((data) => {
         setSaveModalMode(null);
         if (data !== undefined) {
-          setSavedProgress(data.curriculumProgress);
+          setSavedProgress(toCurriculumProgress(data));
           setSessionKey((k) => k + 1);
           controllerRef.current = null;
           engineRef.current = null;
@@ -611,6 +628,9 @@ export function App(): React.JSX.Element {
           {!terminalOpen && !gameCompleted && (
             <StoryTerminal
               currentRoom={roomInfo}
+              inputEnabled={
+                gamePhase === 'playing' && activePanel === 'none' && saveModalMode === null
+              }
               narrativeLog={narrativeLog}
               availableActions={availableActions}
               onAction={handleAction}
@@ -621,7 +641,7 @@ export function App(): React.JSX.Element {
               xp={xp}
               level={level}
               completedChallenges={completedChallenges.length}
-              totalChallenges={118}
+              totalChallenges={TOTAL_CHALLENGES}
             />
           )}
 
@@ -631,7 +651,7 @@ export function App(): React.JSX.Element {
           {/* Victory screen */}
           {gameCompleted && (
             <VictoryScreen
-              totalChallenges={118}
+              totalChallenges={TOTAL_CHALLENGES}
               completedChallenges={completedChallenges.length}
               totalXp={xp}
               level={level}

@@ -290,6 +290,7 @@ function ChallengeModeTerminal({
     submitCode,
     runCode,
     resetState,
+    requestHint,
     interpreter,
   } = useChallengeTerminal(challengeId);
 
@@ -311,10 +312,10 @@ function ChallengeModeTerminal({
     if (result?.passed === true) {
       setShowSuccess(true);
       if (challenge !== null) {
-        onChallengeSuccess?.(challenge.id, challenge.xpReward);
+        onChallengeSuccess?.(challenge.id, result.xpEarned ?? challenge.xpReward);
       }
     }
-  }, [result?.passed, challenge, onChallengeSuccess]);
+  }, [result, challenge, onChallengeSuccess]);
 
   const handleRun = useCallback(
     (code: string) => {
@@ -428,7 +429,8 @@ function ChallengeModeTerminal({
       {objectives.length > 0 && (
         <div className="terminal-objectives">
           <div className="terminal-objectives-title">
-            🎯 MISSION OBJECTIVES ({objectives.filter((o) => o.status === 'passed').length}/
+            🎯 MISSION OBJECTIVES (
+            {objectives.filter((o) => !o.hidden && o.status === 'passed').length}/
             {objectives.filter((o) => !o.hidden).length})
           </div>
           {objectives
@@ -480,6 +482,13 @@ function ChallengeModeTerminal({
       )}
 
       {/* Hints panel */}
+      <button
+        className="terminal-btn"
+        onClick={requestHint}
+        disabled={isRunning || result?.passed === true}
+      >
+        💡 {t('ui:terminal.hint', { defaultValue: 'Request a hint' })}
+      </button>
       {hints.length > 0 && (
         <div className="terminal-hints-panel">
           <div className="terminal-hints-title">💡 CIPHER HINT</div>
@@ -515,7 +524,7 @@ function ChallengeModeTerminal({
       {showSuccess && challenge !== null && (
         <ChallengeSuccessOverlay
           challengeTitle={t(nsKey(challenge.titleKey))}
-          xpEarned={challenge.xpReward}
+          xpEarned={result?.xpEarned ?? challenge.xpReward}
           onDismiss={handleSuccessDismiss}
         />
       )}

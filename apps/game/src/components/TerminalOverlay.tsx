@@ -7,7 +7,6 @@ import { EventBus } from '@venomous-snake/engine';
 export const TerminalOverlay = React.memo(function TerminalOverlay(): React.JSX.Element | null {
   const terminalOpen = useGameStore((s) => s.overlay.terminalOpen);
   const closeTerminal = useGameStore((s) => s.closeTerminal);
-  const addXp = useGameStore((s) => s.addXp);
   const currentChallengeId = useGameStore((s) => s.currentChallengeId);
   const [bootDone, setBootDone] = useState(false);
 
@@ -29,14 +28,10 @@ export const TerminalOverlay = React.memo(function TerminalOverlay(): React.JSX.
     EventBus.emit({ type: 'TERMINAL_CLOSE' });
   }, [closeTerminal]);
 
-  const addCompletedChallenge = useGameStore((s) => s.addCompletedChallenge);
-
   const handleChallengeSuccess = useCallback(
-    (challengeId: string, xpEarned: number): void => {
-      addXp(xpEarned);
-      addCompletedChallenge(challengeId);
-      // Emit CHALLENGE_COMPLETED so doors/InteractiveObjects unlock
-      EventBus.emit({ type: 'CHALLENGE_COMPLETED', payload: { challengeId } });
+    (_challengeId: string, _xpEarned: number): void => {
+      // The GameController session owns XP, achievements, and completion events.
+      // This callback only closes the presentation overlay after the success animation.
       // Auto-close is handled by ChallengeSuccessOverlay after 3 s;
       // also close store state now so the overlay unmounts after the animation.
       setTimeout(() => {
@@ -44,7 +39,7 @@ export const TerminalOverlay = React.memo(function TerminalOverlay(): React.JSX.
         EventBus.emit({ type: 'TERMINAL_CLOSE' });
       }, 3200);
     },
-    [addXp, addCompletedChallenge, closeTerminal],
+    [closeTerminal],
   );
 
   if (!terminalOpen) return null;

@@ -13,6 +13,16 @@ import * as chapter11 from './chapter11';
 import * as chapter12 from './chapter12';
 
 export { chapters } from './chapters';
+export {
+  FLOORS,
+  FINAL_FLOOR_NUMBER,
+  BOSS_CHALLENGE_ID,
+  floorIdFromNumber,
+  floorNumberFromId,
+  getFloor,
+  getFloorForChallenge,
+} from './floors';
+export type { FloorDefinition } from './floors';
 
 const chapterModules: Array<Record<string, Challenge>> = [
   chapter01,

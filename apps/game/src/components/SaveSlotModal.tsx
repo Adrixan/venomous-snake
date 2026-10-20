@@ -1,6 +1,8 @@
+/* eslint-disable @nx/enforce-module-boundaries */
 import React, { useCallback, useEffect, useState } from 'react';
 import type { SaveSlot } from '@venomous-snake/save-system';
 import { saveManager } from '@venomous-snake/save-system';
+import { downloadTextFile } from '@venomous-snake/save-system';
 
 export interface SaveSlotModalProps {
   mode: 'save' | 'load';
@@ -272,7 +274,8 @@ export function SaveSlotModal({
                 <div style={{ color: '#555', fontSize: '11px', marginTop: '2px' }}>
                   {formatDate(slot.updatedAt)}
                   {' · '}
-                  Lv {slot.data.level} · XP {slot.data.xp}
+                  Lv {Math.floor(slot.data.progress.totalXp / 100) + 1} · XP{' '}
+                  {slot.data.progress.totalXp}
                 </div>
               </div>
 
@@ -324,7 +327,8 @@ export function SaveSlotModal({
               setBusy(true);
               setError(null);
               void saveManager
-                .exportAllSaves()
+                .exportSlots()
+                .then((text) => downloadTextFile('venomous-snake-saves.json', text))
                 .then(() => setBusy(false))
                 .catch((err) => {
                   setError(err instanceof Error ? err.message : 'Export failed');
@@ -353,8 +357,9 @@ export function SaveSlotModal({
                 if (!file) return;
                 setBusy(true);
                 setError(null);
-                void saveManager
-                  .importSaveSlot(file)
+                void file
+                  .text()
+                  .then((text) => saveManager.importFile(text))
                   .then(() => {
                     refresh();
                     setBusy(false);

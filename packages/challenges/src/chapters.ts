@@ -33,7 +33,7 @@ export const chapters: Chapter[] = [
     id: 2,
     titleKey: 'chapters.ch02.title',
     descriptionKey: 'chapters.ch02.description',
-    floor: 'floor_2',
+    floor: 'floor_1',
     challenges: [
       'ch02_01_string_methods',
       'ch02_02_string_indexing',
@@ -58,7 +58,7 @@ export const chapters: Chapter[] = [
     id: 3,
     titleKey: 'chapters.ch03.title',
     descriptionKey: 'chapters.ch03.description',
-    floor: 'floor_3',
+    floor: 'floor_2',
     challenges: [
       'ch03_01_simple_if',
       'ch03_02_if_else',
@@ -83,7 +83,7 @@ export const chapters: Chapter[] = [
     id: 4,
     titleKey: 'chapters.ch04.title',
     descriptionKey: 'chapters.ch04.description',
-    floor: 'floor_4',
+    floor: 'floor_3',
     challenges: [
       'ch04_01_simple_for_loop',
       'ch04_02_range_basics',
@@ -111,7 +111,7 @@ export const chapters: Chapter[] = [
     id: 5,
     titleKey: 'chapters.ch05.title',
     descriptionKey: 'chapters.ch05.description',
-    floor: 'floor_5',
+    floor: 'floor_4',
     challenges: [
       'ch05_01_simple_function',
       'ch05_02_function_return',
@@ -139,7 +139,7 @@ export const chapters: Chapter[] = [
     id: 6,
     titleKey: 'chapters.ch06.title',
     descriptionKey: 'chapters.ch06.description',
-    floor: 'floor_6',
+    floor: 'floor_5',
     challenges: [
       'ch06_01_create_list',
       'ch06_02_list_methods',
@@ -167,7 +167,7 @@ export const chapters: Chapter[] = [
     id: 7,
     titleKey: 'chapters.ch07.title',
     descriptionKey: 'chapters.ch07.description',
-    floor: 'floor_7',
+    floor: 'floor_6',
     challenges: [
       'ch07_01_read_file',
       'ch07_02_write_file',
@@ -194,7 +194,7 @@ export const chapters: Chapter[] = [
     id: 8,
     titleKey: 'chapters.ch08.title',
     descriptionKey: 'chapters.ch08.description',
-    floor: 'floor_8',
+    floor: 'floor_7',
     challenges: [
       'ch08_01_try_except',
       'ch08_02_multiple_except',
@@ -220,7 +220,7 @@ export const chapters: Chapter[] = [
     id: 9,
     titleKey: 'chapters.ch09.title',
     descriptionKey: 'chapters.ch09.description',
-    floor: 'floor_9',
+    floor: 'floor_8',
     challenges: [
       'ch09_01_importing_modules',
       'ch09_02_from_import',
@@ -250,7 +250,7 @@ export const chapters: Chapter[] = [
     id: 10,
     titleKey: 'chapters.ch10.title',
     descriptionKey: 'chapters.ch10.description',
-    floor: 'floor_10',
+    floor: 'floor_9',
     challenges: [
       'ch10_01_simple_class',
       'ch10_02_methods',
@@ -281,7 +281,7 @@ export const chapters: Chapter[] = [
     id: 11,
     titleKey: 'chapters.ch11.title',
     descriptionKey: 'chapters.ch11.description',
-    floor: 'floor_11',
+    floor: 'floor_10',
     challenges: [
       'ch11_01_type_hints',
       'ch11_02_dataclasses',
@@ -307,7 +307,7 @@ export const chapters: Chapter[] = [
     id: 12,
     titleKey: 'chapters.ch12.title',
     descriptionKey: 'chapters.ch12.description',
-    floor: 'floor_12',
+    floor: 'floor_11',
     challenges: [
       'ch12_01_generators',
       'ch12_02_generator_expressions',

@@ -1,7 +1,15 @@
 // @venomous-snake/save-system
-// Persistence layer: IndexedDB storage and JSON save/load
-export const SAVE_SYSTEM_VERSION = '0.0.1';
-
-export type { GameSettings, InventoryItem, SaveData, SaveSlot, SaveBundle } from './types';
-export { saveManager, MAX_SAVE_SLOTS, MAX_AUTOSAVE_SLOTS } from './SaveManager';
-export { computeSignature, verifySignature } from './integrity';
+// Validated persistence of save games in IndexedDB, plus export and import.
+export { SAVE_FORMAT_VERSION } from './types';
+export type { SaveData, SaveSlot, SaveBundle, PlayerGender } from './types';
+export {
+  SaveManager,
+  saveManager,
+  MAX_SAVE_SLOTS,
+  MAX_AUTOSAVE_SLOTS,
+  MAX_IMPORT_BYTES,
+} from './SaveManager';
+export { parseSaveData, parseSaveSlot, InvalidSaveError } from './schema';
+export { IndexedDbSaveStore, MemorySaveStore, StorageUnavailableError } from './storage';
+export type { SaveStore } from './storage';
+export { downloadTextFile } from './download';
