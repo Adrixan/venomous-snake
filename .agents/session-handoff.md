@@ -1,14 +1,14 @@
 # Session handoff
 
-Date: 2026-10-20
+Date: 2026-10-21
 
 ## Intent
 
-Dependency and content cleanup: update compatible dependencies, remove `challenges.json`, validate security and release checks, and push the result to `main`.
+Fix local Vite development worker load failure caused by the production service worker intercepting Vite's `/@fs/...` worker request.
 
 ## State
 
-Dependency refresh and i18n cleanup complete. Both localized `challenges.json` files were removed and their translations moved to TypeScript resource modules. Nx test targets use `@nx/vitest:test`; Pyodide 314 asset handling uses `pyodide.asm.mjs`. Tests, type-check, lint, build, and `pnpm audit` pass.
+Service-worker registration in `apps/game/index.html` is now production-only using Vite's `%MODE%` HTML replacement. Production output retains registration; workspace tests, type-check, lint, and build pass.
 
 Untracked helper material in `.scratch/` (consistency, closure and reachability scripts, CPython and Pyodide harnesses) is user-owned and retained. `.scratch/challenges.json` was explicitly removed per request.
 
@@ -21,4 +21,5 @@ Untracked helper material in `.scratch/` (consistency, closure and reachability 
 
 ## Next steps
 
-- Commit the verified changes to `main` and push to `origin/main`.
+- Unregister any existing localhost service worker once in the browser and reload the dev server page to verify the worker request succeeds.
+- Commit and push this fix to `main`.
