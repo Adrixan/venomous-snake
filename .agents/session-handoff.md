@@ -2,6 +2,11 @@
 
 Date: 2026-10-21
 
+## CI follow-up
+
+- Removed the production SCP deployment from push/PR CI. CI retains lint/typecheck/test/build and the build artifact; hosting deployment remains manual, while Lernspiele publishing is handled by the existing dispatch notification/release pipeline.
+- Verified uncached Nx type-check, test, and game build targets: all passed.
+
 ## Intent
 
 Fix local Vite development worker load failure caused by the production service worker intercepting Vite's `/@fs/...` worker request.
