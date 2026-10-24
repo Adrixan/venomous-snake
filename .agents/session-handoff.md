@@ -1,5 +1,8 @@
 # Session handoff
 
+## 2026-10-24 release audit remediation
+- Updated transitive body-parser to 1.20.9 and on-finished to 2.4.2 via compatible lockfile refresh. Audit, lint, type-check, tests and build passed. Main `45e3964` merged/pushed; GitHub CI passed. Used site `.scratch/remediation/venomous-snake` worktree to preserve pre-existing `.serena/project.yml` and `nx.json` edits.
+
 Date: 2026-10-21
 
 ## CI follow-up
