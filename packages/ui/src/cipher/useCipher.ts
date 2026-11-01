@@ -1,4 +1,5 @@
 import { useState, useCallback, useRef } from 'react';
+import { translateCipher } from '@venomous-snake/i18n';
 import { CipherAI } from '@venomous-snake/narrative';
 import type { CipherContext, CipherMood } from '@venomous-snake/narrative';
 
@@ -23,7 +24,7 @@ interface QueueEntry {
 
 export function useCipher(): UseCipherReturn {
   // Stable CipherAI instance — never recreated
-  const cipherRef = useRef<CipherAI>(new CipherAI());
+  const cipherRef = useRef<CipherAI>(new CipherAI({ translator: translateCipher }));
   const cipher = cipherRef.current;
 
   const [currentMessage, setCurrentMessage] = useState<string | null>(null);
