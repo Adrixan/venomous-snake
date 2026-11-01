@@ -66,3 +66,8 @@ The helper scripts formerly in `.scratch/` now live in `tools/review/` (see Hous
 - Comments are the keys of a map, so read them raw with `getResource`: i18next splits keys on `:` and `.`.
 - The main chunk is 948 KB with both languages. Lazy-loading the inactive language would reduce it.
 - Released as `20261101110425-290099` (source `d984548`). Live browser check in German with a desktop `User-Agent`: quest log, starter comments, objectives, hint, failure text and a solved challenge, no console, CSP or HTTP errors.
+
+## Exit state 2026-11-01
+- Trajectory: review scripts moved to `tools/review`, review findings closed, dormant features and ast writing rules enabled, full German translation, three production releases. Latest live: `20261101110425-290099`. Peter considers this work done.
+- Open, none blocking: native read of the German; `manifest.json` and the `index.html` meta description are English; main chunk 948 KB (lazy-load the inactive language); one unexplained test failure on 2026-11-01 never recurred; skill purchases that spend XP and the skill effects are unit-tested only, the endgame was driven through the event bus, not played.
+- Decisions pending: none. Next step: only what Peter asks for.
