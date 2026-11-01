@@ -1,6 +1,7 @@
 import { useState, useCallback, useMemo, useRef, useEffect, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ChallengeSessionContext } from './ChallengeSession';
+import { failureText, testLabel } from './challengeText';
 import { structureLabel } from './structureLabel';
 import type {
   Challenge,
@@ -94,18 +95,18 @@ export function useChallengeTerminal(challengeId: string | null): UseChallengeTe
         const execResult = await interpreterRef.current.execute(code, {
           interactive: true,
           echoPrompts: true,
+          timeoutMessage: (seconds) => t('terminal.failure.time_limit', { seconds }),
         });
         setRunError(execResult.error ?? null);
       } catch (error) {
-        setOutputs([
-          { type: 'stderr', text: error instanceof Error ? error.message : String(error) },
-        ]);
+        console.error('Python run failed', error);
+        setOutputs([{ type: 'stderr', text: t('terminal.python_unavailable') }]);
       } finally {
         busy.current = false;
         setIsRunning(false);
       }
     },
-    [ensureReady, challenge],
+    [ensureReady, challenge, t],
   );
 
   const submitCode = useCallback(
@@ -132,14 +133,17 @@ export function useChallengeTerminal(challengeId: string | null): UseChallengeTe
 
         const failure = (tr: TestResult): string | undefined => {
           if (tr.structureCheck !== undefined) return structureLabel(t, tr.structureCheck);
-          return tr.testCase.id === 'placeholder' ? t('terminal.structure.blank') : tr.error;
+          if (tr.testCase.id === 'placeholder') return t('terminal.structure.blank');
+          // Without a failure code the interpreter itself broke; its message is internal.
+          if (tr.failure === undefined) return t('terminal.python_unavailable');
+          return failureText(t, tr.failure);
         };
         const outputLines = cResult.testResults
           .map((tr) => {
             const mark = tr.passed ? '✓' : '✗';
             return tr.passed
-              ? `${mark} ${tr.testCase.description}`
-              : `${mark} ${failure(tr) ?? tr.testCase.description}`;
+              ? `${mark} ${testLabel(t, challenge.id, tr.testCase)}`
+              : `${mark} ${failure(tr) ?? testLabel(t, challenge.id, tr.testCase)}`;
           })
           .join('\n');
 
@@ -148,7 +152,7 @@ export function useChallengeTerminal(challengeId: string | null): UseChallengeTe
             ...prev,
             {
               type: 'stdout' as const,
-              text: `✓ All ${cResult.testResults.length} test(s) passed!\n`,
+              text: `${t('terminal.all_passed', { total: cResult.testResults.length })}\n`,
             },
           ]);
           setResult({
@@ -166,13 +170,14 @@ export function useChallengeTerminal(challengeId: string | null): UseChallengeTe
             ...prev,
             {
               type: 'stderr' as const,
-              text: `✗ ${failCount} test(s) failed\n${firstError ?? ''}\n`,
+              text: `${t('terminal.some_failed', { failed: failCount })}\n${firstError ?? ''}\n`,
             },
           ]);
           setResult({ passed: false, output: outputLines, error: firstError });
         }
       } catch (error) {
-        const message = error instanceof Error ? error.message : String(error);
+        console.error('Challenge check failed', error);
+        const message = t('terminal.python_unavailable');
         setOutputs([{ type: 'stderr', text: message }]);
         setResult({ passed: false, output: '', error: message });
       } finally {
@@ -204,8 +209,11 @@ export function useChallengeTerminal(challengeId: string | null): UseChallengeTe
     resetState,
     requestHint: () => {
       if (!challenge) return;
-      const hint = session ? session.requestHint() : hintEngineRef.current.getHint(challenge)?.hint;
-      if (hint) setHints((previous) => [...previous, hint]);
+      const hint = session ? session.requestHint() : hintEngineRef.current.getHint(challenge);
+      if (hint) {
+        const text = t(hint.key, { defaultValue: hint.hint });
+        setHints((previous) => [...previous, text]);
+      }
     },
     interpreter: interpreterRef.current,
   };

@@ -1,5 +1,7 @@
 // @venomous-snake/save-system
 // Validated persistence of save games in IndexedDB, plus export and import.
+export { SaveSystemError } from './errors';
+export type { SaveErrorCode } from './errors';
 export { SAVE_FORMAT_VERSION } from './types';
 export type { SaveData, SaveSlot, SaveBundle, PlayerGender } from './types';
 export {

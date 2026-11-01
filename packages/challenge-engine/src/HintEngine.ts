@@ -2,8 +2,15 @@ import type { Challenge, ErrorPattern, PythonError } from '@venomous-snake/share
 
 export interface HintResult {
   hint: string;
+  /** Translation key; `hint` is the English text. */
+  key: string;
   tier: 1 | 2 | 3;
   source: 'error_pattern' | 'challenge_hint' | 'generic';
+}
+
+/** The id a challenge's texts are filed under, for example `ch05_03`. */
+export function challengeKey(challenge: Pick<Challenge, 'id'>): string {
+  return challenge.id.slice(0, 7);
 }
 
 /** Common Python error patterns that apply to all challenges */
@@ -41,7 +48,7 @@ const COMMON_ERROR_PATTERNS: ErrorPattern[] = [
     pattern: '.*',
     hintText:
       "Python uses indentation (spaces at the start of lines) to group code. Make sure you're using consistent indentation — 4 spaces per level is the standard.",
-    category: 'indentation',
+    category: 'inconsistent_indent',
   },
   {
     errorType: 'SyntaxError',
@@ -93,9 +100,9 @@ export class HintEngine {
     const hintsRevealed = this.hintsUsed.get(challenge.id) ?? 0;
 
     if (error !== undefined) {
-      const patternHint = this.matchErrorPattern(error, challenge.errorPatterns);
+      const patternHint = this.matchErrorPattern(challenge, error);
       if (patternHint !== null) {
-        return { hint: patternHint, tier: 1, source: 'error_pattern' };
+        return { ...patternHint, tier: 1, source: 'error_pattern' };
       }
     }
 
@@ -106,11 +113,17 @@ export class HintEngine {
     const nextHint = availableHints[hintsRevealed + this.tierBoost];
     if (nextHint !== undefined) {
       this.hintsUsed.set(challenge.id, hintsRevealed + 1);
-      return { hint: nextHint.text, tier: nextHint.tier, source: 'challenge_hint' };
+      return {
+        hint: nextHint.text,
+        key: `challenges:${challengeKey(challenge)}.hints.${String(nextHint.tier)}`,
+        tier: nextHint.tier,
+        source: 'challenge_hint',
+      };
     }
 
     return {
       hint: "Don't give up! Try re-reading the challenge description carefully. Sometimes the answer is hiding in plain sight.",
+      key: 'ui:hints.generic',
       tier: 1,
       source: 'generic',
     };
@@ -124,15 +137,25 @@ export class HintEngine {
     this.hintsUsed.delete(challengeId);
   }
 
-  private matchErrorPattern(error: PythonError, challengePatterns?: ErrorPattern[]): string | null {
-    const allPatterns = [...(challengePatterns ?? []), ...COMMON_ERROR_PATTERNS];
+  private matchErrorPattern(
+    challenge: Challenge,
+    error: PythonError,
+  ): { hint: string; key: string } | null {
+    const own = (challenge.errorPatterns ?? []).map((pattern, index) => ({
+      pattern,
+      key: `challenges:${challengeKey(challenge)}.errorPatterns.${String(index)}`,
+    }));
+    const common = COMMON_ERROR_PATTERNS.map((pattern) => ({
+      pattern,
+      key: `ui:hints.pattern.${pattern.category}`,
+    }));
 
-    for (const pattern of allPatterns) {
-      if (error.type === pattern.errorType) {
-        const regex = new RegExp(pattern.pattern, 'i');
-        if (regex.test(error.message)) {
-          return pattern.hintText;
-        }
+    for (const { pattern, key } of [...own, ...common]) {
+      if (
+        error.type === pattern.errorType &&
+        new RegExp(pattern.pattern, 'i').test(error.message)
+      ) {
+        return { hint: pattern.hintText, key };
       }
     }
 

@@ -45,6 +45,7 @@ export interface SubmitResult {
 
 export interface HintResult {
   hint: string;
+  key: string;
   tier: number;
   cipherWrapped: string;
 }
@@ -205,6 +206,7 @@ export class GameController {
 
     return {
       hint: hintResult.hint,
+      key: hintResult.key,
       tier: hintResult.tier,
       cipherWrapped: this.cipher.wrapHint(hintResult.hint),
     };

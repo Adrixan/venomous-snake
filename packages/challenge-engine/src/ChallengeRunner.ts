@@ -7,12 +7,19 @@ import type {
 } from '@venomous-snake/shared-types';
 import { findUnmetChecks, hasPlaceholder } from './StructureChecker';
 
+export type TestFailure =
+  | { code: 'timeout' }
+  | { code: 'wrong_error'; expected: string; actual: string | null }
+  | { code: 'wrong_output'; expected: string; actual: string };
+
 export interface TestResult {
   testCase: TestCase;
   passed: boolean;
   actualOutput?: string;
   error?: string;
   executionTimeMs: number;
+  /** Why the test failed, for wording it in the player's language; `error` is the English. */
+  failure?: TestFailure;
   /** Set on a result that reports a broken writing rule rather than a test case. */
   structureCheck?: StructureCheck;
 }
@@ -91,6 +98,7 @@ export class ChallengeRunner {
           testCase,
           passed: false,
           error: 'Your program ran too long and was stopped. Check for a loop that never ends.',
+          failure: { code: 'timeout' },
           executionTimeMs: performance.now() - startTime,
         };
       }
@@ -98,14 +106,22 @@ export class ChallengeRunner {
 
       if (testCase.expectsError !== undefined) {
         const passed = result.error?.type === testCase.expectsError;
-        const actualErrorType = result.error?.type ?? 'no error';
+        const actualType = result.error?.type ?? null;
+        const actualErrorType = actualType ?? 'no error';
         return {
           testCase,
           passed,
           ...(result.error !== undefined ? { actualOutput: result.error.message } : {}),
           ...(passed
             ? {}
-            : { error: `Expected ${testCase.expectsError} but got ${actualErrorType}` }),
+            : {
+                error: `Expected ${testCase.expectsError} but got ${actualErrorType}`,
+                failure: {
+                  code: 'wrong_error',
+                  expected: testCase.expectsError,
+                  actual: actualType,
+                },
+              }),
           executionTimeMs,
         };
       }
@@ -125,7 +141,14 @@ export class ChallengeRunner {
         actualOutput: normalizedActual,
         ...(passed
           ? {}
-          : { error: `Expected:\n${normalizedExpected}\n\nGot:\n${normalizedActual}` }),
+          : {
+              error: `Expected:\n${normalizedExpected}\n\nGot:\n${normalizedActual}`,
+              failure: {
+                code: 'wrong_output',
+                expected: normalizedExpected,
+                actual: normalizedActual,
+              },
+            }),
         executionTimeMs,
       };
     } catch (err) {

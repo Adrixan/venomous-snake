@@ -191,7 +191,7 @@ function GameChallengeSessionBridge({
           xpEarned: result.xpEarned,
         };
       },
-      requestHint: () => controller.getHint()?.hint ?? null,
+      requestHint: () => controller.getHint(),
     }),
     [challengeId, controller],
   );
