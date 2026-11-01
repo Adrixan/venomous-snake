@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import './victory-screen.css';
 
 export interface VictoryScreenProps {
@@ -35,6 +36,23 @@ const ASCII_BANNER = `
  ║              ╚══════╝╚═════╝ ╚═╝                   ║
  ╚═══════════════════════════════════════════════════╝`;
 
+const ASCII_BANNER_DE = `
+ ╔═══════════════════════════════════════════════════╗
+ ║  ███████╗██╗   ██╗███████╗████████╗███████╗███╗  ║
+ ║  ██╔════╝╚██╗ ██╔╝██╔════╝╚══██╔══╝██╔════╝████╗ ║
+ ║  ███████╗ ╚████╔╝ ███████╗   ██║   █████╗ ██╔██╗║
+ ║  ╚════██║  ╚██╔╝  ╚════██║   ██║   ██╔══╝ ██║╚█║║
+ ║  ███████║   ██║   ███████║   ██║   ███████╗██║ ║║║
+ ║  ╚══════╝   ╚═╝   ╚══════╝   ╚═╝   ╚══════╝╚═╝ ║║║
+ ║                                                   ║
+ ║  ███████╗██╗ ██████╗██╗  ██╗███████╗██████╗ ██╗   ║
+ ║  ██╔════╝██║██╔════╝██║  ██║██╔════╝██╔══██╗██║   ║
+ ║  ███████╗██║██║     ███████║█████╗  ██████╔╝██║   ║
+ ║  ╚════██║██║██║     ██╔══██║██╔══╝  ██╔══██╗╚═╝   ║
+ ║  ███████║██║╚██████╗██║  ██║███████╗██║  ██║██╗   ║
+ ║  ╚══════╝╚═╝ ╚═════╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝╚═╝   ║
+ ╚═══════════════════════════════════════════════════╝`;
+
 function getAgentRating(
   completedChallenges: number,
   totalChallenges: number,
@@ -50,16 +68,16 @@ function getAgentRating(
   return 'C';
 }
 
-function getRatingLabel(rating: string): string {
+function getRatingLabelKey(rating: string): string {
   switch (rating) {
     case 'S':
-      return '★ LEGENDARY HACKER ★';
+      return 'victory.rating_s';
     case 'A':
-      return '◆ ELITE OPERATIVE ◆';
+      return 'victory.rating_a';
     case 'B':
-      return '● SKILLED AGENT ●';
+      return 'victory.rating_b';
     default:
-      return '○ FIELD AGENT ○';
+      return 'victory.rating_c';
   }
 }
 
@@ -72,27 +90,26 @@ function VictoryScreenInner({
   onContinue,
   onReturnToTitle,
 }: VictoryScreenProps): React.JSX.Element {
+  const { t, i18n } = useTranslation('ui');
   const rating = getAgentRating(completedChallenges, totalChallenges, totalXp, level);
-  const ratingLabel = getRatingLabel(rating);
+  const ratingLabel = t(getRatingLabelKey(rating));
 
   return (
     <div className="victory-screen">
       <div className="victory-content">
         <pre className="victory-ascii-banner" aria-hidden="true">
-          {ASCII_BANNER}
+          {i18n.language.startsWith('de') ? ASCII_BANNER_DE : ASCII_BANNER}
         </pre>
 
-        <h1 className="victory-header">
-          {'>'} SYSTEM SECURED {'<'}
-        </h1>
-        <p className="victory-subheader">All threats neutralized. Network integrity restored.</p>
+        <h1 className="victory-header">{t('victory.header')}</h1>
+        <p className="victory-subheader">{t('victory.subheader')}</p>
 
         <div className="victory-divider">{'═'.repeat(48)}</div>
 
         <div className="victory-agent-section">
-          <p className="victory-agent-name">AGENT: {playerName}</p>
+          <p className="victory-agent-name">{t('victory.agent', { name: playerName })}</p>
           <p className={`victory-rating victory-rating--${rating.toLowerCase()}`}>
-            RATING: [{rating}] {ratingLabel}
+            {t('victory.rating', { rating, label: ratingLabel })}
           </p>
         </div>
 
@@ -100,43 +117,38 @@ function VictoryScreenInner({
 
         <div className="victory-stats">
           <div className="victory-stat-row">
-            <span className="victory-stat-label">CHALLENGES COMPLETED</span>
+            <span className="victory-stat-label">{t('victory.stat_challenges')}</span>
             <span className="victory-stat-value">
               {completedChallenges}/{totalChallenges}
             </span>
           </div>
           <div className="victory-stat-row">
-            <span className="victory-stat-label">TOTAL XP EARNED</span>
+            <span className="victory-stat-label">{t('victory.stat_xp')}</span>
             <span className="victory-stat-value">{totalXp.toLocaleString()}</span>
           </div>
           <div className="victory-stat-row">
-            <span className="victory-stat-label">AGENT LEVEL</span>
-            <span className="victory-stat-value">LVL {level}</span>
+            <span className="victory-stat-label">{t('victory.stat_level')}</span>
+            <span className="victory-stat-value">{t('victory.level_value', { level })}</span>
           </div>
         </div>
 
         <div className="victory-divider">{'═'.repeat(48)}</div>
 
         <div className="victory-freemode">
-          <p className="victory-freemode-header">
-            {'>>>'} FREE MODE UNLOCKED {'<<<'}
-          </p>
-          <p className="victory-freemode-text">
-            All floors are now accessible. Revisit any terminal, replay challenges, and explore at
-            your leisure.
-          </p>
+          <p className="victory-freemode-header">{t('victory.free_mode_header')}</p>
+          <p className="victory-freemode-text">{t('victory.free_mode_text')}</p>
         </div>
 
         <div className="victory-actions">
           <button className="victory-btn victory-btn--primary" onClick={onContinue} type="button">
-            [{'>'} CONTINUE IN FREE MODE]
+            {t('victory.continue')}
           </button>
           <button
             className="victory-btn victory-btn--secondary"
             onClick={onReturnToTitle}
             type="button"
           >
-            [RETURN TO TITLE]
+            {t('victory.return_to_title')}
           </button>
         </div>
       </div>

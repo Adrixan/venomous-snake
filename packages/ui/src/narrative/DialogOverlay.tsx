@@ -164,7 +164,7 @@ export function DialogOverlay({
       <div
         role="dialog"
         aria-modal="true"
-        aria-label={speakerName ?? 'NPC Dialog'}
+        aria-label={speakerName ?? t('ui:dialog_ui.aria')}
         style={{
           position: 'fixed',
           bottom: 0,
@@ -258,7 +258,7 @@ export function DialogOverlay({
             {hasChoices && !isTyping && (
               <div
                 role="group"
-                aria-label="Dialog choices"
+                aria-label={t('ui:dialog_ui.choices_aria')}
                 style={{ display: 'flex', flexDirection: 'column', gap: 8 }}
               >
                 {(() => {
@@ -348,10 +348,10 @@ export function DialogOverlay({
               }}
             >
               {isTyping
-                ? 'ENTER / CLICK — skip'
+                ? t('ui:dialog_ui.hint_skip')
                 : hasChoices
-                  ? 'TAB — navigate · ENTER — select'
-                  : 'ENTER / CLICK — continue'}
+                  ? t('ui:dialog_ui.hint_navigate')
+                  : t('ui:dialog_ui.hint_continue')}
             </div>
           </div>
         </div>

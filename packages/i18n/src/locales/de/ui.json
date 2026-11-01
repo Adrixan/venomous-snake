@@ -41,7 +41,95 @@
         "kwarg": "einen **kwargs-Parameter"
       }
     },
-    "loading_python": "Python-Umgebung wird geladen ..."
+    "loading_python": "Python-Umgebung wird geladen ...",
+    "failure": {
+      "timeout": "Dein Programm lief zu lange und wurde gestoppt. Suche nach einer Schleife, die nie endet.",
+      "time_limit": "Ausführung nach {{seconds}} s gestoppt. Suche nach einer Schleife, die nie endet.",
+      "wrong_error": "Erwartet: {{expected}}, erhalten: {{actual}}",
+      "no_error": "kein Fehler",
+      "wrong_output": "Erwartet:\n{{expected}}\n\nErhalten:\n{{actual}}"
+    },
+    "empty_editor": "# Schreibe deinen Python-Code hier\n",
+    "python_unavailable": "Die Python-Umgebung ist nicht verfügbar. Lade die Seite neu und versuche es noch einmal.",
+    "state": {
+      "offline": "Offline",
+      "loading": "Lädt...",
+      "ready": "Bereit",
+      "executing": "Wird ausgeführt...",
+      "error": "Fehler"
+    },
+    "python_title": "▶ PYTHON-TERMINAL",
+    "challenge_title": "▶ HACK {{chapter}}.{{order}}",
+    "fallback_title": "▶ TERMINAL",
+    "close_aria": "Terminal schließen (Esc)",
+    "close_button": "✕ SCHLIESSEN",
+    "reset_aria": "Code auf den Anfangszustand zurücksetzen",
+    "reset_button": "↺ ZURÜCKSETZEN",
+    "initializing": "Python-Interpreter wird gestartet...",
+    "no_interpreter": "Kein Interpreter eingerichtet",
+    "free_hint": "Strg+Eingabe zum Ausführen • Esc zum Schließen",
+    "challenge_hint": "Ausführen ▶ zum Testen • Einreichen ✓ zum Bewerten • Esc zum Schließen",
+    "challenge_code": "KAP{{chapter}}.{{order}}",
+    "objectives": "🎯 MISSIONSZIELE ({{passed}}/{{total}})",
+    "hack_successful": "✓ HACK ERFOLGREICH",
+    "tests_failed": "✗ Tests fehlgeschlagen: Prüfe die Missionsziele und versuch es noch einmal",
+    "cipher_hint_title": "💡 CIPHER-HINWEIS",
+    "all_passed": "✓ Alle Tests bestanden ({{total}})!",
+    "some_failed": "✗ Fehlgeschlagene Tests: {{failed}}",
+    "output": {
+      "title": "Ausgabe",
+      "clear": "Löschen",
+      "clear_aria": "Ausgabe löschen",
+      "log_aria": "Programmausgabe",
+      "empty": "Noch keine Ausgabe. Führe deinen Code mit Strg+Eingabe aus.",
+      "input_aria": "Programmeingabe"
+    },
+    "editor": {
+      "aria": "Python-Code-Editor",
+      "run": "Ausführen ▶",
+      "run_aria": "Code ausführen (Strg+Eingabe)",
+      "submit": "Einreichen ✓",
+      "submit_aria": "Lösung einreichen",
+      "phrases": {
+        "completions": "Vorschläge",
+        "selection_deleted": "Auswahl gelöscht",
+        "control_character": "Steuerzeichen",
+        "close": "schließen"
+      }
+    },
+    "keyboard": {
+      "aria": "Code-Tastatur",
+      "symbols_aria": "Python-Symbole",
+      "insert": "{{symbol}} einfügen",
+      "caps_on": "Feststelltaste an",
+      "shift_on": "Umschalttaste an",
+      "shift": "Umschalttaste",
+      "backspace": "Rücktaste",
+      "tab": "Tabulator",
+      "tab_key": "Tab",
+      "space": "Leertaste",
+      "space_key": "Leertaste",
+      "enter": "Eingabetaste",
+      "enter_key": "↵ Eingabe"
+    },
+    "boot": {
+      "aria": "Terminal-Startsequenz",
+      "runtime": "Python-Laufzeit wird gestartet...",
+      "network": "Verbindung zum Netzwerk von Rattlesnake Corp wird aufgebaut...",
+      "ready": "Zugriff gewährt. Terminal bereit."
+    },
+    "success": {
+      "aria": "Hack erfolgreich",
+      "title": "▶ HACK ERFOLGREICH",
+      "continue": "Klicke oder warte, um fortzufahren",
+      "quote_1": "Sauberer Code. Ich würde dich anstellen, aber dann hätte Rattlesnake Corp ZWEI Probleme.",
+      "quote_2": "SYSTEM KOMPROMITTIERT, und zwar auf die bestmögliche Art. Gut gemacht, Operative.",
+      "quote_3": "Weißt du, was das Sicherheitsteam gerade macht? Es aktualisiert seine Lebensläufe.",
+      "quote_4": "Makellos ausgeführt. Ich wusste ja, dass du es schaffst. Ich war nur zu 73 % in Panik.",
+      "quote_5": "Aufgabe gelöst! Der Algorithmus verneigt sich vor deinen überlegenen Python-Künsten.",
+      "quote_6": "Das Terminal hat deine Lösung akzeptiert. Ich war zuerst dran, aber den Ruhm kassieren immer die Terminals.",
+      "quote_7": "So macht man das! Das Sicherheitssystem hatte gerade einen sehr schlechten Tag."
+    }
   },
   "menu": {
     "new_game": "Neues Spiel",
@@ -51,7 +139,11 @@
     "settings": "Einstellungen",
     "quit": "Zum Menü",
     "resume": "Fortsetzen",
-    "tutorial": "Tutorial-Modus"
+    "tutorial": "Tutorial-Modus",
+    "subtitle": "Python-Hacking-RPG",
+    "main_aria": "Hauptmenü",
+    "pause_aria": "Pausenmenü",
+    "paused": "PAUSIERT"
   },
   "error_boundary": {
     "title": "Systemausfall",
@@ -89,7 +181,12 @@
     "keyboard_size_medium": "Mittel",
     "keyboard_size_large": "Groß",
     "show_desktop_keyboard": "Bildschirmtastatur (Desktop)",
-    "restart_tutorial": "Tutorial neu starten"
+    "restart_tutorial": "Tutorial neu starten",
+    "audio": "Ton",
+    "mute": "Alles stummschalten",
+    "mute_btn": "STUMM",
+    "unmute": "TON AN",
+    "language_selector_aria": "Sprachauswahl"
   },
   "hud": {
     "xp": "EP",
@@ -110,7 +207,22 @@
     "try_again": "Nicht ganz richtig. Versuch es nochmal!",
     "tests_passed": "{{passed}}/{{total}} Tests bestanden",
     "locked": "Gesperrt — Zuerst Voraussetzungen erfüllen",
-    "test_results": "Testergebnisse"
+    "test_results": "Testergebnisse",
+    "panel_label": "Aufgabenbereich",
+    "close": "Schließen",
+    "hints": "Hinweise",
+    "tests": "TESTS",
+    "no_results": "Noch keine Testergebnisse. Reiche deine Lösung ein, um die Tests zu starten.",
+    "submit": "▶ EINREICHEN",
+    "hint_warning": "Hinweise verringern deine EP-Belohnung",
+    "get_hint": "💡 HINWEIS (S{{tier}})",
+    "difficulty": {
+      "beginner": "Einsteiger",
+      "easy": "Leicht",
+      "medium": "Mittel",
+      "hard": "Schwer",
+      "expert": "Experte"
+    }
   },
   "progress": {
     "title": "Fortschritt",
@@ -128,7 +240,9 @@
     "status_locked": "Gesperrt",
     "status_available": "Verfügbar",
     "status_in_progress": "In Bearbeitung",
-    "status_completed": "Abgeschlossen"
+    "status_completed": "Abgeschlossen",
+    "floor_lobby": "Lobby",
+    "floor_number": "{{n}}"
   },
   "inventory": {
     "title": "Inventar",
@@ -142,7 +256,8 @@
     "floor": "Etage {{num}}",
     "locked": "Gesperrt",
     "current": "Aktuell",
-    "fast_travel": "Schnellreise"
+    "fast_travel": "Schnellreise",
+    "chapter_short": "Kap. {{num}}"
   },
   "levels": {
     "1": "Rekrut",
@@ -170,7 +285,10 @@
     "cat_oop": "OOP",
     "cat_advanced": "Fortgeschritten",
     "effect_hint_boost": "Hinweise zeigen mehr Details",
-    "effect_speed_bonus": "Geschwindigkeitsbonus auf EP"
+    "effect_speed_bonus": "Geschwindigkeitsbonus auf EP",
+    "state_locked": "gesperrt",
+    "state_available": "verfügbar",
+    "state_unlocked": "freigeschaltet"
   },
   "skills": {
     "print_master": "Druck-Meister",
@@ -329,7 +447,11 @@
     "reset_progress": "Fortschritt zurücksetzen",
     "reset_confirm": "Bist du sicher? Das löscht den gesamten Tutorial-Fortschritt.",
     "difficulty": "Schwierigkeit",
-    "concepts": "Konzepte"
+    "concepts": "Konzepte",
+    "hint_aria": "Tutorial-Hinweis",
+    "chapters_aria": "Kapitel",
+    "reset": "Zurücksetzen",
+    "avatar_badge": "KI"
   },
   "storyTerminal": {
     "quests": "Aufträge",
@@ -337,6 +459,190 @@
     "settings": "Einstellungen",
     "save": "Speichern",
     "inventory": "Gegenstände",
-    "skills": "Fähigkeiten"
+    "skills": "Fähigkeiten",
+    "floor": "ETAGE {{n}}",
+    "xpProgress": "EP: {{percent}} %",
+    "levelBadge": "Lvl. {{level}}",
+    "actions": "Aktionen",
+    "noActions": "Keine Aktionen verfügbar...",
+    "toolbar": "Werkzeugleiste",
+    "locked": "Gesperrt",
+    "prefixSystem": "[SYSTEM]",
+    "prefixError": "[FEHLER]"
+  },
+  "hints": {
+    "generic": "Gib nicht auf! Lies die Aufgabenbeschreibung noch einmal genau durch. Manchmal steckt die Lösung in einem Detail.",
+    "pattern": {
+      "missing_colon": "Sieht so aus, als fehlt ein Doppelpunkt (:). In Python brauchen Anweisungen wie if, for, while, def und class am Zeilenende einen Doppelpunkt.",
+      "indentation": "Deine Einrückung stimmt nicht. In Python ist die Einrückung wichtig! Achte darauf, dass alle Zeilen eines Blocks gleich weit eingerückt sind.",
+      "undefined_name": "Du verwendest eine Variable oder Funktion, die es noch nicht gibt. Prüfe den Namen auf Tippfehler oder ob du sie vor der Verwendung definiert hast.",
+      "type_mismatch": "Du versuchst, Text (Strings) mit Zahlen zu mischen. Wandle Zahlen mit str() in Text um oder Text mit int() bzw. float() in Zahlen.",
+      "inconsistent_indent": "Python gruppiert Code über die Einrückung (Leerzeichen am Zeilenanfang). Rücke einheitlich ein: Üblich sind 4 Leerzeichen pro Ebene.",
+      "unclosed_string": "Du hast eine Zeichenkette mit einem Anführungszeichen begonnen, aber nicht geschlossen. Zu jedem öffnenden Anführungszeichen gehört ein schließendes.",
+      "missing_args": "Du hast eine Funktion aufgerufen, aber zu wenige Argumente übergeben. Sieh in der Funktionsdefinition nach, welche Parameter sie braucht.",
+      "invalid_conversion": "Du versuchst, etwas in eine ganze Zahl umzuwandeln, das keine gültige Zahl ist. Prüfe, ob der Wert wirklich eine Zahl ist.",
+      "index_out_of_range": "Du greifst auf ein Listenelement zu, das es nicht gibt. Denk daran: Python-Listen beginnen bei Index 0. Eine Liste mit 3 Elementen hat die Indizes 0, 1 und 2.",
+      "key_error": "Du greifst auf einen Schlüssel im Dictionary zu, den es nicht gibt. Prüfe die Schreibweise oder gib mit .get() einen Standardwert an."
+    }
+  },
+  "floor_progress": {
+    "label": "Etage: {{floor}}, {{completed}}/{{total}} Aufgaben",
+    "complete": "Etage geschafft! Nimm den Aufzug, um weiterzukommen.",
+    "bar_aria": "{{completed}} von {{total}} Aufgaben abgeschlossen"
+  },
+  "floor_announcement": {
+    "title": "ETAGE {{n}}: {{name}}",
+    "badge": "[ ETAGE {{n}} ]"
+  },
+  "loading": {
+    "status": "LÄDT...",
+    "subtitle": "VENOMOUS SNAKE • SICHERHEITSABTEILUNG VON RATTLESNAKE CORP",
+    "aria": "Wird geladen"
+  },
+  "cipher_ui": {
+    "message_aria": "CIPHER-Nachricht",
+    "skip": "Überspringen",
+    "skip_aria": "Schreibmaschinen-Animation überspringen",
+    "dismiss": "Schließen",
+    "dismiss_aria": "CIPHER-Nachricht schließen",
+    "hint_aria": "CIPHER-Hinweis",
+    "hint_label": "CIPHER · HINWEIS",
+    "dismiss_hint_aria": "Hinweis schließen",
+    "portrait_aria": "CIPHER, Stimmung: {{mood}}",
+    "mood": {
+      "neutral": "neutral",
+      "excited": "begeistert",
+      "concerned": "besorgt",
+      "amused": "amüsiert",
+      "impressed": "beeindruckt",
+      "thinking": "nachdenklich"
+    }
+  },
+  "notifications": {
+    "achievements_aria": "Erfolgsmeldungen",
+    "items_aria": "Gegenstandsmeldungen"
+  },
+  "dialog_ui": {
+    "aria": "NPC-Dialog",
+    "choices_aria": "Antwortmöglichkeiten",
+    "hint_skip": "ENTER / KLICK: überspringen",
+    "hint_navigate": "TAB: wechseln · ENTER: auswählen",
+    "hint_continue": "ENTER / KLICK: weiter"
+  },
+  "cutscene_ui": {
+    "aria": "Zwischensequenz",
+    "skip_aria": "Zwischensequenz überspringen"
+  },
+  "victory": {
+    "header": "> SYSTEM GESICHERT <",
+    "subheader": "Alle Bedrohungen neutralisiert. Netzwerk wiederhergestellt.",
+    "agent": "AGENT: {{name}}",
+    "rating": "BEWERTUNG: [{{rating}}] {{label}}",
+    "rating_s": "★ LEGENDÄRER HACKER ★",
+    "rating_a": "◆ ELITE-OPERATIVE ◆",
+    "rating_b": "● FÄHIGER AGENT ●",
+    "rating_c": "○ FELDAGENT ○",
+    "stat_challenges": "ABGESCHLOSSENE AUFGABEN",
+    "stat_xp": "GESAMMELTE EP",
+    "stat_level": "AGENTEN-LEVEL",
+    "level_value": "LEVEL {{level}}",
+    "free_mode_header": ">>> FREIES SPIEL FREIGESCHALTET <<<",
+    "free_mode_text": "Alle Etagen stehen dir jetzt offen. Besuche jedes Terminal noch einmal, wiederhole Aufgaben und erkunde alles in Ruhe.",
+    "continue": "[> IM FREIEN SPIEL WEITERMACHEN]",
+    "return_to_title": "[ZURÜCK ZUM TITELBILDSCHIRM]"
+  },
+  "credits": {
+    "mission_complete": "Mission erfüllt. Gut gespielt.",
+    "time_hours": "{{hours}} h {{minutes}} min",
+    "time_minutes": "{{minutes}} min {{seconds}} s",
+    "time_seconds": "{{seconds}} s"
+  },
+  "save_slots": {
+    "title_save": "SPIEL SPEICHERN",
+    "title_load": "SPIEL LADEN",
+    "overwrite_confirm": "Diesen Speicherplatz überschreiben?",
+    "overwrite": "ÜBERSCHREIBEN",
+    "cancel": "ABBRECHEN",
+    "empty_load": "Keine Spielstände gefunden.",
+    "empty_save": "Noch keine Spielstände vorhanden.",
+    "slot_manual": "Spielstand: {{name}} · Etage {{floor}}",
+    "slot_auto": "Automatisch gespeichert: {{name}} · Etage {{floor}}",
+    "meta": "Lvl. {{level}} · EP {{xp}}",
+    "load": "LADEN",
+    "save": "SPEICHERN",
+    "delete": "LÖSCHEN",
+    "delete_aria": "{{name}} löschen",
+    "new_slot": "+ NEUER SPEICHERPLATZ",
+    "export_all": "⬇ ALLE EXPORTIEREN",
+    "import": "⬆ IMPORTIEREN",
+    "close": "SCHLIESSEN",
+    "failed": {
+      "save": "Speichern fehlgeschlagen",
+      "delete": "Löschen fehlgeschlagen",
+      "export": "Export fehlgeschlagen",
+      "import": "Import fehlgeschlagen"
+    },
+    "errors": {
+      "storage_unavailable": "Speichern ist in dieser Browser-Sitzung nicht möglich",
+      "slot_limit": "Es sind höchstens {{max}} Spielstände erlaubt. Lösche zuerst einen.",
+      "slot_not_found": "Speicherplatz „{{id}}“ nicht gefunden",
+      "nothing_to_export": "Keine Spielstände zum Exportieren",
+      "import_empty": "Der Import enthielt keine Spielstände",
+      "file_too_large": "Die Datei ist zu groß",
+      "file_not_json": "Die Datei enthält kein gültiges JSON",
+      "file_damaged": "Die Datei ist beschädigt (Prüfsumme stimmt nicht)",
+      "file_empty": "Die Datei enthält keine Spielstände",
+      "field_string": "{{field}} muss ein Text sein",
+      "field_number": "{{field}} muss eine Zahl sein",
+      "field_list": "{{field}} muss eine Liste sein",
+      "engine_missing": "Spielzustand fehlt",
+      "progress_missing": "Fortschritt fehlt",
+      "data_invalid": "Die Spielstanddaten sind ungültig",
+      "slot_invalid": "Der Speicherplatz ist ungültig",
+      "id_invalid": "Ungültige Spielstand-ID",
+      "unsupported_version": "Spielstand-Version {{version}} wird nicht unterstützt"
+    }
+  },
+  "pwa": {
+    "install_aria": "Banner zur App-Installation",
+    "install_title": "Venomous Snake installieren",
+    "install_text": "Offline spielen, kürzere Ladezeiten",
+    "install_button": "INSTALLIEREN",
+    "install_button_aria": "App installieren",
+    "installing": "WIRD INSTALLIERT...",
+    "dismiss_aria": "Installationshinweis schließen",
+    "update_aria": "Update verfügbar: Zum Aktualisieren klicken",
+    "update_title": "Update verfügbar",
+    "update_action": "Zum Aktualisieren klicken",
+    "update_hint": "(neue Version bereit)"
+  },
+  "portrait": {
+    "aria": "Porträt: {{name}}",
+    "names": {
+      "guard": "Wache",
+      "silva": "Dr. Silva",
+      "kai": "Kai",
+      "reeves": "Reeves",
+      "patel": "Patel",
+      "labbot": "Laborbot",
+      "voss": "Voss",
+      "chen": "Chen",
+      "okafor": "Okafor",
+      "jamie": "Jamie",
+      "diaz": "Diaz",
+      "echo": "Echo-KI",
+      "kim": "Kim",
+      "blackwell": "Blackwell",
+      "kowalski": "Kowalski",
+      "delta7": "Delta-7",
+      "volkov": "Volkov",
+      "aifragment": "KI-Fragment",
+      "coreguardian": "Kernwächter",
+      "ghost": "Geist",
+      "sterling": "Sterling",
+      "nova": "Nova",
+      "snake": "Snake",
+      "player": "Spielfigur"
+    }
   }
 }

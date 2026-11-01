@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
+import { challengeMap, floorNumberFromId } from '@venomous-snake/challenges';
+import { translateText } from '../i18n/translateText';
 import type { CurriculumProgress, Chapter } from '@venomous-snake/shared-types';
 
 export interface QuestLogProps {
@@ -71,6 +73,14 @@ export function QuestLog({
     }
   }
 
+  const floorNumber = floorNumberFromId(currentFloor);
+  const floorLabel =
+    floorNumber === undefined
+      ? currentFloor
+      : floorNumber === 0
+        ? t('quest_log.floor_lobby')
+        : t('quest_log.floor_number', { n: floorNumber });
+
   const progressPercent = totalCount > 0 ? Math.round((completedCount / totalCount) * 100) : 0;
 
   const panelStyle: React.CSSProperties = {
@@ -116,7 +126,7 @@ export function QuestLog({
     <div style={panelStyle}>
       <div style={headerStyle}>
         <h2 style={{ color: '#00ff9d', fontSize: '16px', margin: 0 }}>{t('quest_log.title')}</h2>
-        <button style={closeButtonStyle} onClick={onClose} aria-label="Close">
+        <button style={closeButtonStyle} onClick={onClose} aria-label={t('accessibility.close')}>
           ×
         </button>
       </div>
@@ -129,7 +139,7 @@ export function QuestLog({
                 {t('quest_log.chapter', { num: currentChapter.id })}
               </div>
               <div style={{ color: '#e0e0e0', fontSize: '11px', marginBottom: '4px' }}>
-                {t('quest_log.floor', { floor: currentFloor })}
+                {t('quest_log.floor', { floor: floorLabel })}
               </div>
               {/* Progress bar */}
               <div style={{ marginTop: '8px' }}>
@@ -203,7 +213,7 @@ export function QuestLog({
                         fontSize: '13px',
                       }}
                     >
-                      {challengeId}
+                      {translateText(t, challengeMap[challengeId]?.titleKey ?? challengeId)}
                     </span>
                   </div>
                   {isExpanded && (

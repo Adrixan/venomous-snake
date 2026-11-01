@@ -1,7 +1,7 @@
 export { ChallengeRunner } from './ChallengeRunner';
 export { findUnmetChecks, hasPlaceholder } from './StructureChecker';
-export type { TestResult, ChallengeResult } from './ChallengeRunner';
-export { HintEngine } from './HintEngine';
+export type { TestFailure, TestResult, ChallengeResult } from './ChallengeRunner';
+export { HintEngine, challengeKey } from './HintEngine';
 export type { HintResult } from './HintEngine';
 export { ProgressionManager } from './ProgressionManager';
 export { XPSystem, LEVEL_THRESHOLDS } from './XPSystem';

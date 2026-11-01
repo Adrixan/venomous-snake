@@ -1,10 +1,12 @@
 import React, { useEffect, useCallback, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { getSharedInterpreter, initializeSharedInterpreter } from '@venomous-snake/python-runtime';
 import { HackingTerminal, TerminalBootSequence } from '@venomous-snake/ui';
 import { useGameStore } from '../store/gameStore';
 import { EventBus } from '@venomous-snake/engine';
 
 export const TerminalOverlay = React.memo(function TerminalOverlay(): React.JSX.Element | null {
+  const { t } = useTranslation('ui');
   const terminalOpen = useGameStore((s) => s.overlay.terminalOpen);
   const closeTerminal = useGameStore((s) => s.closeTerminal);
   const currentChallengeId = useGameStore((s) => s.currentChallengeId);
@@ -45,7 +47,12 @@ export const TerminalOverlay = React.memo(function TerminalOverlay(): React.JSX.
   if (!terminalOpen) return null;
 
   return (
-    <div className="terminal-overlay" role="dialog" aria-modal="true" aria-label="Hacking Terminal">
+    <div
+      className="terminal-overlay"
+      role="dialog"
+      aria-modal="true"
+      aria-label={t('terminal.title')}
+    >
       {/* Boot sequence shown on first open each session */}
       {!bootDone && <TerminalBootSequence onComplete={() => setBootDone(true)} />}
 
@@ -61,7 +68,7 @@ export const TerminalOverlay = React.memo(function TerminalOverlay(): React.JSX.
           <HackingTerminal
             interpreter={getSharedInterpreter()}
             onClose={handleClose}
-            initialCode={'# Write your Python code here\n'}
+            initialCode={t('terminal.empty_editor')}
           />
         ))}
     </div>

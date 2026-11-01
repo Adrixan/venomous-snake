@@ -334,6 +334,8 @@ export interface ExecutionResult {
 
 /** Per-run options for {@link PythonInterpreter.execute}. */
 export interface ExecuteOptions {
+  /** Wording of the time limit message, for a learner-facing run; gets the limit in seconds. */
+  timeoutMessage?: (seconds: number) => string;
   /** Keeps the run out of `onOutput`, for tooling that must not reach the learner's terminal. */
   silent?: boolean;
   /** Lines returned by successive `input()` calls. */

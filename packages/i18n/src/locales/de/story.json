@@ -134,10 +134,10 @@
     "stats": {
       "heading": "Deine Missionsdaten",
       "challengesCompleted": "Herausforderungen abgeschlossen",
-      "totalXp": "Gesamtes XP verdient",
+      "totalXp": "Insgesamt verdiente EP",
       "timePlayed": "Zeit im Einsatz",
       "achievementsUnlocked": "Erfolge freigeschaltet",
-      "floorsCleared": "Etagen freigeschalten"
+      "floorsCleared": "Etagen freigeschaltet"
     },
     "newGamePlus": "Neues Spiel+ — Behalte deine Fähigkeiten, starte neu",
     "returnToMenu": "Zurück zum Menü",

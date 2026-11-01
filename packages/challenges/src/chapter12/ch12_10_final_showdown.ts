@@ -27,7 +27,7 @@ export const ch12_10_final_showdown: Challenge = {
     },
     {
       id: 'tc02',
-      description: 'Should combine regex, classes, sorting, and filtering',
+      description: 'Should combine classes, sorting, and filtering',
       expectedOutput:
         'Critical vulnerabilities: 2\nVULN-001 (severity 9): Remote code execution in auth module\nVULN-003 (severity 8): SQL injection in search endpoint',
       hidden: true,

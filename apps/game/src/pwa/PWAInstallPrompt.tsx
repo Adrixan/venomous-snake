@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { usePWA } from './usePWA';
 
 const SESSION_KEY = 'pwa-install-dismissed';
@@ -63,6 +64,7 @@ const styles: Record<string, React.CSSProperties> = {
 };
 
 export function PWAInstallPrompt(): React.JSX.Element | null {
+  const { t } = useTranslation('ui');
   const { isInstallable, isInstalled, install } = usePWA();
   const [dismissed, setDismissed] = useState(false);
   const [installing, setInstalling] = useState(false);
@@ -90,27 +92,27 @@ export function PWAInstallPrompt(): React.JSX.Element | null {
   };
 
   return (
-    <div style={styles['banner']} role="complementary" aria-label="Install app banner">
+    <div style={styles['banner']} role="complementary" aria-label={t('pwa.install_aria')}>
       <span style={styles['icon']} aria-hidden="true">
         ⬇
       </span>
       <div style={styles['text']}>
-        <span style={styles['title']}>Install Venomous Snake</span>
-        <span>Play offline, faster load times</span>
+        <span style={styles['title']}>{t('pwa.install_title')}</span>
+        <span>{t('pwa.install_text')}</span>
       </div>
       <div style={styles['actions']}>
         <button
           style={styles['installBtn']}
           onClick={() => void handleInstall()}
           disabled={installing}
-          aria-label="Install app"
+          aria-label={t('pwa.install_button_aria')}
         >
-          {installing ? 'INSTALLING...' : 'INSTALL'}
+          {installing ? t('pwa.installing') : t('pwa.install_button')}
         </button>
         <button
           style={styles['dismissBtn']}
           onClick={handleDismiss}
-          aria-label="Dismiss install prompt"
+          aria-label={t('pwa.dismiss_aria')}
         >
           ✕
         </button>

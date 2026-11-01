@@ -1,3 +1,5 @@
+import { SaveSystemError } from './errors';
+
 /** Minimal key-value persistence used by the save manager. */
 export interface SaveStore {
   getAll(): Promise<unknown[]>;
@@ -7,9 +9,9 @@ export interface SaveStore {
 }
 
 /** Raised when the browser refuses persistent storage (private mode, quota, policy). */
-export class StorageUnavailableError extends Error {
+export class StorageUnavailableError extends SaveSystemError {
   constructor(cause?: unknown) {
-    super('Saving is not available in this browser session');
+    super('Saving is not available in this browser session', 'storage_unavailable');
     this.name = 'StorageUnavailableError';
     if (cause !== undefined) (this as { cause?: unknown }).cause = cause;
   }

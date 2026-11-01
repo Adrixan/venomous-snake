@@ -41,7 +41,7 @@ export const ch03_02_if_else: Challenge = {
     },
     {
       tier: 2,
-      text: 'if door_locked: — Python treats True as "yes, do this" and False as "skip to else".',
+      text: 'if door_locked: — Python treats True as “yes, do this” and False as “skip to else”.',
     },
     {
       tier: 3,

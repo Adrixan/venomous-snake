@@ -95,7 +95,7 @@ export function InventoryPanel({ isOpen, onClose, items }: InventoryPanelProps):
     <div style={panelStyle}>
       <div style={headerStyle}>
         <h2 style={{ color: '#00ff9d', fontSize: '16px', margin: 0 }}>{t('inventory.title')}</h2>
-        <button style={closeButtonStyle} onClick={onClose} aria-label="Close">
+        <button style={closeButtonStyle} onClick={onClose} aria-label={t('accessibility.close')}>
           ×
         </button>
       </div>

@@ -97,7 +97,7 @@ export function FloorMap({
     <div style={panelStyle}>
       <div style={headerStyle}>
         <h2 style={{ color: '#00ff9d', fontSize: '16px', margin: 0 }}>{t('floor_map.title')}</h2>
-        <button style={closeButtonStyle} onClick={onClose} aria-label="Close">
+        <button style={closeButtonStyle} onClick={onClose} aria-label={t('accessibility.close')}>
           ×
         </button>
       </div>
@@ -144,7 +144,8 @@ export function FloorMap({
                   {translateText(t, floor.name)}
                 </div>
                 <div style={{ color: '#666', fontSize: '10px', marginTop: '2px' }}>
-                  {t('floor_map.floor', { num: floor.floorNum })} · Ch.{floor.chapterNum}
+                  {t('floor_map.floor', { num: floor.floorNum })} ·{' '}
+                  {t('floor_map.chapter_short', { num: floor.chapterNum })}
                 </div>
               </div>
               <div>

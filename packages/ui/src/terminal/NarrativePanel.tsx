@@ -10,7 +10,17 @@ export interface NarrativePanelProps {
 
 const TYPEWRITER_MS = 30;
 
-function renderEntryContent(entry: NarrativeEntry, text: string): React.ReactNode {
+/** Log prefixes in the active language. */
+interface EntryPrefixes {
+  system: string;
+  error: string;
+}
+
+function renderEntryContent(
+  entry: NarrativeEntry,
+  text: string,
+  prefixes: EntryPrefixes,
+): React.ReactNode {
   switch (entry.type) {
     case 'dialog':
     case 'cipher': {
@@ -24,15 +34,23 @@ function renderEntryContent(entry: NarrativeEntry, text: string): React.ReactNod
     case 'action':
       return <>&gt; {text}</>;
     case 'system':
-      return <>[SYSTEM] {text}</>;
+      return (
+        <>
+          {prefixes.system} {text}
+        </>
+      );
     case 'error':
-      return <>[ERROR] {text}</>;
+      return (
+        <>
+          {prefixes.error} {text}
+        </>
+      );
     default:
       return text;
   }
 }
 
-function entryToPlainText(entry: NarrativeEntry, text: string): string {
+function entryToPlainText(entry: NarrativeEntry, text: string, prefixes: EntryPrefixes): string {
   const speaker = entry.speaker ?? (entry.type === 'cipher' ? 'CIPHER' : '???');
   switch (entry.type) {
     case 'dialog':
@@ -41,9 +59,9 @@ function entryToPlainText(entry: NarrativeEntry, text: string): string {
     case 'action':
       return `> ${text}`;
     case 'system':
-      return `[SYSTEM] ${text}`;
+      return `${prefixes.system} ${text}`;
     case 'error':
-      return `[ERROR] ${text}`;
+      return `${prefixes.error} ${text}`;
     default:
       return text;
   }
@@ -66,13 +84,15 @@ function renderPartialEntry(entry: NarrativeEntry, visibleText: string): React.R
 function TypewriterText({
   entry,
   text,
+  prefixes,
   onComplete,
 }: {
   entry: NarrativeEntry;
   text: string;
+  prefixes: EntryPrefixes;
   onComplete: () => void;
 }): React.JSX.Element {
-  const fullContent = entryToPlainText(entry, text);
+  const fullContent = entryToPlainText(entry, text, prefixes);
   const [charIndex, setCharIndex] = useState(0);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const done = charIndex >= fullContent.length;
@@ -104,6 +124,10 @@ function TypewriterText({
 
 function NarrativePanelInner({ entries }: NarrativePanelProps): React.JSX.Element {
   const { t } = useTranslation('story');
+  const prefixes: EntryPrefixes = {
+    system: t('ui:storyTerminal.prefixSystem'),
+    error: t('ui:storyTerminal.prefixError'),
+  };
   const reducedMotion = useReducedMotion();
   const scrollRef = useRef<HTMLDivElement>(null);
   const [typewriterDone, setTypewriterDone] = useState(true);
@@ -134,7 +158,7 @@ function NarrativePanelInner({ entries }: NarrativePanelProps): React.JSX.Elemen
           key={entry.id}
           className={`story-narrative-entry story-narrative-entry--${entry.type}`}
         >
-          {renderEntryContent(entry, resolveText(entry))}
+          {renderEntryContent(entry, resolveText(entry), prefixes)}
         </div>
       ))}
       {!typewriterDone && latestEntry !== undefined && (
@@ -145,6 +169,7 @@ function NarrativePanelInner({ entries }: NarrativePanelProps): React.JSX.Elemen
           <TypewriterText
             entry={latestEntry}
             text={resolveText(latestEntry)}
+            prefixes={prefixes}
             onComplete={handleTypewriterComplete}
           />
         </div>

@@ -1,5 +1,6 @@
 import { SAVE_FORMAT_VERSION } from './types';
 import type { SaveBundle, SaveData, SaveSlot } from './types';
+import { SaveSystemError } from './errors';
 import { InvalidSaveError, parseSaveSlot } from './schema';
 import { IndexedDbSaveStore } from './storage';
 import type { SaveStore } from './storage';
@@ -63,7 +64,11 @@ export class SaveManager {
       const existing = id === undefined ? undefined : slots.find((s) => s.id === id);
       const manualCount = slots.filter((s) => !s.isAutoSave).length;
       if (existing === undefined && manualCount >= MAX_SAVE_SLOTS) {
-        throw new Error(`At most ${String(MAX_SAVE_SLOTS)} saves are allowed. Delete one first.`);
+        throw new SaveSystemError(
+          `At most ${String(MAX_SAVE_SLOTS)} saves are allowed. Delete one first.`,
+          'slot_limit',
+          { max: MAX_SAVE_SLOTS },
+        );
       }
       const now = new Date().toISOString();
       const slot: SaveSlot = {
@@ -110,7 +115,9 @@ export class SaveManager {
 
   async renameSlot(id: string, name: string): Promise<void> {
     const slot = await this.getSlot(id);
-    if (slot === undefined) throw new Error(`Save slot "${id}" not found`);
+    if (slot === undefined) {
+      throw new SaveSystemError(`Save slot "${id}" not found`, 'slot_not_found', { id });
+    }
     await this.serial(() =>
       this.store.put({ ...slot, name: name.slice(0, 80), updatedAt: new Date().toISOString() }),
     );
@@ -120,7 +127,7 @@ export class SaveManager {
   async exportSlots(ids?: string[]): Promise<string> {
     const all = await this.listSlots();
     const saves = ids === undefined ? all : all.filter((s) => ids.includes(s.id));
-    if (saves.length === 0) throw new Error('No saves to export');
+    if (saves.length === 0) throw new SaveSystemError('No saves to export', 'nothing_to_export');
     const bundle: SaveBundle = {
       format: 'venomous-snake-saves',
       version: SAVE_FORMAT_VERSION,
@@ -137,12 +144,14 @@ export class SaveManager {
    * overwrite existing ones. Returns the imported slots.
    */
   async importFile(text: string): Promise<SaveSlot[]> {
-    if (text.length > MAX_IMPORT_BYTES) throw new InvalidSaveError('file is too large');
+    if (text.length > MAX_IMPORT_BYTES) {
+      throw new InvalidSaveError('file is too large', 'file_too_large');
+    }
     let parsed: unknown;
     try {
       parsed = JSON.parse(text);
     } catch {
-      throw new InvalidSaveError('file is not valid JSON');
+      throw new InvalidSaveError('file is not valid JSON', 'file_not_json');
     }
 
     let candidates: unknown[];
@@ -155,14 +164,16 @@ export class SaveManager {
       if (bundle.format === 'venomous-snake-saves') {
         const expected = typeof bundle.checksum === 'string' ? bundle.checksum : '';
         if (expected !== (await sha256Hex(JSON.stringify(bundle.saves)))) {
-          throw new InvalidSaveError('file is damaged (checksum mismatch)');
+          throw new InvalidSaveError('file is damaged (checksum mismatch)', 'file_damaged');
         }
       }
       candidates = bundle.saves;
     } else {
       candidates = [parsed];
     }
-    if (candidates.length === 0) throw new InvalidSaveError('file contains no saves');
+    if (candidates.length === 0) {
+      throw new InvalidSaveError('file contains no saves', 'file_empty');
+    }
 
     const slots = candidates.map((c) => parseSaveSlot(c));
     const now = new Date().toISOString();

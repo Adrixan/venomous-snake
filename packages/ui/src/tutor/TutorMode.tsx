@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import type { Chapter, Challenge } from '@venomous-snake/shared-types';
 import { challengeMap, chapters } from '@venomous-snake/challenges';
 import { HackingTerminal } from '../terminal/HackingTerminal';
+import { difficultyLabel } from '../terminal/challengeText';
 import { useTutorProgress } from './useTutorProgress';
 import './tutor.css';
 
@@ -129,15 +130,18 @@ export function TutorMode({ onBack }: TutorModeProps): React.JSX.Element {
       <div className="tutor-terminal-wrapper">
         <div className="tutor-terminal-header">
           <button className="tutor-btn tutor-btn-back" onClick={handleCloseTerminal}>
-            ← {t('ui:tutorial.back_to_menu', 'Back')}
+            ← {t('ui:tutorial.back_to_menu')}
           </button>
           <span className="tutor-terminal-title">
-            CH{String(activeChallenge.chapter).padStart(2, '0')}.
-            {String(activeChallenge.order).padStart(2, '0')} — {t(nsKey(activeChallenge.titleKey))}
+            {t('ui:terminal.challenge_code', {
+              chapter: String(activeChallenge.chapter).padStart(2, '0'),
+              order: String(activeChallenge.order).padStart(2, '0'),
+            })}{' '}
+            — {t(nsKey(activeChallenge.titleKey))}
           </span>
           {isCompleted(activeChallengeId) && (
             <button className="tutor-btn tutor-btn-next" onClick={handleNextChallenge}>
-              {t('ui:tutorial.next_challenge', 'Next Challenge')} →
+              {t('ui:tutorial.next_challenge')} →
             </button>
           )}
         </div>
@@ -159,15 +163,15 @@ export function TutorMode({ onBack }: TutorModeProps): React.JSX.Element {
       {/* Header */}
       <div className="tutor-header">
         <button className="tutor-btn tutor-btn-back" onClick={onBack}>
-          ← {t('ui:tutorial.back_to_menu', 'Back to Menu')}
+          ← {t('ui:tutorial.back_to_menu')}
         </button>
         <div className="tutor-header-title">
-          <h1>{t('ui:tutorial.title', 'PYTHON TUTORIAL')}</h1>
-          <p>{t('ui:tutorial.subtitle', 'Learn Python step by step')}</p>
+          <h1>{t('ui:tutorial.title')}</h1>
+          <p>{t('ui:tutorial.subtitle')}</p>
         </div>
         <div className="tutor-header-progress">
           <span className="tutor-progress-text">
-            {t('ui:tutorial.progress', 'Progress')}: {completedCount}/{totalChallenges}
+            {t('ui:tutorial.progress')}: {completedCount}/{totalChallenges}
           </span>
           <div className="tutor-progress-bar">
             <div
@@ -180,7 +184,7 @@ export function TutorMode({ onBack }: TutorModeProps): React.JSX.Element {
 
       <div className="tutor-body">
         {/* Chapter sidebar */}
-        <nav className="tutor-sidebar" aria-label="Chapters">
+        <nav className="tutor-sidebar" aria-label={t('ui:tutorial.chapters_aria')}>
           {chapters.map((chapter) => {
             const unlocked = isChapterUnlocked(chapter);
             const chCompleted = chapter.challenges.filter((cId) => isCompleted(cId)).length;
@@ -212,7 +216,7 @@ export function TutorMode({ onBack }: TutorModeProps): React.JSX.Element {
 
           <div className="tutor-sidebar-spacer" />
           <button className="tutor-btn tutor-btn-reset" onClick={() => setShowResetConfirm(true)}>
-            {t('ui:tutorial.reset_progress', 'Reset Progress')}
+            {t('ui:tutorial.reset_progress')}
           </button>
         </nav>
 
@@ -222,7 +226,7 @@ export function TutorMode({ onBack }: TutorModeProps): React.JSX.Element {
             <>
               <div className="tutor-challenges-header">
                 <h2>
-                  {t('ui:tutorial.chapter', 'Chapter')} {currentChapter.id}:{' '}
+                  {t('ui:tutorial.chapter')} {currentChapter.id}:{' '}
                   {t(nsKey(currentChapter.titleKey))}
                 </h2>
                 <p className="tutor-challenges-desc">{t(nsKey(currentChapter.descriptionKey))}</p>
@@ -251,7 +255,8 @@ export function TutorMode({ onBack }: TutorModeProps): React.JSX.Element {
                           {String(challenge.order).padStart(2, '0')}. {t(nsKey(challenge.titleKey))}
                         </span>
                         <span className="tutor-challenge-meta">
-                          {challenge.difficulty} · +{challenge.xpReward} XP
+                          {difficultyLabel(t, challenge.difficulty)} ·{' '}
+                          {t('ui:challenge.xp_earned', { xp: challenge.xpReward })}
                         </span>
                       </span>
                     </button>
@@ -267,18 +272,13 @@ export function TutorMode({ onBack }: TutorModeProps): React.JSX.Element {
       {showResetConfirm && (
         <div className="tutor-modal-backdrop" onClick={() => setShowResetConfirm(false)}>
           <div className="tutor-modal" onClick={(e) => e.stopPropagation()}>
-            <p>
-              {t(
-                'ui:tutorial.reset_confirm',
-                'Are you sure? This will clear all tutorial progress.',
-              )}
-            </p>
+            <p>{t('ui:tutorial.reset_confirm')}</p>
             <div className="tutor-modal-actions">
               <button className="tutor-btn" onClick={() => setShowResetConfirm(false)}>
-                Cancel
+                {t('common:cancel')}
               </button>
               <button className="tutor-btn tutor-btn-danger" onClick={handleResetProgress}>
-                Reset
+                {t('ui:tutorial.reset')}
               </button>
             </div>
           </div>

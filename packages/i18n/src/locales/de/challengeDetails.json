@@ -1,0 +1,1473 @@
+{
+  "ch01_01": {
+    "tests": {
+      "tc01": "Sollte \"Hello, World!\" ausgeben"
+    },
+    "hints": {
+      "1": "Die Funktion print() zeigt Text auf dem Bildschirm an. Setze deinen Text in Anführungszeichen.",
+      "2": "Versuche print(\"Hello, World!\"): Text muss in Python in Anführungszeichen stehen.",
+      "3": "Die Antwort lautet: print(\"Hello, World!\")"
+    },
+    "comments": {
+      "# Your first hack: display a message on the security terminal": "# Dein erster Hack: Zeige eine Nachricht auf dem Sicherheitsterminal an",
+      "# Replace the ___ with your message": "# Ersetze ___ durch deine Nachricht"
+    }
+  },
+  "ch01_02": {
+    "tests": {
+      "tc01": "Sollte \"Alias: Ghost\" ausgeben"
+    },
+    "hints": {
+      "1": "Variablen speichern Werte. Verwende = für die Zuweisung: alias = \"some text here\"",
+      "2": "Weise eine Zeichenkette zu: alias = \"Ghost\". Zeichenketten stehen in Python in Anführungszeichen.",
+      "3": "Lösung:\nalias = \"Ghost\"\nprint(\"Alias:\", alias)"
+    },
+    "comments": {
+      "# Store your hacker alias in a variable, then reveal it": "# Speichere deinen Hacker-Alias in einer Variable und zeige ihn dann an",
+      "# Replace ___ with your alias as a string": "# Ersetze ___ durch deinen Alias als Zeichenkette"
+    }
+  },
+  "ch01_03": {
+    "tests": {
+      "tc01": "Sollte 73 ausgeben",
+      "tc02": "Funktioniert mit anderen Werten",
+      "tc03": "Funktioniert auch mit weiteren Werten"
+    },
+    "hints": {
+      "1": "Python unterstützt +, -, *, / zum Rechnen. Du kannst Variablen in Ausdrücken verwenden.",
+      "2": "Multipliziere access_level mit 10 und addiere dann offset: access_level * 10 + offset",
+      "3": "Lösung: security_code = access_level * 10 + offset"
+    },
+    "comments": {
+      "# Calculate the vault security code": "# Berechne den Tresor-Sicherheitscode",
+      "# Formula: (access_level * 10) + offset": "# Formel: (access_level * 10) + offset"
+    },
+    "errorPatterns": [
+      "Ersetze den Platzhalter ___ durch den Rechenausdruck. Lass die Unterstriche nicht in deinem Code stehen."
+    ]
+  },
+  "ch01_04": {
+    "tests": {
+      "tc01": "Sollte den Typ einer Zeichenketten-Variable ausgeben",
+      "tc02": "Sollte die Typen beider Variablen ausgeben"
+    },
+    "hints": {
+      "1": "Die Funktion type() zeigt, welche Art von Daten eine Variable enthält.",
+      "2": "Zeichenketten erstellst du mit Anführungszeichen, zum Beispiel \"Viper\". Zahlen schreibst du ohne Anführungszeichen, zum Beispiel 5.",
+      "3": "Lösung: codename = \"Viper\" und clearance = 5"
+    },
+    "comments": {
+      "# Investigate the types of your data": "# Untersuche die Typen deiner Daten",
+      "# Replace ___ with appropriate values": "# Ersetze ___ durch passende Werte"
+    }
+  },
+  "ch01_05": {
+    "tests": {
+      "tc01": "Sollte 212.0 für celsius = 100 ausgeben",
+      "tc02": "Funktioniert mit dem Gefrierpunkt",
+      "tc03": "Funktioniert mit der Körpertemperatur"
+    },
+    "hints": {
+      "1": "Die Fahrenheit-Formel lautet: (Celsius * 9/5) + 32.",
+      "2": "Verwende Klammern, um die Reihenfolge der Operationen zu steuern: (celsius * 9/5) + 32.",
+      "3": "Lösung: fahrenheit = (celsius * 9/5) + 32"
+    },
+    "comments": {
+      "# The server room temperature sensor reads in Celsius": "# Der Temperatursensor im Serverraum misst in Celsius",
+      "# Convert it to Fahrenheit: F = (C * 9/5) + 32": "# Rechne sie in Fahrenheit um: F = (C * 9/5) + 32"
+    }
+  },
+  "ch01_06": {
+    "tests": {
+      "tc01": "Sollte \"Aleksa Volkov\" ausgeben",
+      "tc02": "Sollte auch mit anderen Daten funktionieren"
+    },
+    "hints": {
+      "1": "Der +-Operator kann Zeichenketten miteinander verbinden. Das nennt man Konkatenation.",
+      "2": "Vergiss das Leerzeichen nicht! Verwende + \" \" + zwischen den Namen.",
+      "3": "Lösung: full_name = first_name + \" \" + last_name"
+    },
+    "comments": {
+      "# Build a full name from separate parts": "# Setze aus einzelnen Teilen einen vollständigen Namen zusammen"
+    }
+  },
+  "ch01_07": {
+    "tests": {
+      "tc01": "Sollte die vollständige ASCII-Kunst-Schlange ausgeben",
+      "tc02": "Sollte genau 3 Ausgabezeilen haben"
+    },
+    "hints": {
+      "1": "Jede print()-Anweisung erzeugt eine Ausgabezeile. Du brauchst drei print-Aufrufe.",
+      "2": "Backslashes sind in Python-Zeichenketten etwas Besonderes. Verwende \\\\, um einen einzelnen Backslash auszugeben.",
+      "3": "Lösung: print(\"  /\\\\_/\\\\\"), print(\" ( o.o)\"), print(\"  > ^ <\")"
+    },
+    "comments": {
+      "# Draw a snake on the terminal using print statements": "# Zeichne mit print-Anweisungen eine Schlange auf das Terminal",
+      "# Replace each ___ with the correct string": "# Ersetze jedes ___ durch die richtige Zeichenkette"
+    }
+  },
+  "ch01_08": {
+    "tests": {
+      "tc01": "Sollte den Statusbericht ausgeben",
+      "tc02": "Sollte auch mit anderen Daten funktionieren"
+    },
+    "hints": {
+      "1": "Kommentare beginnen mit # und werden von Python ignoriert. Sie erklären Menschen den Code.",
+      "2": "Schreibe zum Beispiel: # Speichere die Freigabestufe. Der Kommentar beschreibt die nächste Zeile.",
+      "3": "Jeder Kommentar, der mit # beginnt, funktioniert. Die Ausgabe des Codes bleibt in jedem Fall gleich."
+    },
+    "comments": {
+      "# Add a comment above each line of code explaining what it does": "# Füge über jeder Codezeile einen Kommentar ein, der erklärt, was sie tut"
+    }
+  },
+  "ch02_01": {
+    "tests": {
+      "tc01": "Sollte SHADOW VIPER in Großbuchstaben ausgeben",
+      "tc02": "Sollte auch mit anderen Daten funktionieren",
+      "tc03": "Sollte auch mit anderen Daten funktionieren"
+    },
+    "hints": {
+      "1": "String-Methoden rufst du mit einem Punkt auf: codename.upper() wandelt in Großbuchstaben um.",
+      "2": ".upper() → ALLES GROSS, .lower() → alles klein, .title() → Jedes Wort Groß.",
+      "3": "Lösung: print(codename.upper()), print(codename.lower()), print(codename.title())"
+    },
+    "comments": {
+      "# Transform the codename using string methods": "# Verändere den Codenamen mit String-Methoden",
+      "# Use .upper(), .lower(), and .title() methods": "# Verwende die Methoden .upper(), .lower() und .title()"
+    }
+  },
+  "ch02_02": {
+    "tests": {
+      "tc01": "Sollte das erste Zeichen V extrahieren",
+      "tc02": "Sollte auch mit anderen Daten funktionieren",
+      "tc03": "Sollte auch mit anderen Daten funktionieren"
+    },
+    "hints": {
+      "1": "Zeichenketten werden ab 0 indiziert. access_code[0] liefert das erste Zeichen.",
+      "2": "Verwende negative Indizes, um vom Ende her zu zählen: access_code[-1] liefert das letzte Zeichen.",
+      "3": "Lösung: first = access_code[0], last = access_code[-1], third = access_code[2]"
+    },
+    "comments": {
+      "# Extract specific characters from the access code": "# Extrahiere bestimmte Zeichen aus dem Zugangscode"
+    }
+  },
+  "ch02_03": {
+    "tests": {
+      "tc01": "Sollte das Präfix CLASSIFIED extrahieren",
+      "tc02": "Sollte auch mit anderen Daten funktionieren",
+      "tc03": "Sollte auch mit anderen Daten funktionieren"
+    },
+    "hints": {
+      "1": "String-Slicing verwendet [start:end]. Der Start ist enthalten, das Ende nicht.",
+      "2": "message[:10] liefert die ersten 10 Zeichen. message[11:] liefert alles ab Index 11.",
+      "3": "Lösung: prefix = message[:10], suffix = message[11:], segment = message[3:8]"
+    },
+    "comments": {
+      "# Slice the intercepted message to extract parts": "# Zerschneide die abgefangene Nachricht, um Teile zu extrahieren"
+    }
+  },
+  "ch02_04": {
+    "tests": {
+      "tc01": "Sollte den formatierten Ausweis ausgeben",
+      "tc02": "Sollte auch mit anderen Daten funktionieren"
+    },
+    "hints": {
+      "1": "Mit f-Strings kannst du Variablen direkt in eine Zeichenkette einbetten: {variable_name}.",
+      "2": "Schreibe vor das Anführungszeichen ein f: f\"text {variable} more text\".",
+      "3": "Lösung: id_card = f\"OPERATIVE: {name} | RANK: {rank} | CLEARANCE: {clearance}\""
+    },
+    "comments": {
+      "# Create an ID card using f-strings": "# Erstelle einen Ausweis mit f-Strings"
+    }
+  },
+  "ch02_05": {
+    "tests": {
+      "tc01": "Sollte Agent Viper begrüßen",
+      "tc02": "Sollte Agent Shadow begrüßen"
+    },
+    "hints": {
+      "1": "Die Funktion input() liest Text, den der Benutzer eintippt, und gibt ihn als Zeichenkette zurück.",
+      "2": "Speichere das Ergebnis von input() in einer Variable: codename = input(\"prompt text\").",
+      "3": "Lösung: codename = input(\"Enter your codename: \"), dann print(f\"Welcome, Agent {codename}!\")"
+    },
+    "comments": {
+      "# Ask the user for their codename and greet them": "# Frage den Benutzer nach seinem Codenamen und begrüße ihn"
+    }
+  },
+  "ch02_06": {
+    "tests": {
+      "tc01": "Sollte den Türcode 42 auf 84 verdoppeln",
+      "tc02": "Sollte den Türcode 100 auf 200 verdoppeln"
+    },
+    "hints": {
+      "1": "input() gibt immer eine Zeichenkette zurück. Um damit zu rechnen, wandle sie zuerst in eine Zahl um.",
+      "2": "Verwende int(), um eine Zeichenkette in eine ganze Zahl umzuwandeln: int(\"42\") ergibt 42.",
+      "3": "Lösung: door_code = int(door_code_str), dann doubled = door_code * 2"
+    },
+    "comments": {
+      "# Read a door code from input and double it": "# Lies einen Türcode aus der Eingabe und verdopple ihn"
+    }
+  },
+  "ch02_07": {
+    "tests": {
+      "tc01": "Sollte den formatierten Missionsbericht ausgeben",
+      "tc02": "Sollte auch mit anderen Daten funktionieren"
+    },
+    "hints": {
+      "1": "f-Strings können mehrere Variablen einbetten: f\"{var1} and {var2}\".",
+      "2": "Der Geviertstrich (—) ist ein Sonderzeichen. Du kannst \\u2014 verwenden oder ihn direkt kopieren.",
+      "3": "Lösung: report = f\"[{status}] {operative} — {mission} — Floor {floor}\""
+    },
+    "comments": {
+      "# Build a mission status report using f-strings": "# Erstelle mit f-Strings einen Missions-Statusbericht"
+    }
+  },
+  "ch02_08": {
+    "tests": {
+      "tc01": "Sollte die Passwortlänge 13 melden",
+      "tc02": "Sollte die Längenprüfung bei einem langen Passwort bestehen"
+    },
+    "hints": {
+      "1": "Die Funktion len() liefert die Anzahl der Zeichen in einer Zeichenkette.",
+      "2": "Verwende len(password), um die Länge zu ermitteln, und vergleiche dann mit >= 8.",
+      "3": "Lösung: length = len(password). Das if/else ist bereits für dich geschrieben."
+    },
+    "comments": {
+      "# Check if the password meets the minimum length requirement": "# Prüfe, ob das Passwort die Mindestlänge erfüllt"
+    }
+  },
+  "ch03_01": {
+    "tests": {
+      "tc01": "Sollte ACCESS GRANTED ausgeben, wenn der Code stimmt",
+      "tc02": "Sollte auch mit anderen Daten funktionieren"
+    },
+    "hints": {
+      "1": "Verwende ==, um zwei Werte zu vergleichen. Es prüft, ob sie gleich sind.",
+      "2": "Die Bedingung sollte lauten: access_code == 1337. Denk daran: = weist zu, == vergleicht.",
+      "3": "Lösung: if access_code == 1337: print(\"ACCESS GRANTED\")"
+    },
+    "comments": {
+      "# Check if the access code matches the secret code": "# Prüfe, ob der Zugangscode mit dem Geheimcode übereinstimmt"
+    }
+  },
+  "ch03_02": {
+    "tests": {
+      "tc01": "Sollte \"Door is LOCKED\" ausgeben, wenn door_locked True ist",
+      "tc02": "Sollte auch mit anderen Daten funktionieren"
+    },
+    "hints": {
+      "1": "Die booleschen Werte True und False kannst du direkt in if-Anweisungen verwenden.",
+      "2": "Bei if door_locked: behandelt Python True als „ja, mach das“ und False als „spring zu else“.",
+      "3": "Lösung: if door_locked: print(\"Door is LOCKED\")"
+    },
+    "comments": {
+      "# Check if the door is locked and print the status": "# Prüfe, ob die Tür verschlossen ist, und gib den Status aus"
+    }
+  },
+  "ch03_03": {
+    "tests": {
+      "tc01": "Sollte False für 3 > 5 ausgeben",
+      "tc02": "Sollte auch mit anderen Daten funktionieren"
+    },
+    "hints": {
+      "1": "Vergleichsoperatoren: > (größer), < (kleiner), == (gleich), >= (größer oder gleich), <= (kleiner oder gleich).",
+      "2": "3 == 5 ist False. 3 >= 5 ist ebenfalls False, weil 3 nicht größer oder gleich 5 ist.",
+      "3": "Lösung: print(my_level == required_level) und print(my_level >= required_level)"
+    },
+    "comments": {
+      "# Compare your clearance level against the required level": "# Vergleiche deine Freigabestufe mit der erforderlichen Stufe"
+    }
+  },
+  "ch03_04": {
+    "tests": {
+      "tc01": "Sollte den Bedrohungswert 75 als HIGH einstufen",
+      "tc02": "Sollte elif für mehrere Bedingungen verwenden"
+    },
+    "hints": {
+      "1": "Mit elif prüfst du mehrere Bedingungen nacheinander. Nur der erste True-Zweig wird ausgeführt.",
+      "2": "Prüfe vom höchsten zum niedrigsten Wert: >= 90 für CRITICAL, >= 70 für HIGH, >= 40 für MEDIUM.",
+      "3": "Lösung: elif threat_score >= 70: und elif threat_score >= 40:"
+    },
+    "comments": {
+      "# Classify the threat level based on the score": "# Stufe die Bedrohung anhand des Werts ein"
+    }
+  },
+  "ch03_05": {
+    "tests": {
+      "tc01": "Sollte Zugang gewähren, wenn alle Bedingungen erfüllt sind",
+      "tc02": "Sollte auch mit anderen Daten funktionieren"
+    },
+    "hints": {
+      "1": "Logische Operatoren: \"and\" verlangt, dass beide Seiten True sind, \"or\" verlangt mindestens eine, \"not\" dreht True/False um.",
+      "2": "Kombiniere die Bedingungen: has_badge and has_clearance and not is_blacklisted.",
+      "3": "Lösung: if has_badge and has_clearance and not is_blacklisted:"
+    },
+    "comments": {
+      "# Check all security conditions for access": "# Prüfe alle Sicherheitsbedingungen für den Zugang"
+    }
+  },
+  "ch03_06": {
+    "tests": {
+      "tc01": "Sollte die Identität bestätigen, wenn PIN und Fingerabdruck übereinstimmen",
+      "tc02": "Sollte auch mit anderen Daten funktionieren"
+    },
+    "hints": {
+      "1": "Mit verschachtelten if-Anweisungen prüfst du eine zweite Bedingung nur dann, wenn die erste True ist.",
+      "2": "Prüfe zuerst die PIN: if pin == 7749. Prüfe dann darin: if fingerprint.",
+      "3": "Lösung: if pin == 7749: dann if fingerprint:"
+    },
+    "comments": {
+      "# Two-factor authentication: check PIN then fingerprint": "# Zwei-Faktor-Authentifizierung: Prüfe zuerst die PIN, dann den Fingerabdruck"
+    }
+  },
+  "ch03_07": {
+    "tests": {
+      "tc01": "Sollte den ausgelösten Alarm als True melden",
+      "tc02": "Sollte auch mit anderen Daten funktionieren"
+    },
+    "hints": {
+      "1": "Der Operator \"or\" gibt True zurück, wenn eine der beiden Seiten True ist. \"not\" macht aus True ein False.",
+      "2": "alarm_triggered = alarm_active or motion_detected. Verwende dann not alarm_triggered für den sicheren Status.",
+      "3": "Lösung: alarm_triggered = alarm_active or motion_detected, und not alarm_triggered für safe"
+    },
+    "comments": {
+      "# Determine if the alarm should trigger": "# Bestimme, ob der Alarm ausgelöst werden soll"
+    }
+  },
+  "ch03_08": {
+    "tests": {
+      "tc01": "Sollte \"Snake99\" als gültiges Passwort erkennen",
+      "tc02": "Sollte Länge, Ziffer und Buchstabe prüfen"
+    },
+    "hints": {
+      "1": "Ein gültiges Passwort braucht: mindestens 6 Zeichen, mindestens eine Ziffer und mindestens einen Buchstaben.",
+      "2": "Verwende len() für die Länge, .isdigit() zum Prüfen auf Ziffern und .isalpha() für Buchstaben. Die Funktion any() hilft dir, jedes Zeichen zu prüfen.",
+      "3": "Lösung: has_length = len(password) >= 6, has_digit = any(c.isdigit() for c in password), has_letter = any(c.isalpha() for c in password)"
+    },
+    "comments": {
+      "# Write your solution here": "# Schreibe hier deine Lösung"
+    }
+  },
+  "ch04_01": {
+    "tests": {
+      "tc01": "Sollte alle Namen der Wachen ausgeben",
+      "tc02": "Sollte auch mit anderen Daten funktionieren"
+    },
+    "hints": {
+      "1": "Eine for-Schleife besucht jedes Element einer Liste der Reihe nach: for item in list:",
+      "2": "Verwende for guard in guards: und dann print(guard) im Schleifenkörper.",
+      "3": "Lösung: for guard in guards: print(guard)"
+    },
+    "comments": {
+      "# Print each guard name from the patrol list": "# Gib jeden Wachennamen aus der Patrouillenliste aus"
+    }
+  },
+  "ch04_02": {
+    "tests": {
+      "tc01": "Sollte Camera 0 bis Camera 4 ausgeben",
+      "tc02": "Sollte range(5) verwenden, um die Zahlen 0-4 zu erzeugen"
+    },
+    "hints": {
+      "1": "range(n) erzeugt Zahlen von 0 bis (aber ohne) n.",
+      "2": "range(5) liefert dir: 0, 1, 2, 3, 4. Verwende es in einer for-Schleife.",
+      "3": "Lösung: for i in range(5): print(f\"Camera {i}\")"
+    },
+    "comments": {
+      "# Label each security camera using range()": "# Beschrifte jede Sicherheitskamera mit range()"
+    }
+  },
+  "ch04_03": {
+    "tests": {
+      "tc01": "Sollte den Patrouillenplan für die Stunden 1-5 ausgeben",
+      "tc02": "Sollte mit range(1, 6) bei 1 beginnen und bei 5 enden"
+    },
+    "hints": {
+      "1": "range(start, stop) erzeugt Zahlen von start bis (aber ohne) stop.",
+      "2": "Um 1, 2, 3, 4, 5 zu erhalten, brauchst du range(1, 6): Der stop-Wert ist nicht enthalten.",
+      "3": "Lösung: for hour in range(1, 6): print(f\"Hour {hour}: Guard on patrol\")"
+    },
+    "comments": {
+      "# Print the guard rotation schedule for hours 1 through 5": "# Gib den Plan des Wachwechsels für die Stunden 1 bis 5 aus"
+    }
+  },
+  "ch04_04": {
+    "tests": {
+      "tc01": "Sollte von 5 bis 1 herunterzählen und dann LAUNCH! ausgeben",
+      "tc02": "Sollte auch mit anderen Daten funktionieren"
+    },
+    "hints": {
+      "1": "Eine while-Schleife wiederholt sich, solange ihre Bedingung True ist.",
+      "2": "Die Schleife soll laufen, solange countdown > 0 gilt. Jeder Durchlauf verringert countdown um 1.",
+      "3": "Lösung: while countdown > 0: (das -= 1 verringert den Zähler bei jedem Durchlauf)"
+    },
+    "comments": {
+      "# Countdown to launch using a while loop": "# Zähle mit einer while-Schleife bis zum Start herunter"
+    }
+  },
+  "ch04_05": {
+    "tests": {
+      "tc01": "Sollte nach einem falschen Versuch Zugang gewähren",
+      "tc02": "Sollte mit dem richtigen Passwort sofort Zugang gewähren"
+    },
+    "hints": {
+      "1": "Die while-Schleife soll weiterlaufen, solange das Passwort falsch ist.",
+      "2": "Verwende !=, um auf Ungleichheit zu prüfen: while password != correct_password.",
+      "3": "Lösung: while password != correct_password:"
+    },
+    "comments": {
+      "# Keep asking for the password until it is correct": "# Frage so lange nach dem Passwort, bis es richtig ist"
+    }
+  },
+  "ch04_06": {
+    "tests": {
+      "tc01": "Sollte TARGET_ALPHA finden und die Suche beenden",
+      "tc02": "Sollte auch mit anderen Daten funktionieren"
+    },
+    "hints": {
+      "1": "Die break-Anweisung verlässt die Schleife sofort und überspringt alle restlichen Durchläufe.",
+      "2": "Setze break nach der Ausgabe der Meldung, dass das Ziel gefunden wurde, um die Suche zu beenden.",
+      "3": "Lösung: Füge break nach print(f\"Target found: {name}\") ein"
+    },
+    "comments": {
+      "# Search for the target in the list and stop when found": "# Suche das Ziel in der Liste und höre auf, sobald es gefunden ist"
+    }
+  },
+  "ch04_07": {
+    "tests": {
+      "tc01": "Sollte Kamera 3 überspringen und alle anderen ausgeben",
+      "tc02": "Sollte auch mit anderen Daten funktionieren"
+    },
+    "hints": {
+      "1": "Die continue-Anweisung überspringt den Rest des aktuellen Durchlaufs und geht zum nächsten weiter.",
+      "2": "Wenn die Kamera in der Liste disabled steht, verwende continue, um ihre Ausgabe zu überspringen.",
+      "3": "Lösung: if cam in disabled: continue"
+    },
+    "comments": {
+      "# Print active cameras, skip disabled ones": "# Gib die aktiven Kameras aus, überspringe die deaktivierten"
+    }
+  },
+  "ch04_08": {
+    "tests": {
+      "tc01": "Sollte alle 9 Rasterkoordinaten ausgeben",
+      "tc02": "Sollte auch mit anderen Daten funktionieren"
+    },
+    "hints": {
+      "1": "Eine verschachtelte Schleife ist eine Schleife in einer anderen Schleife. Die innere Schleife läuft bei jedem Durchlauf der äußeren komplett durch.",
+      "2": "Verwende f\"{row}{col}\", um den aktuellen Zeilenbuchstaben mit der aktuellen Spaltennummer zu verbinden.",
+      "3": "Lösung: print(f\"{row}{col}\") in der verschachtelten for-Schleife."
+    },
+    "comments": {
+      "# Generate all grid coordinates for the floor plan": "# Erzeuge alle Rasterkoordinaten für den Grundriss"
+    }
+  },
+  "ch04_09": {
+    "tests": {
+      "tc01": "Sollte die Summe aller Ausweisnummern berechnen",
+      "tc02": "Sollte auch mit anderen Daten funktionieren"
+    },
+    "hints": {
+      "1": "Das Akkumulator-Muster: Beginne mit total = 0 und addiere dann in der Schleife jedes Element mit +=.",
+      "2": "total += badge addiert die aktuelle Ausweisnummer zur laufenden Summe.",
+      "3": "Lösung: total += badge in der for-Schleife."
+    },
+    "comments": {
+      "# Sum all badge numbers to get the total": "# Addiere alle Ausweisnummern zur Gesamtsumme"
+    }
+  },
+  "ch04_10": {
+    "tests": {
+      "tc01": "Sollte die Zugangspunkte ab 1 nummerieren",
+      "tc02": "Sollte auch mit anderen Daten funktionieren"
+    },
+    "hints": {
+      "1": "enumerate() liefert dir für jedes Element einer Liste sowohl den Index als auch den Wert.",
+      "2": "enumerate(list, 1) beginnt bei 1 statt bei 0 zu zählen.",
+      "3": "Lösung: for i, point in enumerate(access_points, 1):"
+    },
+    "comments": {
+      "# Number each access point starting from 1": "# Nummeriere jeden Zugangspunkt ab 1"
+    }
+  },
+  "ch05_01": {
+    "tests": {
+      "tc01": "Sollte Agent Viper begrüßen",
+      "tc02": "Sollte auch mit anderen Daten funktionieren"
+    },
+    "hints": {
+      "1": "Funktionen definierst du mit def. Parameter stehen in Klammern nach dem Namen.",
+      "2": "Bei def greet(name): erhält der Parameter \"name\" den Wert, den du beim Aufruf von greet() übergibst.",
+      "3": "Lösung: def greet(name): return f\"Welcome, Agent {name}!\""
+    },
+    "comments": {
+      "# Define a function that greets an operative by name": "# Definiere eine Funktion, die einen Agenten mit Namen begrüßt"
+    }
+  },
+  "ch05_02": {
+    "tests": {
+      "tc01": "Sollte 12 für clearance=3, rank=4 zurückgeben",
+      "tc02": "Sollte auch mit anderen Daten funktionieren"
+    },
+    "hints": {
+      "1": "Die return-Anweisung gibt einen Wert aus der Funktion an den Aufrufer zurück.",
+      "2": "Multipliziere die beiden Parameter: return clearance * rank.",
+      "3": "Lösung: return clearance * rank"
+    },
+    "comments": {
+      "# Calculate access level from clearance and rank": "# Berechne die Zugangsstufe aus Freigabe und Rang"
+    }
+  },
+  "ch05_03": {
+    "tests": {
+      "tc01": "Sollte den Ausweis korrekt formatieren",
+      "tc02": "Sollte auch mit anderen Daten funktionieren"
+    },
+    "hints": {
+      "1": "Funktionen können mehrere Parameter annehmen, getrennt durch Kommas.",
+      "2": "Verwende einen f-String, um alle drei zu kombinieren: f\"[{department}] {name} — {rank}\".",
+      "3": "Lösung: return f\"[{department}] {name} — {rank}\""
+    },
+    "comments": {
+      "# Format an ID card with name, rank, and department": "# Formatiere einen Ausweis mit Name, Rang und Abteilung"
+    }
+  },
+  "ch05_04": {
+    "tests": {
+      "tc01": "Sollte die übergebene Stufe für einen kritischen Alarm verwenden",
+      "tc02": "Sollte auch mit anderen Daten funktionieren"
+    },
+    "hints": {
+      "1": "Standardparameter bekommen in der Funktionsdefinition mit = einen Wert zugewiesen.",
+      "2": "Bei def create_alert(message, level=\"low\"): gilt: Wird kein level übergeben, ist der Standardwert \"low\".",
+      "3": "Lösung: def create_alert(message, level=\"low\"):"
+    },
+    "comments": {
+      "# Create an alert function with a default severity level": "# Erstelle eine Alarm-Funktion mit einem Standard-Schweregrad"
+    }
+  },
+  "ch05_05": {
+    "tests": {
+      "tc01": "Sollte \"14,27\" zu X: 14, Y: 27 dekodieren",
+      "tc02": "Sollte auch mit anderen Daten funktionieren"
+    },
+    "hints": {
+      "1": "Python-Funktionen können mehrere Werte zurückgeben, getrennt durch Kommas: return a, b.",
+      "2": "return x, y gibt beide Werte zurück. Der Aufrufer entpackt sie: x, y = function().",
+      "3": "Lösung: return x, y"
+    },
+    "comments": {
+      "# Decode encoded coordinates into x and y values": "# Dekodiere die verschlüsselten Koordinaten in x- und y-Werte"
+    }
+  },
+  "ch05_06": {
+    "tests": {
+      "tc01": "Sollte mit richtiger PIN und richtigem Ausweis Zugang gewähren",
+      "tc02": "Sollte auch mit anderen Daten funktionieren"
+    },
+    "hints": {
+      "1": "Funktionen können andere Funktionen aufrufen. Verwende die Hilfsfunktionen check_pin und check_badge.",
+      "2": "Kombiniere beide Prüfungen: check_pin(pin) and check_badge(badge).",
+      "3": "Lösung: if check_pin(pin) and check_badge(badge):"
+    },
+    "comments": {
+      "# Build a multi-step verification system": "# Baue ein mehrstufiges Prüfsystem"
+    }
+  },
+  "ch05_07": {
+    "tests": {
+      "tc01": "Sollte den auf HIGH erhöhten Alarm ausgeben",
+      "tc02": "Sollte auch mit anderen Daten funktionieren"
+    },
+    "hints": {
+      "1": "Variablen in einer Funktion sind lokal: Sie existieren nur innerhalb dieser Funktion.",
+      "2": "Das globale alert_level wird von der Funktion nicht verändert. Übergib \"HIGH\" als Argument.",
+      "3": "Lösung: raise_alert(\"HIGH\"). Das globale alert_level bleibt \"LOW\"."
+    },
+    "comments": {
+      "# Understand local vs global scope": "# Verstehe den Unterschied zwischen lokalem und globalem Gültigkeitsbereich"
+    }
+  },
+  "ch05_08": {
+    "tests": {
+      "tc01": "Sollte alle drei Aktivitäten protokollieren",
+      "tc02": "Sollte eine variable Anzahl von Argumenten verarbeiten"
+    },
+    "hints": {
+      "1": "Mit *args kann eine Funktion beliebig viele Positionsargumente als Tupel annehmen.",
+      "2": "Schreibe def log_activities(*activities): und durchlaufe activities dann mit einer for-Schleife.",
+      "3": "Lösung: def log_activities(*activities): for activity in activities: print(f\"[LOG] {activity}\")"
+    },
+    "comments": {
+      "# Write your solution here": "# Schreibe hier deine Lösung"
+    }
+  },
+  "ch05_09": {
+    "tests": {
+      "tc01": "Sollte alle Terminal-Einstellungen ausgeben",
+      "tc02": "Sollte Schlüsselwortargumente als Dictionary verarbeiten"
+    },
+    "hints": {
+      "1": "Mit **kwargs kann eine Funktion beliebig viele Schlüsselwortargumente als Dictionary annehmen.",
+      "2": "Schreibe def configure_terminal(**settings): und verwende settings.items(), um die Schlüssel-Wert-Paare zu durchlaufen.",
+      "3": "Lösung: def configure_terminal(**settings): for key, value in settings.items(): print(f\"{key}: {value}\")"
+    },
+    "comments": {
+      "# Write your solution here": "# Schreibe hier deine Lösung"
+    }
+  },
+  "ch05_10": {
+    "tests": {
+      "tc01": "Sollte die Wachen aufsteigend nach Stufe sortieren",
+      "tc02": "Sollte lambda als Sortierschlüssel verwenden"
+    },
+    "hints": {
+      "1": "Ein lambda ist eine kleine anonyme Funktion: lambda x: x[1] gibt das zweite Element zurück.",
+      "2": "sorted(list, key=lambda g: g[1]) sortiert nach dem zweiten Element jedes Tupels.",
+      "3": "Lösung: sorted_guards = sorted(guards, key=lambda g: g[1])"
+    },
+    "comments": {
+      "# Write your solution here": "# Schreibe hier deine Lösung"
+    }
+  },
+  "ch06_01": {
+    "tests": {
+      "tc01": "Sollte alle drei Werkzeuge ausgeben",
+      "tc02": "Sollte per Index auf Listenelemente zugreifen"
+    },
+    "hints": {
+      "1": "Listen erstellst du mit eckigen Klammern: [item1, item2, item3].",
+      "2": "Trage die Listenelemente als Zeichenketten ein: \"keylogger\", \"port_scanner\", \"exploit_kit\".",
+      "3": "Lösung: tools = [\"keylogger\", \"port_scanner\", \"exploit_kit\"]"
+    },
+    "comments": {
+      "# Create a list of hacking tools and access each one": "# Erstelle eine Liste von Hacking-Werkzeugen und greife auf jedes zu"
+    }
+  },
+  "ch06_02": {
+    "tests": {
+      "tc01": "Sollte das aktualisierte Inventar anzeigen",
+      "tc02": "Sollte Elemente korrekt hinzufügen und entfernen"
+    },
+    "hints": {
+      "1": ".append() fügt ein Element am Ende hinzu. .remove() entfernt das erste passende Element.",
+      "2": "inventory.append(\"exploit_kit\") fügt es hinzu. inventory.remove(\"keylogger\") entfernt es.",
+      "3": "Lösung: append(\"exploit_kit\"), dann remove(\"keylogger\")"
+    },
+    "comments": {
+      "# Modify the inventory using list methods": "# Verändere das Inventar mit Listenmethoden"
+    }
+  },
+  "ch06_03": {
+    "tests": {
+      "tc01": "Sollte die letzten 3 Nachrichten holen",
+      "tc02": "Sollte auch mit anderen Daten funktionieren"
+    },
+    "hints": {
+      "1": "Listen-Slicing funktioniert wie String-Slicing: list[start:end]. Negative Indizes zählen vom Ende.",
+      "2": "messages[-3:] liefert die letzten 3 Elemente. messages[:2] liefert die ersten 2 Elemente.",
+      "3": "Lösung: recent = messages[-3:], first_two = messages[:2]"
+    },
+    "comments": {
+      "# Slice the message log to get specific parts": "# Schneide bestimmte Teile aus dem Nachrichtenprotokoll heraus"
+    }
+  },
+  "ch06_04": {
+    "tests": {
+      "tc01": "Sollte Werte >= 5 filtern und verdoppeln",
+      "tc02": "Sollte auch mit anderen Daten funktionieren"
+    },
+    "hints": {
+      "1": "List Comprehensions: [expression for item in list if condition]. Die Bedingung filtert die Elemente.",
+      "2": "Filtern: [s for s in scores if s >= 5]. Umwandeln: [s * 2 for s in scores].",
+      "3": "Lösung: high_scores = [s for s in security_scores if s >= 5], doubled = [s * 2 for s in high_scores]"
+    },
+    "comments": {
+      "# Filter and transform security scores using list comprehension": "# Filtere und verändere die Sicherheitswerte mit einer List Comprehension"
+    }
+  },
+  "ch06_05": {
+    "tests": {
+      "tc01": "Sollte beide Koordinaten-Tupel ausgeben",
+      "tc02": "Sollte auch mit anderen Daten funktionieren"
+    },
+    "hints": {
+      "1": "Tupel erstellst du mit runden Klammern: (14, 27). Sie sind wie unveränderliche Listen.",
+      "2": "Entpacke ein Tupel: x, y = server_room weist x den Wert 14 und y den Wert 27 zu.",
+      "3": "Lösung: x, y = server_room"
+    },
+    "comments": {
+      "# Store coordinates as tuples and unpack them": "# Speichere Koordinaten als Tupel und entpacke sie"
+    }
+  },
+  "ch06_06": {
+    "tests": {
+      "tc01": "Sollte den Namen des Mitarbeiters ausgeben",
+      "tc02": "Sollte per Schlüssel auf Dictionary-Werte zugreifen"
+    },
+    "hints": {
+      "1": "Dictionaries speichern Schlüssel-Wert-Paare: {\"key\": value}. Auf Werte greifst du mit dict[\"key\"] zu.",
+      "2": "Trage die Werte ein: \"Aleksa Volkov\" für name, \"Infiltration\" für department, 4 für clearance.",
+      "3": "Lösung: \"name\": \"Aleksa Volkov\", \"department\": \"Infiltration\", \"clearance\": 4"
+    },
+    "comments": {
+      "# Create an employee profile dictionary": "# Erstelle ein Dictionary mit einem Mitarbeiterprofil"
+    }
+  },
+  "ch06_07": {
+    "tests": {
+      "tc01": "Sollte die aktualisierten Profilwerte ausgeben",
+      "tc02": "Sollte auch mit anderen Daten funktionieren"
+    },
+    "hints": {
+      "1": "Neue Schlüssel fügst du mit dict[\"key\"] = value hinzu. Bestehende Schlüssel aktualisierst du genauso.",
+      "2": "profile[\"clearance\"] = 5 fügt einen neuen Schlüssel hinzu. profile[\"status\"] = \"compromised\" aktualisiert einen bestehenden.",
+      "3": "Lösung: profile[\"clearance\"] = 5, profile[\"status\"] = \"compromised\""
+    },
+    "comments": {
+      "# Modify and read a profile using dictionary methods": "# Verändere und lies ein Profil mit Dictionary-Methoden"
+    }
+  },
+  "ch06_08": {
+    "tests": {
+      "tc01": "Sollte Lobby aus floor_1 ausgeben",
+      "tc02": "Sollte auf Werte in verschachtelten Dictionaries zugreifen"
+    },
+    "hints": {
+      "1": "Verkette eckige Klammern, um auf verschachtelte Dictionaries zuzugreifen: dict[\"outer\"][\"inner\"].",
+      "2": "floor_plan[\"floor_1\"][\"name\"] holt zuerst das Dictionary floor_1 und daraus dann den Schlüssel \"name\".",
+      "3": "Lösung: floor_plan[\"floor_1\"][\"name\"] und floor_plan[\"floor_2\"][\"secured\"]"
+    },
+    "comments": {
+      "# Navigate the nested floor plan data": "# Navigiere durch die verschachtelten Grundriss-Daten"
+    }
+  },
+  "ch06_09": {
+    "tests": {
+      "tc01": "Sollte insgesamt 5 eindeutige Karten finden",
+      "tc02": "Sollte auch mit anderen Daten funktionieren"
+    },
+    "hints": {
+      "1": "Mengen entfernen Duplikate automatisch. .union() vereinigt Mengen, .intersection() findet gemeinsame Elemente.",
+      "2": "scan1.union(scan2) vereinigt beide Mengen. scan1.intersection(scan2) findet die gemeinsamen Elemente.",
+      "3": "Lösung: all_cards = scan1.union(scan2), duplicates = scan1.intersection(scan2)"
+    },
+    "comments": {
+      "# Find unique and shared badge scans using sets": "# Finde mit Mengen eindeutige und gemeinsame Ausweis-Scans"
+    }
+  },
+  "ch06_10": {
+    "tests": {
+      "tc01": "Sollte die zusammengeführten und sortierten Agentenstufen ausgeben",
+      "tc02": "Sollte Dictionaries zusammenführen, wobei das zweite das erste überschreibt"
+    },
+    "hints": {
+      "1": "Verwende dict.update(), um Dictionaries zusammenzuführen. Spätere Aktualisierungen überschreiben frühere Werte.",
+      "2": "sorted(dict.items()) sortiert nach Schlüssel. Gib mit einer for-Schleife jeden Namen und jede Stufe aus.",
+      "3": "Lösung: merged = {}, merged.update(source_a), merged.update(source_b), dann Schleife über sorted(merged.items())"
+    },
+    "comments": {
+      "# Merge two intel databases and print sorted results": "# Führe zwei Geheimdienst-Datenbanken zusammen und gib die sortierten Ergebnisse aus",
+      "# Use dict.update() to combine dictionaries": "# Verwende dict.update(), um die Dictionaries zu kombinieren"
+    }
+  },
+  "ch07_01": {
+    "tests": {
+      "tc01": "Sollte den Dateiinhalt ausgeben",
+      "tc02": "Sollte auch mit anderen Daten funktionieren"
+    },
+    "hints": {
+      "1": "io.StringIO erzeugt aus einer Zeichenkette ein dateiähnliches Objekt. Übergib ihm die Datenvariable.",
+      "2": "Verwende f.read(), um den gesamten Inhalt des dateiähnlichen Objekts zu lesen.",
+      "3": "Lösung: f = io.StringIO(file_data) und content = f.read()"
+    },
+    "comments": {}
+  },
+  "ch07_02": {
+    "tests": {
+      "tc01": "Sollte Daten schreiben und zurücklesen",
+      "tc02": "Sollte f.getvalue() verwenden, um den geschriebenen Inhalt abzurufen"
+    },
+    "hints": {
+      "1": "io.StringIO() erzeugt ein leeres dateiähnliches Objekt, in das du schreiben kannst.",
+      "2": "Verwende f.write(\"text\"), um Zeichenketten zu schreiben. f.getvalue() liefert den gesamten geschriebenen Inhalt.",
+      "3": "Lösung: f.write(\"Mission log: Entry 1\\n\") und f.write(\"Infiltrated sector 7\\n\")"
+    },
+    "comments": {}
+  },
+  "ch07_03": {
+    "tests": {
+      "tc01": "Sollte die bereinigten Zeilen ausgeben",
+      "tc02": "Sollte auch mit anderen Daten funktionieren"
+    },
+    "hints": {
+      "1": "Verwende .strip(), um Leerraum am Anfang und Ende jeder Zeile zu entfernen.",
+      "2": "Die if-Bedingung soll Zeilen herausfiltern, die nach dem Entfernen des Leerraums leer sind.",
+      "3": "Lösung: [line.strip() for line in f.readlines() if line.strip()]"
+    },
+    "comments": {}
+  },
+  "ch07_04": {
+    "tests": {
+      "tc01": "Sollte jedes Feld trennen und ausgeben",
+      "tc02": "Sollte auch mit anderen Daten funktionieren"
+    },
+    "hints": {
+      "1": "Die Methode .split() zerlegt eine Zeichenkette anhand eines Trennzeichens in eine Liste.",
+      "2": "Verwende .split(\",\"), um an Kommas zu trennen.",
+      "3": "Lösung: fields = csv_data.split(\",\")"
+    },
+    "comments": {}
+  },
+  "ch07_05": {
+    "tests": {
+      "tc01": "Sollte die Nachricht trennen und wieder zusammensetzen",
+      "tc02": "Sollte auch mit anderen Daten funktionieren"
+    },
+    "hints": {
+      "1": "Verwende .split(\":\"), um an Doppelpunkten zu trennen, und \" | \".join(), um mit Pipes wieder zu verbinden.",
+      "2": "Die Methode .join() wird auf der Trenn-Zeichenkette aufgerufen: separator.join(list).",
+      "3": "Lösung: parts = message.split(\":\") und result = \" | \".join(parts)"
+    },
+    "comments": {}
+  },
+  "ch07_06": {
+    "tests": {
+      "tc01": "Sollte die Zeilen ausgeben und den Kanal schließen",
+      "tc02": "Sollte auch mit anderen Daten funktionieren"
+    },
+    "hints": {
+      "1": "try/finally stellt sicher, dass Aufräumcode auch dann läuft, wenn ein Fehler auftritt. Die Nutzung der Ressource gehört in try, das Aufräumen in finally.",
+      "2": "Verwende split(\"\\n\"), um eine Zeichenkette in Zeilen zu zerlegen. Durchlaufe sie mit for line in lines.",
+      "3": "Lösung: lines = data.split(\"\\n\"), try/finally-Schleife, \"Channel closed\" in finally ausgeben."
+    },
+    "comments": {}
+  },
+  "ch07_07": {
+    "tests": {
+      "tc01": "Sollte JSON-Felder parsen und ausgeben",
+      "tc02": "Sollte json.loads verwenden, um die JSON-Zeichenkette zu parsen"
+    },
+    "hints": {
+      "1": "json.loads() wandelt eine JSON-Zeichenkette in ein Python-Dictionary um.",
+      "2": "Auf Dictionary-Werte greifst du mit data[\"key\"] zu. Aus JSON true wird Python True.",
+      "3": "Lösung: data = json.loads(json_str), dann print(data[\"agent\"]) usw."
+    },
+    "comments": {}
+  },
+  "ch07_08": {
+    "tests": {
+      "tc01": "Sollte die Ziele in Großbuchstaben umwandeln",
+      "tc02": "Sollte JSON parsen und eine List Comprehension verwenden"
+    },
+    "hints": {
+      "1": "Parse zuerst die JSON-Zeichenkette und greife dann auf den Schlüssel \"targets\" zu.",
+      "2": "Verwende eine List Comprehension mit .upper(), um jedes Ziel umzuwandeln.",
+      "3": "Lösung: data = json.loads(raw), targets = data[\"targets\"], result = [t.upper() for t in targets]"
+    },
+    "comments": {}
+  },
+  "ch08_01": {
+    "tests": {
+      "tc01": "Sollte gültige und ungültige Eingaben verarbeiten",
+      "tc02": "Sollte auch mit anderen Daten funktionieren"
+    },
+    "hints": {
+      "1": "Umschließe mit try: Code, der fehlschlagen könnte, und fange mit except bestimmte Fehler ab.",
+      "2": "except ValueError: fängt Fehler ab, wenn int() eine nicht-numerische Zeichenkette erhält.",
+      "3": "Lösung: try: return int(code_str) except ValueError: return -1"
+    },
+    "comments": {}
+  },
+  "ch08_02": {
+    "tests": {
+      "tc01": "Sollte gültige und fehlende Schlüssel verarbeiten",
+      "tc02": "Sollte auch mit anderen Daten funktionieren"
+    },
+    "hints": {
+      "1": "Du kannst mehrere except-Blöcke verwenden, um verschiedene Fehlertypen abzufangen.",
+      "2": "KeyError wird ausgelöst, wenn du auf einen fehlenden Dictionary-Schlüssel zugreifst. TypeError, wenn der Typ falsch ist.",
+      "3": "Lösung: except KeyError: und except TypeError: als getrennte Blöcke"
+    },
+    "comments": {}
+  },
+  "ch08_03": {
+    "tests": {
+      "tc01": "Sollte ein gültiges Signal mit else und finally dekodieren",
+      "tc02": "Sollte auch mit anderen Daten funktionieren"
+    },
+    "hints": {
+      "1": "else: läuft, wenn keine Ausnahme aufgetreten ist. finally: läuft in jedem Fall.",
+      "2": "Das vollständige Muster lautet: try → except → else → finally.",
+      "3": "Lösung: except ValueError:, else:, finally: als drei getrennte Blöcke"
+    },
+    "comments": {}
+  },
+  "ch08_04": {
+    "tests": {
+      "tc01": "Sollte ValueError auslösen und abfangen",
+      "tc02": "Sollte den Freigabe-Bereich prüfen"
+    },
+    "hints": {
+      "1": "Verwende raise ValueError(\"message\"), um einen Fehler mit eigener Meldung auszulösen.",
+      "2": "Das Schlüsselwort raise erzeugt eine Ausnahme, die von einem try/except-Block abgefangen werden kann.",
+      "3": "Lösung: raise ValueError(f\"Clearance level {level} is out of range\")"
+    },
+    "comments": {}
+  },
+  "ch08_05": {
+    "tests": {
+      "tc01": "Sollte eine eigene Ausnahme erstellen und abfangen",
+      "tc02": "Sollte mission_id in der Ausnahme speichern"
+    },
+    "hints": {
+      "1": "Eigene Ausnahmen erben von Exception. Verwende class MyError(Exception):",
+      "2": "Rufe super().__init__(message) auf, um die Fehlermeldung zu setzen. Speichere zusätzliche Daten als Attribute.",
+      "3": "Lösung: class MissionError(Exception): mit super().__init__(message) und self.mission_id = mission_id"
+    },
+    "comments": {}
+  },
+  "ch08_06": {
+    "tests": {
+      "tc01": "Sollte Agenten-IDs korrekt prüfen",
+      "tc02": "Sollte bei ungültigen IDs ValueError auslösen"
+    },
+    "hints": {
+      "1": "Verwende str.startswith(), um das Präfix zu prüfen, und len(), um die Länge zu prüfen.",
+      "2": "Löse bei jedem Prüffehler einen ValueError mit einer aussagekräftigen Meldung aus.",
+      "3": "Lösung: Prüfe zuerst startswith(\"AGT-\"), dann len(agent_id) != 7, und löse jedes Mal ValueError aus."
+    },
+    "comments": {
+      "# Write a function validate_agent_id that checks:": "# Schreibe eine Funktion validate_agent_id, die prüft:",
+      "# - ID must start with \"AGT-\"": "# - Die ID muss mit \"AGT-\" beginnen",
+      "# - ID must be exactly 7 characters long": "# - Die ID muss genau 7 Zeichen lang sein",
+      "# Raise ValueError with appropriate messages": "# Löse ValueError mit passenden Meldungen aus",
+      "# Then test with: \"AGT-001\", \"invalid\", \"AGT-1234567\"": "# Teste dann mit: \"AGT-001\", \"invalid\", \"AGT-1234567\""
+    }
+  },
+  "ch08_07": {
+    "tests": {
+      "tc01": "Sollte Werte und Standardwerte korrekt zurückgeben",
+      "tc02": "Sollte auch mit anderen Daten funktionieren"
+    },
+    "hints": {
+      "1": "Verwende einen try/except-Block, um KeyError abzufangen, wenn ein Schlüssel fehlt.",
+      "2": "Der Parameter default liefert einen Ersatzwert, wenn der Schlüssel nicht gefunden wird.",
+      "3": "Lösung: try: return database[key] except KeyError: return default"
+    },
+    "comments": {
+      "# Write get_intel(database, key, default=\"UNKNOWN\") that:": "# Schreibe get_intel(database, key, default=\"UNKNOWN\"), das:",
+      "# - Returns database[key] if key exists": "# - database[key] zurückgibt, wenn key existiert",
+      "# - Returns default if key is missing (catch KeyError)": "# - default zurückgibt, wenn key fehlt (fange KeyError ab)",
+      "# Test with a sample database dictionary": "# Teste mit einem Beispiel-Dictionary als Datenbank"
+    }
+  },
+  "ch08_08": {
+    "tests": {
+      "tc01": "Sollte Codes mit Fehlerbehandlung verarbeiten",
+      "tc02": "Sollte ungültige Codes durch 0 ersetzen"
+    },
+    "hints": {
+      "1": "Umschließe die int()-Umwandlung in der Schleife mit try/except.",
+      "2": "Wenn ValueError auftritt, hänge 0 statt des umgewandelten Werts an.",
+      "3": "Lösung: try: results.append(int(code)) except ValueError: results.append(0)"
+    },
+    "comments": {
+      "# Process a list of codes, converting to int": "# Verarbeite eine Liste von Codes und wandle sie in int um",
+      "# Use try/except to replace invalid codes with 0": "# Ersetze ungültige Codes mit try/except durch 0",
+      "# codes = [\"42\", \"??\", \"17\", \"error\", \"99\"]": "# codes = [\"42\", \"??\", \"17\", \"error\", \"99\"]"
+    }
+  },
+  "ch09_01": {
+    "tests": {
+      "tc01": "Sollte die Module math und random verwenden",
+      "tc02": "Sollte die richtigen Modulfunktionen aufrufen"
+    },
+    "hints": {
+      "1": "math.sqrt() liefert die Quadratwurzel. math.floor() rundet ab. random.randint() liefert eine zufällige ganze Zahl.",
+      "2": "Importiere zuerst das Modul mit import math und rufe dann math.sqrt(144) auf.",
+      "3": "Lösung: math.sqrt(144), math.floor(9.7), random.randint(1, 10)"
+    },
+    "comments": {}
+  },
+  "ch09_02": {
+    "tests": {
+      "tc01": "Sollte selektive Importe verwenden",
+      "tc02": "Sollte pi, ceil, floor aus math importieren"
+    },
+    "hints": {
+      "1": "from math import pi, ceil, floor importiert gezielt einzelne Namen.",
+      "2": "Nach dem from-Import verwendest du die Namen direkt: pi, ceil(7.2), floor(7.8).",
+      "3": "Lösung: from math import pi, ceil, floor"
+    },
+    "comments": {}
+  },
+  "ch09_03": {
+    "tests": {
+      "tc01": "Sollte die Agenten absteigend nach Stufe sortieren",
+      "tc02": "Sollte auch mit anderen Daten funktionieren"
+    },
+    "hints": {
+      "1": "lambda x: x[1] erzeugt eine Funktion, die das zweite Element eines Tupels zurückgibt.",
+      "2": "sorted() mit key= bestimmt die Sortierreihenfolge über das lambda. reverse=True sortiert absteigend.",
+      "3": "Lösung: sorted(agents, key=lambda x: x[1], reverse=True)"
+    },
+    "comments": {}
+  },
+  "ch09_04": {
+    "tests": {
+      "tc01": "Sollte die Codes mit map umwandeln",
+      "tc02": "Sollte auch mit anderen Daten funktionieren"
+    },
+    "hints": {
+      "1": "map(function, iterable) wendet die Funktion auf jedes Element an.",
+      "2": "Verwende lambda x: x * 7 + 3 als Umwandlungsfunktion.",
+      "3": "Lösung: list(map(lambda x: x * 7 + 3, codes))"
+    },
+    "comments": {}
+  },
+  "ch09_05": {
+    "tests": {
+      "tc01": "Sollte Signale größer als 10 filtern",
+      "tc02": "Sollte auch mit anderen Daten funktionieren"
+    },
+    "hints": {
+      "1": "filter(function, iterable) behält nur die Elemente, für die die Funktion True zurückgibt.",
+      "2": "Verwende lambda x: x > 10, um Werte größer als 10 zu behalten.",
+      "3": "Lösung: list(filter(lambda x: x > 10, signals))"
+    },
+    "comments": {}
+  },
+  "ch09_06": {
+    "tests": {
+      "tc01": "Sollte Vielfache von 2 und 3 zugleich finden",
+      "tc02": "Sollte auch mit anderen Daten funktionieren"
+    },
+    "hints": {
+      "1": "Verwende den Modulo-Operator %, um die Teilbarkeit zu prüfen. x % 2 == 0 bedeutet gerade.",
+      "2": "Kombiniere Bedingungen mit and: x % 2 == 0 and x % 3 == 0.",
+      "3": "Lösung: [x for x in data if x % 2 == 0 and x % 3 == 0]"
+    },
+    "comments": {}
+  },
+  "ch09_07": {
+    "tests": {
+      "tc01": "Sollte ein Dictionary aus einer List Comprehension erstellen",
+      "tc02": "Sollte auch mit anderen Daten funktionieren"
+    },
+    "hints": {
+      "1": "Dictionary Comprehensions verwenden {key: value for item in iterable}.",
+      "2": "Verwende agent als Schlüssel und len(agent) * 10 als Wert.",
+      "3": "Lösung: {agent: len(agent) * 10 for agent in agents}"
+    },
+    "comments": {}
+  },
+  "ch09_08": {
+    "tests": {
+      "tc01": "Sollte die formatierte Tabelle anzeigen",
+      "tc02": "Sollte auch mit anderen Daten funktionieren"
+    },
+    "hints": {
+      "1": "Verwende :<10 für linksbündig auf 10 Zeichen, :>5 für rechtsbündig auf 5 Zeichen.",
+      "2": "Speichere die Kopfzeilen-Zeichenketten in Variablen und verwende dann Formatangaben: f\"{header_name:<10}\".",
+      "3": "Lösung: f\"{header_name:<10} {header_level:>5} {header_xp:>8}\" und f\"{name:<10} {level:>5} {xp:>8}\""
+    },
+    "comments": {
+      "# Create a formatted table of agents with aligned columns": "# Erstelle eine formatierte Agenten-Tabelle mit ausgerichteten Spalten"
+    }
+  },
+  "ch09_09": {
+    "tests": {
+      "tc01": "Sollte Agenten-IDs und Zeiten extrahieren",
+      "tc02": "Sollte auch mit anderen Daten funktionieren"
+    },
+    "hints": {
+      "1": "Verwende r'AGT-\\d+', um AGT- gefolgt von Ziffern zu finden. \\d passt auf jede Ziffer.",
+      "2": "re.findall() liefert alle Treffer eines Musters in einer Zeichenkette.",
+      "3": "Lösung: re.findall(r'AGT-\\d+', log) und re.findall(r'\\d{2}:\\d{2}', log)"
+    },
+    "comments": {}
+  },
+  "ch09_10": {
+    "tests": {
+      "tc01": "Sollte filtern, sortieren und die Summe berechnen",
+      "tc02": "Sollte funktionale Werkzeuge korrekt verketten"
+    },
+    "hints": {
+      "1": "Verwende filter(), um Werte >= 50 zu behalten, sorted(), um absteigend zu sortieren, und map(), um zu verdoppeln.",
+      "2": "Verkette: sorted(filter(...), reverse=True), dann sum(map(...)).",
+      "3": "Lösung: result = sorted(filter(lambda x: x >= 50, raw_scores), reverse=True)"
+    },
+    "comments": {
+      "# Chain map, filter, and sorted to process scores": "# Verkette map, filter und sorted, um die Werte zu verarbeiten",
+      "# raw_scores = [85, 42, 91, 17, 73, 58, 96, 34]": "# raw_scores = [85, 42, 91, 17, 73, 58, 96, 34]",
+      "# 1. Filter scores >= 50": "# 1. Filtere Werte >= 50",
+      "# 2. Sort descending": "# 2. Sortiere absteigend",
+      "# 3. Double each score and sum": "# 3. Verdopple jeden Wert und bilde die Summe"
+    }
+  },
+  "ch10_01": {
+    "tests": {
+      "tc01": "Sollte eine Klasse mit Attributen erstellen",
+      "tc02": "Sollte über eine Instanz auf Klassenattribute zugreifen"
+    },
+    "hints": {
+      "1": "Klassenattribute werden direkt im Klassenkörper definiert, wie Variablen.",
+      "2": "Setze name = \"SENTINEL\", threat_level = 5, active = True in der Klasse.",
+      "3": "Lösung: class SecurityBot: name = \"SENTINEL\" threat_level = 5 active = True"
+    },
+    "comments": {}
+  },
+  "ch10_02": {
+    "tests": {
+      "tc01": "Sollte Methoden auf einer Instanz aufrufen",
+      "tc02": "Sollte Parameter an Methoden übergeben"
+    },
+    "hints": {
+      "1": "Methoden sind Funktionen in einer Klasse. Der erste Parameter ist immer self.",
+      "2": "Verwende return, um einen Wert zurückzugeben. Verwende f-Strings für dynamische Zeichenketten.",
+      "3": "Lösung: return \"HALT. Identify yourself.\" und return f\"Scanning {target}... threat detected.\""
+    },
+    "comments": {}
+  },
+  "ch10_03": {
+    "tests": {
+      "tc01": "Sollte Bots mit unterschiedlichen Werten initialisieren",
+      "tc02": "Sollte auch mit anderen Daten funktionieren"
+    },
+    "hints": {
+      "1": "__init__ wird beim Erstellen einer Instanz automatisch aufgerufen. Parameter stehen nach self.",
+      "2": "Verwende self.name = name, um den Parameter als Instanzattribut zu speichern.",
+      "3": "Lösung: def __init__(self, name, threat_level): self.name = name self.threat_level = threat_level"
+    },
+    "comments": {}
+  },
+  "ch10_04": {
+    "tests": {
+      "tc01": "Sollte str- und repr-Darstellungen haben",
+      "tc02": "Sollte auch mit anderen Daten funktionieren"
+    },
+    "hints": {
+      "1": "__str__ liefert eine gut lesbare Zeichenkette. __repr__ liefert eine entwicklerfreundliche Zeichenkette.",
+      "2": "__repr__ sollte idealerweise wie ein gültiger Konstruktoraufruf aussehen.",
+      "3": "Lösung: __str__ gibt f\"SecurityBot: {self.name} (Level {self.level})\" zurück und __repr__ gibt eine Zeichenkette im Konstruktor-Stil zurück"
+    },
+    "comments": {}
+  },
+  "ch10_05": {
+    "tests": {
+      "tc01": "Sollte Verhalten erben und erweitern",
+      "tc02": "Sollte auch mit anderen Daten funktionieren"
+    },
+    "hints": {
+      "1": "class Agent(Person): lässt Agent von Person erben. super() ruft die Elternklasse auf.",
+      "2": "super().__init__(name, age) ruft Person.__init__ auf. super().introduce() ruft Person.introduce auf.",
+      "3": "Lösung: class Agent(Person):, super().__init__(name, age), base = super().introduce()"
+    },
+    "comments": {}
+  },
+  "ch10_06": {
+    "tests": {
+      "tc01": "Sollte alert in Unterklassen überschreiben",
+      "tc02": "Sollte super() verwenden und vollständig überschreiben"
+    },
+    "hints": {
+      "1": "Überschreibe eine Methode, indem du in der Unterklasse denselben Methodennamen definierst.",
+      "2": "Verwende super().alert(), um die Version der Elternklasse aufzurufen. StealthBot ersetzt das Verhalten vollständig.",
+      "3": "Lösung: EliteBot verwendet super().alert() + zusätzlichen Text. StealthBot gibt \"...\" zurück"
+    },
+    "comments": {}
+  },
+  "ch10_07": {
+    "tests": {
+      "tc01": "Sollte Getter und Setter verwenden",
+      "tc02": "Sollte auch mit anderen Daten funktionieren"
+    },
+    "hints": {
+      "1": "self.__attribute nutzt Name Mangling für den Zugriffsschutz. Greife über Getter/Setter-Methoden darauf zu.",
+      "2": "get_clearance gibt self.__clearance zurück. set_clearance setzt self.__clearance = level.",
+      "3": "Lösung: return self.__clearance und self.__clearance = level"
+    },
+    "comments": {}
+  },
+  "ch10_08": {
+    "tests": {
+      "tc01": "Sollte Namen prüfen und die Anzahl der Instanzen zählen",
+      "tc02": "Sollte auch mit anderen Daten funktionieren"
+    },
+    "hints": {
+      "1": "Klassenvariablen werden von allen Instanzen geteilt. Greife mit ClassName._count darauf zu.",
+      "2": "Eine normale Methode kann Klassenvariablen über den Klassennamen lesen. Eigenständige Funktionen funktionieren wie statische Methoden.",
+      "3": "Lösung: return Mission._count in get_count, return name.startswith(\"OP-\") in validate_mission_name"
+    },
+    "comments": {
+      "# Create a Mission class with a count tracker": "# Erstelle eine Mission-Klasse mit einem Zähler",
+      "# Use a regular method to access class state": "# Verwende eine normale Methode für den Zugriff auf den Klassenzustand",
+      "# Use a standalone function for validation": "# Verwende eine eigenständige Funktion für die Prüfung"
+    }
+  },
+  "ch10_09": {
+    "tests": {
+      "tc01": "Sollte alle Etagen anzeigen",
+      "tc02": "Sollte Building aus Floor-Objekten zusammensetzen"
+    },
+    "hints": {
+      "1": "Komposition bedeutet, dass eine Klasse Instanzen einer anderen enthält. Building hat eine Liste von Floors.",
+      "2": "Floor braucht __str__ für die Anzeige. Building verwendet self.floors = [] und append().",
+      "3": "Lösung: Building.add_floor hängt an self.floors an. list_floors gibt jede Etage aus."
+    },
+    "comments": {
+      "# Create Floor class with number and name": "# Erstelle die Klasse Floor mit number und name",
+      "# Create Building class that contains Floor objects": "# Erstelle die Klasse Building, die Floor-Objekte enthält",
+      "# Building should have add_floor() and list_floors() methods": "# Building soll die Methoden add_floor() und list_floors() haben"
+    }
+  },
+  "ch10_10": {
+    "tests": {
+      "tc01": "Sollte patrol auf verschiedenen Bot-Typen aufrufen",
+      "tc02": "Sollte Polymorphismus durch Duck Typing zeigen"
+    },
+    "hints": {
+      "1": "Polymorphismus bedeutet, dass verschiedene Klassen denselben Methodennamen haben, aber sich unterschiedlich verhalten.",
+      "2": "Python nutzt Duck Typing: Wenn es patrol() hat, kannst du es aufrufen. Eine gemeinsame Basisklasse ist nicht nötig.",
+      "3": "Lösung: Drei Klassen, jede mit patrol(), das unterschiedliche Zeichenketten zurückgibt. run_patrol durchläuft sie und gibt sie aus."
+    },
+    "comments": {
+      "# Create DroneBot, GuardBot, TurretBot — each with a patrol() method": "# Erstelle DroneBot, GuardBot, TurretBot, jeweils mit einer patrol()-Methode",
+      "# Write run_patrol(bots) that calls patrol() on each bot": "# Schreibe run_patrol(bots), das patrol() auf jedem Bot aufruft",
+      "# Each bot type returns a different message": "# Jeder Bot-Typ gibt eine andere Nachricht zurück"
+    }
+  },
+  "ch11_01": {
+    "tests": {
+      "tc01": "Sollte XP und Codenamen berechnen",
+      "tc02": "Sollte auch mit anderen Daten funktionieren"
+    },
+    "hints": {
+      "1": "Typannotationen kennzeichnen Parameter und Rückgabetypen: def func(x: int) -> str:",
+      "2": "Verwende int, float, str als Typannotationen. -> gibt den Rückgabetyp an.",
+      "3": "Lösung: def calculate_xp(base: int, multiplier: float) -> int:"
+    },
+    "comments": {}
+  },
+  "ch11_02": {
+    "tests": {
+      "tc01": "Sollte Instanzen von Datencontainern mit __repr__ erstellen",
+      "tc02": "Sollte auch mit anderen Daten funktionieren"
+    },
+    "hints": {
+      "1": "Datencontainer brauchen die Methoden __init__ (Konstruktor), __repr__ (Anzeige) und __eq__ (Vergleich).",
+      "2": "__repr__ gibt eine Zeichenkette zurück, die zeigt, wie man das Objekt neu erstellt. __eq__ vergleicht alle Felder.",
+      "3": "Lösung: __repr__ gibt f\"Agent(name='...', ...)\" zurück, __eq__ vergleicht name, level und active"
+    },
+    "comments": {}
+  },
+  "ch11_03": {
+    "tests": {
+      "tc01": "Sollte prüfen und teilen",
+      "tc02": "Sollte auch mit anderen Daten funktionieren"
+    },
+    "hints": {
+      "1": "assert condition, \"message\" löst AssertionError aus, wenn condition False ist.",
+      "2": "units > 0 prüft auf positiv, total >= 0 prüft auf nicht negativ.",
+      "3": "Lösung: assert units > 0, \"Unit count must be positive\""
+    },
+    "comments": {}
+  },
+  "ch11_04": {
+    "tests": {
+      "tc01": "Sollte verschlüsseln und die Tests bestehen",
+      "tc02": "Sollte auch mit anderen Daten funktionieren"
+    },
+    "hints": {
+      "1": "Die Caesar-Verschlüsselung verschiebt jeden Buchstaben. ABC um 1 verschoben wird zu BCD.",
+      "2": "XYZ um 3 verschoben beginnt wieder von vorne: X->A, Y->B, Z->C.",
+      "3": "Lösung: \"BCD\", \"ABC\", \"abc\" als erwartete Werte"
+    },
+    "comments": {}
+  },
+  "ch11_05": {
+    "tests": {
+      "tc01": "Sollte die richtige Reaktion auf die Bedrohung zurückgeben",
+      "tc02": "Sollte auch mit anderen Daten funktionieren"
+    },
+    "hints": {
+      "1": "Gute Dokumentation beschreibt, was eine Funktion tut, ihre Parameter und ihren Rückgabewert.",
+      "2": "Dokumentiere mit Kommentaren: Zweck, Argumente mit Typen und Rückgabetyp.",
+      "3": "Trage Beschreibungen ein: threat_level ist ein int (1-10), location ist eine Zeichenkette, die Funktion gibt eine Antwort-Zeichenkette zurück."
+    },
+    "comments": {
+      "# Function: analyze_threat": "# Funktion: analyze_threat",
+      "# Args: threat_level (___), location (___)": "# Argumente: threat_level (___), location (___)",
+      "# Returns: ___": "# Rückgabe: ___",
+      "# Analyze a security threat and return a response protocol": "# Analysiere eine Sicherheitsbedrohung und gib ein Reaktionsprotokoll zurück"
+    }
+  },
+  "ch11_06": {
+    "tests": {
+      "tc01": "Sollte Klassen- und Modulkonstanten verwenden",
+      "tc02": "Sollte die Konstantenwerte korrekt definieren"
+    },
+    "hints": {
+      "1": "Fasse zusammengehörige Konstanten in einer Klasse zusammen. Greife mit ClassName.CONSTANT darauf zu.",
+      "2": "Definiere die Werte: LOW = 1, MEDIUM = 5, HIGH = 8, CRITICAL = 10.",
+      "3": "Konstanten sind Variablen in GROSSBUCHSTABEN: MAX_AGENTS = 12, DEFAULT_FLOOR = \"lobby\""
+    },
+    "comments": {
+      "# Use a class to group related constants (like an enum)": "# Verwende eine Klasse, um zusammengehörige Konstanten zu gruppieren (wie ein enum)"
+    }
+  },
+  "ch11_07": {
+    "tests": {
+      "tc01": "Sollte Agenten verarbeiten und finden",
+      "tc02": "Sollte auch mit anderen Daten funktionieren"
+    },
+    "hints": {
+      "1": "List[str] ist eine Liste von Zeichenketten. Dict[str, int] ist ein Dictionary mit str-Schlüsseln und int-Werten.",
+      "2": "Optional[str] bedeutet, dass die Funktion str oder None zurückgeben kann.",
+      "3": "Lösung: List[str], Dict[str, int], Optional[str]"
+    },
+    "comments": {}
+  },
+  "ch11_08": {
+    "tests": {
+      "tc01": "Sollte Missionen filtern und anzeigen",
+      "tc02": "Sollte Klassen, Filtern und Formatieren kombinieren"
+    },
+    "hints": {
+      "1": "Erstelle eine Mission-Klasse mit __init__ und __repr__. Verwende für status einen Standardparameter.",
+      "2": "filter_missions verwendet eine List Comprehension: [m for m in missions if m.priority >= min_priority].",
+      "3": "Lösung: Mission-Klasse mit name/priority/status, mit einer Comprehension filtern, mit f-Strings ausgeben"
+    },
+    "comments": {
+      "# Combine classes, filtering, and string formatting": "# Kombiniere Klassen, Filtern und Zeichenketten-Formatierung",
+      "# Create a Mission class with name, priority, status": "# Erstelle eine Mission-Klasse mit name, priority, status",
+      "# Write a filter_missions function and print high-priority active missions": "# Schreibe eine Funktion filter_missions und gib aktive Missionen mit hoher Priorität aus"
+    }
+  },
+  "ch12_01": {
+    "tests": {
+      "tc01": "Sollte die Signalfolge erzeugen",
+      "tc02": "Sollte auch mit anderen Daten funktionieren"
+    },
+    "hints": {
+      "1": "yield pausiert die Funktion und gibt einen Wert zurück. Die Funktion läuft beim nächsten Durchlauf weiter.",
+      "2": "Ersetze return durch yield, um aus einer Funktion einen Generator zu machen.",
+      "3": "Lösung: yield start + i * 7"
+    },
+    "comments": {}
+  },
+  "ch12_02": {
+    "tests": {
+      "tc01": "Sollte Generatorfunktionen mit yield erstellen",
+      "tc02": "Sollte auch mit anderen Daten funktionieren"
+    },
+    "hints": {
+      "1": "Generatorfunktionen verwenden yield statt return. Sie erzeugen Werte einzeln nacheinander.",
+      "2": "yield x ** 2 erzeugt den quadrierten Wert. Verwende list(), um alle erzeugten Werte einzusammeln.",
+      "3": "Lösung: yield x ** 2 in beiden Generatorfunktionen"
+    },
+    "comments": {}
+  },
+  "ch12_03": {
+    "tests": {
+      "tc01": "Sollte Funktionsaufrufe protokollieren",
+      "tc02": "Sollte auch mit anderen Daten funktionieren"
+    },
+    "hints": {
+      "1": "Ein Dekorator umhüllt eine Funktion. func.__name__ liefert den Funktionsnamen.",
+      "2": "Rufe in wrapper die ursprüngliche Funktion mit func(*args, **kwargs) auf.",
+      "3": "Lösung: func.__name__ für den Namen, func(*args, **kwargs) für den Aufruf"
+    },
+    "comments": {}
+  },
+  "ch12_04": {
+    "tests": {
+      "tc01": "Sollte Freigabestufen durchsetzen",
+      "tc02": "Sollte auch mit anderen Daten funktionieren"
+    },
+    "hints": {
+      "1": "Ein parametrisierter Dekorator ist eine Funktion, die einen Dekorator zurückgibt. Drei verschachtelte Funktionen.",
+      "2": "min_level wird über eine Closure aus der äußeren Funktion übernommen.",
+      "3": "Lösung: if agent_level < min_level und f\"Need level {min_level}\""
+    },
+    "comments": {}
+  },
+  "ch12_05": {
+    "tests": {
+      "tc01": "Sollte öffnen, senden und schließen",
+      "tc02": "Sollte auch mit anderen Daten funktionieren"
+    },
+    "hints": {
+      "1": "try/finally garantiert, dass Aufräumcode auch dann läuft, wenn im try-Block ein Fehler auftritt.",
+      "2": "Die Nutzung der Ressource (open, transmit) gehört in try. Das Aufräumen (close) gehört in finally.",
+      "3": "Lösung: try: ch.open() + ch.transmit(...), finally: ch.close()"
+    },
+    "comments": {}
+  },
+  "ch12_06": {
+    "tests": {
+      "tc01": "Sollte Callback-basierte Operationen ausführen",
+      "tc02": "Sollte auch mit anderen Daten funktionieren"
+    },
+    "hints": {
+      "1": "Callbacks sind Funktionen, die als Argumente übergeben werden. Die empfangende Funktion ruft sie auf, wenn die Arbeit erledigt ist.",
+      "2": "Übergib process_result als Callback an fetch_intel. Es wird mit dem Ergebnis aufgerufen.",
+      "3": "Lösung: fetch_intel(target, callback) ruft callback(result) auf. Übergib process_result als Callback."
+    },
+    "comments": {}
+  },
+  "ch12_07": {
+    "tests": {
+      "tc01": "Sollte verschiedene Signale einstufen",
+      "tc02": "Sollte auch mit anderen Daten funktionieren"
+    },
+    "hints": {
+      "1": "Verwende isinstance(), um Typen zu prüfen, und dict.get(), um sicher auf Schlüssel zuzugreifen.",
+      "2": "if/elif-Ketten mit Dictionary-Abfragen können strukturierte Daten wie match/case verteilen.",
+      "3": "Lösung: level >= 8 für critical, \"status\" für die Statusprüfung, \"Unknown signal\" als Standardfall"
+    },
+    "comments": {}
+  },
+  "ch12_08": {
+    "tests": {
+      "tc01": "Sollte die Fehlercodes aus den Logzeilen herausziehen",
+      "tc02": "Sollte nur die ERROR-Zeilen behalten"
+    },
+    "hints": {
+      "1": "Verwende startswith(), um zu prüfen, ob eine Log-Zeile mit \"ERROR\" beginnt.",
+      "2": "Teile die Zeile an \":\", um das Fehlerpräfix zu erhalten, und dann an \" \", um den Fehlercode zu extrahieren.",
+      "3": "Lösung: log.startswith(\"ERROR\"), split(\":\")[0].split(\" \")[1] liefert den Code, \"ERROR \" + code."
+    },
+    "comments": {}
+  },
+  "ch12_09": {
+    "tests": {
+      "tc01": "Sollte die Matrix abflachen und Paare erstellen",
+      "tc02": "Sollte verschachtelte Schleifen für komplexe Iteration verwenden"
+    },
+    "hints": {
+      "1": "Verschachtelte for-Schleifen: Die äußere Schleife durchläuft die Zeilen, die innere die Elemente.",
+      "2": "Für das Durchlaufen eines Dictionarys: for floor, rooms in floors.items(): dann for room in rooms:",
+      "3": "Lösung: verschachtelte for-Schleifen mit append für das Abflachen und das Erzeugen der Paare"
+    },
+    "comments": {
+      "# Flatten a matrix keeping only odd numbers using nested loops": "# Flache eine Matrix mit verschachtelten Schleifen ab und behalte nur ungerade Zahlen",
+      "# Create floor-room pairs from a nested dictionary using nested loops": "# Erzeuge mit verschachtelten Schleifen Etage-Raum-Paare aus einem verschachtelten Dictionary"
+    }
+  },
+  "ch12_10": {
+    "tests": {
+      "tc01": "Sollte kritische Schwachstellen finden und anzeigen",
+      "tc02": "Sollte Klassen, Sortieren und Filtern kombinieren"
+    },
+    "hints": {
+      "1": "Verwende startswith() und String-Index/Slice, um Log-Einträge zu parsen. Verwende eine Klasse für strukturierte Daten.",
+      "2": "Filtere mit einer List Comprehension, sortiere mit sorted() und einem lambda-Schlüssel.",
+      "3": "Lösung: Prüfe startswith(\"VULN-\"), verwende index(\"[\"), index(\"]\"), index(\": \"), um die Felder zu extrahieren."
+    },
+    "comments": {
+      "# FINAL CHALLENGE: Combine ALL concepts": "# LETZTE HERAUSFORDERUNG: Kombiniere ALLE Konzepte",
+      "# Parse vulnerability logs using string methods, classes, and filtering": "# Parse Schwachstellen-Logs mit String-Methoden, Klassen und Filtern",
+      "# Filter critical vulnerabilities and display sorted results": "# Filtere kritische Schwachstellen und zeige die sortierten Ergebnisse an"
+    }
+  }
+}

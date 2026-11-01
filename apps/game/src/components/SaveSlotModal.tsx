@@ -1,7 +1,8 @@
-/* eslint-disable @nx/enforce-module-boundaries */
 import React, { useCallback, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import type { TFunction } from 'i18next';
 import type { SaveSlot } from '@venomous-snake/save-system';
-import { saveManager } from '@venomous-snake/save-system';
+import { saveManager, SaveSystemError } from '@venomous-snake/save-system';
 import { downloadTextFile } from '@venomous-snake/save-system';
 
 export interface SaveSlotModalProps {
@@ -23,6 +24,21 @@ function formatDate(iso: string): string {
   }
 }
 
+/** Slot names are stored in English by `useSaveSystem`, so old saves follow the language too. */
+function displayName(t: TFunction, storedName: string): string {
+  const match = /^(Auto )?Save — (.+) · Floor (\d+)$/.exec(storedName);
+  if (match === null) return storedName;
+  const key = match[1] === undefined ? 'save_slots.slot_manual' : 'save_slots.slot_auto';
+  return t(key, { name: match[2], floor: match[3] });
+}
+
+/** Coded failures name the problem; anything else is internal and only logged. */
+function errorText(t: TFunction, error: unknown, fallbackKey: string): string {
+  if (error instanceof SaveSystemError) return t(`save_slots.errors.${error.code}`, error.params);
+  console.error('Save operation failed', error);
+  return t(fallbackKey);
+}
+
 export function SaveSlotModal({
   mode,
   onClose,
@@ -31,6 +47,7 @@ export function SaveSlotModal({
   onDelete,
   listSaves,
 }: SaveSlotModalProps): React.JSX.Element {
+  const { t } = useTranslation('ui');
   const [slots, setSlots] = useState<SaveSlot[]>([]);
   const [busy, setBusy] = useState(false);
   const [confirmOverwrite, setConfirmOverwrite] = useState<string | null>(null);
@@ -72,12 +89,12 @@ export function SaveSlotModal({
         refresh();
         setConfirmOverwrite(null);
       } catch (err) {
-        setError(err instanceof Error ? err.message : 'Save failed');
+        setError(errorText(t, err, 'save_slots.failed.save'));
       } finally {
         setBusy(false);
       }
     },
-    [onSave, refresh],
+    [onSave, refresh, t],
   );
 
   const handleNewSave = useCallback(async () => {
@@ -87,11 +104,11 @@ export function SaveSlotModal({
       await onSave(undefined);
       refresh();
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Save failed');
+      setError(errorText(t, err, 'save_slots.failed.save'));
     } finally {
       setBusy(false);
     }
-  }, [onSave, refresh]);
+  }, [onSave, refresh, t]);
 
   const handleLoad = useCallback(
     (slotId: string) => {
@@ -108,12 +125,12 @@ export function SaveSlotModal({
         await onDelete(slotId);
         refresh();
       } catch (err) {
-        setError(err instanceof Error ? err.message : 'Delete failed');
+        setError(errorText(t, err, 'save_slots.failed.delete'));
       } finally {
         setBusy(false);
       }
     },
-    [onDelete, refresh],
+    [onDelete, refresh, t],
   );
 
   const backdropStyle: React.CSSProperties = {
@@ -182,14 +199,14 @@ export function SaveSlotModal({
     opacity: busy ? 0.5 : 1,
   });
 
-  const title = mode === 'save' ? 'SAVE GAME' : 'LOAD GAME';
+  const title = t(mode === 'save' ? 'save_slots.title_save' : 'save_slots.title_load');
 
   return (
     <div style={backdropStyle} onClick={(e) => e.target === e.currentTarget && onClose()}>
       <div style={panelStyle}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <h2 style={titleStyle}>{title}</h2>
-          <button style={btnStyle('#888')} onClick={onClose} aria-label="Close">
+          <button style={btnStyle('#888')} onClick={onClose} aria-label={t('accessibility.close')}>
             ✕
           </button>
         </div>
@@ -227,7 +244,7 @@ export function SaveSlotModal({
                 margin: 0,
               }}
             >
-              Overwrite this save slot?
+              {t('save_slots.overwrite_confirm')}
             </p>
             <div style={{ display: 'flex', gap: '8px' }}>
               <button
@@ -235,14 +252,14 @@ export function SaveSlotModal({
                 onClick={() => void handleSaveToSlot(confirmOverwrite)}
                 disabled={busy}
               >
-                OVERWRITE
+                {t('save_slots.overwrite')}
               </button>
               <button
                 style={btnStyle('#888')}
                 onClick={() => setConfirmOverwrite(null)}
                 disabled={busy}
               >
-                CANCEL
+                {t('save_slots.cancel')}
               </button>
             </div>
           </div>
@@ -252,7 +269,7 @@ export function SaveSlotModal({
         <div style={slotListStyle}>
           {slots.length === 0 && (
             <p style={{ color: '#666', fontSize: '13px', margin: '16px 0', textAlign: 'center' }}>
-              {mode === 'load' ? 'No save files found.' : 'No existing saves.'}
+              {t(mode === 'load' ? 'save_slots.empty_load' : 'save_slots.empty_save')}
             </p>
           )}
           {slots.map((slot) => (
@@ -269,13 +286,15 @@ export function SaveSlotModal({
                   }}
                 >
                   {slot.isAutoSave ? '⟳ ' : ''}
-                  {slot.name}
+                  {displayName(t, slot.name)}
                 </div>
                 <div style={{ color: '#555', fontSize: '11px', marginTop: '2px' }}>
                   {formatDate(slot.updatedAt)}
                   {' · '}
-                  Lv {Math.floor(slot.data.progress.totalXp / 100) + 1} · XP{' '}
-                  {slot.data.progress.totalXp}
+                  {t('save_slots.meta', {
+                    level: Math.floor(slot.data.progress.totalXp / 100) + 1,
+                    xp: slot.data.progress.totalXp,
+                  })}
                 </div>
               </div>
 
@@ -286,7 +305,7 @@ export function SaveSlotModal({
                     onClick={() => handleLoad(slot.id)}
                     disabled={busy}
                   >
-                    LOAD
+                    {t('save_slots.load')}
                   </button>
                 ) : (
                   <button
@@ -294,16 +313,16 @@ export function SaveSlotModal({
                     onClick={() => setConfirmOverwrite(slot.id)}
                     disabled={busy}
                   >
-                    SAVE
+                    {t('save_slots.save')}
                   </button>
                 )}
                 <button
                   style={btnStyle('#ff3366')}
                   onClick={() => void handleDelete(slot.id)}
                   disabled={busy}
-                  aria-label={`Delete ${slot.name}`}
+                  aria-label={t('save_slots.delete_aria', { name: displayName(t, slot.name) })}
                 >
-                  DEL
+                  {t('save_slots.delete')}
                 </button>
               </div>
             </div>
@@ -318,7 +337,7 @@ export function SaveSlotModal({
               onClick={() => void handleNewSave()}
               disabled={busy}
             >
-              + NEW SAVE SLOT
+              {t('save_slots.new_slot')}
             </button>
           )}
           <button
@@ -330,14 +349,14 @@ export function SaveSlotModal({
                 .exportSlots()
                 .then((text) => downloadTextFile('venomous-snake-saves.json', text))
                 .then(() => setBusy(false))
-                .catch((err) => {
-                  setError(err instanceof Error ? err.message : 'Export failed');
+                .catch((err: unknown) => {
+                  setError(errorText(t, err, 'save_slots.failed.export'));
                   setBusy(false);
                 });
             }}
             disabled={busy || slots.length === 0}
           >
-            ⬇ EXPORT ALL
+            {t('save_slots.export_all')}
           </button>
           <label
             style={{
@@ -347,7 +366,7 @@ export function SaveSlotModal({
               gap: '4px',
             }}
           >
-            ⬆ IMPORT
+            {t('save_slots.import')}
             <input
               type="file"
               accept=".json"
@@ -364,8 +383,8 @@ export function SaveSlotModal({
                     refresh();
                     setBusy(false);
                   })
-                  .catch((err) => {
-                    setError(err instanceof Error ? err.message : 'Import failed');
+                  .catch((err: unknown) => {
+                    setError(errorText(t, err, 'save_slots.failed.import'));
                     setBusy(false);
                   });
                 e.target.value = '';
@@ -374,7 +393,7 @@ export function SaveSlotModal({
             />
           </label>
           <button style={btnStyle('#888')} onClick={onClose} disabled={busy}>
-            CLOSE
+            {t('save_slots.close')}
           </button>
         </div>
       </div>

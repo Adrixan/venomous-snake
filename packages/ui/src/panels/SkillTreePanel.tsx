@@ -306,7 +306,7 @@ export function SkillTreePanel({
                     style={nodeStyle}
                     onClick={() => setSelectedNode(isSelected ? null : node)}
                     title={t(node.nameKey)}
-                    aria-label={`${t(node.nameKey)} — ${state}`}
+                    aria-label={`${t(node.nameKey)} — ${t(`skill_tree.state_${state}`)}`}
                     aria-pressed={isSelected}
                   >
                     <span style={{ fontSize: '16px', lineHeight: 1 }}>{node.icon}</span>

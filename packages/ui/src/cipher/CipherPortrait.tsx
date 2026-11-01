@@ -1,4 +1,5 @@
 import React, { useId } from 'react';
+import { useTranslation } from 'react-i18next';
 import type { CipherMood } from '@venomous-snake/narrative';
 
 interface CipherPortraitProps {
@@ -16,20 +17,12 @@ const MOOD_EYE_COLOR: Record<CipherMood, string> = {
   thinking: '#5c6773',
 };
 
-const MOOD_LABEL: Record<CipherMood, string> = {
-  neutral: 'neutral',
-  excited: 'excited',
-  concerned: 'concerned',
-  amused: 'amused',
-  impressed: 'impressed',
-  thinking: 'thinking',
-};
-
 export function CipherPortrait({
   mood,
   size = 80,
   className,
 }: CipherPortraitProps): React.JSX.Element {
+  const { t } = useTranslation('ui');
   const uid = useId();
   const glowId = `cipher-glow-${uid}`;
   const pulseId = `cipher-pulse-${uid}`;
@@ -52,7 +45,7 @@ export function CipherPortrait({
       height={size}
       viewBox="0 0 80 80"
       xmlns="http://www.w3.org/2000/svg"
-      aria-label={`CIPHER — mood: ${MOOD_LABEL[mood]}`}
+      aria-label={t('cipher_ui.portrait_aria', { mood: t(`cipher_ui.mood.${mood}`) })}
       role="img"
       className={className}
       style={{ display: 'block', flexShrink: 0 }}

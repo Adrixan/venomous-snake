@@ -1,12 +1,14 @@
 import React, { useEffect, useState, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 
-const BOOT_LINES = [
-  '> CIPHER_OS v3.14.159',
-  '> Initializing Python runtime...',
-  '> Connecting to Rattlesnake Corp network...',
-  '> Access granted. Terminal ready.',
-  '> _',
+const BOOT_LINE_KEYS = [
+  'terminal.boot.runtime',
+  'terminal.boot.network',
+  'terminal.boot.ready',
 ] as const;
+
+/** The version line and the cursor line frame the translated lines. */
+const BOOT_LINE_COUNT = BOOT_LINE_KEYS.length + 2;
 
 /** Session flag — skip boot animation on subsequent terminal opens */
 let _bootShown = false;
@@ -29,6 +31,7 @@ export function TerminalBootSequence({
   lineDelay = 260,
   forceReplay = false,
 }: TerminalBootSequenceProps): React.JSX.Element | null {
+  const { t } = useTranslation('ui');
   const [visibleCount, setVisibleCount] = useState(0);
   const onCompleteRef = useRef(onComplete);
   onCompleteRef.current = onComplete;
@@ -42,7 +45,7 @@ export function TerminalBootSequence({
 
     _bootShown = true;
     let count = 0;
-    const totalLines = BOOT_LINES.length;
+    const totalLines = BOOT_LINE_COUNT;
 
     const advance = () => {
       count += 1;
@@ -62,15 +65,17 @@ export function TerminalBootSequence({
   // If already shown and not forcing replay, render nothing (onComplete fires via effect)
   if (_bootShown && !forceReplay && visibleCount === 0) return null;
 
+  const bootLines = ['> CIPHER_OS v3.14.159', ...BOOT_LINE_KEYS.map((key) => `> ${t(key)}`), '> _'];
+
   return (
     <>
       <style>{BOOT_STYLES}</style>
-      <div className="boot-seq-root" role="status" aria-label="Terminal boot sequence">
+      <div className="boot-seq-root" role="status" aria-label={t('terminal.boot.aria')}>
         {/* CRT scanline overlay */}
         <div className="boot-seq-scanlines" aria-hidden="true" />
 
         <div className="boot-seq-lines">
-          {BOOT_LINES.slice(0, visibleCount).map((line, i) => (
+          {bootLines.slice(0, visibleCount).map((line, i) => (
             <p key={i} className="boot-seq-line">
               {line === '> _' ? (
                 <>

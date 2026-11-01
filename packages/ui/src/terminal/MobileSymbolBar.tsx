@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 export interface MobileSymbolBarProps {
   /** Called when a symbol button is pressed */
@@ -72,10 +73,11 @@ export function MobileSymbolBar({
   onSymbol,
   visible = true,
 }: MobileSymbolBarProps): React.JSX.Element | null {
+  const { t } = useTranslation('ui');
   if (!visible) return null;
 
   return (
-    <div style={containerStyle} role="toolbar" aria-label="Python symbol shortcuts">
+    <div style={containerStyle} role="toolbar" aria-label={t('terminal.keyboard.symbols_aria')}>
       {SYMBOLS.map((sym) => (
         <button
           key={sym}
@@ -85,7 +87,7 @@ export function MobileSymbolBar({
             e.preventDefault();
             onSymbol(sym);
           }}
-          aria-label={`Insert ${sym}`}
+          aria-label={t('terminal.keyboard.insert', { symbol: sym })}
           tabIndex={-1}
           type="button"
         >

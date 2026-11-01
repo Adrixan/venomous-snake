@@ -4,13 +4,15 @@ import type {
   NarrativeSnapshot,
   ProgressSnapshot,
 } from '@venomous-snake/shared-types';
+import { SaveSystemError } from './errors';
+import type { SaveErrorCode } from './errors';
 import { SAVE_FORMAT_VERSION } from './types';
 import type { PlayerGender, SaveData, SaveSlot } from './types';
 
 /** Raised when stored or imported data does not describe a valid save. */
-export class InvalidSaveError extends Error {
-  constructor(message: string) {
-    super(message);
+export class InvalidSaveError extends SaveSystemError {
+  constructor(message: string, code: SaveErrorCode, params: Record<string, string | number> = {}) {
+    super(message, code, params);
     this.name = 'InvalidSaveError';
   }
 }
@@ -28,13 +30,13 @@ function isObject(value: unknown): value is Json {
 function str(value: unknown, field: string, fallback?: string): string {
   if (typeof value === 'string') return value;
   if (fallback !== undefined) return fallback;
-  throw new InvalidSaveError(`${field} must be a string`);
+  throw new InvalidSaveError(`${field} must be a string`, 'field_string', { field });
 }
 
 function num(value: unknown, field: string, fallback?: number): number {
   if (typeof value === 'number' && Number.isFinite(value)) return value;
   if (fallback !== undefined) return fallback;
-  throw new InvalidSaveError(`${field} must be a number`);
+  throw new InvalidSaveError(`${field} must be a number`, 'field_number', { field });
 }
 
 function bool(value: unknown, fallback: boolean): boolean {
@@ -44,7 +46,7 @@ function bool(value: unknown, fallback: boolean): boolean {
 function idList(value: unknown, field: string): string[] {
   if (value === undefined) return [];
   if (!Array.isArray(value) || value.length > MAX_LIST) {
-    throw new InvalidSaveError(`${field} must be a list`);
+    throw new InvalidSaveError(`${field} must be a list`, 'field_list', { field });
   }
   return value.filter((v): v is string => typeof v === 'string' && ID_PATTERN.test(v));
 }
@@ -88,7 +90,7 @@ function challengeRecord(value: unknown): Record<string, ChallengeProgress> {
 }
 
 function engineSnapshot(value: unknown): EngineSnapshot {
-  if (!isObject(value)) throw new InvalidSaveError('engine state missing');
+  if (!isObject(value)) throw new InvalidSaveError('engine state missing', 'engine_missing');
   return {
     currentRoomId: str(value['currentRoomId'], 'engine.currentRoomId', 'lobby_entrance'),
     visitedRooms: idList(value['visitedRooms'], 'engine.visitedRooms'),
@@ -98,7 +100,7 @@ function engineSnapshot(value: unknown): EngineSnapshot {
 }
 
 function progressSnapshot(value: unknown): ProgressSnapshot {
-  if (!isObject(value)) throw new InvalidSaveError('progress missing');
+  if (!isObject(value)) throw new InvalidSaveError('progress missing', 'progress_missing');
   return {
     challenges: challengeRecord(value['challenges']),
     totalXp: Math.max(0, num(value['totalXp'], 'progress.totalXp', 0)),
@@ -167,10 +169,14 @@ function migrateV1(raw: Json): SaveData {
  * SaveData in the current format. Unknown fields are dropped.
  */
 export function parseSaveData(raw: unknown): SaveData {
-  if (!isObject(raw)) throw new InvalidSaveError('save data must be an object');
+  if (!isObject(raw)) throw new InvalidSaveError('save data must be an object', 'data_invalid');
   if (raw['version'] === '1.0.0') return migrateV1(raw);
   if (raw['version'] !== SAVE_FORMAT_VERSION) {
-    throw new InvalidSaveError(`unsupported save version ${String(raw['version'])}`);
+    throw new InvalidSaveError(
+      `unsupported save version ${String(raw['version'])}`,
+      'unsupported_version',
+      { version: String(raw['version']) },
+    );
   }
   const alert = Math.floor(num(raw['alertLevel'], 'alertLevel', 0));
   return {
@@ -190,9 +196,9 @@ export function parseSaveData(raw: unknown): SaveData {
 }
 
 export function parseSaveSlot(raw: unknown): SaveSlot {
-  if (!isObject(raw)) throw new InvalidSaveError('save slot must be an object');
+  if (!isObject(raw)) throw new InvalidSaveError('save slot must be an object', 'slot_invalid');
   const id = str(raw['id'], 'id');
-  if (!ID_PATTERN.test(id)) throw new InvalidSaveError('invalid save id');
+  if (!ID_PATTERN.test(id)) throw new InvalidSaveError('invalid save id', 'id_invalid');
   const now = new Date().toISOString();
   const parsedData = parseSaveData(raw['data']);
   return {

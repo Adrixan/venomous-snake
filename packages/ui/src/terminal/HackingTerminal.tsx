@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
+import { difficultyLabel, localizedScaffold, testLabel } from './challengeText';
 import { structureLabel } from './structureLabel';
 import { CipherTerminalHint } from '../cipher/CipherTerminalHint';
 import { useCipher } from '../cipher/useCipher';
@@ -88,12 +89,12 @@ const statusColors: Record<InterpreterStatus, string> = {
   error: '#ff3333',
 };
 
-const statusLabels: Record<InterpreterStatus, string> = {
-  uninitialized: 'Offline',
-  loading: 'Loading...',
-  ready: 'Ready',
-  executing: 'Executing...',
-  error: 'Error',
+const statusLabelKeys: Record<InterpreterStatus, string> = {
+  uninitialized: 'ui:terminal.state.offline',
+  loading: 'ui:terminal.state.loading',
+  ready: 'ui:terminal.state.ready',
+  executing: 'ui:terminal.state.executing',
+  error: 'ui:terminal.state.error',
 };
 
 // Module-level counter to ensure each free-mode terminal gets a unique key
@@ -116,6 +117,7 @@ function FreeModeTerminal({
   onClose,
   onSubmit,
 }: FreeModeProps): React.JSX.Element {
+  const { t } = useTranslation('ui');
   const [outputs, setOutputs] = useState<PythonOutput[]>([]);
   const [status, setStatus] = useState<InterpreterStatus>('uninitialized');
   const [inputPrompt, setInputPrompt] = useState<string | undefined>(undefined);
@@ -151,7 +153,9 @@ function FreeModeTerminal({
       if (!interpreter.isReady()) return;
       setStatus('executing');
       try {
-        const result = await interpreter.execute(code);
+        const result = await interpreter.execute(code, {
+          timeoutMessage: (seconds) => t('terminal.failure.time_limit', { seconds }),
+        });
         setOutputs((prev) => [...prev, ...result.output]);
         if (result.error !== undefined) {
           const err = result.error;
@@ -168,7 +172,7 @@ function FreeModeTerminal({
         setStatus('ready');
       }
     },
-    [interpreter, onSubmit],
+    [interpreter, onSubmit, t],
   );
 
   const handleRunSync = useCallback((code: string) => void handleRun(code), [handleRun]);
@@ -199,21 +203,21 @@ function FreeModeTerminal({
     <div className="terminal-container">
       <div className="terminal-header">
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-          <span className="terminal-title">▶ PYTHON TERMINAL</span>
+          <span className="terminal-title">{t('terminal.python_title')}</span>
           <span
             className="terminal-status-indicator"
             style={{ backgroundColor: statusColor, boxShadow: `0 0 6px ${statusColor}` }}
-            title={statusLabels[status]}
+            title={t(statusLabelKeys[status])}
           />
-          <span style={{ color: statusColor, fontSize: '12px' }}>{statusLabels[status]}</span>
+          <span style={{ color: statusColor, fontSize: '12px' }}>{t(statusLabelKeys[status])}</span>
         </div>
         <div className="terminal-header-actions">
           <button
             className="terminal-btn terminal-btn-close"
             onClick={handleClose}
-            aria-label="Close terminal (Escape)"
+            aria-label={t('terminal.close_aria')}
           >
-            ✕ CLOSE
+            {t('terminal.close_button')}
           </button>
         </div>
       </div>
@@ -221,7 +225,7 @@ function FreeModeTerminal({
       {status === 'loading' ? (
         <div className="terminal-loading">
           <div className="terminal-spinner" />
-          <span>Initializing Python interpreter...</span>
+          <span>{t('terminal.initializing')}</span>
         </div>
       ) : (
         <div
@@ -265,7 +269,7 @@ function FreeModeTerminal({
 
       <div className="terminal-status-bar">
         <span>{interpreter.getVersion()}</span>
-        <span>Ctrl+Enter to run • Esc to close</span>
+        <span>{t('terminal.free_hint')}</span>
       </div>
     </div>
   );
@@ -375,7 +379,8 @@ function ChallengeModeTerminal({
       : 'loading';
   const statusColor = statusColors[status];
   const isDisabled = isRunning;
-  const initialCode = challenge?.scaffoldedCode ?? '# Write your Python code here\n';
+  const initialCode =
+    challenge !== null ? localizedScaffold(challenge) : t('ui:terminal.empty_editor');
 
   // CIPHER explains what went wrong when a run fails.
   const { currentMessage, dismissDialog, showErrorExplanation } = useCipher();
@@ -390,7 +395,11 @@ function ChallengeModeTerminal({
       const tr = testResults?.[i];
       const objStatus: Objective['status'] =
         tr !== undefined ? (tr.passed ? 'passed' : 'failed') : 'pending';
-      return { description: tc.description, hidden: tc.hidden, status: objStatus };
+      return {
+        description: testLabel(t, challenge.id, tc),
+        hidden: tc.hidden,
+        status: objStatus,
+      };
     }) ?? [];
   // Writing rules are visible up front; they are only judged once the output tests pass.
   const testsPassed = challenge?.testCases.every((_, i) => testResults?.[i]?.passed === true);
@@ -409,31 +418,36 @@ function ChallengeModeTerminal({
       <div className="terminal-header">
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
           <span className="terminal-title">
-            {challenge !== null ? `▶ ${challenge.chapter}.${challenge.order} HACK` : '▶ TERMINAL'}
+            {challenge !== null
+              ? t('ui:terminal.challenge_title', {
+                  chapter: challenge.chapter,
+                  order: challenge.order,
+                })
+              : t('ui:terminal.fallback_title')}
           </span>
           <span
             className="terminal-status-indicator"
             style={{ backgroundColor: statusColor, boxShadow: `0 0 6px ${statusColor}` }}
-            title={statusLabels[status]}
+            title={t(statusLabelKeys[status])}
           />
-          <span style={{ color: statusColor, fontSize: '12px' }}>{statusLabels[status]}</span>
+          <span style={{ color: statusColor, fontSize: '12px' }}>{t(statusLabelKeys[status])}</span>
         </div>
         <div className="terminal-header-actions">
           <button
             className="terminal-btn"
             onClick={handleReset}
             disabled={isDisabled}
-            aria-label="Reset code to initial state"
+            aria-label={t('ui:terminal.reset_aria')}
             style={{ fontSize: '12px', color: '#ffb454', borderColor: '#ffb454' }}
           >
-            ↺ RESET
+            {t('ui:terminal.reset_button')}
           </button>
           <button
             className="terminal-btn terminal-btn-close"
             onClick={handleClose}
-            aria-label="Close terminal (Escape)"
+            aria-label={t('ui:terminal.close_aria')}
           >
-            ✕ CLOSE
+            {t('ui:terminal.close_button')}
           </button>
         </div>
       </div>
@@ -442,10 +456,14 @@ function ChallengeModeTerminal({
       {challenge !== null && (
         <div className="terminal-challenge-desc">
           <div className="terminal-challenge-desc-title">
-            {`CH${String(challenge.chapter).padStart(2, '0')}.${String(challenge.order).padStart(2, '0')} • ${t(nsKey(challenge.titleKey))}`}
+            {`${t('ui:terminal.challenge_code', {
+              chapter: String(challenge.chapter).padStart(2, '0'),
+              order: String(challenge.order).padStart(2, '0'),
+            })} • ${t(nsKey(challenge.titleKey))}`}
           </div>
           <div className="terminal-challenge-desc-meta">
-            {challenge.difficulty.toUpperCase()} • +{challenge.xpReward} XP
+            {difficultyLabel(t, challenge.difficulty).toUpperCase()} •{' '}
+            {t('ui:challenge.xp_earned', { xp: challenge.xpReward })}
           </div>
           <div className="terminal-challenge-desc-body">{t(nsKey(challenge.descriptionKey))}</div>
         </div>
@@ -455,9 +473,10 @@ function ChallengeModeTerminal({
       {objectives.length > 0 && (
         <div className="terminal-objectives">
           <div className="terminal-objectives-title">
-            🎯 MISSION OBJECTIVES (
-            {objectives.filter((o) => !o.hidden && o.status === 'passed').length}/
-            {objectives.filter((o) => !o.hidden).length})
+            {t('ui:terminal.objectives', {
+              passed: objectives.filter((o) => !o.hidden && o.status === 'passed').length,
+              total: objectives.filter((o) => !o.hidden).length,
+            })}
           </div>
           {objectives
             .filter((o) => !o.hidden)
@@ -497,11 +516,11 @@ function ChallengeModeTerminal({
         <div className="terminal-result-panel">
           {result.passed ? (
             <div className="terminal-result-pass">
-              <span>✓ HACK SUCCESSFUL</span>
+              <span>{t('ui:terminal.hack_successful')}</span>
             </div>
           ) : (
             <div className="terminal-result-fail">
-              <span>✗ Tests failed — check objectives and try again</span>
+              <span>{t('ui:terminal.tests_failed')}</span>
             </div>
           )}
         </div>
@@ -513,11 +532,11 @@ function ChallengeModeTerminal({
         onClick={requestHint}
         disabled={isRunning || result?.passed === true}
       >
-        💡 {t('ui:terminal.hint', { defaultValue: 'Request a hint' })}
+        💡 {t('ui:terminal.hint')}
       </button>
       {hints.length > 0 && (
         <div className="terminal-hints-panel">
-          <div className="terminal-hints-title">💡 CIPHER HINT</div>
+          <div className="terminal-hints-title">{t('ui:terminal.cipher_hint_title')}</div>
           {hints.map((hint, i) => (
             <div key={i} className="terminal-hint-item">
               {hint}
@@ -547,7 +566,7 @@ function ChallengeModeTerminal({
       {/* Status bar */}
       <div className="terminal-status-bar">
         <span>{interpreter.getVersion()}</span>
-        <span>Run ▶ to test • Submit ✓ to evaluate • Esc to close</span>
+        <span>{t('ui:terminal.challenge_hint')}</span>
       </div>
 
       {/* Success overlay */}
@@ -565,6 +584,7 @@ function ChallengeModeTerminal({
 // ─── Public export ─────────────────────────────────────────────────────────────
 
 function HackingTerminalInner(props: HackingTerminalProps): React.JSX.Element {
+  const { t } = useTranslation('ui');
   const {
     challengeId,
     interpreter,
@@ -595,7 +615,7 @@ function HackingTerminalInner(props: HackingTerminalProps): React.JSX.Element {
     return (
       <div className="terminal-container">
         <div className="terminal-loading">
-          <span>No interpreter configured</span>
+          <span>{t('terminal.no_interpreter')}</span>
         </div>
       </div>
     );
@@ -604,7 +624,7 @@ function HackingTerminalInner(props: HackingTerminalProps): React.JSX.Element {
   return (
     <FreeModeTerminal
       interpreter={effectiveInterpreter}
-      initialCode={initialCode ?? '# Write your Python code here\n'}
+      initialCode={initialCode ?? t('terminal.empty_editor')}
       onClose={onClose}
       {...(readOnlyRanges ? { readOnlyRanges } : {})}
       {...(onSubmit ? { onSubmit } : {})}

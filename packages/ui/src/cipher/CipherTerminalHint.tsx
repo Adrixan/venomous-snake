@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 
 interface CipherTerminalHintProps {
   hint: string;
@@ -9,6 +10,7 @@ export function CipherTerminalHint({
   hint,
   onDismiss,
 }: CipherTerminalHintProps): React.JSX.Element {
+  const { t } = useTranslation('ui');
   const [visible, setVisible] = useState(false);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -36,7 +38,7 @@ export function CipherTerminalHint({
       `}</style>
       <div
         role="note"
-        aria-label="CIPHER hint"
+        aria-label={t('cipher_ui.hint_aria')}
         style={{
           display: 'flex',
           alignItems: 'flex-start',
@@ -90,7 +92,7 @@ export function CipherTerminalHint({
               marginBottom: '4px',
             }}
           >
-            CIPHER · HINT
+            {t('cipher_ui.hint_label')}
           </div>
           <p
             style={{
@@ -109,7 +111,7 @@ export function CipherTerminalHint({
         <button
           type="button"
           onClick={handleDismiss}
-          aria-label="Dismiss hint"
+          aria-label={t('cipher_ui.dismiss_hint_aria')}
           style={{
             background: 'transparent',
             border: 'none',

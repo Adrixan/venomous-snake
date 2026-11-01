@@ -102,7 +102,7 @@ export function CutscenePlayer({ cutscene, onComplete }: CutscenePlayerProps): R
     <div
       onClick={advance}
       role="dialog"
-      aria-label="Cutscene"
+      aria-label={t('ui:cutscene_ui.aria')}
       style={{
         position: 'fixed',
         inset: 0,
@@ -122,7 +122,7 @@ export function CutscenePlayer({ cutscene, onComplete }: CutscenePlayerProps): R
           e.stopPropagation();
           onComplete();
         }}
-        aria-label="Skip cutscene"
+        aria-label={t('ui:cutscene_ui.skip_aria')}
         style={{
           position: 'absolute',
           top: 20,

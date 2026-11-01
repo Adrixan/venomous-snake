@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { Challenge, Difficulty } from '@venomous-snake/shared-types';
 import type { TestResult } from '@venomous-snake/challenge-engine';
+import { difficultyLabel, testLabel } from './challengeText';
 
 /** Convert keys like "challenges.ch01_02.title" to "challenges:ch01_02.title" for i18next namespace resolution */
 function nsKey(key: string): string {
@@ -92,7 +93,7 @@ export function ChallengePanel({
     return (
       <div
         role="complementary"
-        aria-label={t('challenge.panel_label', 'Challenge Panel')}
+        aria-label={t('challenge.panel_label')}
         style={{
           position: 'fixed',
           bottom: 0,
@@ -118,7 +119,7 @@ export function ChallengePanel({
   return (
     <div
       role="complementary"
-      aria-label={t('challenge.panel_label', 'Challenge Panel')}
+      aria-label={t('challenge.panel_label')}
       style={{
         position: 'fixed',
         top: 0,
@@ -163,12 +164,12 @@ export function ChallengePanel({
               letterSpacing: '0.05em',
             }}
           >
-            {challenge.difficulty}
+            {difficultyLabel(t, challenge.difficulty)}
           </span>
         </div>
         <button
           onClick={onClose}
-          aria-label={t('challenge.close', 'Close')}
+          aria-label={t('challenge.close')}
           style={{
             background: 'transparent',
             border: '1px solid #ff0066',
@@ -201,17 +202,17 @@ export function ChallengePanel({
       >
         <div style={{ color: '#00e5ff' }}>⏱ {formatTime(elapsed)}</div>
         <div style={{ color: '#ffb454' }}>
-          {t('challenge.attempts', 'Attempts')}: {attempts}
+          {t('challenge.attempts')}: {attempts}
         </div>
         <div style={{ color: '#c792ea' }}>
-          {t('challenge.hints', 'Hints')}: {hintsUsed}
+          {t('challenge.hints')}: {hintsUsed}
         </div>
       </div>
 
       {/* Test results */}
       <div style={{ flex: 1, overflowY: 'auto', padding: '12px 16px' }}>
         <h3 style={{ margin: '0 0 8px', color: '#00e5ff', fontSize: 13, letterSpacing: '0.05em' }}>
-          {t('challenge.tests', 'TESTS')} ({passedCount}/{totalCount})
+          {t('challenge.tests')} ({passedCount}/{totalCount})
         </h3>
         {testResults && testResults.length > 0 ? (
           testResults.map((result) => (
@@ -229,12 +230,12 @@ export function ChallengePanel({
               <span style={{ color: result.passed ? '#00ff88' : '#ff0066', marginRight: 8 }}>
                 {result.passed ? '✓' : '✗'}
               </span>
-              {result.testCase.description}
+              {testLabel(t, challenge.id, result.testCase)}
             </div>
           ))
         ) : (
           <div style={{ color: '#3d4752', fontSize: 12, fontStyle: 'italic' }}>
-            {t('challenge.no_results', 'No test results yet. Submit your solution to run tests.')}
+            {t('challenge.no_results')}
           </div>
         )}
       </div>
@@ -262,11 +263,11 @@ export function ChallengePanel({
             letterSpacing: '0.05em',
           }}
         >
-          {t('challenge.submit', '▶ SUBMIT')}
+          {t('challenge.submit')}
         </button>
         <button
           onClick={onGetHint}
-          title={t('challenge.hint_warning', 'Using hints reduces XP reward')}
+          title={t('challenge.hint_warning')}
           style={{
             flex: 1,
             padding: '10px 0',
@@ -279,7 +280,7 @@ export function ChallengePanel({
             letterSpacing: '0.05em',
           }}
         >
-          {t('challenge.get_hint', '💡 HINT')} (T{Math.min(hintsUsed + 1, 3)})
+          {t('challenge.get_hint', { tier: Math.min(hintsUsed + 1, 3) })}
         </button>
       </div>
     </div>

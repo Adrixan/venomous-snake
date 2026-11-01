@@ -4,6 +4,11 @@ import LanguageDetector from 'i18next-browser-languagedetector';
 import en from './locales/en';
 import de from './locales/de';
 
+// Screen readers pick their voice from the document language.
+i18n.on('languageChanged', (language) => {
+  if (typeof document !== 'undefined') document.documentElement.lang = language;
+});
+
 void i18n
   .use(LanguageDetector)
   .use(initReactI18next)

@@ -153,9 +153,12 @@ export abstract class BaseInterpreter implements PythonInterpreter {
     const executionTimeMs = Date.now() - started;
 
     if (timedOut) {
+      const seconds = Math.round(timeoutMs / 1000);
       const error: PythonError = {
         type: 'TimeoutError',
-        message: `Execution stopped after ${String(Math.round(timeoutMs / 1000))} s. Check for a loop that never ends.`,
+        message:
+          options.timeoutMessage?.(seconds) ??
+          `Execution stopped after ${String(seconds)} s. Check for a loop that never ends.`,
       };
       publish({ type: 'stderr', text: `${error.type}: ${error.message}\n` });
       return { success: false, output, error, executionTimeMs, timedOut: true };
