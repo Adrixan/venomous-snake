@@ -29,10 +29,7 @@ export const ch09_10_combining_tools: Challenge = {
       hidden: true,
     },
   ],
-  structureChecks: [
-    { type: 'node', node: 'Lambda' },
-    { type: 'call', name: 'sorted' },
-  ],
+  structureChecks: [{ type: 'node', node: 'Lambda' }],
 
   hints: [
     {

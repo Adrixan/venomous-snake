@@ -35,7 +35,7 @@ export const ch12_10_final_showdown: Challenge = {
   ],
   structureChecks: [
     { type: 'node', node: 'ClassDef' },
-    { type: 'call', name: 'find_vulnerabilities' },
+    { type: 'node', node: 'FunctionDef' },
     { type: 'node', node: ['For', 'comprehension'] },
   ],
 

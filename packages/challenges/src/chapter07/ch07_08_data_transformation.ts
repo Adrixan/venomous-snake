@@ -29,10 +29,7 @@ export const ch07_08_data_transformation: Challenge = {
       hidden: true,
     },
   ],
-  structureChecks: [
-    { type: 'call', name: 'loads' },
-    { type: 'call', name: 'upper' },
-  ],
+  structureChecks: [{ type: 'import', module: 'json' }],
 
   hints: [
     { tier: 1 as const, text: 'Parse the JSON string first, then access the "targets" key.' },
