@@ -80,15 +80,10 @@ export function useChallengeTerminal(challengeId: string | null): UseChallengeTe
       setOutputs([]);
       try {
         await ensureReady();
-        const execResult = await interpreterRef.current.execute(code, {
+        await interpreterRef.current.execute(code, {
           interactive: true,
           echoPrompts: true,
         });
-        if (execResult.error !== undefined) {
-          const text =
-            execResult.error.traceback ?? `${execResult.error.type}: ${execResult.error.message}`;
-          setOutputs((previous) => [...previous, { type: 'stderr', text }]);
-        }
       } catch (error) {
         setOutputs([
           { type: 'stderr', text: error instanceof Error ? error.message : String(error) },
