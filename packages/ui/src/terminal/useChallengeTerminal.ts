@@ -2,7 +2,12 @@ import { useState, useCallback, useMemo, useRef, useEffect, useContext } from 'r
 import { useTranslation } from 'react-i18next';
 import { ChallengeSessionContext } from './ChallengeSession';
 import { structureLabel } from './structureLabel';
-import type { Challenge, PythonOutput, PythonInterpreter } from '@venomous-snake/shared-types';
+import type {
+  Challenge,
+  PythonError,
+  PythonOutput,
+  PythonInterpreter,
+} from '@venomous-snake/shared-types';
 import { challengeMap } from '@venomous-snake/challenges';
 import { ChallengeRunner, HintEngine } from '@venomous-snake/challenge-engine';
 import type { ChallengeResult, TestResult } from '@venomous-snake/challenge-engine';
@@ -20,6 +25,8 @@ export interface UseChallengeTerminalReturn {
   outputs: PythonOutput[];
   isRunning: boolean;
   result: SubmitResult | null;
+  /** The Python error of the latest free run, for CIPHER to explain. */
+  runError: PythonError | null;
   hints: string[];
   challengeResult: ChallengeResult | null;
   submitCode: (code: string) => Promise<void>;
@@ -41,6 +48,7 @@ export function useChallengeTerminal(challengeId: string | null): UseChallengeTe
   const [outputs, setOutputs] = useState<PythonOutput[]>([]);
   const [isRunning, setIsRunning] = useState(false);
   const [result, setResult] = useState<SubmitResult | null>(null);
+  const [runError, setRunError] = useState<PythonError | null>(null);
   const [hints, setHints] = useState<string[]>([]);
   const [challengeResult, setChallengeResult] = useState<ChallengeResult | null>(null);
 
@@ -83,10 +91,11 @@ export function useChallengeTerminal(challengeId: string | null): UseChallengeTe
       setOutputs([]);
       try {
         await ensureReady();
-        await interpreterRef.current.execute(code, {
+        const execResult = await interpreterRef.current.execute(code, {
           interactive: true,
           echoPrompts: true,
         });
+        setRunError(execResult.error ?? null);
       } catch (error) {
         setOutputs([
           { type: 'stderr', text: error instanceof Error ? error.message : String(error) },
@@ -176,6 +185,7 @@ export function useChallengeTerminal(challengeId: string | null): UseChallengeTe
 
   const resetState = useCallback(() => {
     setOutputs([]);
+    setRunError(null);
     setResult(null);
     setHints([]);
     setChallengeResult(null);
@@ -186,6 +196,7 @@ export function useChallengeTerminal(challengeId: string | null): UseChallengeTe
     outputs,
     isRunning,
     result,
+    runError,
     hints,
     challengeResult,
     submitCode,

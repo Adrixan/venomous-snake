@@ -11,6 +11,7 @@ import {
   AchievementManager,
   ChallengeTimer,
   FloorGateSystem,
+  SKILL_TREE,
 } from '@venomous-snake/challenge-engine';
 import type {
   TestResult,
@@ -21,7 +22,11 @@ import type {
 } from '@venomous-snake/challenge-engine';
 import { CipherAI, DialogEngine } from '@venomous-snake/narrative';
 import { challengeMap } from '@venomous-snake/challenges';
+import { translateCipher } from '@venomous-snake/i18n';
 import { EventBus } from '@venomous-snake/engine';
+
+/** XP multiplier each speed skill adds to a quick solve. */
+const SPEED_SKILL_BONUS = 0.05;
 
 export interface StartChallengeResult {
   challenge: Challenge;
@@ -50,6 +55,7 @@ export class GameController {
   private progression: ProgressionManager;
   private xpSystem: XPSystem;
   private achievements: AchievementManager;
+  private speedSkillBonus = 0;
   private timer: ChallengeTimer;
   private dialogEngine: DialogEngine;
   private cipher: CipherAI;
@@ -64,7 +70,7 @@ export class GameController {
     this.achievements = new AchievementManager();
     this.timer = new ChallengeTimer();
     this.dialogEngine = new DialogEngine();
-    this.cipher = new CipherAI();
+    this.cipher = new CipherAI({ translator: translateCipher });
     this.floorGate = new FloorGateSystem();
   }
 
@@ -114,6 +120,7 @@ export class GameController {
         attempts,
         hintsUsed,
         timeMs,
+        this.speedSkillBonus,
       );
 
       this.progression.markCompleted(challenge, timeMs, hintsUsed, code);
@@ -229,6 +236,10 @@ export class GameController {
     return this.progression.getProgress();
   }
 
+  getLevel(): number {
+    return this.xpSystem.getLevelForXP(this.progression.getProgress().totalXp).level;
+  }
+
   getChallengeStatus(challengeId: string): 'locked' | 'available' | 'completed' {
     const challenge = challengeMap[challengeId];
     if (challenge === undefined) return 'locked';
@@ -239,6 +250,19 @@ export class GameController {
     if (!this.progression.isUnlocked(challenge)) return 'locked';
 
     return 'available';
+  }
+
+  /** Applies the effects of the player's skills to rewards and hints. */
+  applySkills(skillIds: string[]): void {
+    const effects = SKILL_TREE.filter((node) => skillIds.includes(node.id)).map(
+      (node) => node.unlockEffect,
+    );
+    this.speedSkillBonus = effects.filter((e) => e === 'speed_bonus').length * SPEED_SKILL_BONUS;
+    this.hintEngine.setTierBoost(effects.includes('hint_boost') ? 1 : 0);
+  }
+
+  restoreAchievements(ids: string[]): void {
+    this.achievements = new AchievementManager(ids);
   }
 
   getDialogEngine(): DialogEngine {

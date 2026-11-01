@@ -137,7 +137,7 @@ export function CutscenePlayer({ cutscene, onComplete }: CutscenePlayerProps): R
           zIndex: 10000,
         }}
       >
-        SKIP ⏭
+        {t('story:cutscene.controls.skip')} ⏭
       </button>
 
       {/* Scene counter */}
@@ -237,7 +237,7 @@ export function CutscenePlayer({ cutscene, onComplete }: CutscenePlayerProps): R
           fontSize: 11,
         }}
       >
-        {isTyping ? 'Click or press Space to skip' : 'Click or press Space to continue'}
+        {t(isTyping ? 'story:cutscene.controls.finish' : 'story:cutscene.controls.next')}
       </div>
     </div>
   );

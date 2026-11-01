@@ -149,12 +149,26 @@ export interface OverlayState {
   mapOpen: boolean;
 }
 
+/** Side panels of the running game. */
+export type ActivePanel = 'none' | 'questlog' | 'map' | 'settings' | 'inventory' | 'skills';
+
+/** Progress that outlives a single playthrough or is restored from a save. */
+export interface PersistentProgress {
+  unlockedSkills: string[];
+  spentSkillXp: number;
+  unlockedAchievements: string[];
+  seenCutscenes: string[];
+  playTimeMs: number;
+  /** New Game+ cycle; 0 for the first playthrough. */
+  newGamePlus: number;
+}
+
 /** Zustand read model and its UI actions. */
-export interface GameStoreState {
+export interface GameStoreState extends PersistentProgress {
   currentRoomId: string;
   overlay: OverlayState;
   gamePhase: 'menu' | 'playing' | 'paused';
-  activePanel: 'none' | 'questlog' | 'map' | 'settings';
+  activePanel: ActivePanel;
   playerName: string;
   playerGender: 'male' | 'female' | 'nonbinary';
   xp: number;
@@ -190,7 +204,7 @@ export interface GameStoreState {
   toggleMenu: () => void;
   toggleMap: () => void;
   setGamePhase: (phase: 'menu' | 'playing' | 'paused') => void;
-  setActivePanel: (panel: 'none' | 'questlog' | 'map' | 'settings') => void;
+  setActivePanel: (panel: ActivePanel) => void;
   setPlayerName: (name: string) => void;
   setPlayerGender: (gender: 'male' | 'female' | 'nonbinary') => void;
   addXp: (amount: number) => void;
@@ -206,6 +220,11 @@ export interface GameStoreState {
   setAlertLevel: (level: 0 | 1 | 2 | 3) => void;
   incrementAlertLevel: () => void;
   setGameCompleted: (completed: boolean) => void;
+  unlockSkill: (skillId: string, xpCost: number) => void;
+  addUnlockedAchievement: (id: string) => void;
+  markCutsceneSeen: (id: string) => void;
+  addPlayTime: (ms: number) => void;
+  restoreProgress: (progress: PersistentProgress) => void;
   setMasterVolume: (volume: number) => void;
   setMusicVolume: (volume: number) => void;
   setSfxVolume: (volume: number) => void;

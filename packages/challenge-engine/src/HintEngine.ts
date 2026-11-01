@@ -81,7 +81,13 @@ const COMMON_ERROR_PATTERNS: ErrorPattern[] = [
 ];
 
 export class HintEngine {
+  private tierBoost = 0;
   private hintsUsed = new Map<string, number>();
+
+  /** Skips ahead by this many tiers, so each hint reveals more detail. */
+  setTierBoost(boost: number): void {
+    this.tierBoost = boost;
+  }
 
   getHint(challenge: Challenge, error?: PythonError): HintResult | null {
     const hintsRevealed = this.hintsUsed.get(challenge.id) ?? 0;
@@ -94,10 +100,10 @@ export class HintEngine {
     }
 
     const availableHints = challenge.hints
-      .filter((h) => h.tier <= Math.min(hintsRevealed + 1, 3))
+      .filter((h) => h.tier <= Math.min(hintsRevealed + 1 + this.tierBoost, 3))
       .sort((a, b) => a.tier - b.tier);
 
-    const nextHint = availableHints[hintsRevealed];
+    const nextHint = availableHints[hintsRevealed + this.tierBoost];
     if (nextHint !== undefined) {
       this.hintsUsed.set(challenge.id, hintsRevealed + 1);
       return { hint: nextHint.text, tier: nextHint.tier, source: 'challenge_hint' };

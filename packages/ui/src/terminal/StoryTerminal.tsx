@@ -1,3 +1,4 @@
+import type { ToolbarPanel } from './StatusBar';
 import React from 'react';
 import type { NarrativeEntry, GameAction } from '@venomous-snake/shared-types';
 import { LocationHeader } from './LocationHeader';
@@ -13,9 +14,10 @@ export interface StoryTerminalProps {
   narrativeLog: NarrativeEntry[];
   availableActions: GameAction[];
   onAction: (action: GameAction) => void;
-  onOpenPanel: (panel: 'questlog' | 'map' | 'settings') => void;
+  onOpenPanel: (panel: ToolbarPanel) => void;
+  /** Rendered between the location header and the narrative. */
+  progressBar?: React.ReactNode;
   onSave: () => void;
-  onPause: () => void;
   playerName: string;
   xp: number;
   level: number;
@@ -30,8 +32,8 @@ function StoryTerminalInner({
   availableActions,
   onAction,
   onOpenPanel,
+  progressBar,
   onSave,
-  onPause,
   xp,
   level,
   completedChallenges,
@@ -57,11 +59,13 @@ function StoryTerminalInner({
         totalChallenges={totalChallenges}
       />
 
+      {progressBar}
+
       <NarrativePanel entries={narrativeLog} />
 
       <ActionPanel actions={availableActions} onAction={onAction} enabled={inputEnabled} />
 
-      <StatusBar onOpenPanel={onOpenPanel} onSave={onSave} onPause={onPause} />
+      <StatusBar onOpenPanel={onOpenPanel} onSave={onSave} enabled={inputEnabled} />
     </div>
   );
 }

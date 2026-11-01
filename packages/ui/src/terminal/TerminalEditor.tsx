@@ -183,7 +183,7 @@ function TerminalEditorInner(
   return (
     <div className={`terminal-editor-wrapper${isAndroid ? ' android-custom-kb' : ''}`}>
       <div ref={containerRef} className="terminal-editor-cm" aria-label="Python code editor" />
-      <div className="terminal-editor-toolbar">
+      <div data-tutorial="run-submit-buttons" className="terminal-editor-toolbar">
         <button
           className="terminal-btn terminal-btn-run"
           onClick={handleRunClick}

@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { translateText } from '../i18n/translateText';
 import {
   getFloorConfig,
   getFloorProgress,
@@ -25,6 +27,7 @@ export function FloorProgressBar({
   completedChallenges,
   reducedMotion = false,
 }: FloorProgressBarProps): React.JSX.Element {
+  const { t } = useTranslation('story');
   const floorNumber = getFloorNumberFromId(floorId);
   const config = getFloorConfig(floorNumber);
   const { completed, total, percentage } = getFloorProgress(floorNumber, completedChallenges);
@@ -44,7 +47,7 @@ export function FloorProgressBar({
     return undefined;
   }, [completed, reducedMotion]);
 
-  const floorName = config?.name ?? floorId;
+  const floorName = config === undefined ? floorId : translateText(t, config.name);
 
   const containerStyle: React.CSSProperties = {
     fontFamily: FONT_FAMILY,
@@ -52,6 +55,8 @@ export function FloorProgressBar({
     flexDirection: 'column',
     gap: '3px',
     minWidth: '180px',
+    padding: '4px 16px',
+    boxSizing: 'border-box',
   };
 
   const headerRowStyle: React.CSSProperties = {

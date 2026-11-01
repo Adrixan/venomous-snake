@@ -7,36 +7,30 @@ import {
   TutorialManager,
 } from '@venomous-snake/narrative';
 import type { Cutscene, TutorialStep } from '@venomous-snake/narrative';
+import { BOSS_CHALLENGE_ID, chapters } from '@venomous-snake/challenges';
 import { EventBus } from '@venomous-snake/engine';
+import { useGameStore } from '../store/gameStore';
 
-/**
- * Tracks how many seconds the current game session has been running.
- */
-function usePlayTimer(active: boolean): number {
-  const [seconds, setSeconds] = useState(0);
-  const activeRef = useRef(active);
-  activeRef.current = active;
+const PLAY_TIMER_TICK_MS = 1000;
 
+/** Adds to the saved play time while the player is actually in the game. */
+function usePlayTimer(active: boolean): void {
   useEffect(() => {
     if (!active) return;
     const id = setInterval(() => {
-      setSeconds((s) => s + 1);
-    }, 1000);
+      useGameStore.getState().addPlayTime(PLAY_TIMER_TICK_MS);
+    }, PLAY_TIMER_TICK_MS);
     return () => clearInterval(id);
   }, [active]);
-
-  return seconds;
 }
 
-/** Boss challenge ID — the final challenge on floor 12. */
-const BOSS_CHALLENGE_ID = 'ch12_10';
+/** The challenge before the boss: solving it opens the final confrontation. */
+const PRE_BOSS_CHALLENGE_ID = chapters.at(-1)?.challenges.at(-2);
 
 export interface UseStoryFlowReturn {
   activeCutscene: Cutscene | null;
   showCredits: boolean;
   activeTutorialStep: TutorialStep | null;
-  /** Seconds played during this session */
-  playTime: number;
   onCutsceneComplete: () => void;
   onCreditsClose: () => void;
   onTutorialStepComplete: () => void;
@@ -45,29 +39,18 @@ export interface UseStoryFlowReturn {
   triggerNewGame: () => void;
   /** Call when the player moves to a new floor number. */
   triggerFloorTransition: (floor: number) => void;
-  /** Whether New Game+ flag is set (keep skills, restart story). */
-  isNewGamePlus: boolean;
-  /** Call from the CreditsScreen "New Game+" button. */
-  onNewGamePlus: () => void;
+  /** Offers the tutorial again from its first step. */
+  restartTutorial: () => void;
 }
 
-const NEW_GAME_PLUS_KEY = 'venomous_snake_ng_plus';
-
-export function useStoryFlow(completedChallenges: string[]): UseStoryFlowReturn {
+export function useStoryFlow(playing: boolean): UseStoryFlowReturn {
   const [activeCutscene, setActiveCutscene] = useState<Cutscene | null>(null);
   const [showCredits, setShowCredits] = useState(false);
   const [activeTutorialStep, setActiveTutorialStep] = useState<TutorialStep | null>(null);
-  const [isNewGamePlus, setIsNewGamePlus] = useState(
-    () => localStorage.getItem(NEW_GAME_PLUS_KEY) === '1',
-  );
-
   const tutorialManagerRef = useRef<TutorialManager>(new TutorialManager());
   const cutsceneQueueRef = useRef<Cutscene[]>([]);
-  const seenFloorTransitionsRef = useRef<Set<number>>(new Set());
 
-  // Track play time while not in cutscene/credits
-  const playing = !activeCutscene && !showCredits;
-  const playTime = usePlayTimer(playing);
+  usePlayTimer(playing && activeCutscene === null && !showCredits);
 
   const showNextQueued = useCallback((): void => {
     const next = cutsceneQueueRef.current.shift();
@@ -78,6 +61,9 @@ export function useStoryFlow(completedChallenges: string[]): UseStoryFlowReturn 
 
   const enqueueCutscene = useCallback(
     (cutscene: Cutscene): void => {
+      const { seenCutscenes, markCutsceneSeen } = useGameStore.getState();
+      if (seenCutscenes.includes(cutscene.id)) return;
+      markCutsceneSeen(cutscene.id);
       if (activeCutscene) {
         cutsceneQueueRef.current.push(cutscene);
       } else {
@@ -97,10 +83,10 @@ export function useStoryFlow(completedChallenges: string[]): UseStoryFlowReturn 
   }, []);
 
   const onTutorialStepComplete = useCallback((): void => {
-    if (activeTutorialStep) {
-      tutorialManagerRef.current.completeStep(activeTutorialStep.id);
-    }
-    setActiveTutorialStep(null);
+    if (activeTutorialStep === null) return;
+    const manager = tutorialManagerRef.current;
+    manager.completeStep(activeTutorialStep.id);
+    setActiveTutorialStep(manager.getNextStep(activeTutorialStep.trigger) ?? null);
   }, [activeTutorialStep]);
 
   const onTutorialSkip = useCallback((): void => {
@@ -110,8 +96,6 @@ export function useStoryFlow(completedChallenges: string[]): UseStoryFlowReturn 
 
   const triggerNewGame = useCallback((): void => {
     tutorialManagerRef.current.reset();
-    seenFloorTransitionsRef.current.clear();
-    setIsNewGamePlus(false);
     enqueueCutscene(introCutscene);
     // Queue movement tutorial step after intro
     const step = tutorialManagerRef.current.getNextStep('game_start');
@@ -122,8 +106,6 @@ export function useStoryFlow(completedChallenges: string[]): UseStoryFlowReturn 
 
   const triggerFloorTransition = useCallback(
     (floor: number): void => {
-      if (seenFloorTransitionsRef.current.has(floor)) return;
-      seenFloorTransitionsRef.current.add(floor);
       const cutscene = getFloorTransitionCutscene(floor);
       if (cutscene) enqueueCutscene(cutscene);
     },
@@ -154,7 +136,7 @@ export function useStoryFlow(completedChallenges: string[]): UseStoryFlowReturn 
 
       // Show "boss encounter" when approaching the final challenge
       // (first time reaching ch12's last challenge)
-      if (challengeId === 'ch12_09' && !completedChallenges.includes(BOSS_CHALLENGE_ID)) {
+      if (challengeId === PRE_BOSS_CHALLENGE_ID) {
         enqueueCutscene(bossEncounterCutscene);
         return;
       }
@@ -164,7 +146,7 @@ export function useStoryFlow(completedChallenges: string[]): UseStoryFlowReturn 
       if (step) setActiveTutorialStep(step);
     });
     return unsub;
-  }, [completedChallenges, enqueueCutscene]);
+  }, [enqueueCutscene]);
 
   // Show credits after the victory cutscene finishes
   const prevCutsceneRef = useRef<Cutscene | null>(null);
@@ -186,26 +168,21 @@ export function useStoryFlow(completedChallenges: string[]): UseStoryFlowReturn 
     return unsub;
   }, []);
 
-  const handleNewGamePlus = useCallback((): void => {
-    localStorage.setItem(NEW_GAME_PLUS_KEY, '1');
-    setIsNewGamePlus(true);
-    setShowCredits(false);
+  const restartTutorial = useCallback((): void => {
+    tutorialManagerRef.current.reset();
+    setActiveTutorialStep(tutorialManagerRef.current.getNextStep('game_start') ?? null);
   }, []);
-
-  // Expose handleNewGamePlus so credits screen can use it
 
   return {
     activeCutscene,
     showCredits,
     activeTutorialStep,
-    playTime,
     onCutsceneComplete,
     onCreditsClose,
     onTutorialStepComplete,
     onTutorialSkip,
     triggerNewGame,
     triggerFloorTransition,
-    isNewGamePlus,
-    onNewGamePlus: handleNewGamePlus,
+    restartTutorial,
   };
 }

@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { structureLabel } from './structureLabel';
+import { CipherTerminalHint } from '../cipher/CipherTerminalHint';
+import { useCipher } from '../cipher/useCipher';
 import type {
   PythonInterpreter,
   PythonOutput,
@@ -292,6 +294,7 @@ function ChallengeModeTerminal({
     outputs,
     isRunning,
     result,
+    runError,
     hints,
     challengeResult,
     submitCode,
@@ -373,6 +376,12 @@ function ChallengeModeTerminal({
   const statusColor = statusColors[status];
   const isDisabled = isRunning;
   const initialCode = challenge?.scaffoldedCode ?? '# Write your Python code here\n';
+
+  // CIPHER explains what went wrong when a run fails.
+  const { currentMessage, dismissDialog, showErrorExplanation } = useCipher();
+  useEffect(() => {
+    if (runError !== null) showErrorExplanation(runError.type, runError.message);
+  }, [runError, showErrorExplanation]);
 
   // Derive per-test objective status from last challengeResult
   const testResults = challengeResult?.testResults;
@@ -468,7 +477,7 @@ function ChallengeModeTerminal({
         className="terminal-split"
         style={breakpoint === 'mobile' ? { flexDirection: 'column' } : undefined}
       >
-        <div className="terminal-editor-area">
+        <div className="terminal-editor-area" data-tutorial="code-editor">
           <TerminalEditor
             key={editorKey}
             ref={editorRef}
@@ -515,6 +524,10 @@ function ChallengeModeTerminal({
             </div>
           ))}
         </div>
+      )}
+
+      {currentMessage !== null && (
+        <CipherTerminalHint hint={currentMessage} onDismiss={dismissDialog} />
       )}
 
       {/* Mobile symbol bar / on-screen keyboard */}

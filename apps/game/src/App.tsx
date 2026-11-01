@@ -7,6 +7,7 @@ import { useGameStore } from './store/gameStore';
 import { GameControllerProvider } from './hooks/useGameController';
 import { useSaveSystem } from './hooks/useSaveSystem';
 import { useGameAudio } from './hooks/useGameAudio';
+import { useStoryFlow } from './hooks/useStoryFlow';
 import { getSharedInterpreter, initializeSharedInterpreter } from '@venomous-snake/python-runtime';
 import {
   MainMenu,
@@ -18,10 +19,30 @@ import {
   StoryTerminal,
   VictoryScreen,
   QuestLog,
+  CipherDialog,
+  CreditsScreen,
+  CutscenePlayer,
+  FloorAnnouncementOverlay,
+  FloorProgressBar,
+  FocusTrap,
+  InventoryPanel,
+  ItemPickupToast,
+  LoadingScreen,
+  LocaleSwitcher,
+  SkillTreePanel,
+  TutorialOverlay,
+  TutorMode,
+  useAnnounce,
+  useCipher,
   FloorMap,
 } from '@venomous-snake/ui';
-import type { AudioSettingsPanelProps, ToastNotification } from '@venomous-snake/ui';
-import { ACHIEVEMENTS } from '@venomous-snake/challenge-engine';
+import type {
+  AudioSettingsPanelProps,
+  ItemPickupNotification,
+  ToastNotification,
+} from '@venomous-snake/ui';
+import { i18n } from '@venomous-snake/i18n';
+import { ACHIEVEMENTS, SKILL_TREE, SkillTreeManager } from '@venomous-snake/challenge-engine';
 import { chapters, FLOORS, TOTAL_CHALLENGES, floorIdFromNumber } from '@venomous-snake/challenges';
 import type { SaveData } from '@venomous-snake/save-system';
 
@@ -29,10 +50,11 @@ import {
   EventBus,
   ITEMS,
   TextAdventureEngine,
+  getItemsGrantedBy,
   getRoomDisplayName,
   getFirstRoomOfFloor,
 } from '@venomous-snake/engine';
-import type { GameAction, NarrativeEntry } from '@venomous-snake/shared-types';
+import type { ActivePanel, GameAction, NarrativeEntry } from '@venomous-snake/shared-types';
 import type { CurriculumProgress } from '@venomous-snake/shared-types';
 import type { GameController } from './GameController';
 import { DialogOverlay, useDialog, useReducedMotion } from '@venomous-snake/ui';
@@ -68,7 +90,7 @@ function toCurriculumProgress(data: SaveData): CurriculumProgress {
   };
 }
 
-type MenuView = 'main' | 'newgame' | 'settings';
+type MenuView = 'main' | 'newgame' | 'settings' | 'tutor';
 type SaveModalMode = 'save' | 'load' | null;
 
 export function App(): React.JSX.Element {
@@ -87,12 +109,14 @@ export function App(): React.JSX.Element {
   const openTerminal = useGameStore((state) => state.openTerminal);
   const completedChallenges = useGameStore((state) => state.completedChallenges);
   // Items are rewards for solved challenges, so the inventory follows from progress.
-  const inventory = useMemo(
-    () =>
-      ITEMS.filter((item) => completedChallenges.includes(item.grantedBy)).map((item) => item.id),
+  const inventoryItems = useMemo(
+    () => ITEMS.filter((item) => completedChallenges.includes(item.grantedBy)),
     [completedChallenges],
   );
+  const inventory = useMemo(() => inventoryItems.map((item) => item.id), [inventoryItems]);
   const dialog = useDialog({ inventory });
+  const unlockedSkills = useGameStore((state) => state.unlockedSkills);
+  const spentSkillXp = useGameStore((state) => state.spentSkillXp);
   const xp = useGameStore((state) => state.xp);
   const level = useGameStore((state) => state.level);
   const playerName = useGameStore((state) => state.playerName);
@@ -156,7 +180,42 @@ export function App(): React.JSX.Element {
   const controllerRef = useRef<GameController | null>(null);
   const saveSystem = useSaveSystem(controllerRef);
 
-  // Story flow: cutscenes, credits
+  // Story flow: cutscenes, credits, tutorial
+  const storyFlow = useStoryFlow(gamePhase === 'playing');
+  const { activeCutscene, activeTutorialStep, showCredits, onCreditsClose, triggerNewGame } =
+    storyFlow;
+  const storyOverlayOpen = dialog.isOpen || activeCutscene !== null || showCredits;
+  const announce = useAnnounce();
+  const {
+    cipher,
+    currentMessage: cipherMessage,
+    currentMood: cipherMood,
+    dismissDialog: dismissCipher,
+    showDialog: showCipherLine,
+  } = useCipher();
+  useEffect(() => {
+    cipher.setPlayerName(playerName);
+  }, [cipher, playerName]);
+  const [itemNotifications, setItemNotifications] = useState<ItemPickupNotification[]>([]);
+  const [announcedFloor, setAnnouncedFloor] = useState<number | null>(null);
+  const [pythonLoading, setPythonLoading] = useState(false);
+
+  useEffect(() => {
+    const interpreter = interpreterRef.current;
+    setPythonLoading(interpreter.getStatus() === 'loading');
+    return interpreter.onStatusChange((status) => setPythonLoading(status === 'loading'));
+  }, []);
+
+  // Greet each floor the player reaches for the first time.
+  const lastFloor = useRef(currentFloor);
+  useEffect(() => {
+    if (gamePhase === 'playing' && currentFloor > lastFloor.current) {
+      setAnnouncedFloor(currentFloor);
+      announce(i18n.t(`story:floors.${String(currentFloor)}.name`));
+    }
+    lastFloor.current = currentFloor;
+  }, [currentFloor, gamePhase, announce]);
+
   // Refresh "has save data" flag
   const refreshHasSaveData = useCallback((): void => {
     void saveSystem
@@ -218,7 +277,7 @@ export function App(): React.JSX.Element {
       }
       refreshActions();
     }
-  }, [gamePhase]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [gamePhase, sessionKey]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Refresh available actions whenever relevant state changes
   const refreshActions = useCallback(() => {
@@ -280,13 +339,32 @@ export function App(): React.JSX.Element {
           setAchievementNotifications((prev) => [...prev, notification]);
           break;
         }
+        case 'FLOOR_UNLOCKED':
+          showCipherLine('story');
+          break;
         case 'CHALLENGE_COMPLETED': {
           addCompletedChallenge(event.payload.challengeId);
+          for (const item of getItemsGrantedBy(event.payload.challengeId)) {
+            EventBus.emit({ type: 'ITEM_ACQUIRED', payload: { itemId: item.id, firstTime: true } });
+            const name = i18n.t(item.nameKey.replace('.', ':'));
+            announce(name);
+            setItemNotifications((previous) => [
+              ...previous,
+              {
+                id: `item_${item.id}`,
+                itemId: item.id,
+                name,
+                description: i18n.t(item.descriptionKey.replace('.', ':')),
+                itemType: item.type,
+                isFirstPickup: true,
+              },
+            ]);
+          }
           // Add narrative feedback
           const entry: NarrativeEntry = {
             id: `nar_${Date.now()}`,
             type: 'cipher',
-            text: 'Challenge complete! The terminal flickers green. Another system breached.',
+            text: cipher.getLine('challenge_success'),
             speaker: 'CIPHER',
             timestamp: Date.now(),
           };
@@ -317,13 +395,23 @@ export function App(): React.JSX.Element {
       }
     });
     return unsub;
-  }, [openTerminal, addCompletedChallenge, appendNarrative, refreshActions, setGameCompleted]);
+  }, [
+    openTerminal,
+    addCompletedChallenge,
+    appendNarrative,
+    refreshActions,
+    setGameCompleted,
+    announce,
+    cipher,
+    showCipherLine,
+  ]);
 
   // Keyboard shortcuts
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (gamePhase !== 'playing') return;
-      if (terminalOpen || saveModalMode !== null || dialog.isOpen) return;
+      if (terminalOpen || saveModalMode !== null || storyOverlayOpen) return;
+      if (activeTutorialStep !== null) return;
 
       switch (e.key) {
         case 'Escape':
@@ -341,16 +429,27 @@ export function App(): React.JSX.Element {
         case 'M':
           setActivePanel(activePanel === 'map' ? 'none' : 'map');
           break;
+        case 'i':
+        case 'I':
+          setActivePanel(activePanel === 'inventory' ? 'none' : 'inventory');
+          break;
+        case 'k':
+        case 'K':
+          setActivePanel(activePanel === 'skills' ? 'none' : 'skills');
+          break;
       }
     };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
+    // Capture: a panel's own Escape handler must not close it before this one has seen it,
+    // or the same key press would go on to open the pause menu.
+    window.addEventListener('keydown', handleKeyDown, true);
+    return () => window.removeEventListener('keydown', handleKeyDown, true);
   }, [
     gamePhase,
     activePanel,
     terminalOpen,
     saveModalMode,
-    dialog.isOpen,
+    storyOverlayOpen,
+    activeTutorialStep,
     setGamePhase,
     setActivePanel,
   ]);
@@ -412,9 +511,68 @@ export function App(): React.JSX.Element {
       setPlayerName(name);
       setPlayerGender(gender);
       setGamePhase('playing');
+      triggerNewGame();
     },
-    [resetGameState, setPlayerName, setPlayerGender, setGamePhase],
+    [resetGameState, setPlayerName, setPlayerGender, setGamePhase, triggerNewGame],
   );
+
+  const handleNewGamePlus = useCallback(() => {
+    const state = useGameStore.getState();
+    const { xp, level, playerName: name, playerGender: gender } = state;
+    onCreditsClose();
+    resetGameState();
+    state.restoreProgress({
+      unlockedSkills: state.unlockedSkills,
+      spentSkillXp: state.spentSkillXp,
+      unlockedAchievements: state.unlockedAchievements,
+      seenCutscenes: [],
+      playTimeMs: state.playTimeMs,
+      newGamePlus: state.newGamePlus + 1,
+    });
+    state.addXp(xp);
+    state.setLevel(level);
+    setGameCompleted(false);
+    setSavedProgress({
+      challenges: {},
+      currentChapter: 1,
+      totalXp: xp,
+      completedChallenges: 0,
+      unlockedFloors: [floorIdFromNumber(0)],
+    });
+    setSessionKey((k) => k + 1);
+    engineRef.current = null;
+    controllerRef.current = null;
+    engineNarrativeSyncIndex.current = 0;
+    setPlayerName(name);
+    setPlayerGender(gender);
+    setGamePhase('playing');
+  }, [
+    onCreditsClose,
+    resetGameState,
+    setGameCompleted,
+    setPlayerName,
+    setPlayerGender,
+    setGamePhase,
+  ]);
+
+  const handleTutorMode = useCallback(() => {
+    setMenuView('tutor');
+  }, []);
+
+  const handleUnlockSkill = useCallback((skillId: string) => {
+    const state = useGameStore.getState();
+    const node = SKILL_TREE.find((candidate) => candidate.id === skillId);
+    const manager = new SkillTreeManager(state.unlockedSkills);
+    const available = state.xp - state.spentSkillXp;
+    if (node === undefined || !manager.canUnlock(skillId, state.completedChallenges, available)) {
+      return;
+    }
+    state.unlockSkill(skillId, node.xpCost);
+  }, []);
+
+  const handleDismissItem = useCallback((id: string) => {
+    setItemNotifications((previous) => previous.filter((n) => n.id !== id));
+  }, []);
 
   const handleNewGameBack = useCallback(() => {
     setMenuView('main');
@@ -431,6 +589,12 @@ export function App(): React.JSX.Element {
     setSaveModalMode(null);
     engineRef.current = null;
   }, [setGamePhase, setActivePanel]);
+
+  const handleCreditsToMenu = useCallback(() => {
+    onCreditsClose();
+    setGameCompleted(false);
+    handleQuitToMenu();
+  }, [onCreditsClose, setGameCompleted, handleQuitToMenu]);
 
   const handlePauseSave = useCallback(() => {
     setSaveModalMode('save');
@@ -454,10 +618,18 @@ export function App(): React.JSX.Element {
   }, []);
 
   const handleOpenPanel = useCallback(
-    (panel: 'questlog' | 'map' | 'settings') => {
+    (panel: Exclude<ActivePanel, 'none'>) => {
       setActivePanel(panel);
     },
     [setActivePanel],
+  );
+
+  const availableSkills = useMemo(
+    () =>
+      new SkillTreeManager(unlockedSkills)
+        .getAvailableSkills(completedChallenges, xp - spentSkillXp)
+        .map((node) => node.id),
+    [unlockedSkills, completedChallenges, xp, spentSkillXp],
   );
 
   // Derived floor IDs for FloorMap
@@ -517,10 +689,6 @@ export function App(): React.JSX.Element {
   const handleSave = useCallback(() => {
     setSaveModalMode('save');
   }, []);
-
-  const handlePause = useCallback(() => {
-    setGamePhase('paused');
-  }, [setGamePhase]);
 
   // Save modal callbacks
   const handleModalSave = useCallback(
@@ -582,6 +750,9 @@ export function App(): React.JSX.Element {
         </>
       );
     }
+    if (menuView === 'tutor') {
+      return <TutorMode onBack={handleNewGameBack} />;
+    }
     if (menuView === 'settings') {
       return (
         <>
@@ -599,8 +770,11 @@ export function App(): React.JSX.Element {
           onContinue={handleContinue}
           onLoadGame={handleLoadGame}
           onSettings={handleMenuSettings}
-          onTutorial={handleNewGame}
+          onTutorial={handleTutorMode}
         />
+        <div style={{ position: 'fixed', right: '16px', bottom: '16px', zIndex: 10 }}>
+          <LocaleSwitcher />
+        </div>
         {saveModalMode === 'load' && (
           <SaveSlotModal
             mode="load"
@@ -643,14 +817,21 @@ export function App(): React.JSX.Element {
                 gamePhase === 'playing' &&
                 activePanel === 'none' &&
                 saveModalMode === null &&
-                !dialog.isOpen
+                !storyOverlayOpen &&
+                activeTutorialStep === null
               }
               narrativeLog={narrativeLog}
               availableActions={availableActions}
               onAction={handleAction}
               onOpenPanel={handleOpenPanel}
+              progressBar={
+                <FloorProgressBar
+                  floorId={currentFloorId}
+                  completedChallenges={completedChallenges}
+                  reducedMotion={reducedMotion}
+                />
+              }
               onSave={handleSave}
-              onPause={handlePause}
               playerName={playerName}
               xp={xp}
               level={level}
@@ -661,11 +842,60 @@ export function App(): React.JSX.Element {
 
           <DialogOverlay {...dialog} />
 
+          {activeCutscene !== null && (
+            <CutscenePlayer cutscene={activeCutscene} onComplete={storyFlow.onCutsceneComplete} />
+          )}
+
+          {activeTutorialStep !== null && activeCutscene === null && !dialog.isOpen && (
+            <TutorialOverlay
+              step={activeTutorialStep}
+              onComplete={storyFlow.onTutorialStepComplete}
+              onSkip={storyFlow.onTutorialSkip}
+            />
+          )}
+
+          {announcedFloor !== null && activeCutscene === null && (
+            <FloorAnnouncementOverlay
+              floorNumber={announcedFloor}
+              floorName={i18n.t(`story:floors.${String(announcedFloor)}.name`)}
+              subtitle={i18n.t(
+                (chapters[announcedFloor]?.titleKey ?? '').replace('chapters.', 'chapters:'),
+              )}
+              isVisible
+              onDismiss={() => setAnnouncedFloor(null)}
+            />
+          )}
+
+          {terminalOpen && pythonLoading && (
+            <LoadingScreen statusText={i18n.t('ui:terminal.loading_python')} />
+          )}
+
+          {cipherMessage !== null && activeCutscene === null && (
+            <div style={{ position: 'fixed', left: '16px', bottom: '96px', zIndex: 60 }}>
+              <CipherDialog message={cipherMessage} mood={cipherMood} onDismiss={dismissCipher} />
+            </div>
+          )}
+
+          {showCredits && (
+            <CreditsScreen
+              stats={{
+                challengesCompleted: completedChallenges.length,
+                totalXp: xp,
+                timePlayed: Math.round(useGameStore.getState().playTimeMs / 1000),
+                achievementsUnlocked: useGameStore.getState().unlockedAchievements.length,
+                floorsCleared: unlockedFloors.length,
+              }}
+              pythonVersion={interpreterRef.current.getVersion()}
+              onNewGamePlus={handleNewGamePlus}
+              onReturnToMenu={handleCreditsToMenu}
+            />
+          )}
+
           {/* Terminal overlay for challenges */}
           {terminalOpen && <TerminalOverlay />}
 
           {/* Victory screen */}
-          {gameCompleted && (
+          {gameCompleted && activeCutscene === null && !showCredits && (
             <VictoryScreen
               totalChallenges={TOTAL_CHALLENGES}
               completedChallenges={completedChallenges.length}
@@ -678,6 +908,9 @@ export function App(): React.JSX.Element {
           )}
 
           {/* Notifications */}
+          {itemNotifications.length > 0 && (
+            <ItemPickupToast notifications={itemNotifications} onDismiss={handleDismissItem} />
+          )}
           {achievementNotifications.length > 0 && (
             <AchievementToast
               notifications={achievementNotifications}
@@ -710,7 +943,33 @@ export function App(): React.JSX.Element {
 
           {/* Settings panel */}
           {activePanel === 'settings' && gamePhase === 'playing' && (
-            <SettingsPanel onBack={handleClosePanel} audioSettings={audioSettings} />
+            <SettingsPanel
+              onBack={handleClosePanel}
+              audioSettings={audioSettings}
+              onRestartTutorial={() => {
+                handleClosePanel();
+                storyFlow.restartTutorial();
+              }}
+            />
+          )}
+
+          {activePanel === 'inventory' && gamePhase === 'playing' && (
+            <FocusTrap active>
+              <InventoryPanel isOpen onClose={handleClosePanel} items={inventoryItems} />
+            </FocusTrap>
+          )}
+
+          {activePanel === 'skills' && gamePhase === 'playing' && (
+            <FocusTrap active>
+              <SkillTreePanel
+                isOpen
+                onClose={handleClosePanel}
+                unlockedSkills={unlockedSkills}
+                availableSkills={availableSkills}
+                xp={xp - spentSkillXp}
+                onUnlock={handleUnlockSkill}
+              />
+            </FocusTrap>
           )}
 
           {/* Quest log panel */}

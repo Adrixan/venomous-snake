@@ -66,13 +66,20 @@ export class XPSystem {
    * Calculates the XP reward for completing a challenge, applying bonuses for
    * first-try completions, hint-free runs, and speed.
    */
-  calculateXPReward(baseXP: number, attempts: number, hintsUsed: number, timeMs: number): number {
+  calculateXPReward(
+    baseXP: number,
+    attempts: number,
+    hintsUsed: number,
+    timeMs: number,
+    /** Extra multiplier for quick solves, from speed skills. */
+    speedSkillBonus = 0,
+  ): number {
     let multiplier = 1.0;
 
     if (attempts === 1) multiplier += BONUS_FIRST_TRY;
     if (hintsUsed === 0) multiplier += BONUS_NO_HINTS;
-    if (timeMs < 60_000) multiplier += BONUS_SPEED_FAST;
-    else if (timeMs < 120_000) multiplier += BONUS_SPEED_OK;
+    if (timeMs < 60_000) multiplier += BONUS_SPEED_FAST + speedSkillBonus;
+    else if (timeMs < 120_000) multiplier += BONUS_SPEED_OK + speedSkillBonus;
 
     return Math.round(baseXP * multiplier);
   }
