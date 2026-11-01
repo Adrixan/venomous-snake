@@ -11,4 +11,4 @@ One-off audit tools from the production readiness review (`.agents/production-re
 - `reach.py`: source files missing from the production bundle. Build its input first, nothing else is written:
   - `pnpm exec vite build --config tools/review/vite.metafile.config.ts`
   - `python3 tools/review/reach.py`
-- `browser-smoke.py`: title screen check against a running dev server (`pnpm dev`): `uv run tools/review/browser-smoke.py`.
+- `browser-smoke.py`: title screen and Python worker check against a running dev server (`pnpm dev`): `uv run tools/review/browser-smoke.py`.

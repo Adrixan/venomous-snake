@@ -19,6 +19,7 @@ const PYODIDE_FILES = [
 
 const MIME: Record<string, string> = {
   '.js': 'text/javascript',
+  '.mjs': 'text/javascript',
   '.wasm': 'application/wasm',
   '.zip': 'application/zip',
   '.json': 'application/json',

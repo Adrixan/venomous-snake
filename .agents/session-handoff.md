@@ -29,8 +29,9 @@ The helper scripts formerly in `.scratch/` now live in `tools/review/` (see Hous
 
 ## Next steps
 
-- Unregister any existing localhost service worker once in the browser and reload the dev server page to verify the worker request succeeds.
-- Commit and push this fix to `main`.
+- Peter: check once in a desktop browser that `pyodide.asm.mjs` on the live site arrives with a JavaScript `Content-Type`. The host decides that, and agent tools must not fetch aufner.org. A wrong type stops Python exactly as it did in the dev server.
+- Peter: a browser that ran the old localhost service worker may need it unregistered once; a fresh browser does not.
+- Peter: `git stash drop` the redundant lint-staged backup `b46af8a` (stash@{0}); the permission classifier refused it twice.
 
 ## Housekeeping 2026-11-01
 - The seven review scripts moved from `.scratch/` to `tools/review/` and pass the hook with real types (no `--no-verify`, no `eslint-disable`, no config change). Usage: `tools/review/README.md`.
@@ -46,3 +47,4 @@ The helper scripts formerly in `.scratch/` now live in `tools/review/` (see Hous
   - Removed the `first_pickup` achievement (no emitter, no translations, no item grants in the live game), so 31 achievements remain, and the dead `roomId` and `terminalId` fields of `Challenge`.
   - `challenge-validator:build` passes through a new `tsconfig.lib.json`.
 - Open: one workspace test run failed once right after the override install; the log was lost. It did not recur in 13 further runs, also after a fresh install and at 200 % CPU load, so the cause is unknown. A CI failure in `Test` should be read with this in mind.
+- Dev server fix: `pyodide.asm.mjs` was served as `application/octet-stream`, so Python could not start under `pnpm dev`. `.mjs` is now in the MIME table. Verified in a browser: worker loads, a runaway loop times out, the interpreter recovers; `browser-smoke.py` now covers this and fails without the fix. Production build checked through `vite preview`, not on the live host.
