@@ -40,7 +40,7 @@ The helper scripts formerly in `.scratch/` now live in `tools/review/` (see Hous
 - `reach.py` counts barrels and type-only files as dead, so its 6,630 lines overstate dead code.
 - Consistency checks are now real tests: every room reachable, chapter list and floor map agree (`world.test.ts`), achievement references exist (`Achievements.test.ts`). Each was shown to fail on deliberately broken data. `tools/review/closure.test.ts` was removed as a duplicate of the existing completability test; `consistency.test.ts` stays as a numeric report.
 - Resolved the same day:
-  - `.serena/` is no longer tracked (files stay local, ignored in the repo too), so `.serena/memories/` left the repo.
+  - `.serena/` is no longer tracked and is ignored in the repo too, so `.serena/memories/` left the repo. Git deletes these files from the working tree when a clone pulls this change (it happened here and was restored by hand): on another machine back up `.serena/` first, or let Serena regenerate `project.yml`.
   - CI: lint, test and the audit now block; the audit level rose from critical to moderate.
   - Audit: overrides for `follow-redirects` (GHSA-mrwp-f3q8-3g9p, high) and `minimatch` (GHSA-g3hv-75wg-m249, moderate). The `minimatch` override crosses a major version because Nx and typescript-eslint still pin 10; drop it once they move.
   - Removed the `first_pickup` achievement (no emitter, no translations, no item grants in the live game), so 31 achievements remain, and the dead `roomId` and `terminalId` fields of `Challenge`.
