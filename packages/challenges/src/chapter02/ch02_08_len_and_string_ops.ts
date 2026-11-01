@@ -32,6 +32,10 @@ export const ch02_08_len_and_string_ops: Challenge = {
       hidden: true,
     },
   ],
+  structureChecks: [
+    { type: 'call', name: 'len' },
+    { type: 'node', node: 'If' },
+  ],
 
   hints: [
     {

@@ -29,6 +29,11 @@ export const ch08_08_error_handling_in_loops: Challenge = {
       hidden: true,
     },
   ],
+  structureChecks: [
+    { type: 'node', node: 'Try' },
+    { type: 'node', node: ['For', 'comprehension'] },
+  ],
+
   hints: [
     { tier: 1 as const, text: 'Wrap the int() conversion in a try/except inside the loop.' },
     { tier: 2 as const, text: 'When ValueError occurs, append 0 instead of the converted value.' },

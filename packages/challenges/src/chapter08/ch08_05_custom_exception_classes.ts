@@ -29,6 +29,12 @@ export const ch08_05_custom_exception_classes: Challenge = {
       hidden: true,
     },
   ],
+  structureChecks: [
+    { type: 'node', node: 'ClassDef' },
+    { type: 'node', node: 'Raise' },
+    { type: 'node', node: 'Try' },
+  ],
+
   hints: [
     {
       tier: 1 as const,

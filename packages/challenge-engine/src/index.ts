@@ -1,4 +1,5 @@
 export { ChallengeRunner } from './ChallengeRunner';
+export { findUnmetChecks, hasPlaceholder } from './StructureChecker';
 export type { TestResult, ChallengeResult } from './ChallengeRunner';
 export { HintEngine } from './HintEngine';
 export type { HintResult } from './HintEngine';

@@ -31,6 +31,7 @@ export const ch05_09_kwargs: Challenge = {
       hidden: true,
     },
   ],
+  structureChecks: [{ type: 'node', node: 'kwarg' }],
 
   hints: [
     {

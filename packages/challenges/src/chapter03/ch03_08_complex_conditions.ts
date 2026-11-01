@@ -31,6 +31,10 @@ export const ch03_08_complex_conditions: Challenge = {
       hidden: true,
     },
   ],
+  structureChecks: [
+    { type: 'node', node: 'If' },
+    { type: 'call', name: 'len' },
+  ],
 
   hints: [
     {

@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
+import { structureLabel } from './structureLabel';
 import type {
   PythonInterpreter,
   PythonOutput,
@@ -15,6 +16,12 @@ import { useChallengeTerminal } from './useChallengeTerminal';
 import { useBreakpoint } from '../responsive/useBreakpoint';
 import { useIsAndroid } from './useIsAndroid';
 import './terminal.css';
+
+interface Objective {
+  description: string;
+  hidden: boolean;
+  status: 'passed' | 'failed' | 'pending';
+}
 
 function useKeyboardSettings(): {
   keyboardLayout: 'qwerty' | 'qwertz';
@@ -369,13 +376,23 @@ function ChallengeModeTerminal({
 
   // Derive per-test objective status from last challengeResult
   const testResults = challengeResult?.testResults;
-  const objectives =
+  const objectives: Objective[] =
     challenge?.testCases.map((tc, i) => {
       const tr = testResults?.[i];
-      const objStatus: 'passed' | 'failed' | 'pending' =
+      const objStatus: Objective['status'] =
         tr !== undefined ? (tr.passed ? 'passed' : 'failed') : 'pending';
       return { description: tc.description, hidden: tc.hidden, status: objStatus };
     }) ?? [];
+  // Writing rules are visible up front; they are only judged once the output tests pass.
+  const testsPassed = challenge?.testCases.every((_, i) => testResults?.[i]?.passed === true);
+  for (const check of challenge?.structureChecks ?? []) {
+    const unmet = testResults?.some((tr) => tr.structureCheck === check) === true;
+    objectives.push({
+      description: structureLabel(t, check),
+      hidden: false,
+      status: unmet ? 'failed' : testsPassed === true ? 'passed' : 'pending',
+    });
+  }
 
   return (
     <div className="terminal-container" style={{ position: 'relative' }}>

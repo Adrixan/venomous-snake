@@ -110,11 +110,15 @@ export abstract class BaseInterpreter implements PythonInterpreter {
     const timeoutMs = options.timeoutMs ?? DEFAULT_TIMEOUT_MS;
     const interactive = options.interactive === true && this.inputCallbacks.size > 0;
     const echoPrompts = options.echoPrompts ?? options.interactive === true;
+    const output: PythonOutput[] = [];
+    const publish = (out: PythonOutput): void => {
+      output.push(out);
+      if (options.silent !== true) this.emit(out);
+    };
     const inputs = [...this.queued, ...(options.inputs ?? [])];
     this.queued = [];
 
     this.setStatus('executing');
-    const output: PythonOutput[] = [];
     let emittedStdout = 0;
     let finalOutcome: RunOutcome | null = null;
     let timedOut = false;
@@ -128,9 +132,7 @@ export abstract class BaseInterpreter implements PythonInterpreter {
         }
         const fresh = outcome.stdout.slice(emittedStdout);
         if (fresh !== '') {
-          const out: PythonOutput = { type: 'stdout', text: fresh };
-          output.push(out);
-          this.emit(out);
+          publish({ type: 'stdout', text: fresh });
           emittedStdout = outcome.stdout.length;
         }
         if (outcome.needsInput === undefined) {
@@ -155,17 +157,13 @@ export abstract class BaseInterpreter implements PythonInterpreter {
         type: 'TimeoutError',
         message: `Execution stopped after ${String(Math.round(timeoutMs / 1000))} s. Check for a loop that never ends.`,
       };
-      const out: PythonOutput = { type: 'stderr', text: `${error.type}: ${error.message}\n` };
-      output.push(out);
-      this.emit(out);
+      publish({ type: 'stderr', text: `${error.type}: ${error.message}\n` });
       return { success: false, output, error, executionTimeMs, timedOut: true };
     }
 
     const stderr = finalOutcome?.stderr ?? '';
     if (stderr !== '') {
-      const out: PythonOutput = { type: 'stderr', text: stderr };
-      output.push(out);
-      this.emit(out);
+      publish({ type: 'stderr', text: stderr });
       return {
         success: false,
         output,

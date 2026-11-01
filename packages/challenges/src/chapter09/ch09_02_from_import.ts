@@ -30,6 +30,12 @@ export const ch09_02_from_import: Challenge = {
       hidden: true,
     },
   ],
+  structureChecks: [
+    { type: 'node', node: 'ImportFrom' },
+    { type: 'call', name: 'ceil' },
+    { type: 'call', name: 'floor' },
+  ],
+
   hints: [
     { tier: 1 as const, text: 'from math import pi, ceil, floor imports specific names directly.' },
     {

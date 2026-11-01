@@ -15,11 +15,11 @@ export const ch01_07_multiple_prints: Challenge = {
   scaffoldedCode:
     '# Draw a snake on the terminal using print statements\n# Replace each ___ with the correct string\nprint(___)\nprint(___)\nprint(___)',
   editableRegions: [
-    { startLine: 3, endLine: 3, placeholder: '"  /\\_/\\\\"' },
+    { startLine: 3, endLine: 3, placeholder: '"  /\\\\_/\\\\"' },
     { startLine: 4, endLine: 4, placeholder: '" ( o.o)"' },
     { startLine: 5, endLine: 5, placeholder: '"  > ^ <"' },
   ],
-  solutionCode: 'print("  /\\_/\\\\")\nprint(" ( o.o)")\nprint("  > ^ <")',
+  solutionCode: 'print("  /\\\\_/\\\\")\nprint(" ( o.o)")\nprint("  > ^ <")',
 
   testCases: [
     {
@@ -35,6 +35,7 @@ export const ch01_07_multiple_prints: Challenge = {
       hidden: true,
     },
   ],
+  structureChecks: [{ type: 'call', name: 'print', min: 3 }],
 
   hints: [
     {
@@ -47,7 +48,7 @@ export const ch01_07_multiple_prints: Challenge = {
     },
     {
       tier: 3,
-      text: 'Solution: print("  /\\_/\\\\"), print(" ( o.o)"), print("  > ^ <")',
+      text: 'Solution: print("  /\\\\_/\\\\"), print(" ( o.o)"), print("  > ^ <")',
     },
   ],
 

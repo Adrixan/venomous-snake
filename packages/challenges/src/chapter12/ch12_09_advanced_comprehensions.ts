@@ -33,6 +33,7 @@ export const ch12_09_advanced_comprehensions: Challenge = {
       hidden: true,
     },
   ],
+  structureChecks: [{ type: 'node', node: ['For', 'comprehension'], min: 4 }],
 
   hints: [
     {

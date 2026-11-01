@@ -35,6 +35,7 @@ export const ch03_04_if_elif_else: Challenge = {
       hidden: true,
     },
   ],
+  structureChecks: [{ type: 'node', node: 'If', min: 3 }],
 
   hints: [
     {

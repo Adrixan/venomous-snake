@@ -30,6 +30,11 @@ export const ch09_01_importing_modules: Challenge = {
       hidden: true,
     },
   ],
+  structureChecks: [
+    { type: 'import', module: 'math' },
+    { type: 'import', module: 'random' },
+  ],
+
   hints: [
     {
       tier: 1 as const,

@@ -29,6 +29,11 @@ export const ch07_07_json_parsing: Challenge = {
       hidden: true,
     },
   ],
+  structureChecks: [
+    { type: 'import', module: 'json' },
+    { type: 'call', name: 'loads' },
+  ],
+
   hints: [
     { tier: 1 as const, text: 'json.loads() parses a JSON string into a Python dictionary.' },
     {

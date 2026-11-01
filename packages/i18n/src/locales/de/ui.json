@@ -16,7 +16,31 @@
       "error": "Terminal-Fehler"
     },
     "line": "Zeile",
-    "column": "Spalte"
+    "column": "Spalte",
+    "structure": {
+      "blank": "Fülle jede ___-Lücke aus",
+      "node": "Verwende {{what}}",
+      "node_many": "Verwende {{what}} (mindestens {{count}})",
+      "call": "Rufe {{name}}() auf",
+      "call_many": "Rufe {{name}}() mindestens {{count}}-mal auf",
+      "assign": "Speichere den Wert in einer Variable namens {{name}}",
+      "import": "Importiere das Modul {{name}}",
+      "nodes": {
+        "For": "eine for-Schleife",
+        "comprehension": "eine Comprehension",
+        "If": "eine if-Anweisung",
+        "Lambda": "ein Lambda",
+        "List": "eine Liste",
+        "Dict": "ein Dictionary",
+        "ClassDef": "eine Klasse",
+        "FunctionDef": "eine Funktion oder Methode",
+        "Raise": "raise",
+        "Try": "try/except",
+        "ImportFrom": "from ... import",
+        "vararg": "einen *args-Parameter",
+        "kwarg": "einen **kwargs-Parameter"
+      }
+    }
   },
   "menu": {
     "new_game": "Neues Spiel",

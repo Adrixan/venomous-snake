@@ -31,6 +31,10 @@ export const ch05_10_lambda: Challenge = {
       hidden: true,
     },
   ],
+  structureChecks: [
+    { type: 'node', node: 'Lambda' },
+    { type: 'call', name: 'sorted' },
+  ],
 
   hints: [
     {

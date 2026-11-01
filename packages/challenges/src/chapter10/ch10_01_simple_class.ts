@@ -30,6 +30,11 @@ export const ch10_01_simple_class: Challenge = {
       hidden: true,
     },
   ],
+  structureChecks: [
+    { type: 'node', node: 'ClassDef' },
+    { type: 'assign', name: 'bot' },
+  ],
+
   hints: [
     {
       tier: 1 as const,

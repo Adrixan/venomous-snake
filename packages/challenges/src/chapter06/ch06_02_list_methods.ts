@@ -35,6 +35,10 @@ export const ch06_02_list_methods: Challenge = {
       hidden: true,
     },
   ],
+  structureChecks: [
+    { type: 'call', name: 'append' },
+    { type: 'call', name: 'remove' },
+  ],
 
   hints: [
     {

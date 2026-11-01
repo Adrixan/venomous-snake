@@ -315,6 +315,8 @@ export interface ExecutionResult {
 
 /** Per-run options for {@link PythonInterpreter.execute}. */
 export interface ExecuteOptions {
+  /** Keeps the run out of `onOutput`, for tooling that must not reach the learner's terminal. */
+  silent?: boolean;
   /** Lines returned by successive `input()` calls. */
   inputs?: string[];
   /**
@@ -364,6 +366,20 @@ export interface TestCase {
   expectsError?: string;
 }
 
+/**
+ * A rule about how a program is written, checked with Python's `ast` after the output
+ * tests pass. It covers what comparing stdout cannot, such as "uses a for loop".
+ */
+export type StructureCheck =
+  /** At least `min` AST nodes of one of these classes, or `vararg`/`kwarg` parameters. */
+  | { type: 'node'; node: string | string[]; min?: number }
+  /** At least `min` calls of a function or method with this name. */
+  | { type: 'call'; name: string; min?: number }
+  /** A variable with this name is assigned. */
+  | { type: 'assign'; name: string }
+  /** This module is imported, by `import` or `from ... import`. */
+  | { type: 'import'; module: string };
+
 /** Hint definition with tiers */
 export interface ChallengeHint {
   tier: 1 | 2 | 3;
@@ -403,6 +419,8 @@ export interface Challenge {
   solutionCode: string;
 
   testCases: TestCase[];
+  /** Rules on how the solution is written, for what output comparison cannot verify. */
+  structureChecks?: StructureCheck[];
 
   hints: ChallengeHint[];
   errorPatterns?: ErrorPattern[];

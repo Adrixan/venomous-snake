@@ -35,6 +35,11 @@ export const ch07_02_write_file: Challenge = {
       hidden: true,
     },
   ],
+  structureChecks: [
+    { type: 'call', name: 'StringIO' },
+    { type: 'call', name: 'write' },
+  ],
+
   hints: [
     { tier: 1 as const, text: 'io.StringIO() creates an empty file-like object you can write to.' },
     {

@@ -6,6 +6,8 @@ import { loadPyodide } from 'pyodide';
 import { allChallenges } from '@venomous-snake/challenges';
 import { InProcessInterpreter } from '@venomous-snake/python-runtime';
 import type { PyodideLike } from '@venomous-snake/python-runtime';
+import { findUnmetChecks } from '@venomous-snake/challenge-engine';
+import type { StructureCheck } from '@venomous-snake/shared-types';
 import { validateStructure, validateExecution } from '../validate';
 import type { Violation } from '../validate';
 
@@ -53,6 +55,38 @@ describe('challenge execution on real CPython (Pyodide)', () => {
     const dir = path.dirname(require.resolve('pyodide/package.json')) + path.sep;
     const pyodide = (await loadPyodide({ indexURL: dir })) as unknown as PyodideLike;
     interpreter = new InProcessInterpreter(pyodide);
+  });
+
+  it('evaluates writing rules with the real ast module', async () => {
+    const code = [
+      'import json',
+      'from math import ceil',
+      'def f(*a, **k):',
+      '    return [x for x in a]',
+      'total = 0',
+      'for i in range(2):',
+      '    total += ceil(i)',
+      'print(f(total))',
+    ].join('\n');
+    const met: StructureCheck[] = [
+      { type: 'node', node: 'For' },
+      { type: 'node', node: ['While', 'comprehension'] },
+      { type: 'node', node: 'vararg' },
+      { type: 'node', node: 'kwarg' },
+      { type: 'call', name: 'range' },
+      { type: 'assign', name: 'total' },
+      { type: 'import', module: 'json' },
+      { type: 'import', module: 'math' },
+    ];
+    expect(await findUnmetChecks(interpreter, code, met)).toEqual([]);
+    const unmet: StructureCheck[] = [
+      { type: 'node', node: 'For', min: 2 },
+      { type: 'node', node: 'While' },
+      { type: 'call', name: 'print', min: 2 },
+      { type: 'assign', name: 'missing' },
+      { type: 'import', module: 'os' },
+    ];
+    expect(await findUnmetChecks(interpreter, code, unmet)).toEqual(unmet);
   });
 
   it('every solution passes all of its tests', async () => {

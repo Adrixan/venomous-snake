@@ -16,7 +16,31 @@
       "error": "Terminal Error"
     },
     "line": "Ln",
-    "column": "Col"
+    "column": "Col",
+    "structure": {
+      "blank": "Fill in every ___ blank",
+      "node": "Use {{what}}",
+      "node_many": "Use {{what}} (at least {{count}})",
+      "call": "Call {{name}}()",
+      "call_many": "Call {{name}}() at least {{count}} times",
+      "assign": "Store the value in a variable named {{name}}",
+      "import": "Import the {{name}} module",
+      "nodes": {
+        "For": "a for loop",
+        "comprehension": "a comprehension",
+        "If": "an if statement",
+        "Lambda": "a lambda",
+        "List": "a list",
+        "Dict": "a dictionary",
+        "ClassDef": "a class",
+        "FunctionDef": "a function or method",
+        "Raise": "raise",
+        "Try": "try/except",
+        "ImportFrom": "from ... import",
+        "vararg": "a *args parameter",
+        "kwarg": "a **kwargs parameter"
+      }
+    }
   },
   "menu": {
     "new_game": "New Game",

@@ -147,7 +147,9 @@ export function ChallengePanel({
         }}
       >
         <div>
-          <h2 style={{ margin: 0, color: '#00ff88', fontSize: 16 }}>{t(nsKey(challenge.titleKey))}</h2>
+          <h2 style={{ margin: 0, color: '#00ff88', fontSize: 16 }}>
+            {t(nsKey(challenge.titleKey))}
+          </h2>
           <span
             style={{
               display: 'inline-block',
@@ -197,9 +199,7 @@ export function ChallengePanel({
           fontSize: 12,
         }}
       >
-        <div style={{ color: '#00e5ff' }}>
-          ⏱ {formatTime(elapsed)}
-        </div>
+        <div style={{ color: '#00e5ff' }}>⏱ {formatTime(elapsed)}</div>
         <div style={{ color: '#ffb454' }}>
           {t('challenge.attempts', 'Attempts')}: {attempts}
         </div>

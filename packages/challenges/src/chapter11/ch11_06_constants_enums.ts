@@ -33,6 +33,12 @@ export const ch11_06_constants_enums: Challenge = {
       hidden: true,
     },
   ],
+  structureChecks: [
+    { type: 'node', node: 'ClassDef' },
+    { type: 'assign', name: 'MAX_AGENTS' },
+    { type: 'assign', name: 'DEFAULT_FLOOR' },
+  ],
+
   hints: [
     {
       tier: 1 as const,
