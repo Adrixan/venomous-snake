@@ -65,3 +65,4 @@ The helper scripts formerly in `.scratch/` now live in `tools/review/` (see Hous
 - English hints, test descriptions and comments live in the challenge data; German in `packages/i18n/src/locales/de/challengeDetails.json`. Engine packages carry keys (`HintResult.key`, `TestResult.failure`, `SaveSystemError.code`), the UI words them. Adding a challenge fails the validator until its German exists.
 - Comments are the keys of a map, so read them raw with `getResource`: i18next splits keys on `:` and `.`.
 - The main chunk is 948 KB with both languages. Lazy-loading the inactive language would reduce it.
+- Released as `20261101110425-290099` (source `d984548`). Live browser check in German with a desktop `User-Agent`: quest log, starter comments, objectives, hint, failure text and a solved challenge, no console, CSP or HTTP errors.
