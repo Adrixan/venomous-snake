@@ -81,7 +81,7 @@ Not done: no browser run. UI findings marked "by code reading" were not reproduc
 - `chapters.ts`: `floor` is `lobby`, `floor_2` to `floor_12`.
 - `FloorMap.tsx:21-33` plus `App.tsx:33-66`: 12 floors with different names (`security-office`, `server-room-b1`), different chapter numbers, and `StoryTerminal.tsx:25` carries a fifth list of names (`MAIL ROOM`, `IT DEPARTMENT`).
 - Visible effects: QuestLog prints the raw id `server-room-b1`; floor achievements are keyed `floor_2/3/4` but emitted from engine floor numbers (`useGameController.ts` uses `floor_${floor}`), so they are off by one; the "current chapter" in curriculum progress is derived from the wrong source.
-- Fix: one `Floor` table (number, i18n key, chapter ids, first room id, required terminals) in `challenges` or `engine`, generated into the others; delete the four copies. Add a consistency test (the script in `.scratch/consistency.test.ts` is a starting point).
+- Fix: one `Floor` table (number, i18n key, chapter ids, first room id, required terminals) in `challenges` or `engine`, generated into the others; delete the four copies. Add a consistency test (the script in `tools/review/consistency.test.ts` is a starting point).
 
 ### P1-3 Hard-coded 118
 
@@ -156,7 +156,7 @@ Decision needed before deleting: which of the dormant features are planned (cred
 - Tooling drift: `vitest ^2.1.9` with `@vitest/coverage-v8 ^4.0.18`; `@nx/vite:test` executor deprecated (removed in Nx 23); `vite.config.ts:49` and the chunk-size comment still reference Phaser.
 - Security headers and CSP: none. A CSP needs `script-src 'self' 'wasm-unsafe-eval'` for Pyodide and, after P0-4, no third-party origin. Learner code can `import js` and reach the DOM; acceptable for self-XSS on a single-user client, but document it and never load shared content into the same origin.
 - Bundle: main chunk 765 kB (221 kB gzip), of which i18n JSON is about 204 kB and challenges about 180 kB. Lazy-load the locale not in use and the challenge chapters per floor.
-- Noise: `console.warn` in audio and dialog code, `.scratch/` and `.serena/project.yml` untracked or modified in git status.
+- Noise: `console.warn` in audio and dialog code, `.serena/project.yml` modified in git status (`.scratch/` was untracked at review time and is ignored since 2026-11-01).
 
 ## Recommended order and rationale
 
@@ -197,8 +197,10 @@ Ordered by learner harm per unit of effort, and by dependency (later items assum
 
 ## Commands and scripts used
 
+The scripts moved to `tools/review/` on 2026-11-01 and were ported to the code of that date (see its `README.md`), so rerunning them reports the current state, not the numbers above.
+
 - `npx nx run-many --target=type-check|lint|test --all`
-- `.scratch/consistency.test.ts`, `closure.test.ts`, `dump.test.ts`: data consistency, completability simulation, challenge export
-- `.scratch/run_py.py`: every solution and scaffold under CPython with the wrapper's `input()` semantics
-- `.scratch/pyo.test.ts`: the real `PyodideInterpreter` wrapper against local Pyodide 0.29.3
-- `.scratch/reach.py` with an esbuild metafile: module reachability from `main.tsx`
+- `tools/review/consistency.test.ts`, `closure.test.ts`, `dump.test.ts`: data consistency, completability simulation, challenge export
+- `tools/review/run_py.py`: every solution and scaffold under CPython with the runner's `input()` semantics
+- `tools/review/pyo.test.ts`: `input()` behaviour on the real runtime; at review time the `PyodideInterpreter` wrapper against Pyodide 0.29.3, now `InProcessInterpreter`
+- `tools/review/reach.py` with a bundle metafile (esbuild at review time, now `vite.metafile.config.ts`): module reachability from `main.tsx`
