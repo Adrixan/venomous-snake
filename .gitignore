@@ -28,3 +28,6 @@ Thumbs.db
 # Temporary
 tmp/
 temp/
+
+# Local scratch and tools/review reports
+.scratch/
