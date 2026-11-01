@@ -48,8 +48,6 @@ export const ch02_08_len_and_string_ops: Challenge = {
     },
   ],
 
-  roomId: 'floor_2_room_01',
-  terminalId: 'terminal_08',
   preDialogKey: 'dialog.ch02_08.pre',
   postDialogKey: 'dialog.ch02_08.post',
 

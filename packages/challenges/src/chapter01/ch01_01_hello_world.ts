@@ -38,8 +38,6 @@ export const ch01_01_hello_world: Challenge = {
     { tier: 3, text: 'The answer is: print("Hello, World!")' },
   ],
 
-  roomId: 'lobby_terminal_room',
-  terminalId: 'terminal_01',
   preDialogKey: 'dialog.ch01_01.pre',
   postDialogKey: 'dialog.ch01_01.post',
 

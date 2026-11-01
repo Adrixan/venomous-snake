@@ -13,9 +13,7 @@ export const ch09_02_from_import: Challenge = {
   tags: ['modules', 'from-import'],
   scaffoldedCode:
     'from math import ___, ___, ___\nprint(round(___, 4))\nprint(___(7.2))\nprint(___(7.8))',
-  editableRegions: [
-    { startLine: 1, endLine: 1, placeholder: 'pi, ceil, floor' },
-  ],
+  editableRegions: [{ startLine: 1, endLine: 1, placeholder: 'pi, ceil, floor' }],
   solutionCode:
     'from math import pi, ceil, floor\nprint(round(pi, 4))\nprint(ceil(7.2))\nprint(floor(7.8))',
   testCases: [
@@ -34,11 +32,12 @@ export const ch09_02_from_import: Challenge = {
   ],
   hints: [
     { tier: 1 as const, text: 'from math import pi, ceil, floor imports specific names directly.' },
-    { tier: 2 as const, text: 'After from-import, use the names directly: pi, ceil(7.2), floor(7.8).' },
+    {
+      tier: 2 as const,
+      text: 'After from-import, use the names directly: pi, ceil(7.2), floor(7.8).',
+    },
     { tier: 3 as const, text: 'Solution: from math import pi, ceil, floor' },
   ],
-  roomId: 'floor_9_room_01',
-  terminalId: 'terminal_02',
   preDialogKey: 'dialog.ch09_02.pre',
   postDialogKey: 'dialog.ch09_02.post',
   conceptsIntroduced: ['from_import', 'selective_import'],

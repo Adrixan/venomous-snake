@@ -38,8 +38,6 @@ export const ch01_02_variables: Challenge = {
     { tier: 3, text: 'Solution:\nalias = "Ghost"\nprint("Alias:", alias)' },
   ],
 
-  roomId: 'lobby_terminal_room',
-  terminalId: 'terminal_02',
   preDialogKey: 'dialog.ch01_02.pre',
   postDialogKey: 'dialog.ch01_02.post',
 

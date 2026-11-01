@@ -51,8 +51,6 @@ export const ch03_03_comparison_operators: Challenge = {
     },
   ],
 
-  roomId: 'floor_3_room_01',
-  terminalId: 'terminal_03',
   preDialogKey: 'dialog.ch03_03.pre',
   postDialogKey: 'dialog.ch03_03.post',
 

@@ -30,12 +30,16 @@ export const ch12_04_decorators_with_args: Challenge = {
     },
   ],
   hints: [
-    { tier: 1 as const, text: 'A parameterized decorator is a function that returns a decorator. Three nested functions.' },
+    {
+      tier: 1 as const,
+      text: 'A parameterized decorator is a function that returns a decorator. Three nested functions.',
+    },
     { tier: 2 as const, text: 'min_level is captured from the outer function via closure.' },
-    { tier: 3 as const, text: 'Solution: if agent_level < min_level and f"Need level {min_level}"' },
+    {
+      tier: 3 as const,
+      text: 'Solution: if agent_level < min_level and f"Need level {min_level}"',
+    },
   ],
-  roomId: 'floor_12_room_01',
-  terminalId: 'terminal_04',
   preDialogKey: 'dialog.ch12_04.pre',
   postDialogKey: 'dialog.ch12_04.post',
   conceptsIntroduced: ['parameterized_decorators', 'triple_nested_closures'],

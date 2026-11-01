@@ -34,12 +34,16 @@ export const ch12_02_generator_expressions: Challenge = {
     },
   ],
   hints: [
-    { tier: 1 as const, text: 'Generator functions use yield instead of return. They produce values one at a time.' },
-    { tier: 2 as const, text: 'yield x ** 2 produces the squared value. Use list() to collect all yielded values.' },
+    {
+      tier: 1 as const,
+      text: 'Generator functions use yield instead of return. They produce values one at a time.',
+    },
+    {
+      tier: 2 as const,
+      text: 'yield x ** 2 produces the squared value. Use list() to collect all yielded values.',
+    },
     { tier: 3 as const, text: 'Solution: yield x ** 2 in both generator functions' },
   ],
-  roomId: 'floor_12_room_01',
-  terminalId: 'terminal_02',
   preDialogKey: 'dialog.ch12_02.pre',
   postDialogKey: 'dialog.ch12_02.post',
   conceptsIntroduced: ['generator_functions', 'lazy_evaluation'],

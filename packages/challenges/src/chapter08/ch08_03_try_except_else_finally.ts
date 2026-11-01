@@ -30,12 +30,16 @@ export const ch08_03_try_except_else_finally: Challenge = {
     },
   ],
   hints: [
-    { tier: 1 as const, text: 'else: runs when no exception occurred. finally: runs no matter what.' },
+    {
+      tier: 1 as const,
+      text: 'else: runs when no exception occurred. finally: runs no matter what.',
+    },
     { tier: 2 as const, text: 'The full pattern is: try → except → else → finally.' },
-    { tier: 3 as const, text: 'Solution: except ValueError:, else:, finally: as three separate blocks' },
+    {
+      tier: 3 as const,
+      text: 'Solution: except ValueError:, else:, finally: as three separate blocks',
+    },
   ],
-  roomId: 'floor_8_room_01',
-  terminalId: 'terminal_03',
   preDialogKey: 'dialog.ch08_03.pre',
   postDialogKey: 'dialog.ch08_03.post',
   conceptsIntroduced: ['else_clause', 'finally_clause'],

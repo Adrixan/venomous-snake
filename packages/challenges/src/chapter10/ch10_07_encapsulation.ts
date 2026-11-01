@@ -30,12 +30,16 @@ export const ch10_07_encapsulation: Challenge = {
     },
   ],
   hints: [
-    { tier: 1 as const, text: 'self.__attribute uses name mangling for privacy. Access it via getter/setter methods.' },
-    { tier: 2 as const, text: 'get_clearance returns self.__clearance. set_clearance sets self.__clearance = level.' },
+    {
+      tier: 1 as const,
+      text: 'self.__attribute uses name mangling for privacy. Access it via getter/setter methods.',
+    },
+    {
+      tier: 2 as const,
+      text: 'get_clearance returns self.__clearance. set_clearance sets self.__clearance = level.',
+    },
     { tier: 3 as const, text: 'Solution: return self.__clearance and self.__clearance = level' },
   ],
-  roomId: 'floor_10_room_01',
-  terminalId: 'terminal_07',
   preDialogKey: 'dialog.ch10_07.pre',
   postDialogKey: 'dialog.ch10_07.post',
   conceptsIntroduced: ['encapsulation', 'name_mangling', 'getters_setters'],

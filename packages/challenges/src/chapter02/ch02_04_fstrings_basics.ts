@@ -54,8 +54,6 @@ export const ch02_04_fstrings_basics: Challenge = {
     },
   ],
 
-  roomId: 'floor_2_room_01',
-  terminalId: 'terminal_04',
   preDialogKey: 'dialog.ch02_04.pre',
   postDialogKey: 'dialog.ch02_04.post',
 

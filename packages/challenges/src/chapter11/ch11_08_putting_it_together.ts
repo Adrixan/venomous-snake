@@ -33,13 +33,20 @@ export const ch11_08_putting_it_together: Challenge = {
   ],
 
   hints: [
-    { tier: 1 as const, text: 'Create a Mission class with __init__ and __repr__. Use a default parameter for status.' },
-    { tier: 2 as const, text: 'filter_missions uses list comprehension: [m for m in missions if m.priority >= min_priority].' },
-    { tier: 3 as const, text: 'Solution: Mission class with name/priority/status, filter with comprehension, print with f-strings' },
+    {
+      tier: 1 as const,
+      text: 'Create a Mission class with __init__ and __repr__. Use a default parameter for status.',
+    },
+    {
+      tier: 2 as const,
+      text: 'filter_missions uses list comprehension: [m for m in missions if m.priority >= min_priority].',
+    },
+    {
+      tier: 3 as const,
+      text: 'Solution: Mission class with name/priority/status, filter with comprehension, print with f-strings',
+    },
   ],
 
-  roomId: 'floor_11_room_01',
-  terminalId: 'terminal_08',
   preDialogKey: 'dialog.ch11_08.pre',
   postDialogKey: 'dialog.ch11_08.post',
 

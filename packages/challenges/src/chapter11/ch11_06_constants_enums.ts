@@ -34,12 +34,16 @@ export const ch11_06_constants_enums: Challenge = {
     },
   ],
   hints: [
-    { tier: 1 as const, text: 'Group related constants in a class. Access with ClassName.CONSTANT.' },
+    {
+      tier: 1 as const,
+      text: 'Group related constants in a class. Access with ClassName.CONSTANT.',
+    },
     { tier: 2 as const, text: 'Define values: LOW = 1, MEDIUM = 5, HIGH = 8, CRITICAL = 10.' },
-    { tier: 3 as const, text: 'Constants are UPPERCASE variables: MAX_AGENTS = 12, DEFAULT_FLOOR = "lobby"' },
+    {
+      tier: 3 as const,
+      text: 'Constants are UPPERCASE variables: MAX_AGENTS = 12, DEFAULT_FLOOR = "lobby"',
+    },
   ],
-  roomId: 'floor_11_room_01',
-  terminalId: 'terminal_06',
   preDialogKey: 'dialog.ch11_06.pre',
   postDialogKey: 'dialog.ch11_06.post',
   conceptsIntroduced: ['class_constants', 'constants_convention'],

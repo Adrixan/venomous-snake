@@ -31,11 +31,15 @@ export const ch07_07_json_parsing: Challenge = {
   ],
   hints: [
     { tier: 1 as const, text: 'json.loads() parses a JSON string into a Python dictionary.' },
-    { tier: 2 as const, text: 'Access dictionary values with data["key"]. JSON true becomes Python True.' },
-    { tier: 3 as const, text: 'Solution: data = json.loads(json_str), then print(data["agent"]) etc.' },
+    {
+      tier: 2 as const,
+      text: 'Access dictionary values with data["key"]. JSON true becomes Python True.',
+    },
+    {
+      tier: 3 as const,
+      text: 'Solution: data = json.loads(json_str), then print(data["agent"]) etc.',
+    },
   ],
-  roomId: 'floor_7_room_01',
-  terminalId: 'terminal_07',
   preDialogKey: 'dialog.ch07_07.pre',
   postDialogKey: 'dialog.ch07_07.post',
   conceptsIntroduced: ['json_loads', 'json_parsing'],

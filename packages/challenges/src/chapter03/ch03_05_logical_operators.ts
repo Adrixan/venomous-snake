@@ -50,8 +50,6 @@ export const ch03_05_logical_operators: Challenge = {
     },
   ],
 
-  roomId: 'floor_3_room_01',
-  terminalId: 'terminal_05',
   preDialogKey: 'dialog.ch03_05.pre',
   postDialogKey: 'dialog.ch03_05.post',
 

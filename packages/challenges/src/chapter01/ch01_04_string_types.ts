@@ -50,8 +50,6 @@ export const ch01_04_string_types: Challenge = {
     },
   ],
 
-  roomId: 'lobby_terminal_room',
-  terminalId: 'terminal_04',
   preDialogKey: 'dialog.ch01_04.pre',
   postDialogKey: 'dialog.ch01_04.post',
 

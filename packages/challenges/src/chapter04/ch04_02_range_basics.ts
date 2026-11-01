@@ -47,8 +47,6 @@ export const ch04_02_range_basics: Challenge = {
     },
   ],
 
-  roomId: 'floor_4_room_01',
-  terminalId: 'terminal_02',
   preDialogKey: 'dialog.ch04_02.pre',
   postDialogKey: 'dialog.ch04_02.post',
 

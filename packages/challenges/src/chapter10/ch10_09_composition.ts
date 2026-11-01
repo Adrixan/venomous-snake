@@ -30,12 +30,19 @@ export const ch10_09_composition: Challenge = {
     },
   ],
   hints: [
-    { tier: 1 as const, text: 'Composition means one class contains instances of another. Building has a list of Floors.' },
-    { tier: 2 as const, text: 'Floor needs __str__ for display. Building uses self.floors = [] and append().' },
-    { tier: 3 as const, text: 'Solution: Building.add_floor appends to self.floors. list_floors prints each floor.' },
+    {
+      tier: 1 as const,
+      text: 'Composition means one class contains instances of another. Building has a list of Floors.',
+    },
+    {
+      tier: 2 as const,
+      text: 'Floor needs __str__ for display. Building uses self.floors = [] and append().',
+    },
+    {
+      tier: 3 as const,
+      text: 'Solution: Building.add_floor appends to self.floors. list_floors prints each floor.',
+    },
   ],
-  roomId: 'floor_10_room_01',
-  terminalId: 'terminal_09',
   preDialogKey: 'dialog.ch10_09.pre',
   postDialogKey: 'dialog.ch10_09.post',
   conceptsIntroduced: ['composition', 'has_a_relationship'],

@@ -13,9 +13,7 @@ export const ch07_04_csv_parsing: Challenge = {
   tags: ['string-processing', 'split'],
   scaffoldedCode:
     'csv_data = "snake,viper,cobra,python"\nfields = csv_data.___(___)\nfor field in fields:\n    print(field)',
-  editableRegions: [
-    { startLine: 2, endLine: 2, placeholder: 'split(",")' },
-  ],
+  editableRegions: [{ startLine: 2, endLine: 2, placeholder: 'split(",")' }],
   solutionCode:
     'csv_data = "snake,viper,cobra,python"\nfields = csv_data.split(",")\nfor field in fields:\n    print(field)',
   testCases: [
@@ -33,12 +31,13 @@ export const ch07_04_csv_parsing: Challenge = {
     },
   ],
   hints: [
-    { tier: 1 as const, text: 'The .split() method breaks a string into a list using a delimiter.' },
+    {
+      tier: 1 as const,
+      text: 'The .split() method breaks a string into a list using a delimiter.',
+    },
     { tier: 2 as const, text: 'Use .split(",") to split on commas.' },
     { tier: 3 as const, text: 'Solution: fields = csv_data.split(",")' },
   ],
-  roomId: 'floor_7_room_01',
-  terminalId: 'terminal_04',
   preDialogKey: 'dialog.ch07_04.pre',
   postDialogKey: 'dialog.ch07_04.post',
   conceptsIntroduced: ['csv_parsing', 'split_delimiter'],

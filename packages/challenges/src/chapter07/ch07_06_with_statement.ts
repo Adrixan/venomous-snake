@@ -34,12 +34,19 @@ export const ch07_06_with_statement: Challenge = {
     },
   ],
   hints: [
-    { tier: 1 as const, text: 'try/finally ensures cleanup code runs even if an error occurs. Put resource usage in try, cleanup in finally.' },
-    { tier: 2 as const, text: 'Use split("\\n") to break a string into lines. Loop with for line in lines.' },
-    { tier: 3 as const, text: 'Solution: lines = data.split("\\n"), try/finally loop, print "Channel closed" in finally.' },
+    {
+      tier: 1 as const,
+      text: 'try/finally ensures cleanup code runs even if an error occurs. Put resource usage in try, cleanup in finally.',
+    },
+    {
+      tier: 2 as const,
+      text: 'Use split("\\n") to break a string into lines. Loop with for line in lines.',
+    },
+    {
+      tier: 3 as const,
+      text: 'Solution: lines = data.split("\\n"), try/finally loop, print "Channel closed" in finally.',
+    },
   ],
-  roomId: 'floor_7_room_01',
-  terminalId: 'terminal_06',
   preDialogKey: 'dialog.ch07_06.pre',
   postDialogKey: 'dialog.ch07_06.post',
   conceptsIntroduced: ['try_finally', 'resource_management'],

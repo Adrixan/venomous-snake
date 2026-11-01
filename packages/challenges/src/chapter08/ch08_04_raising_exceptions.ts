@@ -30,12 +30,19 @@ export const ch08_04_raising_exceptions: Challenge = {
     },
   ],
   hints: [
-    { tier: 1 as const, text: 'Use raise ValueError("message") to raise an error with a custom message.' },
-    { tier: 2 as const, text: 'The raise keyword creates an exception that can be caught by a try/except block.' },
-    { tier: 3 as const, text: 'Solution: raise ValueError(f"Clearance level {level} is out of range")' },
+    {
+      tier: 1 as const,
+      text: 'Use raise ValueError("message") to raise an error with a custom message.',
+    },
+    {
+      tier: 2 as const,
+      text: 'The raise keyword creates an exception that can be caught by a try/except block.',
+    },
+    {
+      tier: 3 as const,
+      text: 'Solution: raise ValueError(f"Clearance level {level} is out of range")',
+    },
   ],
-  roomId: 'floor_8_room_01',
-  terminalId: 'terminal_04',
   preDialogKey: 'dialog.ch08_04.pre',
   postDialogKey: 'dialog.ch08_04.post',
   conceptsIntroduced: ['raise_exception', 'custom_error_message'],

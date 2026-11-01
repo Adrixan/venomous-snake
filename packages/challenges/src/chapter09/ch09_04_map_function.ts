@@ -11,11 +11,8 @@ export const ch09_04_map_function: Challenge = {
   prerequisites: ['ch09_03_lambda_functions'],
   xpReward: 185,
   tags: ['map', 'lambda', 'transformation'],
-  scaffoldedCode:
-    'codes = [1, 2, 3, 4, 5]\nencrypted = list(map(___, codes))\nprint(encrypted)',
-  editableRegions: [
-    { startLine: 2, endLine: 2, placeholder: 'lambda x: x * 7 + 3' },
-  ],
+  scaffoldedCode: 'codes = [1, 2, 3, 4, 5]\nencrypted = list(map(___, codes))\nprint(encrypted)',
+  editableRegions: [{ startLine: 2, endLine: 2, placeholder: 'lambda x: x * 7 + 3' }],
   solutionCode:
     'codes = [1, 2, 3, 4, 5]\nencrypted = list(map(lambda x: x * 7 + 3, codes))\nprint(encrypted)',
   testCases: [
@@ -37,8 +34,6 @@ export const ch09_04_map_function: Challenge = {
     { tier: 2 as const, text: 'Use lambda x: x * 7 + 3 as the transformation function.' },
     { tier: 3 as const, text: 'Solution: list(map(lambda x: x * 7 + 3, codes))' },
   ],
-  roomId: 'floor_9_room_01',
-  terminalId: 'terminal_04',
   preDialogKey: 'dialog.ch09_04.pre',
   postDialogKey: 'dialog.ch09_04.post',
   conceptsIntroduced: ['map_function'],

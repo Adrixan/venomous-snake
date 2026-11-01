@@ -58,8 +58,6 @@ export const ch02_02_string_indexing: Challenge = {
     },
   ],
 
-  roomId: 'floor_2_room_01',
-  terminalId: 'terminal_02',
   preDialogKey: 'dialog.ch02_02.pre',
   postDialogKey: 'dialog.ch02_02.post',
 

@@ -30,12 +30,19 @@ export const ch07_03_file_line_processing: Challenge = {
     },
   ],
   hints: [
-    { tier: 1 as const, text: 'Use .strip() to remove leading and trailing whitespace from each line.' },
-    { tier: 2 as const, text: 'The if condition should filter out lines that are empty after stripping.' },
-    { tier: 3 as const, text: 'Solution: [line.strip() for line in f.readlines() if line.strip()]' },
+    {
+      tier: 1 as const,
+      text: 'Use .strip() to remove leading and trailing whitespace from each line.',
+    },
+    {
+      tier: 2 as const,
+      text: 'The if condition should filter out lines that are empty after stripping.',
+    },
+    {
+      tier: 3 as const,
+      text: 'Solution: [line.strip() for line in f.readlines() if line.strip()]',
+    },
   ],
-  roomId: 'floor_7_room_01',
-  terminalId: 'terminal_03',
   preDialogKey: 'dialog.ch07_03.pre',
   postDialogKey: 'dialog.ch07_03.post',
   conceptsIntroduced: ['readlines', 'strip', 'line_processing'],

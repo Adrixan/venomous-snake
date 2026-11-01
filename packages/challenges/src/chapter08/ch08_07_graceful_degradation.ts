@@ -31,11 +31,15 @@ export const ch08_07_graceful_degradation: Challenge = {
   ],
   hints: [
     { tier: 1 as const, text: 'Use a try/except block to catch KeyError when a key is missing.' },
-    { tier: 2 as const, text: 'The default parameter provides a fallback value when the key is not found.' },
-    { tier: 3 as const, text: 'Solution: try: return database[key] except KeyError: return default' },
+    {
+      tier: 2 as const,
+      text: 'The default parameter provides a fallback value when the key is not found.',
+    },
+    {
+      tier: 3 as const,
+      text: 'Solution: try: return database[key] except KeyError: return default',
+    },
   ],
-  roomId: 'floor_8_room_01',
-  terminalId: 'terminal_07',
   preDialogKey: 'dialog.ch08_07.pre',
   postDialogKey: 'dialog.ch08_07.post',
   conceptsIntroduced: ['graceful_degradation', 'default_parameters_errorhandling'],

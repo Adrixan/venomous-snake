@@ -48,8 +48,6 @@ export const ch05_05_return_multiple: Challenge = {
     },
   ],
 
-  roomId: 'floor_5_room_01',
-  terminalId: 'terminal_05',
   preDialogKey: 'dialog.ch05_05.pre',
   postDialogKey: 'dialog.ch05_05.post',
 

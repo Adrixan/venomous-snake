@@ -13,9 +13,7 @@ export const ch08_01_try_except: Challenge = {
   tags: ['error-handling', 'try-except'],
   scaffoldedCode:
     'def parse_code(code_str):\n    ___:\n        return int(code_str)\n    ___ ValueError:\n        return -1\n\nprint(parse_code("42"))\nprint(parse_code("invalid"))',
-  editableRegions: [
-    { startLine: 2, endLine: 4, placeholder: 'try / except' },
-  ],
+  editableRegions: [{ startLine: 2, endLine: 4, placeholder: 'try / except' }],
   solutionCode:
     'def parse_code(code_str):\n    try:\n        return int(code_str)\n    except ValueError:\n        return -1\n\nprint(parse_code("42"))\nprint(parse_code("invalid"))',
   testCases: [
@@ -33,12 +31,16 @@ export const ch08_01_try_except: Challenge = {
     },
   ],
   hints: [
-    { tier: 1 as const, text: 'Use try: to wrap code that might fail, and except to catch specific errors.' },
-    { tier: 2 as const, text: 'except ValueError: catches errors when int() receives a non-numeric string.' },
+    {
+      tier: 1 as const,
+      text: 'Use try: to wrap code that might fail, and except to catch specific errors.',
+    },
+    {
+      tier: 2 as const,
+      text: 'except ValueError: catches errors when int() receives a non-numeric string.',
+    },
     { tier: 3 as const, text: 'Solution: try: return int(code_str) except ValueError: return -1' },
   ],
-  roomId: 'floor_8_room_01',
-  terminalId: 'terminal_01',
   preDialogKey: 'dialog.ch08_01.pre',
   postDialogKey: 'dialog.ch08_01.post',
   conceptsIntroduced: ['try_except', 'ValueError'],

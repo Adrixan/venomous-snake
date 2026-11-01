@@ -19,23 +19,32 @@ export const ch12_03_decorators_basics: Challenge = {
     {
       id: 'tc01',
       description: 'Should log function calls',
-      expectedOutput: '[LOG] Calling hack_firewall\n[LOG] hack_firewall complete\nFirewall at 192.168.0.1 bypassed',
+      expectedOutput:
+        '[LOG] Calling hack_firewall\n[LOG] hack_firewall complete\nFirewall at 192.168.0.1 bypassed',
       hidden: false,
     },
     {
       id: 'tc02',
       description: 'Should wrap function with decorator',
-      expectedOutput: '[LOG] Calling hack_firewall\n[LOG] hack_firewall complete\nFirewall at 192.168.0.1 bypassed',
+      expectedOutput:
+        '[LOG] Calling hack_firewall\n[LOG] hack_firewall complete\nFirewall at 192.168.0.1 bypassed',
       hidden: true,
     },
   ],
   hints: [
-    { tier: 1 as const, text: 'A decorator wraps a function. func.__name__ gives the function name.' },
-    { tier: 2 as const, text: 'Call the original function with func(*args, **kwargs) inside wrapper.' },
-    { tier: 3 as const, text: 'Solution: func.__name__ for the name, func(*args, **kwargs) to call it' },
+    {
+      tier: 1 as const,
+      text: 'A decorator wraps a function. func.__name__ gives the function name.',
+    },
+    {
+      tier: 2 as const,
+      text: 'Call the original function with func(*args, **kwargs) inside wrapper.',
+    },
+    {
+      tier: 3 as const,
+      text: 'Solution: func.__name__ for the name, func(*args, **kwargs) to call it',
+    },
   ],
-  roomId: 'floor_12_room_01',
-  terminalId: 'terminal_03',
   preDialogKey: 'dialog.ch12_03.pre',
   postDialogKey: 'dialog.ch12_03.post',
   conceptsIntroduced: ['decorators', 'closures', 'wrapper_functions'],

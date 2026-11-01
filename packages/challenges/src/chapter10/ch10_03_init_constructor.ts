@@ -30,12 +30,19 @@ export const ch10_03_init_constructor: Challenge = {
     },
   ],
   hints: [
-    { tier: 1 as const, text: '__init__ is called automatically when creating an instance. Parameters go after self.' },
-    { tier: 2 as const, text: 'Use self.name = name to store the parameter as an instance attribute.' },
-    { tier: 3 as const, text: 'Solution: def __init__(self, name, threat_level): self.name = name self.threat_level = threat_level' },
+    {
+      tier: 1 as const,
+      text: '__init__ is called automatically when creating an instance. Parameters go after self.',
+    },
+    {
+      tier: 2 as const,
+      text: 'Use self.name = name to store the parameter as an instance attribute.',
+    },
+    {
+      tier: 3 as const,
+      text: 'Solution: def __init__(self, name, threat_level): self.name = name self.threat_level = threat_level',
+    },
   ],
-  roomId: 'floor_10_room_01',
-  terminalId: 'terminal_03',
   preDialogKey: 'dialog.ch10_03.pre',
   postDialogKey: 'dialog.ch10_03.post',
   conceptsIntroduced: ['init_constructor', 'instance_attributes'],

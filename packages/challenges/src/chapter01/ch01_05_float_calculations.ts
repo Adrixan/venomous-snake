@@ -55,8 +55,6 @@ export const ch01_05_float_calculations: Challenge = {
     },
   ],
 
-  roomId: 'lobby_terminal_room',
-  terminalId: 'terminal_05',
   preDialogKey: 'dialog.ch01_05.pre',
   postDialogKey: 'dialog.ch01_05.post',
 

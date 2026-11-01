@@ -51,8 +51,6 @@ export const ch03_06_nested_if: Challenge = {
     },
   ],
 
-  roomId: 'floor_3_room_01',
-  terminalId: 'terminal_06',
   preDialogKey: 'dialog.ch03_06.pre',
   postDialogKey: 'dialog.ch03_06.post',
 

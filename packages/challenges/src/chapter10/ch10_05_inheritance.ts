@@ -30,12 +30,19 @@ export const ch10_05_inheritance: Challenge = {
     },
   ],
   hints: [
-    { tier: 1 as const, text: 'class Agent(Person): makes Agent inherit from Person. super() calls the parent class.' },
-    { tier: 2 as const, text: 'super().__init__(name, age) calls Person.__init__. super().introduce() calls Person.introduce.' },
-    { tier: 3 as const, text: 'Solution: class Agent(Person):, super().__init__(name, age), base = super().introduce()' },
+    {
+      tier: 1 as const,
+      text: 'class Agent(Person): makes Agent inherit from Person. super() calls the parent class.',
+    },
+    {
+      tier: 2 as const,
+      text: 'super().__init__(name, age) calls Person.__init__. super().introduce() calls Person.introduce.',
+    },
+    {
+      tier: 3 as const,
+      text: 'Solution: class Agent(Person):, super().__init__(name, age), base = super().introduce()',
+    },
   ],
-  roomId: 'floor_10_room_01',
-  terminalId: 'terminal_05',
   preDialogKey: 'dialog.ch10_05.pre',
   postDialogKey: 'dialog.ch10_05.post',
   conceptsIntroduced: ['inheritance', 'super_function', 'method_override'],

@@ -21,25 +21,34 @@ export const ch12_09_advanced_comprehensions: Challenge = {
     {
       id: 'tc01',
       description: 'Should flatten matrix and create pairs',
-      expectedOutput: '[1, 3, 5, 7, 9]\n[(\'lobby\', 1), (\'lobby\', 2), (\'ops\', 3), (\'ops\', 4), (\'intel\', 5), (\'intel\', 6)]',
+      expectedOutput:
+        "[1, 3, 5, 7, 9]\n[('lobby', 1), ('lobby', 2), ('ops', 3), ('ops', 4), ('intel', 5), ('intel', 6)]",
       hidden: false,
     },
     {
       id: 'tc02',
       description: 'Should use nested loops for complex iteration',
-      expectedOutput: '[1, 3, 5, 7, 9]\n[(\'lobby\', 1), (\'lobby\', 2), (\'ops\', 3), (\'ops\', 4), (\'intel\', 5), (\'intel\', 6)]',
+      expectedOutput:
+        "[1, 3, 5, 7, 9]\n[('lobby', 1), ('lobby', 2), ('ops', 3), ('ops', 4), ('intel', 5), ('intel', 6)]",
       hidden: true,
     },
   ],
 
   hints: [
-    { tier: 1 as const, text: 'Nested for loops: the outer loop iterates rows, the inner loop iterates elements.' },
-    { tier: 2 as const, text: 'For dict iteration: for floor, rooms in floors.items(): then for room in rooms:' },
-    { tier: 3 as const, text: 'Solution: nested for loops with append for both flattening and pair creation' },
+    {
+      tier: 1 as const,
+      text: 'Nested for loops: the outer loop iterates rows, the inner loop iterates elements.',
+    },
+    {
+      tier: 2 as const,
+      text: 'For dict iteration: for floor, rooms in floors.items(): then for room in rooms:',
+    },
+    {
+      tier: 3 as const,
+      text: 'Solution: nested for loops with append for both flattening and pair creation',
+    },
   ],
 
-  roomId: 'floor_12_room_01',
-  terminalId: 'terminal_09',
   preDialogKey: 'dialog.ch12_09.pre',
   postDialogKey: 'dialog.ch12_09.post',
 

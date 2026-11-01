@@ -24,23 +24,32 @@ export const ch11_02_dataclasses: Challenge = {
     {
       id: 'tc01',
       description: 'Should create data container instances with __repr__',
-      expectedOutput: 'Agent(name=\'Snake\', level=10, active=True)\nAgent(name=\'Ghost\', level=6, active=False)\nTrue',
+      expectedOutput:
+        "Agent(name='Snake', level=10, active=True)\nAgent(name='Ghost', level=6, active=False)\nTrue",
       hidden: false,
     },
     {
       id: 'tc02',
       description: 'Should implement __init__, __repr__, and __eq__',
-      expectedOutput: 'Agent(name=\'Snake\', level=10, active=True)\nAgent(name=\'Ghost\', level=6, active=False)\nTrue',
+      expectedOutput:
+        "Agent(name='Snake', level=10, active=True)\nAgent(name='Ghost', level=6, active=False)\nTrue",
       hidden: true,
     },
   ],
   hints: [
-    { tier: 1 as const, text: 'Data containers need __init__ (constructor), __repr__ (display), and __eq__ (comparison) methods.' },
-    { tier: 2 as const, text: '__repr__ returns a string showing how to recreate the object. __eq__ compares all fields.' },
-    { tier: 3 as const, text: 'Solution: __repr__ returns f"Agent(name=\'...\', ...)", __eq__ compares name, level, and active' },
+    {
+      tier: 1 as const,
+      text: 'Data containers need __init__ (constructor), __repr__ (display), and __eq__ (comparison) methods.',
+    },
+    {
+      tier: 2 as const,
+      text: '__repr__ returns a string showing how to recreate the object. __eq__ compares all fields.',
+    },
+    {
+      tier: 3 as const,
+      text: 'Solution: __repr__ returns f"Agent(name=\'...\', ...)", __eq__ compares name, level, and active',
+    },
   ],
-  roomId: 'floor_11_room_01',
-  terminalId: 'terminal_02',
   preDialogKey: 'dialog.ch11_02.pre',
   postDialogKey: 'dialog.ch11_02.post',
   conceptsIntroduced: ['dunder_repr', 'dunder_eq', 'data_containers'],

@@ -12,7 +12,8 @@ export const ch06_10_combining_collections: Challenge = {
   xpReward: 225,
   tags: ['dictionary', 'merge', 'sorted'],
 
-  scaffoldedCode: '# Merge two intel databases and print sorted results\n# Use dict.update() to combine dictionaries\n',
+  scaffoldedCode:
+    '# Merge two intel databases and print sorted results\n# Use dict.update() to combine dictionaries\n',
 
   solutionCode:
     'source_a = {"Viper": 3, "Ghost": 5}\nsource_b = {"Phantom": 2, "Viper": 4}\nmerged = {}\nmerged.update(source_a)\nmerged.update(source_b)\nfor name, level in sorted(merged.items()):\n    print(f"{name}: {level}")',
@@ -47,8 +48,6 @@ export const ch06_10_combining_collections: Challenge = {
     },
   ],
 
-  roomId: 'floor_6_room_01',
-  terminalId: 'terminal_10',
   preDialogKey: 'dialog.ch06_10.pre',
   postDialogKey: 'dialog.ch06_10.post',
 

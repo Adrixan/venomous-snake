@@ -34,8 +34,6 @@ export const ch11_04_writing_simple_tests: Challenge = {
     { tier: 2 as const, text: 'XYZ shifted by 3 wraps around: X->A, Y->B, Z->C.' },
     { tier: 3 as const, text: 'Solution: "BCD", "ABC", "abc" as expected values' },
   ],
-  roomId: 'floor_11_room_01',
-  terminalId: 'terminal_04',
   preDialogKey: 'dialog.ch11_04.pre',
   postDialogKey: 'dialog.ch11_04.post',
   conceptsIntroduced: ['unit_testing', 'test_functions'],

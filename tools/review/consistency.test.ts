@@ -120,8 +120,6 @@ it('report', () => {
     c.prerequisites.filter((p) => !map.has(p)).map((p) => `${c.id}:${p}`),
   );
   out.push(`prereq unknown: ${JSON.stringify(prereq)}`);
-  const roomRefs = challenges.filter((c) => c.roomId && !roomIds.has(c.roomId)).length;
-  out.push(`challenges whose roomId is not a real engine room: ${roomRefs}/${total}`);
 
   const triggerTypes = [...new Set(ACHIEVEMENTS.map((a) => a.trigger.type))];
   out.push(`achievements: ${ACHIEVEMENTS.length}; triggers: ${JSON.stringify(triggerTypes)}`);

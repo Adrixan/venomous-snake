@@ -47,8 +47,6 @@ export const ch03_08_complex_conditions: Challenge = {
     },
   ],
 
-  roomId: 'floor_3_room_01',
-  terminalId: 'terminal_08',
   preDialogKey: 'dialog.ch03_08.pre',
   postDialogKey: 'dialog.ch03_08.post',
 

@@ -30,12 +30,16 @@ export const ch09_03_lambda_functions: Challenge = {
     },
   ],
   hints: [
-    { tier: 1 as const, text: 'lambda x: x[1] creates a function that returns the second element of a tuple.' },
-    { tier: 2 as const, text: 'sorted() with key= uses the lambda to determine sort order. reverse=True sorts descending.' },
+    {
+      tier: 1 as const,
+      text: 'lambda x: x[1] creates a function that returns the second element of a tuple.',
+    },
+    {
+      tier: 2 as const,
+      text: 'sorted() with key= uses the lambda to determine sort order. reverse=True sorts descending.',
+    },
     { tier: 3 as const, text: 'Solution: sorted(agents, key=lambda x: x[1], reverse=True)' },
   ],
-  roomId: 'floor_9_room_01',
-  terminalId: 'terminal_03',
   preDialogKey: 'dialog.ch09_03.pre',
   postDialogKey: 'dialog.ch09_03.post',
   conceptsIntroduced: ['lambda_sort_key', 'sorted_reverse'],

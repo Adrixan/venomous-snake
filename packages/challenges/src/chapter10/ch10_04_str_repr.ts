@@ -19,23 +19,27 @@ export const ch10_04_str_repr: Challenge = {
     {
       id: 'tc01',
       description: 'Should have str and repr representations',
-      expectedOutput: 'SecurityBot: VANGUARD (Level 7)\nSecurityBot(\'VANGUARD\', 7)',
+      expectedOutput: "SecurityBot: VANGUARD (Level 7)\nSecurityBot('VANGUARD', 7)",
       hidden: false,
     },
     {
       id: 'tc02',
       description: 'Should define __str__ and __repr__',
-      expectedOutput: 'SecurityBot: VANGUARD (Level 7)\nSecurityBot(\'VANGUARD\', 7)',
+      expectedOutput: "SecurityBot: VANGUARD (Level 7)\nSecurityBot('VANGUARD', 7)",
       hidden: true,
     },
   ],
   hints: [
-    { tier: 1 as const, text: '__str__ returns a human-readable string. __repr__ returns a developer-friendly string.' },
+    {
+      tier: 1 as const,
+      text: '__str__ returns a human-readable string. __repr__ returns a developer-friendly string.',
+    },
     { tier: 2 as const, text: '__repr__ should ideally look like a valid constructor call.' },
-    { tier: 3 as const, text: 'Solution: __str__ returns f"SecurityBot: {self.name} (Level {self.level})" and __repr__ returns a constructor-style string' },
+    {
+      tier: 3 as const,
+      text: 'Solution: __str__ returns f"SecurityBot: {self.name} (Level {self.level})" and __repr__ returns a constructor-style string',
+    },
   ],
-  roomId: 'floor_10_room_01',
-  terminalId: 'terminal_04',
   preDialogKey: 'dialog.ch10_04.pre',
   postDialogKey: 'dialog.ch10_04.post',
   conceptsIntroduced: ['dunder_str', 'dunder_repr'],

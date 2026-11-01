@@ -47,8 +47,6 @@ export const ch05_10_lambda: Challenge = {
     },
   ],
 
-  roomId: 'floor_5_room_01',
-  terminalId: 'terminal_10',
   preDialogKey: 'dialog.ch05_10.pre',
   postDialogKey: 'dialog.ch05_10.post',
 

@@ -13,9 +13,7 @@ export const ch10_01_simple_class: Challenge = {
   tags: ['oop', 'class', 'attributes'],
   scaffoldedCode:
     'class SecurityBot:\n    name = ___\n    threat_level = ___\n    active = ___\n\nbot = SecurityBot()\nprint(bot.name)\nprint(bot.threat_level)\nprint(bot.active)',
-  editableRegions: [
-    { startLine: 2, endLine: 4, placeholder: '"SENTINEL" / 5 / True' },
-  ],
+  editableRegions: [{ startLine: 2, endLine: 4, placeholder: '"SENTINEL" / 5 / True' }],
   solutionCode:
     'class SecurityBot:\n    name = "SENTINEL"\n    threat_level = 5\n    active = True\n\nbot = SecurityBot()\nprint(bot.name)\nprint(bot.threat_level)\nprint(bot.active)',
   testCases: [
@@ -33,12 +31,19 @@ export const ch10_01_simple_class: Challenge = {
     },
   ],
   hints: [
-    { tier: 1 as const, text: 'Class attributes are defined directly in the class body, like variables.' },
-    { tier: 2 as const, text: 'Set name = "SENTINEL", threat_level = 5, active = True inside the class.' },
-    { tier: 3 as const, text: 'Solution: class SecurityBot: name = "SENTINEL" threat_level = 5 active = True' },
+    {
+      tier: 1 as const,
+      text: 'Class attributes are defined directly in the class body, like variables.',
+    },
+    {
+      tier: 2 as const,
+      text: 'Set name = "SENTINEL", threat_level = 5, active = True inside the class.',
+    },
+    {
+      tier: 3 as const,
+      text: 'Solution: class SecurityBot: name = "SENTINEL" threat_level = 5 active = True',
+    },
   ],
-  roomId: 'floor_10_room_01',
-  terminalId: 'terminal_01',
   preDialogKey: 'dialog.ch10_01.pre',
   postDialogKey: 'dialog.ch10_01.post',
   conceptsIntroduced: ['class_definition', 'class_attributes'],

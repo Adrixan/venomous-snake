@@ -51,8 +51,6 @@ export const ch02_05_input_basics: Challenge = {
     },
   ],
 
-  roomId: 'floor_2_room_01',
-  terminalId: 'terminal_05',
   preDialogKey: 'dialog.ch02_05.pre',
   postDialogKey: 'dialog.ch02_05.post',
 

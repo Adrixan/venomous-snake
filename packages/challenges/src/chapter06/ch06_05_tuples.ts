@@ -48,8 +48,6 @@ export const ch06_05_tuples: Challenge = {
     },
   ],
 
-  roomId: 'floor_6_room_01',
-  terminalId: 'terminal_05',
   preDialogKey: 'dialog.ch06_05.pre',
   postDialogKey: 'dialog.ch06_05.post',
 

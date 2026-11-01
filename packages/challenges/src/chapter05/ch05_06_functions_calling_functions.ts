@@ -50,8 +50,6 @@ export const ch05_06_functions_calling_functions: Challenge = {
     },
   ],
 
-  roomId: 'floor_5_room_01',
-  terminalId: 'terminal_06',
   preDialogKey: 'dialog.ch05_06.pre',
   postDialogKey: 'dialog.ch05_06.post',
 

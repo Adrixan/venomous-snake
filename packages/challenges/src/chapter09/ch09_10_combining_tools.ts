@@ -30,12 +30,16 @@ export const ch09_10_combining_tools: Challenge = {
     },
   ],
   hints: [
-    { tier: 1 as const, text: 'Use filter() to keep scores >= 50, sorted() to sort descending, map() to double.' },
+    {
+      tier: 1 as const,
+      text: 'Use filter() to keep scores >= 50, sorted() to sort descending, map() to double.',
+    },
     { tier: 2 as const, text: 'Chain: sorted(filter(...), reverse=True), then sum(map(...)).' },
-    { tier: 3 as const, text: 'Solution: result = sorted(filter(lambda x: x >= 50, raw_scores), reverse=True)' },
+    {
+      tier: 3 as const,
+      text: 'Solution: result = sorted(filter(lambda x: x >= 50, raw_scores), reverse=True)',
+    },
   ],
-  roomId: 'floor_9_room_01',
-  terminalId: 'terminal_10',
   preDialogKey: 'dialog.ch09_10.pre',
   postDialogKey: 'dialog.ch09_10.post',
   conceptsIntroduced: ['functional_chaining', 'data_pipeline'],

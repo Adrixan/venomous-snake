@@ -19,23 +19,32 @@ export const ch08_06_input_validation_with_errors: Challenge = {
     {
       id: 'tc01',
       description: 'Should validate agent IDs correctly',
-      expectedOutput: 'AGT-001: Valid\ninvalid: Agent ID must start with AGT-\nAGT-1234567: Agent ID must be 7 characters',
+      expectedOutput:
+        'AGT-001: Valid\ninvalid: Agent ID must start with AGT-\nAGT-1234567: Agent ID must be 7 characters',
       hidden: false,
     },
     {
       id: 'tc02',
       description: 'Should raise ValueError for invalid IDs',
-      expectedOutput: 'AGT-001: Valid\ninvalid: Agent ID must start with AGT-\nAGT-1234567: Agent ID must be 7 characters',
+      expectedOutput:
+        'AGT-001: Valid\ninvalid: Agent ID must start with AGT-\nAGT-1234567: Agent ID must be 7 characters',
       hidden: true,
     },
   ],
   hints: [
-    { tier: 1 as const, text: 'Use str.startswith() to check the prefix and len() to check the length.' },
-    { tier: 2 as const, text: 'Raise ValueError with a descriptive message for each validation failure.' },
-    { tier: 3 as const, text: 'Solution: Check startswith("AGT-") first, then len(agent_id) != 7, raising ValueError each time.' },
+    {
+      tier: 1 as const,
+      text: 'Use str.startswith() to check the prefix and len() to check the length.',
+    },
+    {
+      tier: 2 as const,
+      text: 'Raise ValueError with a descriptive message for each validation failure.',
+    },
+    {
+      tier: 3 as const,
+      text: 'Solution: Check startswith("AGT-") first, then len(agent_id) != 7, raising ValueError each time.',
+    },
   ],
-  roomId: 'floor_8_room_01',
-  terminalId: 'terminal_06',
   preDialogKey: 'dialog.ch08_06.pre',
   postDialogKey: 'dialog.ch08_06.post',
   conceptsIntroduced: ['input_validation', 'startswith'],

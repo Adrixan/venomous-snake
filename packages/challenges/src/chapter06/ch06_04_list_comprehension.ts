@@ -51,8 +51,6 @@ export const ch06_04_list_comprehension: Challenge = {
     },
   ],
 
-  roomId: 'floor_6_room_01',
-  terminalId: 'terminal_04',
   preDialogKey: 'dialog.ch06_04.pre',
   postDialogKey: 'dialog.ch06_04.post',
 

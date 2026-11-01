@@ -48,8 +48,6 @@ export const ch04_09_loop_accumulator: Challenge = {
     },
   ],
 
-  roomId: 'floor_4_room_01',
-  terminalId: 'terminal_09',
   preDialogKey: 'dialog.ch04_09.pre',
   postDialogKey: 'dialog.ch04_09.post',
 

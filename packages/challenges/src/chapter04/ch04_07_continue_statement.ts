@@ -48,8 +48,6 @@ export const ch04_07_continue_statement: Challenge = {
     },
   ],
 
-  roomId: 'floor_4_room_01',
-  terminalId: 'terminal_07',
   preDialogKey: 'dialog.ch04_07.pre',
   postDialogKey: 'dialog.ch04_07.post',
 

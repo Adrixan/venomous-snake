@@ -32,10 +32,11 @@ export const ch08_08_error_handling_in_loops: Challenge = {
   hints: [
     { tier: 1 as const, text: 'Wrap the int() conversion in a try/except inside the loop.' },
     { tier: 2 as const, text: 'When ValueError occurs, append 0 instead of the converted value.' },
-    { tier: 3 as const, text: 'Solution: try: results.append(int(code)) except ValueError: results.append(0)' },
+    {
+      tier: 3 as const,
+      text: 'Solution: try: results.append(int(code)) except ValueError: results.append(0)',
+    },
   ],
-  roomId: 'floor_8_room_01',
-  terminalId: 'terminal_08',
   preDialogKey: 'dialog.ch08_08.pre',
   postDialogKey: 'dialog.ch08_08.post',
   conceptsIntroduced: ['error_recovery_loops'],

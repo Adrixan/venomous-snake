@@ -54,8 +54,6 @@ export const ch02_07_string_formatting: Challenge = {
     },
   ],
 
-  roomId: 'floor_2_room_01',
-  terminalId: 'terminal_07',
   preDialogKey: 'dialog.ch02_07.pre',
   postDialogKey: 'dialog.ch02_07.post',
 

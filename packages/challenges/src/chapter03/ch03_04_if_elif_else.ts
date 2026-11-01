@@ -51,8 +51,6 @@ export const ch03_04_if_elif_else: Challenge = {
     },
   ],
 
-  roomId: 'floor_3_room_01',
-  terminalId: 'terminal_04',
   preDialogKey: 'dialog.ch03_04.pre',
   postDialogKey: 'dialog.ch03_04.post',
 

@@ -48,8 +48,6 @@ export const ch05_07_scope: Challenge = {
     },
   ],
 
-  roomId: 'floor_5_room_01',
-  terminalId: 'terminal_07',
   preDialogKey: 'dialog.ch05_07.pre',
   postDialogKey: 'dialog.ch05_07.post',
 
