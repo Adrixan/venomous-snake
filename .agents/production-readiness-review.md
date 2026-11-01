@@ -200,7 +200,7 @@ Ordered by learner harm per unit of effort, and by dependency (later items assum
 The scripts moved to `tools/review/` on 2026-11-01 and were ported to the code of that date (see its `README.md`), so rerunning them reports the current state, not the numbers above.
 
 - `npx nx run-many --target=type-check|lint|test --all`
-- `tools/review/consistency.test.ts`, `closure.test.ts`, `dump.test.ts`: data consistency, completability simulation, challenge export
+- `tools/review/consistency.test.ts`, `dump.test.ts`: data consistency, challenge export. The completability simulation was `closure.test.ts`; `packages/engine/src/__tests__/world.test.ts` now covers it
 - `tools/review/run_py.py`: every solution and scaffold under CPython with the runner's `input()` semantics
 - `tools/review/pyo.test.ts`: `input()` behaviour on the real runtime; at review time the `PyodideInterpreter` wrapper against Pyodide 0.29.3, now `InProcessInterpreter`
 - `tools/review/reach.py` with a bundle metafile (esbuild at review time, now `vite.metafile.config.ts`): module reachability from `main.tsx`

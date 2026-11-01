@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest';
-import { FLOORS, allChallenges, challengeMap } from '@venomous-snake/challenges';
-import { allRooms } from '../rooms/world';
+import { FLOORS, allChallenges, challengeMap, chapters } from '@venomous-snake/challenges';
+import { floorConfigs } from '@venomous-snake/challenge-engine';
+import { START_ROOM_ID, allRooms } from '../rooms/world';
 
 const terminals = allRooms.flatMap((room) =>
   room.terminals.map((terminal) => ({ room, challengeId: terminal.challengeId })),
@@ -53,6 +54,30 @@ describe('world data', () => {
         }
       }
     }
+  });
+
+  it('agrees with the chapter list and the floor progression map', () => {
+    chapters.forEach((chapter, index) => {
+      expect(chapter.floor, `chapter ${chapter.id}`).toBe(FLOORS[index]?.id);
+    });
+    expect(floorConfigs.map((f) => [f.floorNumber, f.challengeIds])).toEqual(
+      FLOORS.map((f) => [f.number, f.challengeIds]),
+    );
+  });
+
+  it('reaches every room from the start when locks are ignored', () => {
+    const byId = new Map(allRooms.map((r) => [r.id, r]));
+    const seen = new Set<string>([START_ROOM_ID]);
+    const queue = [START_ROOM_ID];
+    for (let current = queue.shift(); current !== undefined; current = queue.shift()) {
+      for (const c of byId.get(current)?.connections ?? []) {
+        if (!seen.has(c.targetRoomId)) {
+          seen.add(c.targetRoomId);
+          queue.push(c.targetRoomId);
+        }
+      }
+    }
+    expect(allRooms.filter((r) => !seen.has(r.id)).map((r) => r.id)).toEqual([]);
   });
 
   it('can be completed from the start without deadlocks', () => {

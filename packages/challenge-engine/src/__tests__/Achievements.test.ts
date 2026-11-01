@@ -1,5 +1,36 @@
 import { describe, it, expect } from 'vitest';
-import { AchievementManager } from '../Achievements';
+import { challengeMap, chapters, floorNumberFromId } from '@venomous-snake/challenges';
+import { ACHIEVEMENTS, AchievementManager } from '../Achievements';
+
+/** Placeholder trigger of `first_pickup`: not a floor id, and nothing emits it yet. */
+const ITEM_PICKUP_TRIGGER = '__item_pickup__';
+
+describe('achievement data', () => {
+  it('references existing challenges', () => {
+    for (const { id, trigger } of ACHIEVEMENTS) {
+      if ('challengeId' in trigger) {
+        expect(challengeMap[trigger.challengeId], `${id}: ${trigger.challengeId}`).toBeDefined();
+      }
+    }
+  });
+
+  it('references existing chapters', () => {
+    const chapterIds = new Set(chapters.map((c) => c.id));
+    for (const { id, trigger } of ACHIEVEMENTS) {
+      if (trigger.type === 'chapter_complete') {
+        expect(chapterIds.has(trigger.chapter), `${id}: ${trigger.chapter}`).toBe(true);
+      }
+    }
+  });
+
+  it('references existing floors', () => {
+    for (const { id, trigger } of ACHIEVEMENTS) {
+      if (trigger.type === 'floor_unlock' && trigger.floor !== ITEM_PICKUP_TRIGGER) {
+        expect(floorNumberFromId(trigger.floor), `${id}: ${trigger.floor}`).toBeDefined();
+      }
+    }
+  });
+});
 
 describe('AchievementManager', () => {
   it('unlocks a matching achievement on challenge_complete trigger', () => {
@@ -55,10 +86,16 @@ describe('AchievementManager', () => {
   it('does not re-unlock an already-unlocked achievement', () => {
     const mgr = new AchievementManager();
 
-    const firstCheck = mgr.check({ type: 'challenge_complete', challengeId: 'ch01_01_hello_world' });
+    const firstCheck = mgr.check({
+      type: 'challenge_complete',
+      challengeId: 'ch01_01_hello_world',
+    });
     expect(firstCheck.some((a) => a.id === 'first_hack')).toBe(true);
 
-    const secondCheck = mgr.check({ type: 'challenge_complete', challengeId: 'ch01_01_hello_world' });
+    const secondCheck = mgr.check({
+      type: 'challenge_complete',
+      challengeId: 'ch01_01_hello_world',
+    });
     expect(secondCheck.some((a) => a.id === 'first_hack')).toBe(false);
   });
 
