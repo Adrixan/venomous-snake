@@ -39,5 +39,10 @@ The helper scripts formerly in `.scratch/` now live in `tools/review/` (see Hous
 - Current results: 108/108 completable, 0 CPython solution failures on 3.13 and 3.14, 5 scaffolds pass unmodified on 3.14 (exactly the `known-violations.json` list; 3 on 3.13, because `ch11_01` and `ch11_07` only pass through lazy annotations), floor models agree (0/108 mismatches). Still open from review item P0-6: 101/108 challenges have identical test cases, 103/108 are output-only.
 - `reach.py` counts barrels and type-only files as dead, so its 6,630 lines overstate dead code.
 - Consistency checks are now real tests: every room reachable, chapter list and floor map agree (`world.test.ts`), achievement references exist (`Achievements.test.ts`). Each was shown to fail on deliberately broken data. `tools/review/closure.test.ts` was removed as a duplicate of the existing completability test; `consistency.test.ts` stays as a numeric report.
-- Not asserted because they would fail today: `roomId` on all 108 challenges names rooms that do not exist (`floor_9_room_01` style; the field has no reader). The `first_pickup` achievement cannot unlock: nothing emits its `__item_pickup__` trigger.
-- CI `Test` still has `continue-on-error: true`, so these tests report but do not block a merge.
+- Resolved the same day:
+  - `.serena/` is no longer tracked (files stay local, ignored in the repo too), so `.serena/memories/` left the repo.
+  - CI: lint, test and the audit now block; the audit level rose from critical to moderate.
+  - Audit: overrides for `follow-redirects` (GHSA-mrwp-f3q8-3g9p, high) and `minimatch` (GHSA-g3hv-75wg-m249, moderate). The `minimatch` override crosses a major version because Nx and typescript-eslint still pin 10; drop it once they move.
+  - Removed the `first_pickup` achievement (no emitter, no translations, no item grants in the live game), so 31 achievements remain, and the dead `roomId` and `terminalId` fields of `Challenge`.
+  - `challenge-validator:build` passes through a new `tsconfig.lib.json`.
+- Open: one workspace test run failed once right after the override install; the log was lost. It did not recur in 13 further runs, also after a fresh install and at 200 % CPU load, so the cause is unknown. A CI failure in `Test` should be read with this in mind.
