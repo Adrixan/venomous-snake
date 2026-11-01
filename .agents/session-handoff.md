@@ -20,18 +20,19 @@ Service-worker registration in `apps/game/index.html` is now production-only usi
 
 The helper scripts formerly in `.scratch/` now live in `tools/review/` (see Housekeeping 2026-11-01). `.scratch/challenges.json` was explicitly removed per request.
 
-## Pending decisions for the owner
+## Decisions closed 2026-11-01
 
-- Which dormant features are in scope (credits, cutscenes, tutorial, skill tree, achievements, inventory) versus to be removed.
-- Single narrative source: `engine/narrative/storyContent.ts` or `narrative/dialogs` plus `dialog.json`.
-- Whether a no-WASM fallback (`MiniPythonEvaluator`) has a real requirement.
-- Canonical floor/chapter table (12 floors with chapters 1 and 2 sharing the lobby, or one chapter per floor).
+- No-WASM fallback: closed, `MiniPythonEvaluator` is gone; Python needs WASM.
+- Floor table: closed, `packages/challenges/src/floors.ts` is canonical, one chapter per floor.
+- Narrative: both sources are live. `story.json` narrates rooms through the engine, `narrative/dialogs` plus `dialog.json` drive NPC talks. Earlier notes calling the dialog trees unreachable were wrong: they were bundled, and only their overlay was never mounted.
+- Dormant features: NPC dialogs and items are wired. Credits, cutscenes, tutorial overlay, tutor mode and inventory panel are not rendered and are tree-shaken, so they do not reach players. They stay in the tree: removing them drops product scope, which is the owner's call.
 
 ## Next steps
 
-- Peter: check once in a desktop browser that `pyodide.asm.mjs` on the live site arrives with a JavaScript `Content-Type`. The host decides that, and agent tools must not fetch aufner.org. A wrong type stops Python exactly as it did in the dev server.
-- Peter: a browser that ran the old localhost service worker may need it unregistered once; a fresh browser does not.
 - Peter: `git stash drop` the redundant lint-staged backup `b46af8a` (stash@{0}); the permission classifier refused it twice.
+- Peter: a browser that ran the old localhost service worker may need it unregistered once; a fresh browser does not.
+- Open content work: 37 challenges still pass a printed answer (`hardcode-fails` allowlist in `known-violations.json`). Learners write the data themselves there, so stdout comparison has nothing to vary; they need AST checks such as "uses a for loop", a new engine feature.
+- Dialog German was machine-assisted: the register of casual characters (Echo, Nova, Kai) reads stiff in `Sie`, and source inconsistencies remain (NeoCorp versus Rattlesnake Corp, Sterling's "Mr. Snake"). Worth a native read.
 
 ## Housekeeping 2026-11-01
 - The seven review scripts moved from `.scratch/` to `tools/review/` and pass the hook with real types (no `--no-verify`, no `eslint-disable`, no config change). Usage: `tools/review/README.md`.
@@ -48,3 +49,5 @@ The helper scripts formerly in `.scratch/` now live in `tools/review/` (see Hous
   - `challenge-validator:build` passes through a new `tsconfig.lib.json`.
 - Open: one workspace test run failed once right after the override install; the log was lost. It did not recur in 13 further runs, also after a fresh install and at 200 % CPU load, so the cause is unknown. A CI failure in `Test` should be read with this in mind.
 - Dev server fix: `pyodide.asm.mjs` was served as `application/octet-stream`, so Python could not start under `pnpm dev`. `.mjs` is now in the MIME table. Verified in a browser: worker loads, a runaway loop times out, the interpreter recovers; `browser-smoke.py` now covers this and fails without the fix. Production build checked through `vite preview`, not on the live host.
+- Remaining review items closed: hidden tests of 66 challenges now use other data (a new `hardcode-fails` rule keeps it that way); NPC dialogs render, with an inventory derived from solved challenges; German `dialog.json` is complete; the service worker precaches from a build-generated list, so offline play works after one visit (bump `CACHE_VERSION` when Pyodide changes); a production CSP, an error boundary, and no more orientation lock or duplicate tracebacks.
+- Live host checked: it serves `.mjs` as `text/javascript`.
