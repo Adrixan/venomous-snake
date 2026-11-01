@@ -57,11 +57,64 @@ function selfHostedPyodide(): Plugin {
   };
 }
 
+/** Lists every bundled file so the service worker can precache the whole game on install. */
+function precacheManifest(): Plugin {
+  return {
+    name: 'precache-manifest',
+    apply: 'build',
+    generateBundle: {
+      order: 'post',
+      handler(_options, bundle) {
+        this.emitFile({
+          type: 'asset',
+          fileName: 'precache-manifest.json',
+          source: JSON.stringify(Object.keys(bundle)),
+        });
+      },
+    },
+  };
+}
+
+/**
+ * Production-only policy: the game loads nothing from other origins, and Pyodide needs
+ * `wasm-unsafe-eval`. A `<meta>` tag because shared hosting offers no header control here.
+ */
+const CONTENT_SECURITY_POLICY = [
+  "default-src 'self'",
+  "script-src 'self' 'wasm-unsafe-eval'",
+  "style-src 'self' 'unsafe-inline'",
+  "img-src 'self' data: blob:",
+  "font-src 'self' data:",
+  "connect-src 'self'",
+  "worker-src 'self'",
+  "object-src 'none'",
+  "base-uri 'self'",
+  "form-action 'none'",
+].join('; ');
+
+function contentSecurityPolicy(): Plugin {
+  return {
+    name: 'content-security-policy',
+    apply: 'build',
+    transformIndexHtml() {
+      return [
+        {
+          tag: 'meta',
+          attrs: { 'http-equiv': 'Content-Security-Policy', content: CONTENT_SECURITY_POLICY },
+          injectTo: 'head-prepend',
+        },
+      ];
+    },
+  };
+}
+
 export default defineConfig({
   base: './',
   plugins: [
     react(),
     selfHostedPyodide(),
+    precacheManifest(),
+    contentSecurityPolicy(),
     compression({ algorithm: 'gzip', ext: '.gz', threshold: 1024 }),
     compression({ algorithm: 'brotliCompress', ext: '.br', threshold: 1024 }),
   ],

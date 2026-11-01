@@ -1,4 +1,5 @@
-const CACHE_VERSION = 'v2';
+// Bump when Pyodide changes: its files have no content hash and are served cache-first.
+const CACHE_VERSION = 'v3';
 const STATIC_CACHE = `venomous-snake-static-${CACHE_VERSION}`;
 const DYNAMIC_CACHE = `venomous-snake-dynamic-${CACHE_VERSION}`;
 const PYODIDE_CACHE = `venomous-snake-pyodide-${CACHE_VERSION}`;
@@ -9,11 +10,25 @@ const SHELL_ASSETS = ['./', './index.html', './manifest.json', './sw.js'];
 // Pyodide assets cached on first use
 const PYODIDE_PATTERNS = [/pyodide/, /\.whl$/, /\.wasm$/];
 
+function remember(event, cacheName, response) {
+  if (!response.ok) return;
+  const clone = response.clone();
+  event.waitUntil(caches.open(cacheName).then((cache) => cache.put(event.request, clone)));
+}
+
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches
       .open(STATIC_CACHE)
-      .then((cache) => cache.addAll(SHELL_ASSETS))
+      .then(async (cache) => {
+        await cache.addAll(SHELL_ASSETS);
+        const manifest = await fetch(new URL('precache-manifest.json', self.registration.scope));
+        const files = manifest.ok ? await manifest.json() : [];
+        // One failed file must not cost the player the whole install.
+        await Promise.allSettled(
+          files.map((file) => cache.add(new URL(file, self.registration.scope))),
+        );
+      })
       .then(() => self.skipWaiting()),
   );
 });
@@ -40,8 +55,7 @@ self.addEventListener('fetch', (event) => {
     event.respondWith(
       fetch(event.request)
         .then((response) => {
-          const clone = response.clone();
-          caches.open(STATIC_CACHE).then((cache) => cache.put(event.request, clone));
+          remember(event, STATIC_CACHE, response);
           return response;
         })
         .catch(() => caches.match(new URL('./index.html', self.registration.scope).href)),
@@ -55,10 +69,7 @@ self.addEventListener('fetch', (event) => {
       caches.match(event.request).then((cached) => {
         if (cached) return cached;
         return fetch(event.request).then((response) => {
-          if (response.ok) {
-            const clone = response.clone();
-            caches.open(PYODIDE_CACHE).then((cache) => cache.put(event.request, clone));
-          }
+          remember(event, PYODIDE_CACHE, response);
           return response;
         });
       }),
@@ -67,15 +78,12 @@ self.addEventListener('fetch', (event) => {
   }
 
   // Static assets (JS/CSS with content hash): cache-first
-  if (/\.[A-Za-z0-9_-]{8,}\.(js|css|woff2?)$/.test(url.pathname)) {
+  if (/[.-][A-Za-z0-9_-]{8,}\.(js|css|woff2?)$/.test(url.pathname)) {
     event.respondWith(
       caches.match(event.request).then((cached) => {
         if (cached) return cached;
         return fetch(event.request).then((response) => {
-          if (response.ok) {
-            const clone = response.clone();
-            caches.open(STATIC_CACHE).then((cache) => cache.put(event.request, clone));
-          }
+          remember(event, STATIC_CACHE, response);
           return response;
         });
       }),
@@ -87,10 +95,7 @@ self.addEventListener('fetch', (event) => {
   event.respondWith(
     caches.match(event.request).then((cached) => {
       const fetchPromise = fetch(event.request).then((response) => {
-        if (response.ok) {
-          const clone = response.clone();
-          caches.open(DYNAMIC_CACHE).then((cache) => cache.put(event.request, clone));
-        }
+        remember(event, DYNAMIC_CACHE, response);
         return response;
       });
       return cached || fetchPromise;

@@ -28,6 +28,11 @@
     "resume": "Resume",
     "tutorial": "Tutorial Mode"
   },
+  "error_boundary": {
+    "title": "System failure",
+    "message": "The game hit an unexpected error. Your last autosave is safe.",
+    "reload": "Reload"
+  },
   "new_game": {
     "step_gender": "Choose Your Identity",
     "step_codename": "Enter Your Codename",
