@@ -19,13 +19,13 @@ export const ch12_08_walrus_operator: Challenge = {
   testCases: [
     {
       id: 'tc01',
-      description: 'Should extract errors using regex and loop',
+      description: 'Should extract the error codes from the log lines',
       expectedOutput: "['ERROR 404', 'ERROR 500', 'ERROR 403']\nTotal errors: 3",
       hidden: false,
     },
     {
       id: 'tc02',
-      description: 'Should use re.search with conditional append',
+      description: 'Should keep only the ERROR lines',
       expectedOutput: "['ERROR 404', 'ERROR 500', 'ERROR 403']\nTotal errors: 3",
       hidden: true,
     },

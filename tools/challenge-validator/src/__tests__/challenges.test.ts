@@ -4,6 +4,7 @@ import { createRequire } from 'node:module';
 import { describe, it, expect, beforeAll } from 'vitest';
 import { loadPyodide } from 'pyodide';
 import { allChallenges } from '@venomous-snake/challenges';
+import { i18n } from '@venomous-snake/i18n';
 import { InProcessInterpreter } from '@venomous-snake/python-runtime';
 import type { PyodideLike } from '@venomous-snake/python-runtime';
 import { findUnmetChecks } from '@venomous-snake/challenge-engine';
@@ -12,6 +13,12 @@ import { validateStructure, validateExecution } from '../validate';
 import type { Violation } from '../validate';
 
 const require = createRequire(import.meta.url);
+
+interface GermanDetails {
+  tests: Record<string, string>;
+  hints: Record<string, string>;
+  comments: Record<string, string>;
+}
 
 const ALLOWLIST_PATH = path.resolve(__dirname, '../../known-violations.json');
 const REGENERATE = process.env['UPDATE_KNOWN_VIOLATIONS'] === '1';
@@ -45,6 +52,37 @@ describe('challenge definitions', () => {
 
   it('satisfy the structural rules', () => {
     checkAgainstAllowlist(validateStructure(allChallenges), 'structure');
+  });
+});
+
+describe('German challenge text', () => {
+  const german = (id: string): GermanDetails =>
+    i18n.getResource('de', 'challenges', id.slice(0, 7)) as GermanDetails;
+  /** Program text a translation must keep: quoted output, calls and blanks. */
+  const codeTokens = (text: string): string[] =>
+    [...text.matchAll(/"[^"]*"|\b[A-Za-z_][\w.]*\(|_{3,}/g)].map(([token]) => token);
+
+  it('covers every test, hint and starter code comment', () => {
+    for (const c of allChallenges) {
+      const de = german(c.id);
+      expect(Object.keys(de.tests).sort(), c.id).toEqual(c.testCases.map((t) => t.id).sort());
+      expect(Object.keys(de.hints).sort(), c.id).toEqual(c.hints.map((h) => String(h.tier)).sort());
+      for (const comment of Object.keys(de.comments)) {
+        expect(c.scaffoldedCode, `${c.id}: ${comment}`).toContain(comment);
+        expect(de.comments[comment], `${c.id}: ${comment}`).toMatch(/^#/);
+      }
+    }
+  });
+
+  it('keeps the code inside hints unchanged', () => {
+    for (const c of allChallenges) {
+      for (const hint of c.hints) {
+        const translated = german(c.id).hints[String(hint.tier)] ?? '';
+        for (const token of codeTokens(hint.text)) {
+          expect(translated, `${c.id} hint ${String(hint.tier)}`).toContain(token);
+        }
+      }
+    }
   });
 });
 
