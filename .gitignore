@@ -31,3 +31,6 @@ temp/
 
 # Local scratch and tools/review reports
 .scratch/
+
+# Local Serena state
+.serena/
