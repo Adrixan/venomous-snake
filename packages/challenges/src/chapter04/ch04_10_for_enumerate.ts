@@ -48,8 +48,6 @@ export const ch04_10_for_enumerate: Challenge = {
     },
   ],
 
-  roomId: 'floor_4_room_01',
-  terminalId: 'terminal_10',
   preDialogKey: 'dialog.ch04_10.pre',
   postDialogKey: 'dialog.ch04_10.post',
 

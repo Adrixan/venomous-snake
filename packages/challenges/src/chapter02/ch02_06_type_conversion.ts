@@ -53,8 +53,6 @@ export const ch02_06_type_conversion: Challenge = {
     },
   ],
 
-  roomId: 'floor_2_room_01',
-  terminalId: 'terminal_06',
   preDialogKey: 'dialog.ch02_06.pre',
   postDialogKey: 'dialog.ch02_06.post',
 

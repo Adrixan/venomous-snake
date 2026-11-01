@@ -34,12 +34,19 @@ export const ch10_08_class_static_methods: Challenge = {
     },
   ],
   hints: [
-    { tier: 1 as const, text: 'Class variables are shared across all instances. Access with ClassName._count.' },
-    { tier: 2 as const, text: 'A regular method can read class variables via the class name. Standalone functions work like static methods.' },
-    { tier: 3 as const, text: 'Solution: return Mission._count in get_count, return name.startswith("OP-") in validate_mission_name' },
+    {
+      tier: 1 as const,
+      text: 'Class variables are shared across all instances. Access with ClassName._count.',
+    },
+    {
+      tier: 2 as const,
+      text: 'A regular method can read class variables via the class name. Standalone functions work like static methods.',
+    },
+    {
+      tier: 3 as const,
+      text: 'Solution: return Mission._count in get_count, return name.startswith("OP-") in validate_mission_name',
+    },
   ],
-  roomId: 'floor_10_room_01',
-  terminalId: 'terminal_08',
   preDialogKey: 'dialog.ch10_08.pre',
   postDialogKey: 'dialog.ch10_08.post',
   conceptsIntroduced: ['class_variables', 'utility_functions'],

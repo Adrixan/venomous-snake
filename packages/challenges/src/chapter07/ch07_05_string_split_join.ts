@@ -19,23 +19,30 @@ export const ch07_05_string_split_join: Challenge = {
     {
       id: 'tc01',
       description: 'Should split and rejoin message',
-      expectedOutput: '[\'ALPHA\', \'BRAVO\', \'CHARLIE\', \'DELTA\']\nALPHA | BRAVO | CHARLIE | DELTA',
+      expectedOutput: "['ALPHA', 'BRAVO', 'CHARLIE', 'DELTA']\nALPHA | BRAVO | CHARLIE | DELTA",
       hidden: false,
     },
     {
       id: 'tc02',
       description: 'Should use correct delimiters',
-      expectedOutput: '[\'ALPHA\', \'BRAVO\', \'CHARLIE\', \'DELTA\']\nALPHA | BRAVO | CHARLIE | DELTA',
+      expectedOutput: "['ALPHA', 'BRAVO', 'CHARLIE', 'DELTA']\nALPHA | BRAVO | CHARLIE | DELTA",
       hidden: true,
     },
   ],
   hints: [
-    { tier: 1 as const, text: 'Use .split(":") to split on colons, and " | ".join() to rejoin with pipes.' },
-    { tier: 2 as const, text: 'The .join() method is called on the separator string: separator.join(list).' },
-    { tier: 3 as const, text: 'Solution: parts = message.split(":") and result = " | ".join(parts)' },
+    {
+      tier: 1 as const,
+      text: 'Use .split(":") to split on colons, and " | ".join() to rejoin with pipes.',
+    },
+    {
+      tier: 2 as const,
+      text: 'The .join() method is called on the separator string: separator.join(list).',
+    },
+    {
+      tier: 3 as const,
+      text: 'Solution: parts = message.split(":") and result = " | ".join(parts)',
+    },
   ],
-  roomId: 'floor_7_room_01',
-  terminalId: 'terminal_05',
   preDialogKey: 'dialog.ch07_05.pre',
   postDialogKey: 'dialog.ch07_05.post',
   conceptsIntroduced: ['string_join', 'delimiter_processing'],

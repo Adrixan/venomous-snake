@@ -48,8 +48,6 @@ export const ch04_06_break_statement: Challenge = {
     },
   ],
 
-  roomId: 'floor_4_room_01',
-  terminalId: 'terminal_06',
   preDialogKey: 'dialog.ch04_06.pre',
   postDialogKey: 'dialog.ch04_06.post',
 

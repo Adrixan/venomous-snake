@@ -51,8 +51,6 @@ export const ch06_09_sets: Challenge = {
     },
   ],
 
-  roomId: 'floor_6_room_01',
-  terminalId: 'terminal_09',
   preDialogKey: 'dialog.ch06_09.pre',
   postDialogKey: 'dialog.ch06_09.post',
 

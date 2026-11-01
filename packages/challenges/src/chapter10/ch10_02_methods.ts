@@ -34,12 +34,19 @@ export const ch10_02_methods: Challenge = {
     },
   ],
   hints: [
-    { tier: 1 as const, text: 'Methods are functions inside a class. The first parameter is always self.' },
-    { tier: 2 as const, text: 'Use return to send a value back. Use f-strings for dynamic strings.' },
-    { tier: 3 as const, text: 'Solution: return "HALT. Identify yourself." and return f"Scanning {target}... threat detected."' },
+    {
+      tier: 1 as const,
+      text: 'Methods are functions inside a class. The first parameter is always self.',
+    },
+    {
+      tier: 2 as const,
+      text: 'Use return to send a value back. Use f-strings for dynamic strings.',
+    },
+    {
+      tier: 3 as const,
+      text: 'Solution: return "HALT. Identify yourself." and return f"Scanning {target}... threat detected."',
+    },
   ],
-  roomId: 'floor_10_room_01',
-  terminalId: 'terminal_02',
   preDialogKey: 'dialog.ch10_02.pre',
   postDialogKey: 'dialog.ch10_02.post',
   conceptsIntroduced: ['instance_methods', 'self_parameter'],

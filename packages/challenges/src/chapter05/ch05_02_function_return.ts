@@ -48,8 +48,6 @@ export const ch05_02_function_return: Challenge = {
     },
   ],
 
-  roomId: 'floor_5_room_01',
-  terminalId: 'terminal_02',
   preDialogKey: 'dialog.ch05_02.pre',
   postDialogKey: 'dialog.ch05_02.post',
 

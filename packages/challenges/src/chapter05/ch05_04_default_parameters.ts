@@ -48,8 +48,6 @@ export const ch05_04_default_parameters: Challenge = {
     },
   ],
 
-  roomId: 'floor_5_room_01',
-  terminalId: 'terminal_04',
   preDialogKey: 'dialog.ch05_04.pre',
   postDialogKey: 'dialog.ch05_04.post',
 

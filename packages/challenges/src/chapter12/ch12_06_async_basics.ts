@@ -24,23 +24,32 @@ export const ch12_06_async_basics: Challenge = {
     {
       id: 'tc01',
       description: 'Should run callback-based operations',
-      expectedOutput: 'Intel on NexusCorp: 42 vulnerabilities found\nIntel on VaultX: 42 vulnerabilities found\nIntel on ShadowNet: 42 vulnerabilities found',
+      expectedOutput:
+        'Intel on NexusCorp: 42 vulnerabilities found\nIntel on VaultX: 42 vulnerabilities found\nIntel on ShadowNet: 42 vulnerabilities found',
       hidden: false,
     },
     {
       id: 'tc02',
       description: 'Should use callbacks and batch processing',
-      expectedOutput: 'Intel on NexusCorp: 42 vulnerabilities found\nIntel on VaultX: 42 vulnerabilities found\nIntel on ShadowNet: 42 vulnerabilities found',
+      expectedOutput:
+        'Intel on NexusCorp: 42 vulnerabilities found\nIntel on VaultX: 42 vulnerabilities found\nIntel on ShadowNet: 42 vulnerabilities found',
       hidden: true,
     },
   ],
   hints: [
-    { tier: 1 as const, text: 'Callbacks are functions passed as arguments. The receiving function calls them when work is done.' },
-    { tier: 2 as const, text: 'Pass process_result as the callback to fetch_intel. It will be called with the result.' },
-    { tier: 3 as const, text: 'Solution: fetch_intel(target, callback) calls callback(result). Pass process_result as the callback.' },
+    {
+      tier: 1 as const,
+      text: 'Callbacks are functions passed as arguments. The receiving function calls them when work is done.',
+    },
+    {
+      tier: 2 as const,
+      text: 'Pass process_result as the callback to fetch_intel. It will be called with the result.',
+    },
+    {
+      tier: 3 as const,
+      text: 'Solution: fetch_intel(target, callback) calls callback(result). Pass process_result as the callback.',
+    },
   ],
-  roomId: 'floor_12_room_01',
-  terminalId: 'terminal_06',
   preDialogKey: 'dialog.ch12_06.pre',
   postDialogKey: 'dialog.ch12_06.post',
   conceptsIntroduced: ['callbacks', 'function_as_argument', 'batch_processing'],

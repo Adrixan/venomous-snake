@@ -2,9 +2,6 @@ import { describe, it, expect } from 'vitest';
 import { challengeMap, chapters, floorNumberFromId } from '@venomous-snake/challenges';
 import { ACHIEVEMENTS, AchievementManager } from '../Achievements';
 
-/** Placeholder trigger of `first_pickup`: not a floor id, and nothing emits it yet. */
-const ITEM_PICKUP_TRIGGER = '__item_pickup__';
-
 describe('achievement data', () => {
   it('references existing challenges', () => {
     for (const { id, trigger } of ACHIEVEMENTS) {
@@ -25,7 +22,7 @@ describe('achievement data', () => {
 
   it('references existing floors', () => {
     for (const { id, trigger } of ACHIEVEMENTS) {
-      if (trigger.type === 'floor_unlock' && trigger.floor !== ITEM_PICKUP_TRIGGER) {
+      if (trigger.type === 'floor_unlock') {
         expect(floorNumberFromId(trigger.floor), `${id}: ${trigger.floor}`).toBeDefined();
       }
     }

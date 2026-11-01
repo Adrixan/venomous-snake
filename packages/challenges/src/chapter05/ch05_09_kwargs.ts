@@ -47,8 +47,6 @@ export const ch05_09_kwargs: Challenge = {
     },
   ],
 
-  roomId: 'floor_5_room_01',
-  terminalId: 'terminal_09',
   preDialogKey: 'dialog.ch05_09.pre',
   postDialogKey: 'dialog.ch05_09.post',
 

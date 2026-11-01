@@ -51,8 +51,6 @@ export const ch06_08_nested_dicts: Challenge = {
     },
   ],
 
-  roomId: 'floor_6_room_01',
-  terminalId: 'terminal_08',
   preDialogKey: 'dialog.ch06_08.pre',
   postDialogKey: 'dialog.ch06_08.post',
 

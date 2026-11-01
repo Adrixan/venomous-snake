@@ -51,8 +51,6 @@ export const ch01_07_multiple_prints: Challenge = {
     },
   ],
 
-  roomId: 'lobby_terminal_room',
-  terminalId: 'terminal_07',
   preDialogKey: 'dialog.ch01_07.pre',
   postDialogKey: 'dialog.ch01_07.post',
 

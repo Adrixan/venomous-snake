@@ -50,8 +50,6 @@ export const ch04_05_while_condition: Challenge = {
     },
   ],
 
-  roomId: 'floor_4_room_01',
-  terminalId: 'terminal_05',
   preDialogKey: 'dialog.ch04_05.pre',
   postDialogKey: 'dialog.ch04_05.post',
 

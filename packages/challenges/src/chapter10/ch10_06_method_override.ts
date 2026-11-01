@@ -19,23 +19,32 @@ export const ch10_06_method_override: Challenge = {
     {
       id: 'tc01',
       description: 'Should override alert in subclasses',
-      expectedOutput: 'Alert: Unknown entity detected\nAlert: Unknown entity detected — PRIORITY THREAT\n...',
+      expectedOutput:
+        'Alert: Unknown entity detected\nAlert: Unknown entity detected — PRIORITY THREAT\n...',
       hidden: false,
     },
     {
       id: 'tc02',
       description: 'Should use super() and complete override',
-      expectedOutput: 'Alert: Unknown entity detected\nAlert: Unknown entity detected — PRIORITY THREAT\n...',
+      expectedOutput:
+        'Alert: Unknown entity detected\nAlert: Unknown entity detected — PRIORITY THREAT\n...',
       hidden: true,
     },
   ],
   hints: [
-    { tier: 1 as const, text: 'Override a method by defining the same method name in the subclass.' },
-    { tier: 2 as const, text: 'Use super().alert() to call the parent version. StealthBot completely replaces the behavior.' },
-    { tier: 3 as const, text: 'Solution: EliteBot uses super().alert() + extra text. StealthBot returns "..."' },
+    {
+      tier: 1 as const,
+      text: 'Override a method by defining the same method name in the subclass.',
+    },
+    {
+      tier: 2 as const,
+      text: 'Use super().alert() to call the parent version. StealthBot completely replaces the behavior.',
+    },
+    {
+      tier: 3 as const,
+      text: 'Solution: EliteBot uses super().alert() + extra text. StealthBot returns "..."',
+    },
   ],
-  roomId: 'floor_10_room_01',
-  terminalId: 'terminal_06',
   preDialogKey: 'dialog.ch10_06.pre',
   postDialogKey: 'dialog.ch10_06.post',
   conceptsIntroduced: ['method_overriding', 'polymorphic_behavior'],

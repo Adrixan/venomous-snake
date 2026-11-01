@@ -51,8 +51,6 @@ export const ch06_07_dict_methods: Challenge = {
     },
   ],
 
-  roomId: 'floor_6_room_01',
-  terminalId: 'terminal_07',
   preDialogKey: 'dialog.ch06_07.pre',
   postDialogKey: 'dialog.ch06_07.post',
 

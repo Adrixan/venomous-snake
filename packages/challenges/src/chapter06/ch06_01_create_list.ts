@@ -50,8 +50,6 @@ export const ch06_01_create_list: Challenge = {
     },
   ],
 
-  roomId: 'floor_6_room_01',
-  terminalId: 'terminal_01',
   preDialogKey: 'dialog.ch06_01.pre',
   postDialogKey: 'dialog.ch06_01.post',
 

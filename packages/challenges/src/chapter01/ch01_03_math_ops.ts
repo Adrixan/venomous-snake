@@ -63,8 +63,6 @@ export const ch01_03_math_ops: Challenge = {
     },
   ],
 
-  roomId: 'lobby_terminal_room',
-  terminalId: 'terminal_03',
   preDialogKey: 'dialog.ch01_03.pre',
   postDialogKey: 'dialog.ch01_03.post',
 

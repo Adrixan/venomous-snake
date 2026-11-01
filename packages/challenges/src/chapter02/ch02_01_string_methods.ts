@@ -58,8 +58,6 @@ export const ch02_01_string_methods: Challenge = {
     },
   ],
 
-  roomId: 'floor_2_room_01',
-  terminalId: 'terminal_01',
   preDialogKey: 'dialog.ch02_01.pre',
   postDialogKey: 'dialog.ch02_01.post',
 

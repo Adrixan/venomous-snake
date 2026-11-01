@@ -35,12 +35,19 @@ export const ch12_07_pattern_matching: Challenge = {
     },
   ],
   hints: [
-    { tier: 1 as const, text: 'Use isinstance() to check types and dict.get() to safely access keys.' },
-    { tier: 2 as const, text: 'if/elif chains with dict lookups can handle structured data dispatch like match/case.' },
-    { tier: 3 as const, text: 'Solution: level >= 8 for critical, "status" for status check, "Unknown signal" as default' },
+    {
+      tier: 1 as const,
+      text: 'Use isinstance() to check types and dict.get() to safely access keys.',
+    },
+    {
+      tier: 2 as const,
+      text: 'if/elif chains with dict lookups can handle structured data dispatch like match/case.',
+    },
+    {
+      tier: 3 as const,
+      text: 'Solution: level >= 8 for critical, "status" for status check, "Unknown signal" as default',
+    },
   ],
-  roomId: 'floor_12_room_01',
-  terminalId: 'terminal_07',
   preDialogKey: 'dialog.ch12_07.pre',
   postDialogKey: 'dialog.ch12_07.post',
   conceptsIntroduced: ['type_dispatch', 'dict_based_dispatch'],

@@ -156,7 +156,7 @@ Decision needed before deleting: which of the dormant features are planned (cred
 - Tooling drift: `vitest ^2.1.9` with `@vitest/coverage-v8 ^4.0.18`; `@nx/vite:test` executor deprecated (removed in Nx 23); `vite.config.ts:49` and the chunk-size comment still reference Phaser.
 - Security headers and CSP: none. A CSP needs `script-src 'self' 'wasm-unsafe-eval'` for Pyodide and, after P0-4, no third-party origin. Learner code can `import js` and reach the DOM; acceptable for self-XSS on a single-user client, but document it and never load shared content into the same origin.
 - Bundle: main chunk 765 kB (221 kB gzip), of which i18n JSON is about 204 kB and challenges about 180 kB. Lazy-load the locale not in use and the challenge chapters per floor.
-- Noise: `console.warn` in audio and dialog code, `.serena/project.yml` modified in git status (`.scratch/` was untracked at review time and is ignored since 2026-11-01).
+- Noise: `console.warn` in audio and dialog code, `.scratch/` and `.serena/project.yml` untracked or modified in git status at review time; both folders are ignored since 2026-11-01.
 
 ## Recommended order and rationale
 

@@ -51,8 +51,6 @@ export const ch03_07_boolean_variables: Challenge = {
     },
   ],
 
-  roomId: 'floor_3_room_01',
-  terminalId: 'terminal_07',
   preDialogKey: 'dialog.ch03_07.pre',
   postDialogKey: 'dialog.ch03_07.post',
 

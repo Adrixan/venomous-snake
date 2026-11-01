@@ -30,12 +30,13 @@ export const ch11_03_assert_statements: Challenge = {
     },
   ],
   hints: [
-    { tier: 1 as const, text: 'assert condition, "message" raises AssertionError if condition is False.' },
+    {
+      tier: 1 as const,
+      text: 'assert condition, "message" raises AssertionError if condition is False.',
+    },
     { tier: 2 as const, text: 'units > 0 checks positive, total >= 0 checks non-negative.' },
     { tier: 3 as const, text: 'Solution: assert units > 0, "Unit count must be positive"' },
   ],
-  roomId: 'floor_11_room_01',
-  terminalId: 'terminal_03',
   preDialogKey: 'dialog.ch11_03.pre',
   postDialogKey: 'dialog.ch11_03.post',
   conceptsIntroduced: ['assert_statement', 'AssertionError'],

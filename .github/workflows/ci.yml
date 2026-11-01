@@ -56,19 +56,16 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Security audit
-        run: pnpm audit --audit-level=critical
-        continue-on-error: true
+        run: pnpm audit --audit-level=moderate
 
       - name: Lint
         run: npx nx run-many --target=lint --all --parallel=3
-        continue-on-error: true
 
       - name: Type check
         run: npx nx run-many --target=type-check --all --parallel=3
 
       - name: Test
         run: npx nx run-many --target=test --all --parallel=3
-        continue-on-error: true
 
       - name: Build
         run: npx nx build game

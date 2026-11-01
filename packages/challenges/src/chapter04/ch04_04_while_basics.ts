@@ -48,8 +48,6 @@ export const ch04_04_while_basics: Challenge = {
     },
   ],
 
-  roomId: 'floor_4_room_01',
-  terminalId: 'terminal_04',
   preDialogKey: 'dialog.ch04_04.pre',
   postDialogKey: 'dialog.ch04_04.post',
 

@@ -13,9 +13,7 @@ export const ch12_01_generators: Challenge = {
   tags: ['generators', 'yield', 'iteration'],
   scaffoldedCode:
     'def signal_generator(start, count):\n    for i in range(count):\n        ___ start + i * 7\n\ngen = signal_generator(100, 5)\nfor signal in gen:\n    print(signal)',
-  editableRegions: [
-    { startLine: 3, endLine: 3, placeholder: 'yield' },
-  ],
+  editableRegions: [{ startLine: 3, endLine: 3, placeholder: 'yield' }],
   solutionCode:
     'def signal_generator(start, count):\n    for i in range(count):\n        yield start + i * 7\n\ngen = signal_generator(100, 5)\nfor signal in gen:\n    print(signal)',
   testCases: [
@@ -33,12 +31,13 @@ export const ch12_01_generators: Challenge = {
     },
   ],
   hints: [
-    { tier: 1 as const, text: 'yield pauses the function and returns a value. The function resumes on next iteration.' },
+    {
+      tier: 1 as const,
+      text: 'yield pauses the function and returns a value. The function resumes on next iteration.',
+    },
     { tier: 2 as const, text: 'Replace return with yield to make a function into a generator.' },
     { tier: 3 as const, text: 'Solution: yield start + i * 7' },
   ],
-  roomId: 'floor_12_room_01',
-  terminalId: 'terminal_01',
   preDialogKey: 'dialog.ch12_01.pre',
   postDialogKey: 'dialog.ch12_01.post',
   conceptsIntroduced: ['generators', 'yield_keyword'],

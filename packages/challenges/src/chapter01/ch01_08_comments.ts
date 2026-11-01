@@ -52,8 +52,6 @@ export const ch01_08_comments: Challenge = {
     },
   ],
 
-  roomId: 'lobby_terminal_room',
-  terminalId: 'terminal_08',
   preDialogKey: 'dialog.ch01_08.pre',
   postDialogKey: 'dialog.ch01_08.post',
 

@@ -9,7 +9,7 @@
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/tools/challenge-validator",
-        "tsConfig": "tools/challenge-validator/tsconfig.json",
+        "tsConfig": "tools/challenge-validator/tsconfig.lib.json",
         "main": "tools/challenge-validator/src/index.ts"
       }
     },

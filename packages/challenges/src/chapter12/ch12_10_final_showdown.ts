@@ -21,28 +21,43 @@ export const ch12_10_final_showdown: Challenge = {
     {
       id: 'tc01',
       description: 'Should find and display critical vulnerabilities',
-      expectedOutput: 'Critical vulnerabilities: 2\nVULN-001 (severity 9): Remote code execution in auth module\nVULN-003 (severity 8): SQL injection in search endpoint',
+      expectedOutput:
+        'Critical vulnerabilities: 2\nVULN-001 (severity 9): Remote code execution in auth module\nVULN-003 (severity 8): SQL injection in search endpoint',
       hidden: false,
     },
     {
       id: 'tc02',
       description: 'Should combine regex, classes, sorting, and filtering',
-      expectedOutput: 'Critical vulnerabilities: 2\nVULN-001 (severity 9): Remote code execution in auth module\nVULN-003 (severity 8): SQL injection in search endpoint',
+      expectedOutput:
+        'Critical vulnerabilities: 2\nVULN-001 (severity 9): Remote code execution in auth module\nVULN-003 (severity 8): SQL injection in search endpoint',
       hidden: true,
     },
   ],
 
   hints: [
-    { tier: 1 as const, text: 'Use startswith() and string index/slice to parse log entries. Use a class for structured data.' },
-    { tier: 2 as const, text: 'Filter with list comprehension, sort with sorted() and a lambda key.' },
-    { tier: 3 as const, text: 'Solution: check startswith("VULN-"), use index("["), index("]"), index(": ") to extract fields.' },
+    {
+      tier: 1 as const,
+      text: 'Use startswith() and string index/slice to parse log entries. Use a class for structured data.',
+    },
+    {
+      tier: 2 as const,
+      text: 'Filter with list comprehension, sort with sorted() and a lambda key.',
+    },
+    {
+      tier: 3 as const,
+      text: 'Solution: check startswith("VULN-"), use index("["), index("]"), index(": ") to extract fields.',
+    },
   ],
 
-  roomId: 'floor_12_room_01',
-  terminalId: 'terminal_10',
   preDialogKey: 'dialog.ch12_10.pre',
   postDialogKey: 'dialog.ch12_10.post',
 
   conceptsIntroduced: ['full_integration', 'vulnerability_analysis'],
-  conceptsReinforced: ['class_definition', 'regular_expressions', 'list_comprehension', 'lambda', 'sorting'],
+  conceptsReinforced: [
+    'class_definition',
+    'regular_expressions',
+    'list_comprehension',
+    'lambda',
+    'sorting',
+  ],
 };

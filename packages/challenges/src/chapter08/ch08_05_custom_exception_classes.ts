@@ -30,12 +30,19 @@ export const ch08_05_custom_exception_classes: Challenge = {
     },
   ],
   hints: [
-    { tier: 1 as const, text: 'Custom exceptions inherit from Exception. Use class MyError(Exception):' },
-    { tier: 2 as const, text: 'Call super().__init__(message) to set the error message. Store extra data as attributes.' },
-    { tier: 3 as const, text: 'Solution: class MissionError(Exception): with super().__init__(message) and self.mission_id = mission_id' },
+    {
+      tier: 1 as const,
+      text: 'Custom exceptions inherit from Exception. Use class MyError(Exception):',
+    },
+    {
+      tier: 2 as const,
+      text: 'Call super().__init__(message) to set the error message. Store extra data as attributes.',
+    },
+    {
+      tier: 3 as const,
+      text: 'Solution: class MissionError(Exception): with super().__init__(message) and self.mission_id = mission_id',
+    },
   ],
-  roomId: 'floor_8_room_01',
-  terminalId: 'terminal_05',
   preDialogKey: 'dialog.ch08_05.pre',
   postDialogKey: 'dialog.ch08_05.post',
   conceptsIntroduced: ['custom_exceptions', 'exception_inheritance'],

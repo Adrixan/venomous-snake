@@ -30,12 +30,19 @@ export const ch08_02_multiple_except: Challenge = {
     },
   ],
   hints: [
-    { tier: 1 as const, text: 'You can have multiple except blocks to catch different error types.' },
-    { tier: 2 as const, text: 'KeyError is raised when accessing a missing dictionary key. TypeError when the type is wrong.' },
-    { tier: 3 as const, text: 'Solution: except KeyError: and except TypeError: as separate blocks' },
+    {
+      tier: 1 as const,
+      text: 'You can have multiple except blocks to catch different error types.',
+    },
+    {
+      tier: 2 as const,
+      text: 'KeyError is raised when accessing a missing dictionary key. TypeError when the type is wrong.',
+    },
+    {
+      tier: 3 as const,
+      text: 'Solution: except KeyError: and except TypeError: as separate blocks',
+    },
   ],
-  roomId: 'floor_8_room_01',
-  terminalId: 'terminal_02',
   preDialogKey: 'dialog.ch08_02.pre',
   postDialogKey: 'dialog.ch08_02.post',
   conceptsIntroduced: ['multiple_except', 'KeyError', 'TypeError'],

@@ -407,8 +407,6 @@ export interface Challenge {
   hints: ChallengeHint[];
   errorPatterns?: ErrorPattern[];
 
-  roomId?: string;
-  terminalId?: string;
   preDialogKey?: string;
   postDialogKey?: string;
 

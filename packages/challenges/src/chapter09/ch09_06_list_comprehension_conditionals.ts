@@ -11,8 +11,7 @@ export const ch09_06_list_comprehension_conditionals: Challenge = {
   prerequisites: ['ch09_05_filter_function'],
   xpReward: 190,
   tags: ['list-comprehension', 'conditionals', 'filtering'],
-  scaffoldedCode:
-    'data = range(1, 21)\nresult = [x for x in data if ___]\nprint(result)',
+  scaffoldedCode: 'data = range(1, 21)\nresult = [x for x in data if ___]\nprint(result)',
   solutionCode:
     'data = range(1, 21)\nresult = [x for x in data if x % 2 == 0 and x % 3 == 0]\nprint(result)',
   testCases: [
@@ -30,12 +29,13 @@ export const ch09_06_list_comprehension_conditionals: Challenge = {
     },
   ],
   hints: [
-    { tier: 1 as const, text: 'Use the modulo operator % to check divisibility. x % 2 == 0 means even.' },
+    {
+      tier: 1 as const,
+      text: 'Use the modulo operator % to check divisibility. x % 2 == 0 means even.',
+    },
     { tier: 2 as const, text: 'Combine conditions with and: x % 2 == 0 and x % 3 == 0.' },
     { tier: 3 as const, text: 'Solution: [x for x in data if x % 2 == 0 and x % 3 == 0]' },
   ],
-  roomId: 'floor_9_room_01',
-  terminalId: 'terminal_06',
   preDialogKey: 'dialog.ch09_06.pre',
   postDialogKey: 'dialog.ch09_06.post',
   conceptsIntroduced: ['conditional_comprehension', 'compound_conditions'],

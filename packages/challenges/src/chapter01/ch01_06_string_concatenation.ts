@@ -48,8 +48,6 @@ export const ch01_06_string_concatenation: Challenge = {
     },
   ],
 
-  roomId: 'lobby_terminal_room',
-  terminalId: 'terminal_06',
   preDialogKey: 'dialog.ch01_06.pre',
   postDialogKey: 'dialog.ch01_06.post',
 

@@ -34,12 +34,16 @@ export const ch11_01_type_hints: Challenge = {
     },
   ],
   hints: [
-    { tier: 1 as const, text: 'Type hints annotate parameters and return types: def func(x: int) -> str:' },
-    { tier: 2 as const, text: 'Use int, float, str as type annotations. -> indicates return type.' },
+    {
+      tier: 1 as const,
+      text: 'Type hints annotate parameters and return types: def func(x: int) -> str:',
+    },
+    {
+      tier: 2 as const,
+      text: 'Use int, float, str as type annotations. -> indicates return type.',
+    },
     { tier: 3 as const, text: 'Solution: def calculate_xp(base: int, multiplier: float) -> int:' },
   ],
-  roomId: 'floor_11_room_01',
-  terminalId: 'terminal_01',
   preDialogKey: 'dialog.ch11_01.pre',
   postDialogKey: 'dialog.ch11_01.post',
   conceptsIntroduced: ['type_hints', 'return_type_annotation'],

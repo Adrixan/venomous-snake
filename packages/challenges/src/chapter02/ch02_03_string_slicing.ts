@@ -58,8 +58,6 @@ export const ch02_03_string_slicing: Challenge = {
     },
   ],
 
-  roomId: 'floor_2_room_01',
-  terminalId: 'terminal_03',
   preDialogKey: 'dialog.ch02_03.pre',
   postDialogKey: 'dialog.ch02_03.post',
 
