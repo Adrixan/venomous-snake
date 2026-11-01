@@ -30,9 +30,10 @@ export const ch12_06_async_basics: Challenge = {
     },
     {
       id: 'tc02',
-      description: 'Should use callbacks and batch processing',
+      description: 'Should still work when the data changes',
+      append: "fetch_intel('OfyvtDpsq', process_result)",
       expectedOutput:
-        'Intel on NexusCorp: 42 vulnerabilities found\nIntel on VaultX: 42 vulnerabilities found\nIntel on ShadowNet: 42 vulnerabilities found',
+        'Intel on NexusCorp: 42 vulnerabilities found\nIntel on VaultX: 42 vulnerabilities found\nIntel on ShadowNet: 42 vulnerabilities found\nIntel on OfyvtDpsq: 42 vulnerabilities found\n',
       hidden: true,
     },
   ],

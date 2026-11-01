@@ -44,7 +44,7 @@ export function validateStructure(challenges: Challenge[]): Violation[] {
   return violations;
 }
 
-/** Rules that execute code: the solution must pass and the scaffold must not. */
+/** Rules that execute code: the solution must pass; the scaffold and a printed answer must not. */
 export async function validateExecution(
   challenges: Challenge[],
   interpreter: PythonInterpreter,
@@ -60,6 +60,20 @@ export async function validateExecution(
           challengeId: c.id,
           rule: 'solution-passes',
           detail: `${r.testCase.id}: ${r.error ?? 'failed'}`.slice(0, 300),
+        });
+      }
+    }
+    const visible = c.testCases.find((t) => !t.hidden);
+    if (visible !== undefined) {
+      const printed = await runner.runChallenge(
+        c,
+        `print(${JSON.stringify(visible.expectedOutput.trim())})`,
+      );
+      if (printed.allPassed) {
+        violations.push({
+          challengeId: c.id,
+          rule: 'hardcode-fails',
+          detail: 'printing the expected output passes every test',
         });
       }
     }

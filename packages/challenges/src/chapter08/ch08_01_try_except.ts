@@ -25,8 +25,9 @@ export const ch08_01_try_except: Challenge = {
     },
     {
       id: 'tc02',
-      description: 'Should catch ValueError for non-numeric input',
-      expectedOutput: '42\n-1',
+      description: 'Should still work when the data changes',
+      append: "print(parse_code('53'))",
+      expectedOutput: '42\n-1\n53\n',
       hidden: true,
     },
   ],

@@ -24,8 +24,9 @@ export const ch09_04_map_function: Challenge = {
     },
     {
       id: 'tc02',
-      description: 'Should apply lambda to each element',
-      expectedOutput: '[10, 17, 24, 31, 38]',
+      description: 'Should still work when the data changes',
+      setup: 'codes = [4, 5, 6, 7, 8]',
+      expectedOutput: '[31, 38, 45, 52, 59]\n',
       hidden: true,
     },
   ],

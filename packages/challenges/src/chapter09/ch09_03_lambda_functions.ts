@@ -24,8 +24,9 @@ export const ch09_03_lambda_functions: Challenge = {
     },
     {
       id: 'tc02',
-      description: 'Should use lambda as sort key',
-      expectedOutput: 'Snake: 10\nWolf: 9\nViper: 8\nGhost: 6',
+      description: 'Should still work when the data changes',
+      setup: "agents = [('Wjqfs', 11), ('Toblf', 13), ('Hiptu', 9), ('Xpmg', 12)]",
+      expectedOutput: 'Toblf: 13\nXpmg: 12\nWjqfs: 11\nHiptu: 9\n',
       hidden: true,
     },
   ],

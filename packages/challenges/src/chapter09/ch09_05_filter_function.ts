@@ -25,8 +25,9 @@ export const ch09_05_filter_function: Challenge = {
     },
     {
       id: 'tc02',
-      description: 'Should use filter with lambda',
-      expectedOutput: '[15, 42, 100, 23]',
+      description: 'Should still work when the data changes',
+      setup: 'signals = [3, 18, 6, 45, 10, 103, 3, 26]',
+      expectedOutput: '[18, 45, 103, 26]\n',
       hidden: true,
     },
   ],

@@ -28,8 +28,9 @@ export const ch07_06_with_statement: Challenge = {
     },
     {
       id: 'tc02',
-      description: 'Should use try/finally for resource management',
-      expectedOutput: 'Secure transmission received\nDecrypting payload...\nChannel closed',
+      description: 'Should still work when the data changes',
+      setup: "data = 'Tfdvsf usbotnjttjpo sfdfjwfe\\nEfdszqujoh qbzmpbe...'",
+      expectedOutput: 'Tfdvsf usbotnjttjpo sfdfjwfe\nEfdszqujoh qbzmpbe...\nChannel closed\n',
       hidden: true,
     },
   ],

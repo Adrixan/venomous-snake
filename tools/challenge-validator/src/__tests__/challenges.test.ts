@@ -62,6 +62,13 @@ describe('challenge execution on real CPython (Pyodide)', () => {
     expect(violations).toEqual([]);
   });
 
+  it('printing the expected output does not pass', async () => {
+    const violations = (await validateExecution(allChallenges, interpreter)).filter(
+      (v) => v.rule === 'hardcode-fails',
+    );
+    checkAgainstAllowlist(violations, 'hardcode');
+  });
+
   it('starter code does not already pass', async () => {
     const violations = (await validateExecution(allChallenges, interpreter)).filter(
       (v) => v.rule === 'scaffold-fails',

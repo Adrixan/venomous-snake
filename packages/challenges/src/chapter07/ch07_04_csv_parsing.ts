@@ -25,8 +25,9 @@ export const ch07_04_csv_parsing: Challenge = {
     },
     {
       id: 'tc02',
-      description: 'Should use split to parse CSV data',
-      expectedOutput: 'snake\nviper\ncobra\npython',
+      description: 'Should still work when the data changes',
+      setup: "csv_data = 'toblf,wjqfs,dpcsb,qzuipo'",
+      expectedOutput: 'toblf\nwjqfs\ndpcsb\nqzuipo\n',
       hidden: true,
     },
   ],

@@ -30,8 +30,9 @@ export const ch06_09_sets: Challenge = {
     },
     {
       id: 'tc02',
-      description: 'Should use union and intersection operations',
-      expectedOutput: '5\n{2318}',
+      description: 'Should still work when the data changes',
+      setup: 'scan1 = {1045, 2321, 850, 1045}',
+      expectedOutput: '6\nset()\n',
       hidden: true,
     },
   ],

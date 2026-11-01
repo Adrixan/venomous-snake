@@ -24,8 +24,9 @@ export const ch10_04_str_repr: Challenge = {
     },
     {
       id: 'tc02',
-      description: 'Should define __str__ and __repr__',
-      expectedOutput: "SecurityBot: VANGUARD (Level 7)\nSecurityBot('VANGUARD', 7)",
+      description: 'Should still work when the data changes',
+      setup: "bot = SecurityBot('WBOHVBSE', 10)",
+      expectedOutput: "SecurityBot: WBOHVBSE (Level 10)\nSecurityBot('WBOHVBSE', 10)\n",
       hidden: true,
     },
   ],

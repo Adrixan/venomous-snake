@@ -30,8 +30,9 @@ export const ch03_03_comparison_operators: Challenge = {
     },
     {
       id: 'tc02',
-      description: 'Should correctly evaluate all comparison operators',
-      expectedOutput: 'False\nTrue\nFalse\nFalse',
+      description: 'Should still work when the data changes',
+      setup: 'my_level = 6',
+      expectedOutput: 'True\nFalse\nFalse\nTrue\n',
       hidden: true,
     },
   ],

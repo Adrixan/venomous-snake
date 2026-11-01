@@ -27,8 +27,10 @@ export const ch04_06_break_statement: Challenge = {
     },
     {
       id: 'tc02',
-      description: 'Should not print names after TARGET_ALPHA',
-      expectedOutput: 'Not a match: Martinez\nNot a match: Chen\nTarget found: TARGET_ALPHA',
+      description: 'Should still work when the data changes',
+      setup: "targets = ['Nbsujofa', 'Difo', 'UBSHFU_BMQIB', 'Wpmlpw', 'Sfzft']",
+      expectedOutput:
+        'Not a match: Nbsujofa\nNot a match: Difo\nNot a match: UBSHFU_BMQIB\nNot a match: Wpmlpw\nNot a match: Sfzft\n',
       hidden: true,
     },
   ],

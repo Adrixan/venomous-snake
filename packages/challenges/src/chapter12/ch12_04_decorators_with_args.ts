@@ -24,8 +24,9 @@ export const ch12_04_decorators_with_args: Challenge = {
     },
     {
       id: 'tc02',
-      description: 'Should use parameterized decorator',
-      expectedOutput: 'Vault accessed\nACCESS DENIED: Need level 8\nNone',
+      description: 'Should still work when the data changes',
+      append: 'print(access_vault(8))',
+      expectedOutput: 'Vault accessed\nACCESS DENIED: Need level 8\nNone\nVault accessed\n',
       hidden: true,
     },
   ],

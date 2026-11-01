@@ -4,7 +4,6 @@
   "description": "A cyberpunk noir 2D RPG that teaches Python programming through hacking challenges",
   "start_url": ".",
   "display": "standalone",
-  "orientation": "landscape",
   "theme_color": "#0a0a0f",
   "background_color": "#0a0a0f",
   "categories": ["education", "games"],

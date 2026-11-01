@@ -27,8 +27,10 @@ export const ch05_04_default_parameters: Challenge = {
     },
     {
       id: 'tc02',
-      description: 'Should default to "low" when no level is given',
-      expectedOutput: '[CRITICAL] Intruder detected\n[LOW] Routine check',
+      description: 'Should still work when the data changes',
+      append: "print(create_alert('Jousvefs efufdufe', 'dsjujdbm'))",
+      expectedOutput:
+        '[CRITICAL] Intruder detected\n[LOW] Routine check\n[DSJUJDBM] Jousvefs efufdufe\n',
       hidden: true,
     },
   ],

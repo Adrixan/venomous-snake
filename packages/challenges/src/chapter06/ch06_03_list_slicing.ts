@@ -30,8 +30,9 @@ export const ch06_03_list_slicing: Challenge = {
     },
     {
       id: 'tc02',
-      description: 'Should get the first 2 messages',
-      expectedOutput: "['msg3', 'msg4', 'msg5']\n['msg1', 'msg2']",
+      description: 'Should still work when the data changes',
+      setup: "messages = ['nth2', 'nth3', 'nth4', 'nth5', 'nth6']",
+      expectedOutput: "['nth4', 'nth5', 'nth6']\n['nth2', 'nth3']\n",
       hidden: true,
     },
   ],

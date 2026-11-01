@@ -24,8 +24,10 @@ export const ch11_03_assert_statements: Challenge = {
     },
     {
       id: 'tc02',
-      description: 'Should raise AssertionError for invalid input',
-      expectedOutput: '25.0\n0.0\nAssertionError: Unit count must be positive',
+      description: 'Should still work when the data changes',
+      append: 'print(divide_resources(103, 7))',
+      expectedOutput:
+        '25.0\n0.0\nAssertionError: Unit count must be positive\n14.714285714285714\n',
       hidden: true,
     },
   ],

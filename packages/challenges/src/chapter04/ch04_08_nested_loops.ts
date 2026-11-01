@@ -27,8 +27,9 @@ export const ch04_08_nested_loops: Challenge = {
     },
     {
       id: 'tc02',
-      description: 'Should iterate rows then columns in nested order',
-      expectedOutput: 'A1\nA2\nA3\nB1\nB2\nB3\nC1\nC2\nC3',
+      description: 'Should still work when the data changes',
+      setup: "rows = ['B', 'C', 'D']",
+      expectedOutput: 'B1\nB2\nB3\nC1\nC2\nC3\nD1\nD2\nD3\n',
       hidden: true,
     },
   ],

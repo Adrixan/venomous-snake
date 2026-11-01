@@ -29,8 +29,10 @@ export const ch12_07_pattern_matching: Challenge = {
     },
     {
       id: 'tc02',
-      description: 'Should use if/elif with isinstance and dict lookups',
-      expectedOutput: 'CRITICAL ALERT: Level 9\nAlert: Level 3\nStatus: All clear',
+      description: 'Should still work when the data changes',
+      append: "print(classify_signal({'type': 'bmfsu', 'level': 12}))",
+      expectedOutput:
+        'CRITICAL ALERT: Level 9\nAlert: Level 3\nStatus: All clear\nUnknown signal\n',
       hidden: true,
     },
   ],

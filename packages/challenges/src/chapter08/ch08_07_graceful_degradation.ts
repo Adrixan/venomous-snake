@@ -24,8 +24,9 @@ export const ch08_07_graceful_degradation: Challenge = {
     },
     {
       id: 'tc02',
-      description: 'Should use default when key is missing',
-      expectedOutput: 'Nexus Tower\nUNKNOWN\nGhost',
+      description: 'Should still work when the data changes',
+      append: "print(get_intel(db, 'mpdbujpo'))",
+      expectedOutput: 'Nexus Tower\nUNKNOWN\nGhost\nUNKNOWN\n',
       hidden: true,
     },
   ],

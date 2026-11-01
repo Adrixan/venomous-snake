@@ -28,6 +28,11 @@
     "resume": "Fortsetzen",
     "tutorial": "Tutorial-Modus"
   },
+  "error_boundary": {
+    "title": "Systemausfall",
+    "message": "Im Spiel ist ein unerwarteter Fehler aufgetreten. Dein letzter automatischer Spielstand ist sicher.",
+    "reload": "Neu laden"
+  },
   "new_game": {
     "step_gender": "Wähle deine Identität",
     "step_codename": "Gib deinen Codenamen ein",

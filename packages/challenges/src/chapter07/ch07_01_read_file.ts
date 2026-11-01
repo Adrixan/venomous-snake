@@ -25,8 +25,9 @@ export const ch07_01_read_file: Challenge = {
     },
     {
       id: 'tc02',
-      description: 'Should use io.StringIO to read data',
-      expectedOutput: 'CLASSIFIED: Operation Cobra\nTarget: Nexus Tower\nStatus: Active',
+      description: 'Should still work when the data changes',
+      setup: "file_data = 'DMBTTJGJFE: Pqfsbujpo Dpcsb\\nUbshfu: Ofyvt Upxfs\\nTubuvt: Bdujwf'",
+      expectedOutput: 'DMBTTJGJFE: Pqfsbujpo Dpcsb\nUbshfu: Ofyvt Upxfs\nTubuvt: Bdujwf\n',
       hidden: true,
     },
   ],

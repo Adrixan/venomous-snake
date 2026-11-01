@@ -24,8 +24,9 @@ export const ch10_05_inheritance: Challenge = {
     },
     {
       id: 'tc02',
-      description: 'Should use super() to call parent methods',
-      expectedOutput: 'Name: Alex, Age: 30, Codename: VIPER',
+      description: 'Should still work when the data changes',
+      setup: "agent = Agent('Bmfy', 33, 'WJQFS')",
+      expectedOutput: 'Name: Bmfy, Age: 33, Codename: WJQFS\n',
       hidden: true,
     },
   ],

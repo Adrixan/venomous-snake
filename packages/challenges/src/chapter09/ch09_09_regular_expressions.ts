@@ -24,8 +24,9 @@ export const ch09_09_regular_expressions: Challenge = {
     },
     {
       id: 'tc02',
-      description: 'Should use regex patterns with re.findall',
-      expectedOutput: "['AGT-007', 'AGT-012']\n['14:32', '15:47']",
+      description: 'Should still work when the data changes',
+      setup: "log = 'FSSPS: Bhfou BHU-118 csfbdife bu 25:43. Bhfou BHU-123 ftdbqfe bu 26:58.'",
+      expectedOutput: "[]\n['25:43', '26:58']\n",
       hidden: true,
     },
   ],

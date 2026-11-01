@@ -24,8 +24,10 @@ export const ch08_03_try_except_else_finally: Challenge = {
     },
     {
       id: 'tc02',
-      description: 'Should use try/except/else/finally pattern',
-      expectedOutput: 'Signal decoded: 42\nTransmission complete',
+      description: 'Should still work when the data changes',
+      append: "decode_signal('32')",
+      expectedOutput:
+        'Signal decoded: 42\nTransmission complete\nSignal decoded: 64\nTransmission complete\n',
       hidden: true,
     },
   ],

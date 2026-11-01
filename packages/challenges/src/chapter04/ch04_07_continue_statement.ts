@@ -27,8 +27,10 @@ export const ch04_07_continue_statement: Challenge = {
     },
     {
       id: 'tc02',
-      description: 'Should use continue to skip disabled cameras',
-      expectedOutput: 'Camera 1: ACTIVE\nCamera 2: ACTIVE\nCamera 4: ACTIVE\nCamera 5: ACTIVE',
+      description: 'Should still work when the data changes',
+      setup: 'cameras = [4, 5, 6, 7, 8]',
+      expectedOutput:
+        'Camera 4: ACTIVE\nCamera 5: ACTIVE\nCamera 6: ACTIVE\nCamera 7: ACTIVE\nCamera 8: ACTIVE\n',
       hidden: true,
     },
   ],

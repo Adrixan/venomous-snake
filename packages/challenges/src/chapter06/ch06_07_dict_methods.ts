@@ -30,8 +30,9 @@ export const ch06_07_dict_methods: Challenge = {
     },
     {
       id: 'tc02',
-      description: 'Should add and update dictionary entries',
-      expectedOutput: 'Ghost\n5\ncompromised',
+      description: 'Should still work when the data changes',
+      setup: "profile = {'name': 'Hiptu', 'status': 'bdujwf'}",
+      expectedOutput: 'Hiptu\n5\ncompromised\n',
       hidden: true,
     },
   ],

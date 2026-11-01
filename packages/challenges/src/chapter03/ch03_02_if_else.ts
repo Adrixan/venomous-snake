@@ -27,8 +27,9 @@ export const ch03_02_if_else: Challenge = {
     },
     {
       id: 'tc02',
-      description: 'Should handle the boolean condition correctly',
-      expectedOutput: 'Door is LOCKED',
+      description: 'Should still work when the data changes',
+      setup: 'door_locked = False',
+      expectedOutput: 'Door is OPEN\n',
       hidden: true,
     },
   ],

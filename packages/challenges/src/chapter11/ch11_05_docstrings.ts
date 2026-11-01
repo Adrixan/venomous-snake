@@ -31,8 +31,10 @@ export const ch11_05_docstrings: Challenge = {
     },
     {
       id: 'tc02',
-      description: 'Should handle different threat levels',
-      expectedOutput: 'CRITICAL: Deploy all units to Server Room\nLOW: Log Lobby incident',
+      description: 'Should still work when the data changes',
+      append: "print(analyze_threat(12, 'Tfswfs Sppn'))",
+      expectedOutput:
+        'CRITICAL: Deploy all units to Server Room\nLOW: Log Lobby incident\nCRITICAL: Deploy all units to Tfswfs Sppn\n',
       hidden: true,
     },
   ],

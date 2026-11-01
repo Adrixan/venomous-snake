@@ -24,8 +24,9 @@ export const ch11_04_writing_simple_tests: Challenge = {
     },
     {
       id: 'tc02',
-      description: 'Should handle Caesar cipher correctly',
-      expectedOutput: 'URYYB\nTrue',
+      description: 'Should still work when the data changes',
+      append: "print(encrypt_shift('IFMMP', 16))",
+      expectedOutput: 'URYYB\nTrue\nYVCCF\n',
       hidden: true,
     },
   ],

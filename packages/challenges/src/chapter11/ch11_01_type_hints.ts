@@ -28,8 +28,9 @@ export const ch11_01_type_hints: Challenge = {
     },
     {
       id: 'tc02',
-      description: 'Should use type annotations',
-      expectedOutput: '150\nAGENT-VIPER',
+      description: 'Should still work when the data changes',
+      append: 'print(calculate_xp(103, 3.0))',
+      expectedOutput: '150\nAGENT-VIPER\n309\n',
       hidden: true,
     },
   ],

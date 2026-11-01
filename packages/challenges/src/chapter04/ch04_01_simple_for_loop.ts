@@ -28,8 +28,9 @@ export const ch04_01_simple_for_loop: Challenge = {
     },
     {
       id: 'tc02',
-      description: 'Should iterate over all list items',
-      expectedOutput: 'Ramirez\nChen\nVolkov',
+      description: 'Should still work when the data changes',
+      setup: "guards = ['Sbnjsfa', 'Difo', 'Wpmlpw']",
+      expectedOutput: 'Sbnjsfa\nDifo\nWpmlpw\n',
       hidden: true,
     },
   ],

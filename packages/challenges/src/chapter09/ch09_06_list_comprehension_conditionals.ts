@@ -23,8 +23,9 @@ export const ch09_06_list_comprehension_conditionals: Challenge = {
     },
     {
       id: 'tc02',
-      description: 'Should use compound condition in comprehension',
-      expectedOutput: '[6, 12, 18]',
+      description: 'Should still work when the data changes',
+      setup: 'data = range(5, 25)',
+      expectedOutput: '[6, 12, 18, 24]\n',
       hidden: true,
     },
   ],

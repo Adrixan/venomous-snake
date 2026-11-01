@@ -1,6 +1,6 @@
 # Venomous Snake 🐍
 
-A **text-based cyberpunk RPG** that teaches Python programming from scratch. Players explore a noir hacking world across 12 floors, solving 118 coding challenges that progress from `print("Hello, World!")` to advanced topics like decorators, generators, and file I/O.
+A **text-based cyberpunk RPG** that teaches Python programming from scratch. Players explore a noir hacking world across 12 floors, solving 108 coding challenges that progress from `print("Hello, World!")` to advanced topics like decorators, generators, and file I/O.
 
 ## Features
 
@@ -95,7 +95,7 @@ venomous-snake/
 ├── packages/
 │   ├── engine/                # Game engine: rooms, navigation, actions, NPC logic
 │   ├── ui/                    # React components: StoryTerminal, HackingTerminal
-│   ├── challenges/            # 118 challenge definitions (12 chapters)
+│   ├── challenges/            # 108 challenge definitions (12 chapters)
 │   ├── challenge-engine/      # ChallengeRunner: executes & validates student code
 │   ├── python-runtime/        # Pyodide interpreter + MiniPythonEvaluator fallback
 │   ├── narrative/             # Dialog engine & dialog trees

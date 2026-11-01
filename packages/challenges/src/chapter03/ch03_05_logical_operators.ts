@@ -29,8 +29,9 @@ export const ch03_05_logical_operators: Challenge = {
     },
     {
       id: 'tc02',
-      description: 'Should use and/or/not logical operators',
-      expectedOutput: 'ACCESS GRANTED',
+      description: 'Should still work when the data changes',
+      setup: 'has_badge = False',
+      expectedOutput: 'ACCESS DENIED\n',
       hidden: true,
     },
   ],

@@ -27,8 +27,9 @@ export const ch01_06_string_concatenation: Challenge = {
     },
     {
       id: 'tc02',
-      description: 'Should concatenate with a space between names',
-      expectedOutput: 'Aleksa Volkov',
+      description: 'Should still work when the data changes',
+      setup: "first_name = 'Bmfltb'",
+      expectedOutput: 'Bmfltb Volkov\n',
       hidden: true,
     },
   ],

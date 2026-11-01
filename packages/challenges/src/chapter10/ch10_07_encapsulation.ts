@@ -24,8 +24,9 @@ export const ch10_07_encapsulation: Challenge = {
     },
     {
       id: 'tc02',
-      description: 'Should protect private attributes',
-      expectedOutput: 'Agent Snake, Clearance: 5\n9',
+      description: 'Should still work when the data changes',
+      setup: "a = Agent('Toblf', 8)",
+      expectedOutput: 'Agent Toblf, Clearance: 8\n9\n',
       hidden: true,
     },
   ],

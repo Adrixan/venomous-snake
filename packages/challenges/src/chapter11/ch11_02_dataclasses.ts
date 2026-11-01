@@ -30,9 +30,10 @@ export const ch11_02_dataclasses: Challenge = {
     },
     {
       id: 'tc02',
-      description: 'Should implement __init__, __repr__, and __eq__',
+      description: 'Should still work when the data changes',
+      setup: "a1 = Agent('Toblf', 13)",
       expectedOutput:
-        "Agent(name='Snake', level=10, active=True)\nAgent(name='Ghost', level=6, active=False)\nTrue",
+        "Agent(name='Toblf', level=13, active=True)\nAgent(name='Ghost', level=6, active=False)\nTrue\n",
       hidden: true,
     },
   ],
