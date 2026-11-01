@@ -57,7 +57,11 @@ The helper scripts formerly in `.scratch/` now live in `tools/review/` (see Hous
 - Wired: intro, floor, boss and victory cutscenes, credits, New Game+ (keeps XP, skills, achievements), tutorial overlay (rewritten for the text UI, restart in Settings), tutor mode, inventory panel with pickup toasts, skill tree with real effects (`speed_bonus`, `hint_boost`, XP is spent), floor banner and progress bar, CIPHER dialog and error explanations (new `cipher` i18n namespace), language switcher, Python loading screen, focus trap, screen reader announcements.
 - Saves now really hold skills, spent XP, achievements, seen cutscenes, play time and the New Game+ cycle.
 - Live bugs fixed on the way: XP never reached the store for any player, a second key handler in `StatusBar` paused the game on Esc, the tutorial bubble left the screen, `InventoryPanel` used the wrong namespace, `ch01_02` described a variable the test did not use.
-- Challenge hints are still English in German mode: `ChallengeHint.text` is not in `challengeContent`.
 - `tools/review/browser-smoke.py` drives the full opening; rerun it after UI changes.
 - Released as `20261101101744-252581` (source `95ead96`). Live browser check in German with a desktop `User-Agent`: cutscene, tutorial, skills, NPC dialog, CIPHER error text, XP and level, a hard-coded answer rejected, inventory, service worker, offline resume. No console, CSP or HTTP errors.
-- Still English in German mode: challenge hints, test descriptions, `MISSION OBJECTIVES`, `Tests failed`, `FLOOR 0` in the room header.
+
+## Full German 2026-11-01
+- Everything a player perceives is German in German mode, including aria labels and starter code comments. Stays English on purpose: Python tracebacks and all program output, because tests compare it. `apps/game/public/manifest.json` and the meta description in `index.html` stay English.
+- English hints, test descriptions and comments live in the challenge data; German in `packages/i18n/src/locales/de/challengeDetails.json`. Engine packages carry keys (`HintResult.key`, `TestResult.failure`, `SaveSystemError.code`), the UI words them. Adding a challenge fails the validator until its German exists.
+- Comments are the keys of a map, so read them raw with `getResource`: i18next splits keys on `:` and `.`.
+- The main chunk is 948 KB with both languages. Lazy-loading the inactive language would reduce it.
