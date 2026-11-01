@@ -27,6 +27,7 @@ import type { SaveData } from '@venomous-snake/save-system';
 
 import {
   EventBus,
+  ITEMS,
   TextAdventureEngine,
   getRoomDisplayName,
   getFirstRoomOfFloor,
@@ -34,7 +35,7 @@ import {
 import type { GameAction, NarrativeEntry } from '@venomous-snake/shared-types';
 import type { CurriculumProgress } from '@venomous-snake/shared-types';
 import type { GameController } from './GameController';
-import { useReducedMotion } from '@venomous-snake/ui';
+import { DialogOverlay, useDialog, useReducedMotion } from '@venomous-snake/ui';
 
 const FLOOR_NUM_TO_ID: Record<number, string> = Object.fromEntries(
   FLOORS.map((floor) => [floor.number, floor.id]),
@@ -85,6 +86,13 @@ export function App(): React.JSX.Element {
   const terminalOpen = useGameStore((state) => state.overlay.terminalOpen);
   const openTerminal = useGameStore((state) => state.openTerminal);
   const completedChallenges = useGameStore((state) => state.completedChallenges);
+  // Items are rewards for solved challenges, so the inventory follows from progress.
+  const inventory = useMemo(
+    () =>
+      ITEMS.filter((item) => completedChallenges.includes(item.grantedBy)).map((item) => item.id),
+    [completedChallenges],
+  );
+  const dialog = useDialog({ inventory });
   const xp = useGameStore((state) => state.xp);
   const level = useGameStore((state) => state.level);
   const playerName = useGameStore((state) => state.playerName);
@@ -315,7 +323,7 @@ export function App(): React.JSX.Element {
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (gamePhase !== 'playing') return;
-      if (terminalOpen || saveModalMode !== null) return;
+      if (terminalOpen || saveModalMode !== null || dialog.isOpen) return;
 
       switch (e.key) {
         case 'Escape':
@@ -337,7 +345,15 @@ export function App(): React.JSX.Element {
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [gamePhase, activePanel, terminalOpen, saveModalMode, setGamePhase, setActivePanel]);
+  }, [
+    gamePhase,
+    activePanel,
+    terminalOpen,
+    saveModalMode,
+    dialog.isOpen,
+    setGamePhase,
+    setActivePanel,
+  ]);
 
   const handleNewGame = useCallback(() => {
     setMenuView('newgame');
@@ -624,7 +640,10 @@ export function App(): React.JSX.Element {
             <StoryTerminal
               currentRoom={roomInfo}
               inputEnabled={
-                gamePhase === 'playing' && activePanel === 'none' && saveModalMode === null
+                gamePhase === 'playing' &&
+                activePanel === 'none' &&
+                saveModalMode === null &&
+                !dialog.isOpen
               }
               narrativeLog={narrativeLog}
               availableActions={availableActions}
@@ -639,6 +658,8 @@ export function App(): React.JSX.Element {
               totalChallenges={TOTAL_CHALLENGES}
             />
           )}
+
+          <DialogOverlay {...dialog} />
 
           {/* Terminal overlay for challenges */}
           {terminalOpen && <TerminalOverlay />}
