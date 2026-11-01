@@ -24,8 +24,9 @@ export const ch10_03_init_constructor: Challenge = {
     },
     {
       id: 'tc02',
-      description: 'Should use __init__ constructor',
-      expectedOutput: 'SENTINEL | Threat Level: 5\nGUARDIAN | Threat Level: 8',
+      description: 'Should still work when the data changes',
+      setup: "bot1 = SecurityBot('TFOUJOFM', 8)",
+      expectedOutput: 'TFOUJOFM | Threat Level: 8\nGUARDIAN | Threat Level: 8\n',
       hidden: true,
     },
   ],

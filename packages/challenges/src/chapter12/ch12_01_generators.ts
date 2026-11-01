@@ -25,8 +25,9 @@ export const ch12_01_generators: Challenge = {
     },
     {
       id: 'tc02',
-      description: 'Should use yield keyword',
-      expectedOutput: '100\n107\n114\n121\n128',
+      description: 'Should still work when the data changes',
+      setup: 'gen = signal_generator(103, 8)',
+      expectedOutput: '103\n110\n117\n124\n131\n138\n145\n152\n',
       hidden: true,
     },
   ],

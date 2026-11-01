@@ -33,8 +33,9 @@ export const ch02_04_fstrings_basics: Challenge = {
     },
     {
       id: 'tc02',
-      description: 'Should include all three variables in the output',
-      expectedOutput: 'OPERATIVE: Aleksa | RANK: Field Operative | CLEARANCE: 4',
+      description: 'Should still work when the data changes',
+      setup: "name = 'Bmfltb'",
+      expectedOutput: 'OPERATIVE: Bmfltb | RANK: Field Operative | CLEARANCE: 4\n',
       hidden: true,
     },
   ],

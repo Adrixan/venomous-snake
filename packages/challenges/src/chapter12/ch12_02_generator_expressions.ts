@@ -28,8 +28,9 @@ export const ch12_02_generator_expressions: Challenge = {
     },
     {
       id: 'tc02',
-      description: 'Should use yield for lazy evaluation',
-      expectedOutput: '[4, 16, 36, 64, 100]\n55',
+      description: 'Should still work when the data changes',
+      append: 'print(sum(squares_up_to(8)))',
+      expectedOutput: '[4, 16, 36, 64, 100]\n55\n204\n',
       hidden: true,
     },
   ],

@@ -28,8 +28,9 @@ export const ch10_08_class_static_methods: Challenge = {
     },
     {
       id: 'tc02',
-      description: 'Should track instance count with class variable',
-      expectedOutput: 'True\n2',
+      description: 'Should still work when the data changes',
+      append: "print(validate_mission_name('PQ-118'))",
+      expectedOutput: 'True\n2\nFalse\n',
       hidden: true,
     },
   ],

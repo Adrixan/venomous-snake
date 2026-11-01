@@ -24,8 +24,9 @@ export const ch11_07_list_typing: Challenge = {
     },
     {
       id: 'tc02',
-      description: 'Should use generic types correctly',
-      expectedOutput: "{'Snake': 5, 'Viper': 5, 'Ghost': 5}\nViper\nNone",
+      description: 'Should still work when the data changes',
+      append: "print(find_agent(team, 'wjqfs'))",
+      expectedOutput: "{'Snake': 5, 'Viper': 5, 'Ghost': 5}\nViper\nNone\nNone\n",
       hidden: true,
     },
   ],

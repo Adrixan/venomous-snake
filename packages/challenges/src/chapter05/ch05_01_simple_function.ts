@@ -28,8 +28,9 @@ export const ch05_01_simple_function: Challenge = {
     },
     {
       id: 'tc02',
-      description: 'Should return a formatted greeting string',
-      expectedOutput: 'Welcome, Agent Viper!',
+      description: 'Should still work when the data changes',
+      append: "print(greet('Wjqfs'))",
+      expectedOutput: 'Welcome, Agent Viper!\nWelcome, Agent Wjqfs!\n',
       hidden: true,
     },
   ],

@@ -29,9 +29,10 @@ export const ch12_05_context_managers: Challenge = {
     },
     {
       id: 'tc02',
-      description: 'Should use try/finally for guaranteed cleanup',
+      description: 'Should still work when the data changes',
+      setup: "ch = SecureChannel('BMQIB')",
       expectedOutput:
-        'Opening secure channel: ALPHA\nTransmitting: Operation details\nClosing secure channel: ALPHA',
+        'Opening secure channel: BMQIB\nTransmitting: Operation details\nClosing secure channel: BMQIB\n',
       hidden: true,
     },
   ],

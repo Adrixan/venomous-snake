@@ -29,8 +29,9 @@ export const ch05_03_multiple_parameters: Challenge = {
     },
     {
       id: 'tc02',
-      description: 'Should use all three parameters in the output',
-      expectedOutput: '[Infiltration] Aleksa \u2014 Operative',
+      description: 'Should still work when the data changes',
+      append: "print(format_id_card('Bmfltb', 'Pqfsbujwf', 'Jogjmusbujpo'))",
+      expectedOutput: '[Infiltration] Aleksa — Operative\n[Jogjmusbujpo] Bmfltb — Pqfsbujwf\n',
       hidden: true,
     },
   ],

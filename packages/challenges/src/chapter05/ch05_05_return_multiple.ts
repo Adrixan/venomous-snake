@@ -27,8 +27,9 @@ export const ch05_05_return_multiple: Challenge = {
     },
     {
       id: 'tc02',
-      description: 'Should return two values from the function',
-      expectedOutput: 'X: 14, Y: 27',
+      description: 'Should still work when the data changes',
+      append: "print(decode_coordinates('25,38'))",
+      expectedOutput: 'X: 14, Y: 27\n(25, 38)\n',
       hidden: true,
     },
   ],

@@ -31,8 +31,9 @@ export const ch01_08_comments: Challenge = {
     },
     {
       id: 'tc02',
-      description: 'Comments should not affect output',
-      expectedOutput: 'Clearance: 5 | Dept: Infiltration',
+      description: 'Should still work when the data changes',
+      setup: 'clearance_level = 8',
+      expectedOutput: 'Clearance: 8 | Dept: Infiltration\n',
       hidden: true,
     },
   ],

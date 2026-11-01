@@ -34,9 +34,10 @@ export const ch09_08_string_formatting_advanced: Challenge = {
     },
     {
       id: 'tc02',
-      description: 'Should use alignment format specs',
+      description: 'Should still work when the data changes',
+      setup: "agents = [('Toblf', 13, 9853), ('Wjqfs', 11, 7203), ('Hiptu', 9, 5103)]",
       expectedOutput:
-        'Name       Level       XP\n-------------------------\nSnake         10     9850\nViper          8     7200\nGhost          6     5100',
+        'Name       Level       XP\n-------------------------\nToblf         13     9853\nWjqfs         11     7203\nHiptu          9     5103\n',
       hidden: true,
     },
   ],

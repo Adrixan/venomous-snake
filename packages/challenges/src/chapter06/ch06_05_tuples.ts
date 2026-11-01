@@ -27,8 +27,9 @@ export const ch06_05_tuples: Challenge = {
     },
     {
       id: 'tc02',
-      description: 'Should unpack the server_room tuple',
-      expectedOutput: 'Server room: (14, 27)\nVault: (3, 9)\nCoordinates: x=14, y=27',
+      description: 'Should still work when the data changes',
+      setup: 'server_room = (17, 30)',
+      expectedOutput: 'Server room: (17, 30)\nVault: (3, 9)\nCoordinates: x=17, y=30\n',
       hidden: true,
     },
   ],

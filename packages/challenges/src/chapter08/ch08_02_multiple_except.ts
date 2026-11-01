@@ -24,8 +24,9 @@ export const ch08_02_multiple_except: Challenge = {
     },
     {
       id: 'tc02',
-      description: 'Should catch KeyError for missing keys',
-      expectedOutput: 'Viper\nKEY_NOT_FOUND',
+      description: 'Should still work when the data changes',
+      append: "print(safe_access(info, 'bhfou'))",
+      expectedOutput: 'Viper\nKEY_NOT_FOUND\nKEY_NOT_FOUND\n',
       hidden: true,
     },
   ],

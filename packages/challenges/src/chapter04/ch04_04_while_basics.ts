@@ -27,8 +27,9 @@ export const ch04_04_while_basics: Challenge = {
     },
     {
       id: 'tc02',
-      description: 'Should use while loop with countdown condition',
-      expectedOutput: '5\n4\n3\n2\n1\nLAUNCH!',
+      description: 'Should still work when the data changes',
+      setup: 'countdown = 8',
+      expectedOutput: '8\n7\n6\n5\n4\n3\n2\n1\nLAUNCH!\n',
       hidden: true,
     },
   ],

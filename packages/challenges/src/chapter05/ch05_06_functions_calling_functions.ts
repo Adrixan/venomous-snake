@@ -29,8 +29,9 @@ export const ch05_06_functions_calling_functions: Challenge = {
     },
     {
       id: 'tc02',
-      description: 'Should call helper functions for verification',
-      expectedOutput: 'ACCESS GRANTED',
+      description: 'Should still work when the data changes',
+      append: "print(verify_access(4895, 'CBEHF-Y55'))",
+      expectedOutput: 'ACCESS GRANTED\nACCESS DENIED\n',
       hidden: true,
     },
   ],

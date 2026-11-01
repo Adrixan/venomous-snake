@@ -27,8 +27,10 @@ export const ch05_07_scope: Challenge = {
     },
     {
       id: 'tc02',
-      description: 'Global alert_level should remain LOW',
-      expectedOutput: 'Alert raised to: HIGH\nStatus: ACTIVE\nGlobal level: LOW',
+      description: 'Should still work when the data changes',
+      append: "raise_alert('IJHI')",
+      expectedOutput:
+        'Alert raised to: HIGH\nStatus: ACTIVE\nGlobal level: LOW\nAlert raised to: IJHI\nStatus: ACTIVE\n',
       hidden: true,
     },
   ],

@@ -24,8 +24,9 @@ export const ch07_05_string_split_join: Challenge = {
     },
     {
       id: 'tc02',
-      description: 'Should use correct delimiters',
-      expectedOutput: "['ALPHA', 'BRAVO', 'CHARLIE', 'DELTA']\nALPHA | BRAVO | CHARLIE | DELTA",
+      description: 'Should still work when the data changes',
+      setup: "message = 'BMQIB:CSBWP:DIBSMJF:EFMUB'",
+      expectedOutput: "['BMQIB', 'CSBWP', 'DIBSMJF', 'EFMUB']\nBMQIB | CSBWP | DIBSMJF | EFMUB\n",
       hidden: true,
     },
   ],

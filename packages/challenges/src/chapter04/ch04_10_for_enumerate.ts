@@ -27,8 +27,9 @@ export const ch04_10_for_enumerate: Challenge = {
     },
     {
       id: 'tc02',
-      description: 'Should use enumerate with start=1',
-      expectedOutput: '1. Main Gate\n2. Side Door\n3. Roof Hatch\n4. Basement',
+      description: 'Should still work when the data changes',
+      setup: "access_points = ['Nbjo Hbuf', 'Tjef Epps', 'Sppg Ibudi', 'Cbtfnfou']",
+      expectedOutput: '1. Nbjo Hbuf\n2. Tjef Epps\n3. Sppg Ibudi\n4. Cbtfnfou\n',
       hidden: true,
     },
   ],

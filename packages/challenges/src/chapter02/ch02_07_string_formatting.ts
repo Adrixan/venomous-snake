@@ -33,8 +33,9 @@ export const ch02_07_string_formatting: Challenge = {
     },
     {
       id: 'tc02',
-      description: 'Should include all variables in the report',
-      expectedOutput: '[ACTIVE] Vex \u2014 Operation Blackout \u2014 Floor 3',
+      description: 'Should still work when the data changes',
+      setup: "operative = 'Wfy'",
+      expectedOutput: '[ACTIVE] Wfy — Operation Blackout — Floor 3\n',
       hidden: true,
     },
   ],

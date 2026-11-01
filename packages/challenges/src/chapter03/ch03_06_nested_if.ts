@@ -30,8 +30,9 @@ export const ch03_06_nested_if: Challenge = {
     },
     {
       id: 'tc02',
-      description: 'Should handle nested conditions correctly',
-      expectedOutput: 'Identity confirmed. Welcome.',
+      description: 'Should still work when the data changes',
+      setup: 'pin = 7752',
+      expectedOutput: 'Wrong PIN. Access denied.\n',
       hidden: true,
     },
   ],

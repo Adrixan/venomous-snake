@@ -24,8 +24,9 @@ export const ch09_07_dictionary_comprehension: Challenge = {
     },
     {
       id: 'tc02',
-      description: 'Should compute clearance from name length',
-      expectedOutput: "{'Snake': 50, 'Viper': 50, 'Ghost': 50, 'Wolf': 40}",
+      description: 'Should still work when the data changes',
+      setup: "agents = ['Toblf', 'Wjqfs', 'Hiptu', 'Xpmg']",
+      expectedOutput: "{'Toblf': 50, 'Wjqfs': 50, 'Hiptu': 50, 'Xpmg': 40}\n",
       hidden: true,
     },
   ],

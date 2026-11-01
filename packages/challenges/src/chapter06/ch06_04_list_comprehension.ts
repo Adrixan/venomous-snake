@@ -30,8 +30,9 @@ export const ch06_04_list_comprehension: Challenge = {
     },
     {
       id: 'tc02',
-      description: 'Should use list comprehension with condition and transform',
-      expectedOutput: '[7, 9, 6, 8]\n[14, 18, 12, 16]',
+      description: 'Should still work when the data changes',
+      setup: 'security_scores = [6, 10, 5, 12, 7, 9, 4, 11]',
+      expectedOutput: '[6, 10, 5, 12, 7, 9, 11]\n[12, 20, 10, 24, 14, 18, 22]\n',
       hidden: true,
     },
   ],

@@ -24,8 +24,9 @@ export const ch07_03_file_line_processing: Challenge = {
     },
     {
       id: 'tc02',
-      description: 'Should strip whitespace and filter empty lines',
-      expectedOutput: 'Alpha Team\nBravo Team\nCharlie Team',
+      description: 'Should still work when the data changes',
+      setup: "raw = '  Bmqib Ufbn  \\n  Csbwp Ufbn  \\n\\n  Dibsmjf Ufbn  \\n  '",
+      expectedOutput: 'Bmqib Ufbn\nCsbwp Ufbn\nDibsmjf Ufbn\n',
       hidden: true,
     },
   ],

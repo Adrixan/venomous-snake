@@ -27,8 +27,9 @@ export const ch05_02_function_return: Challenge = {
     },
     {
       id: 'tc02',
-      description: 'Should multiply clearance by rank',
-      expectedOutput: '12',
+      description: 'Should still work when the data changes',
+      append: 'print(calculate_access_level(6, 7))',
+      expectedOutput: '12\n42\n',
       hidden: true,
     },
   ],

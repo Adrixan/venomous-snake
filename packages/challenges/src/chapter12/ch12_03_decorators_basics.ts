@@ -25,9 +25,10 @@ export const ch12_03_decorators_basics: Challenge = {
     },
     {
       id: 'tc02',
-      description: 'Should wrap function with decorator',
+      description: 'Should still work when the data changes',
+      setup: "result = hack_firewall('203.279.1.2')",
       expectedOutput:
-        '[LOG] Calling hack_firewall\n[LOG] hack_firewall complete\nFirewall at 192.168.0.1 bypassed',
+        '[LOG] Calling hack_firewall\n[LOG] hack_firewall complete\nFirewall at 203.279.1.2 bypassed\n',
       hidden: true,
     },
   ],

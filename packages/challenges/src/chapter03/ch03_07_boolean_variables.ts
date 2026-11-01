@@ -30,8 +30,9 @@ export const ch03_07_boolean_variables: Challenge = {
     },
     {
       id: 'tc02',
-      description: 'Should use or and not operators correctly',
-      expectedOutput: 'Alarm triggered: True\nSystem safe: False',
+      description: 'Should still work when the data changes',
+      setup: 'motion_detected = False',
+      expectedOutput: 'Alarm triggered: False\nSystem safe: True\n',
       hidden: true,
     },
   ],

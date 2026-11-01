@@ -26,8 +26,9 @@ export const ch03_01_simple_if: Challenge = {
     },
     {
       id: 'tc02',
-      description: 'Should use == for comparison',
-      expectedOutput: 'ACCESS GRANTED',
+      description: 'Should still work when the data changes',
+      setup: 'access_code = 1340',
+      expectedOutput: '',
       hidden: true,
     },
   ],

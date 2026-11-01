@@ -27,8 +27,9 @@ export const ch04_09_loop_accumulator: Challenge = {
     },
     {
       id: 'tc02',
-      description: 'Should use accumulator pattern with +=',
-      expectedOutput: 'Total: 8760',
+      description: 'Should still work when the data changes',
+      setup: 'badge_numbers = [1045, 2321, 850, 3994, 565]',
+      expectedOutput: 'Total: 8775\n',
       hidden: true,
     },
   ],
