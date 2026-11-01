@@ -41,7 +41,95 @@
         "kwarg": "a **kwargs parameter"
       }
     },
-    "loading_python": "Loading Python runtime..."
+    "loading_python": "Loading Python runtime...",
+    "failure": {
+      "timeout": "Your program ran too long and was stopped. Check for a loop that never ends.",
+      "time_limit": "Execution stopped after {{seconds}} s. Check for a loop that never ends.",
+      "wrong_error": "Expected {{expected}} but got {{actual}}",
+      "no_error": "no error",
+      "wrong_output": "Expected:\n{{expected}}\n\nGot:\n{{actual}}"
+    },
+    "empty_editor": "# Write your Python code here\n",
+    "python_unavailable": "The Python runtime is not available. Reload the page and try again.",
+    "state": {
+      "offline": "Offline",
+      "loading": "Loading...",
+      "ready": "Ready",
+      "executing": "Executing...",
+      "error": "Error"
+    },
+    "python_title": "▶ PYTHON TERMINAL",
+    "challenge_title": "▶ {{chapter}}.{{order}} HACK",
+    "fallback_title": "▶ TERMINAL",
+    "close_aria": "Close terminal (Escape)",
+    "close_button": "✕ CLOSE",
+    "reset_aria": "Reset code to initial state",
+    "reset_button": "↺ RESET",
+    "initializing": "Initializing Python interpreter...",
+    "no_interpreter": "No interpreter configured",
+    "free_hint": "Ctrl+Enter to run • Esc to close",
+    "challenge_hint": "Run ▶ to test • Submit ✓ to evaluate • Esc to close",
+    "challenge_code": "CH{{chapter}}.{{order}}",
+    "objectives": "🎯 MISSION OBJECTIVES ({{passed}}/{{total}})",
+    "hack_successful": "✓ HACK SUCCESSFUL",
+    "tests_failed": "✗ Tests failed — check objectives and try again",
+    "cipher_hint_title": "💡 CIPHER HINT",
+    "all_passed": "✓ All {{total}} test(s) passed!",
+    "some_failed": "✗ {{failed}} test(s) failed",
+    "output": {
+      "title": "Output",
+      "clear": "Clear",
+      "clear_aria": "Clear output",
+      "log_aria": "Program output",
+      "empty": "No output yet. Run your code with Ctrl+Enter.",
+      "input_aria": "Program input"
+    },
+    "editor": {
+      "aria": "Python code editor",
+      "run": "Run ▶",
+      "run_aria": "Run code (Ctrl+Enter)",
+      "submit": "Submit ✓",
+      "submit_aria": "Submit solution",
+      "phrases": {
+        "completions": "Completions",
+        "selection_deleted": "Selection deleted",
+        "control_character": "Control character",
+        "close": "close"
+      }
+    },
+    "keyboard": {
+      "aria": "Code keyboard",
+      "symbols_aria": "Python symbol shortcuts",
+      "insert": "Insert {{symbol}}",
+      "caps_on": "Caps lock on",
+      "shift_on": "Shift on",
+      "shift": "Shift",
+      "backspace": "Backspace",
+      "tab": "Tab",
+      "tab_key": "tab",
+      "space": "Space",
+      "space_key": "space",
+      "enter": "Enter",
+      "enter_key": "↵ enter"
+    },
+    "boot": {
+      "aria": "Terminal boot sequence",
+      "runtime": "Initializing Python runtime...",
+      "network": "Connecting to Rattlesnake Corp network...",
+      "ready": "Access granted. Terminal ready."
+    },
+    "success": {
+      "aria": "Hack successful",
+      "title": "▶ HACK SUCCESSFUL",
+      "continue": "click or wait to continue",
+      "quote_1": "Clean code. I'd hire you, but then Rattlesnake Corp would have TWO problems.",
+      "quote_2": "SYSTEM COMPROMISED — in the best possible way. Well done, operative.",
+      "quote_3": "You know what the security team is doing right now? Updating their résumés.",
+      "quote_4": "Flawless execution. I mean, I knew you'd get it. I was only 73% panicking.",
+      "quote_5": "Challenge complete! The algorithm bows to your superior Python skills.",
+      "quote_6": "The terminal accepted your solution. I accepted it first, but terminals get all the credit.",
+      "quote_7": "That's how it's done! The security system just had a very bad day."
+    }
   },
   "menu": {
     "new_game": "New Game",
@@ -51,7 +139,11 @@
     "settings": "Settings",
     "quit": "Quit to Menu",
     "resume": "Resume",
-    "tutorial": "Tutorial Mode"
+    "tutorial": "Tutorial Mode",
+    "subtitle": "Python Hacking RPG",
+    "main_aria": "Main Menu",
+    "pause_aria": "Pause Menu",
+    "paused": "PAUSED"
   },
   "error_boundary": {
     "title": "System failure",
@@ -89,7 +181,12 @@
     "keyboard_size_medium": "Medium",
     "keyboard_size_large": "Large",
     "show_desktop_keyboard": "On-Screen Keyboard (Desktop)",
-    "restart_tutorial": "Restart tutorial"
+    "restart_tutorial": "Restart tutorial",
+    "audio": "Audio",
+    "mute": "Mute All",
+    "mute_btn": "MUTE",
+    "unmute": "UNMUTE",
+    "language_selector_aria": "Language selector"
   },
   "hud": {
     "xp": "XP",
@@ -110,7 +207,22 @@
     "try_again": "Not quite right. Try again!",
     "tests_passed": "{{passed}}/{{total}} tests passed",
     "locked": "Locked — Complete prerequisites first",
-    "test_results": "Test Results"
+    "test_results": "Test Results",
+    "panel_label": "Challenge Panel",
+    "close": "Close",
+    "hints": "Hints",
+    "tests": "TESTS",
+    "no_results": "No test results yet. Submit your solution to run tests.",
+    "submit": "▶ SUBMIT",
+    "hint_warning": "Using hints reduces XP reward",
+    "get_hint": "💡 HINT (T{{tier}})",
+    "difficulty": {
+      "beginner": "beginner",
+      "easy": "easy",
+      "medium": "medium",
+      "hard": "hard",
+      "expert": "expert"
+    }
   },
   "progress": {
     "title": "Progress",
@@ -128,7 +240,9 @@
     "status_locked": "Locked",
     "status_available": "Available",
     "status_in_progress": "In Progress",
-    "status_completed": "Completed"
+    "status_completed": "Completed",
+    "floor_lobby": "Lobby",
+    "floor_number": "{{n}}"
   },
   "inventory": {
     "title": "Inventory",
@@ -142,7 +256,8 @@
     "floor": "Floor {{num}}",
     "locked": "Locked",
     "current": "Current",
-    "fast_travel": "Fast Travel"
+    "fast_travel": "Fast Travel",
+    "chapter_short": "Ch.{{num}}"
   },
   "levels": {
     "1": "Recruit",
@@ -170,7 +285,10 @@
     "cat_oop": "OOP",
     "cat_advanced": "Advanced",
     "effect_hint_boost": "Hints reveal more detail",
-    "effect_speed_bonus": "Speed bonus on XP"
+    "effect_speed_bonus": "Speed bonus on XP",
+    "state_locked": "locked",
+    "state_available": "available",
+    "state_unlocked": "unlocked"
   },
   "skills": {
     "print_master": "Print Master",
@@ -329,7 +447,11 @@
     "reset_progress": "Reset Progress",
     "reset_confirm": "Are you sure? This will clear all tutorial progress.",
     "difficulty": "Difficulty",
-    "concepts": "Concepts"
+    "concepts": "Concepts",
+    "hint_aria": "Tutorial hint",
+    "chapters_aria": "Chapters",
+    "reset": "Reset",
+    "avatar_badge": "AI"
   },
   "storyTerminal": {
     "quests": "Quests",
@@ -337,6 +459,190 @@
     "settings": "Settings",
     "save": "Save",
     "inventory": "Items",
-    "skills": "Skills"
+    "skills": "Skills",
+    "floor": "FLOOR {{n}}",
+    "xpProgress": "XP: {{percent}}%",
+    "levelBadge": "Lv.{{level}}",
+    "actions": "Actions",
+    "noActions": "No actions available...",
+    "toolbar": "Toolbar",
+    "locked": "Locked",
+    "prefixSystem": "[SYSTEM]",
+    "prefixError": "[ERROR]"
+  },
+  "hints": {
+    "generic": "Don't give up! Try re-reading the challenge description carefully. Sometimes the answer is hiding in plain sight.",
+    "pattern": {
+      "missing_colon": "Looks like you're missing a colon (:). In Python, statements like if, for, while, def, and class need a colon at the end of the line.",
+      "indentation": "Your indentation is off. In Python, indentation matters! Make sure all lines in the same block have the same indentation level.",
+      "undefined_name": "You're trying to use a variable or function that doesn't exist yet. Check for typos in the name, or make sure you defined it before using it.",
+      "type_mismatch": "You're trying to mix text (strings) with numbers. Use str() to convert numbers to text, or int()/float() to convert text to numbers.",
+      "inconsistent_indent": "Python uses indentation (spaces at the start of lines) to group code. Make sure you're using consistent indentation — 4 spaces per level is the standard.",
+      "unclosed_string": "You started a string with a quote but forgot to close it. Make sure every opening quote has a matching closing quote.",
+      "missing_args": "You called a function but didn't pass enough arguments. Check the function definition to see what parameters it needs.",
+      "invalid_conversion": "You're trying to convert something to an integer that isn't a valid number. Make sure the value you're converting is actually a number.",
+      "index_out_of_range": "You're trying to access a list item that doesn't exist. Remember, Python lists start at index 0. A list with 3 items has indices 0, 1, and 2.",
+      "key_error": "You're trying to access a dictionary key that doesn't exist. Check if the key is spelled correctly, or use .get() to provide a default value."
+    }
+  },
+  "floor_progress": {
+    "label": "Floor: {{floor}} — {{completed}}/{{total}} challenges",
+    "complete": "Floor complete! Use the elevator to proceed.",
+    "bar_aria": "{{completed}} of {{total}} challenges completed"
+  },
+  "floor_announcement": {
+    "title": "FLOOR {{n}} — {{name}}",
+    "badge": "[ FLOOR {{n}} ]"
+  },
+  "loading": {
+    "status": "LOADING...",
+    "subtitle": "VENOMOUS SNAKE • RATTLESNAKE CORP SECURITY DIVISION",
+    "aria": "Loading"
+  },
+  "cipher_ui": {
+    "message_aria": "CIPHER message",
+    "skip": "Skip",
+    "skip_aria": "Skip typewriter animation",
+    "dismiss": "Dismiss",
+    "dismiss_aria": "Dismiss CIPHER message",
+    "hint_aria": "CIPHER hint",
+    "hint_label": "CIPHER · HINT",
+    "dismiss_hint_aria": "Dismiss hint",
+    "portrait_aria": "CIPHER — mood: {{mood}}",
+    "mood": {
+      "neutral": "neutral",
+      "excited": "excited",
+      "concerned": "concerned",
+      "amused": "amused",
+      "impressed": "impressed",
+      "thinking": "thinking"
+    }
+  },
+  "notifications": {
+    "achievements_aria": "Achievement notifications",
+    "items_aria": "Item pickup notifications"
+  },
+  "dialog_ui": {
+    "aria": "NPC Dialog",
+    "choices_aria": "Dialog choices",
+    "hint_skip": "ENTER / CLICK — skip",
+    "hint_navigate": "TAB — navigate · ENTER — select",
+    "hint_continue": "ENTER / CLICK — continue"
+  },
+  "cutscene_ui": {
+    "aria": "Cutscene",
+    "skip_aria": "Skip cutscene"
+  },
+  "victory": {
+    "header": "> SYSTEM SECURED <",
+    "subheader": "All threats neutralized. Network integrity restored.",
+    "agent": "AGENT: {{name}}",
+    "rating": "RATING: [{{rating}}] {{label}}",
+    "rating_s": "★ LEGENDARY HACKER ★",
+    "rating_a": "◆ ELITE OPERATIVE ◆",
+    "rating_b": "● SKILLED AGENT ●",
+    "rating_c": "○ FIELD AGENT ○",
+    "stat_challenges": "CHALLENGES COMPLETED",
+    "stat_xp": "TOTAL XP EARNED",
+    "stat_level": "AGENT LEVEL",
+    "level_value": "LVL {{level}}",
+    "free_mode_header": ">>> FREE MODE UNLOCKED <<<",
+    "free_mode_text": "All floors are now accessible. Revisit any terminal, replay challenges, and explore at your leisure.",
+    "continue": "[> CONTINUE IN FREE MODE]",
+    "return_to_title": "[RETURN TO TITLE]"
+  },
+  "credits": {
+    "mission_complete": "Mission complete. Well played.",
+    "time_hours": "{{hours}}h {{minutes}}m",
+    "time_minutes": "{{minutes}}m {{seconds}}s",
+    "time_seconds": "{{seconds}}s"
+  },
+  "save_slots": {
+    "title_save": "SAVE GAME",
+    "title_load": "LOAD GAME",
+    "overwrite_confirm": "Overwrite this save slot?",
+    "overwrite": "OVERWRITE",
+    "cancel": "CANCEL",
+    "empty_load": "No save files found.",
+    "empty_save": "No existing saves.",
+    "slot_manual": "Save — {{name}} · Floor {{floor}}",
+    "slot_auto": "Auto Save — {{name}} · Floor {{floor}}",
+    "meta": "Lv {{level}} · XP {{xp}}",
+    "load": "LOAD",
+    "save": "SAVE",
+    "delete": "DEL",
+    "delete_aria": "Delete {{name}}",
+    "new_slot": "+ NEW SAVE SLOT",
+    "export_all": "⬇ EXPORT ALL",
+    "import": "⬆ IMPORT",
+    "close": "CLOSE",
+    "failed": {
+      "save": "Save failed",
+      "delete": "Delete failed",
+      "export": "Export failed",
+      "import": "Import failed"
+    },
+    "errors": {
+      "storage_unavailable": "Saving is not available in this browser session",
+      "slot_limit": "At most {{max}} saves are allowed. Delete one first.",
+      "slot_not_found": "Save slot \"{{id}}\" not found",
+      "nothing_to_export": "No saves to export",
+      "import_empty": "Import contained no saves",
+      "file_too_large": "file is too large",
+      "file_not_json": "file is not valid JSON",
+      "file_damaged": "file is damaged (checksum mismatch)",
+      "file_empty": "file contains no saves",
+      "field_string": "{{field}} must be a string",
+      "field_number": "{{field}} must be a number",
+      "field_list": "{{field}} must be a list",
+      "engine_missing": "engine state missing",
+      "progress_missing": "progress missing",
+      "data_invalid": "save data must be an object",
+      "slot_invalid": "save slot must be an object",
+      "id_invalid": "invalid save id",
+      "unsupported_version": "unsupported save version {{version}}"
+    }
+  },
+  "pwa": {
+    "install_aria": "Install app banner",
+    "install_title": "Install Venomous Snake",
+    "install_text": "Play offline, faster load times",
+    "install_button": "INSTALL",
+    "install_button_aria": "Install app",
+    "installing": "INSTALLING...",
+    "dismiss_aria": "Dismiss install prompt",
+    "update_aria": "Update available — click to refresh",
+    "update_title": "Update Available",
+    "update_action": "Click to refresh",
+    "update_hint": "(new version ready)"
+  },
+  "portrait": {
+    "aria": "{{name}} portrait",
+    "names": {
+      "guard": "Guard",
+      "silva": "Dr. Silva",
+      "kai": "Kai",
+      "reeves": "Reeves",
+      "patel": "Patel",
+      "labbot": "Lab Bot",
+      "voss": "Voss",
+      "chen": "Chen",
+      "okafor": "Okafor",
+      "jamie": "Jamie",
+      "diaz": "Diaz",
+      "echo": "Echo AI",
+      "kim": "Kim",
+      "blackwell": "Blackwell",
+      "kowalski": "Kowalski",
+      "delta7": "Delta-7",
+      "volkov": "Volkov",
+      "aifragment": "AI Fragment",
+      "coreguardian": "Core Guardian",
+      "ghost": "Ghost",
+      "sterling": "Sterling",
+      "nova": "Nova",
+      "snake": "Snake",
+      "player": "Player"
+    }
   }
 }

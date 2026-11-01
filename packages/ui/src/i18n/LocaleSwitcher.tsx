@@ -15,8 +15,10 @@ const LABELS: Record<Language, string> = {
 };
 
 export function LocaleSwitcher({ className }: LocaleSwitcherProps): React.JSX.Element {
-  const { i18n } = useTranslation();
-  const current = (LANGUAGES.includes(i18n.language as Language) ? i18n.language : 'en') as Language;
+  const { t, i18n } = useTranslation('ui');
+  const current = (
+    LANGUAGES.includes(i18n.language as Language) ? i18n.language : 'en'
+  ) as Language;
 
   const switchTo = (lang: Language) => {
     void i18n.changeLanguage(lang);
@@ -26,7 +28,7 @@ export function LocaleSwitcher({ className }: LocaleSwitcherProps): React.JSX.El
     <div
       className={className}
       role="group"
-      aria-label="Language selector"
+      aria-label={t('settings.language_selector_aria')}
       style={{
         display: 'inline-flex',
         border: '1px solid #1a2a3a',

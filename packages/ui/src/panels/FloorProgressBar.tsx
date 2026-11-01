@@ -102,13 +102,13 @@ export function FloorProgressBar({
     boxShadow: isGlowing ? '0 0 10px #00ff9d' : isComplete ? '0 0 6px #00ff9d66' : 'none',
   };
 
-  const label = `Floor: ${floorName} — ${completed}/${total} challenges`;
+  const label = t('ui:floor_progress.label', { floor: floorName, completed, total });
 
   return (
     <div
       style={containerStyle}
       aria-label={label}
-      title={isComplete ? 'Floor complete! Use the elevator to proceed.' : label}
+      title={isComplete ? t('ui:floor_progress.complete') : label}
     >
       <div style={headerRowStyle}>
         <span style={floorNameStyle}>
@@ -125,7 +125,7 @@ export function FloorProgressBar({
         aria-valuenow={completed}
         aria-valuemin={0}
         aria-valuemax={total}
-        aria-label={`${completed} of ${total} challenges completed`}
+        aria-label={t('ui:floor_progress.bar_aria', { completed, total })}
       >
         <div style={fillStyle} />
       </div>

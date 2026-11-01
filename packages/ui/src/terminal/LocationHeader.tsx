@@ -37,23 +37,18 @@ function LocationHeaderInner({
     <div className="story-location-header" role="banner">
       <div className="story-location-info">
         <span className="story-location-floor">
-          ▸{' '}
-          {t('storyTerminal.floor', `FLOOR ${String(floorNumber)}`).replace(
-            '{n}',
-            String(floorNumber),
-          )}
-          : {floorName}
+          ▸ {t('storyTerminal.floor', { n: floorNumber })}: {floorName}
         </span>
         <span className="story-location-sep">│</span>
         <span className="story-location-room">{roomName}</span>
       </div>
 
       <div className="story-location-stats">
-        <span className="story-level-badge">Lv.{level}</span>
+        <span className="story-level-badge">{t('storyTerminal.levelBadge', { level })}</span>
         <span
           className="story-xp-bar"
           data-tutorial="xp-bar"
-          aria-label={t('storyTerminal.xpProgress', `XP: ${String(bar.percent)}%`)}
+          aria-label={t('storyTerminal.xpProgress', { percent: bar.percent })}
         >
           <span className="story-xp-bar-track" aria-hidden="true">
             <span className="story-xp-bar-filled">{'█'.repeat(bar.filled)}</span>

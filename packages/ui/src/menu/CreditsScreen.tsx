@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import type { TFunction } from 'i18next';
 
 export interface CreditsScreenProps {
   /** Stats gathered during the run */
@@ -19,13 +20,13 @@ export interface CreditsScreenProps {
 
 const FONT_FAMILY = "'JetBrains Mono', 'Fira Code', monospace";
 
-function formatTime(seconds: number): string {
-  const h = Math.floor(seconds / 3600);
-  const m = Math.floor((seconds % 3600) / 60);
-  const s = seconds % 60;
-  if (h > 0) return `${h}h ${m}m`;
-  if (m > 0) return `${m}m ${s}s`;
-  return `${s}s`;
+function formatTime(t: TFunction, totalSeconds: number): string {
+  const hours = Math.floor(totalSeconds / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
+  const seconds = totalSeconds % 60;
+  if (hours > 0) return t('ui:credits.time_hours', { hours, minutes });
+  if (minutes > 0) return t('ui:credits.time_minutes', { minutes, seconds });
+  return t('ui:credits.time_seconds', { seconds });
 }
 
 export function CreditsScreen({
@@ -56,8 +57,11 @@ export function CreditsScreen({
 
   const statItems: { labelKey: string; value: string }[] = [
     { labelKey: 'credits.stats.challengesCompleted', value: String(stats.challengesCompleted) },
-    { labelKey: 'credits.stats.totalXp', value: `${stats.totalXp.toLocaleString()} XP` },
-    { labelKey: 'credits.stats.timePlayed', value: formatTime(stats.timePlayed) },
+    {
+      labelKey: 'credits.stats.totalXp',
+      value: `${stats.totalXp.toLocaleString()} ${t('ui:hud.xp')}`,
+    },
+    { labelKey: 'credits.stats.timePlayed', value: formatTime(t, stats.timePlayed) },
     { labelKey: 'credits.stats.achievementsUnlocked', value: String(stats.achievementsUnlocked) },
     { labelKey: 'credits.stats.floorsCleared', value: String(stats.floorsCleared) },
   ];
@@ -266,7 +270,7 @@ export function CreditsScreen({
             <div>{pythonVersion}</div>
             <div>&nbsp;</div>
             <div>$ ./venomous_snake --credits</div>
-            <div>Mission complete. Well played.</div>
+            <div>{t('ui:credits.mission_complete')}</div>
             <div>&nbsp;</div>
             <div>█</div>
           </div>

@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef } from 'react';
 import type React from 'react';
 import { saveManager } from '@venomous-snake/save-system';
 import type { SaveSlot, SaveData } from '@venomous-snake/save-system';
-import { SAVE_FORMAT_VERSION } from '@venomous-snake/save-system';
+import { SAVE_FORMAT_VERSION, SaveSystemError } from '@venomous-snake/save-system';
 import { downloadTextFile } from '@venomous-snake/save-system';
 import { useGameStore } from '../store/gameStore';
 import type { GameController } from '../GameController';
@@ -130,7 +130,7 @@ export function useSaveSystem(
   const importSave = useCallback(async (file: File) => {
     const imported = await saveManager.importFile(await file.text());
     const first = imported[0];
-    if (!first) throw new Error('Import contained no saves');
+    if (!first) throw new SaveSystemError('Import contained no saves', 'import_empty');
     return first;
   }, []);
   const triggerAutoSave = useCallback(async () => {

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { usePWA } from './usePWA';
 
 const styles: Record<string, React.CSSProperties> = {
@@ -36,6 +37,7 @@ const styles: Record<string, React.CSSProperties> = {
 };
 
 export function PWAUpdateNotifier(): React.JSX.Element | null {
+  const { t } = useTranslation('ui');
   const { isUpdateAvailable, update } = usePWA();
 
   if (!isUpdateAvailable) return null;
@@ -50,15 +52,15 @@ export function PWAUpdateNotifier(): React.JSX.Element | null {
       onKeyDown={(e) => {
         if (e.key === 'Enter' || e.key === ' ') update();
       }}
-      aria-label="Update available — click to refresh"
+      aria-label={t('pwa.update_aria')}
     >
       <span style={styles['icon']} aria-hidden="true">
         ↻
       </span>
-      <span style={styles['label']}>Update Available</span>
+      <span style={styles['label']}>{t('pwa.update_title')}</span>
       <span aria-hidden="true">—</span>
-      <span>Click to refresh</span>
-      <span style={styles['hint']}>(new version ready)</span>
+      <span>{t('pwa.update_action')}</span>
+      <span style={styles['hint']}>{t('pwa.update_hint')}</span>
     </div>
   );
 }

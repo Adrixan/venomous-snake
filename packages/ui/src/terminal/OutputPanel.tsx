@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 import type { PythonOutput } from '@venomous-snake/shared-types';
 import './terminal.css';
 
@@ -15,6 +16,7 @@ function OutputPanelInner({
   inputPrompt,
   onInputSubmit,
 }: OutputPanelProps): React.JSX.Element {
+  const { t } = useTranslation('ui');
   const bottomRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const [inputValue, setInputValue] = useState('');
@@ -46,25 +48,23 @@ function OutputPanelInner({
   return (
     <div className="terminal-output-area">
       <div className="terminal-output-header">
-        <span className="terminal-output-label">Output</span>
+        <span className="terminal-output-label">{t('terminal.output.title')}</span>
         <button
           className="terminal-btn terminal-btn-clear"
           onClick={onClear}
-          aria-label="Clear output"
+          aria-label={t('terminal.output.clear_aria')}
         >
-          Clear
+          {t('terminal.output.clear')}
         </button>
       </div>
       <div
         role="log"
         aria-live="polite"
-        aria-label="Program output"
+        aria-label={t('terminal.output.log_aria')}
         className="terminal-output-log"
       >
         {outputs.length === 0 ? (
-          <span className="terminal-output-empty">
-            No output yet. Run your code with Ctrl+Enter.
-          </span>
+          <span className="terminal-output-empty">{t('terminal.output.empty')}</span>
         ) : (
           outputs.map((item, index) => (
             <pre
@@ -89,7 +89,7 @@ function OutputPanelInner({
             value={inputValue}
             onChange={handleInputChange}
             onKeyDown={handleInputKeyDown}
-            aria-label="Program input"
+            aria-label={t('terminal.output.input_aria')}
           />
         </div>
       )}

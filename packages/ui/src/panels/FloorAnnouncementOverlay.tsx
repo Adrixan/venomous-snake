@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 
 const FONT_FAMILY = "'JetBrains Mono', 'Fira Code', monospace";
 const DISPLAY_DURATION_MS = 3000;
@@ -37,12 +38,16 @@ export function FloorAnnouncementOverlay({
   isVisible,
   onDismiss,
 }: FloorAnnouncementOverlayProps): React.JSX.Element | null {
+  const { t } = useTranslation('ui');
   const [displayedTitle, setDisplayedTitle] = useState('');
   const [opacity, setOpacity] = useState(0);
   const glitchRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const dismissRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const title = `FLOOR ${floorNumber} — ${floorName.toUpperCase()}`;
+  const title = t('floor_announcement.title', {
+    n: floorNumber,
+    name: floorName.toUpperCase(),
+  });
 
   useEffect(() => {
     if (!isVisible) {
@@ -157,7 +162,7 @@ export function FloorAnnouncementOverlay({
     <div style={backdropStyle} role="alert" aria-live="assertive">
       <div style={scanlineStyle} aria-hidden="true" />
       <div style={floorNumberStyle} aria-hidden="true">
-        {`[ FLOOR ${floorNumber} ]`}
+        {t('floor_announcement.badge', { n: floorNumber })}
       </div>
       <div style={titleStyle}>{displayedTitle}</div>
       <div style={dividerStyle} aria-hidden="true" />

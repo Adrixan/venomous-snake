@@ -101,7 +101,7 @@ export function TutorialOverlay({
         fontFamily: FONT_FAMILY,
       }}
       aria-live="polite"
-      aria-label="Tutorial hint"
+      aria-label={t('ui:tutorial.hint_aria')}
     >
       {/* Semi-transparent dark overlay with spotlight cutout */}
       <svg
@@ -182,7 +182,7 @@ export function TutorialOverlay({
               flexShrink: 0,
             }}
           >
-            AI
+            {t('ui:tutorial.avatar_badge')}
           </div>
           <span
             style={{

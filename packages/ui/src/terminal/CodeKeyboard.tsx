@@ -1,4 +1,5 @@
 import React, { useState, useCallback, useRef, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 
 export interface CodeKeyboardProps {
   onInput: (text: string) => void;
@@ -264,6 +265,7 @@ export function CodeKeyboard({
   keyboardLayout = 'qwerty',
   keyboardSize = 'medium',
 }: CodeKeyboardProps): React.JSX.Element | null {
+  const { t } = useTranslation('ui');
   const [shiftActive, setShiftActive] = useState(false);
   const [capsLock, setCapsLock] = useState(false);
   const lastShiftTap = useRef<number>(0);
@@ -316,7 +318,7 @@ export function CodeKeyboard({
   if (!visible) return null;
 
   return (
-    <div style={styles.container} role="toolbar" aria-label="Code keyboard">
+    <div style={styles.container} role="toolbar" aria-label={t('terminal.keyboard.aria')}>
       {/* Always-visible number row */}
       <div style={styles.row}>
         {NUMBER_ROW.map((n) => (
@@ -331,7 +333,7 @@ export function CodeKeyboard({
       </div>
 
       {/* Scrollable Python symbol bar */}
-      <div style={styles.symbolBar} role="toolbar" aria-label="Python symbol shortcuts">
+      <div style={styles.symbolBar} role="toolbar" aria-label={t('terminal.keyboard.symbols_aria')}>
         {SYMBOL_BAR.map((sym) => (
           <button
             key={sym}
@@ -342,7 +344,7 @@ export function CodeKeyboard({
               e.preventDefault();
               onInput(sym);
             }}
-            aria-label={`Insert ${sym}`}
+            aria-label={t('terminal.keyboard.insert', { symbol: sym })}
           >
             {sym}
           </button>
@@ -356,7 +358,13 @@ export function CodeKeyboard({
           {rowIdx === 2 && (
             <Key
               label="⇧"
-              ariaLabel={capsLock ? 'Caps lock on' : shiftActive ? 'Shift on' : 'Shift'}
+              ariaLabel={t(
+                capsLock
+                  ? 'terminal.keyboard.caps_on'
+                  : shiftActive
+                    ? 'terminal.keyboard.shift_on'
+                    : 'terminal.keyboard.shift',
+              )}
               baseKeyStyle={styles.key}
               extraStyle={shiftStyle}
               onPress={handleShift}
@@ -374,7 +382,7 @@ export function CodeKeyboard({
           {rowIdx === 2 && (
             <Key
               label="⌫"
-              ariaLabel="Backspace"
+              ariaLabel={t('terminal.keyboard.backspace')}
               baseKeyStyle={styles.key}
               extraStyle={styles.keyBackspace}
               onPress={onBackspace}
@@ -386,22 +394,22 @@ export function CodeKeyboard({
       {/* Bottom action row */}
       <div style={styles.row}>
         <Key
-          label="tab"
-          ariaLabel="Tab"
+          label={t('terminal.keyboard.tab_key')}
+          ariaLabel={t('terminal.keyboard.tab')}
           baseKeyStyle={styles.key}
           extraStyle={styles.keyTab}
           onPress={() => onInput('    ')}
         />
         <Key
-          label="space"
-          ariaLabel="Space"
+          label={t('terminal.keyboard.space_key')}
+          ariaLabel={t('terminal.keyboard.space')}
           baseKeyStyle={styles.key}
           extraStyle={styles.keySpace}
           onPress={() => onInput(' ')}
         />
         <Key
-          label="↵ enter"
-          ariaLabel="Enter"
+          label={t('terminal.keyboard.enter_key')}
+          ariaLabel={t('terminal.keyboard.enter')}
           baseKeyStyle={styles.key}
           extraStyle={styles.keyEnter}
           onPress={() => onInput('\n')}

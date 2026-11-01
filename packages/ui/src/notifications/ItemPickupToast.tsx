@@ -187,6 +187,7 @@ export function ItemPickupToast({
   notifications,
   onDismiss,
 }: ItemPickupToastProps): React.JSX.Element {
+  const { t } = useTranslation('ui');
   const containerStyle: React.CSSProperties = {
     position: 'fixed',
     top: '24px',
@@ -201,7 +202,7 @@ export function ItemPickupToast({
   };
 
   return (
-    <div style={containerStyle} aria-label="Item pickup notifications">
+    <div style={containerStyle} aria-label={t('notifications.items_aria')}>
       {notifications.map((notification) => (
         <div key={notification.id} style={{ pointerEvents: 'auto' }}>
           <SinglePickupToast notification={notification} onDismiss={onDismiss} />

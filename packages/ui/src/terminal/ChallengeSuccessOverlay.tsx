@@ -1,22 +1,15 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import './terminal.css';
 
 const FONT = "'JetBrains Mono', 'Fira Code', monospace";
 
-const CIPHER_QUOTES = [
-  "Clean code. I'd hire you, but then Rattlesnake Corp would have TWO problems.",
-  'SYSTEM COMPROMISED — in the best possible way. Well done, operative.',
-  'You know what the security team is doing right now? Updating their résumés.',
-  "Flawless execution. I mean, I knew you'd get it. I was only 73% panicking.",
-  'Challenge complete! The algorithm bows to your superior Python skills.',
-  'The terminal accepted your solution. I accepted it first, but terminals get all the credit.',
-  "That's how it's done! The security system just had a very bad day.",
-];
+/** `terminal.success.quote_1` to `quote_<n>` in the `ui` namespace. */
+const CIPHER_QUOTE_COUNT = 7;
 
-function pickQuote(): string {
-  const idx = Math.floor(Math.random() * CIPHER_QUOTES.length);
-  const quote = CIPHER_QUOTES[idx];
-  return quote ?? 'Flawless execution. Well done, operative.';
+function pickQuoteKey(): string {
+  const number = Math.floor(Math.random() * CIPHER_QUOTE_COUNT) + 1;
+  return `terminal.success.quote_${String(number)}`;
 }
 
 export interface ChallengeSuccessOverlayProps {
@@ -33,8 +26,9 @@ export function ChallengeSuccessOverlay({
   onDismiss,
   autoDismissMs = 3000,
 }: ChallengeSuccessOverlayProps): React.JSX.Element {
+  const { t } = useTranslation('ui');
   const [glitching, setGlitching] = useState(false);
-  const [quote] = useState<string>(pickQuote);
+  const [quoteKey] = useState<string>(pickQuoteKey);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const glitchRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
@@ -60,7 +54,7 @@ export function ChallengeSuccessOverlay({
     <div
       role="dialog"
       aria-modal="true"
-      aria-label="Hack successful"
+      aria-label={t('terminal.success.aria')}
       onClick={onDismiss}
       style={{
         position: 'absolute',
@@ -100,7 +94,7 @@ export function ChallengeSuccessOverlay({
           marginBottom: 8,
         }}
       >
-        ▶ HACK SUCCESSFUL
+        {t('terminal.success.title')}
       </div>
 
       {/* Separator */}
@@ -145,7 +139,7 @@ export function ChallengeSuccessOverlay({
           boxShadow: '0 0 12px rgba(255,180,84,0.3)',
         }}
       >
-        <span style={{ fontSize: 14 }}>XP</span>
+        <span style={{ fontSize: 14 }}>{t('hud.xp')}</span>
         <span>+{xpEarned}</span>
       </div>
 
@@ -165,12 +159,12 @@ export function ChallengeSuccessOverlay({
         }}
       >
         <span style={{ color: '#00b4d8', fontStyle: 'normal', fontWeight: 700 }}>CIPHER: </span>
-        {quote}
+        {t(quoteKey)}
       </div>
 
       {/* Dismiss hint */}
       <div style={{ color: '#3d4752', fontSize: 11, letterSpacing: '0.05em' }}>
-        click or wait to continue
+        {t('terminal.success.continue')}
       </div>
     </div>
   );

@@ -29,6 +29,8 @@ function ActionPanelInner({
   };
   const displayLabel = (action: GameAction): string =>
     action.labelKey ? translate(action.labelKey, action.labelParams) : action.label;
+  const shortDisabledReason = (action: GameAction): string =>
+    action.disabledReasonKey ? t('storyTerminal.locked') : (action.disabledReason ?? '');
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   // Clamp selected index when actions change
@@ -88,26 +90,18 @@ function ActionPanelInner({
 
   if (actions.length === 0) {
     return (
-      <div
-        className="story-action-panel"
-        role="navigation"
-        aria-label={t('storyTerminal.actions', 'Actions')}
-      >
+      <div className="story-action-panel" role="navigation" aria-label={t('storyTerminal.actions')}>
         <div
           style={{ padding: '8px 12px', color: '#3d4752', fontStyle: 'italic', fontSize: '13px' }}
         >
-          {t('storyTerminal.noActions', 'No actions available...')}
+          {t('storyTerminal.noActions')}
         </div>
       </div>
     );
   }
 
   return (
-    <div
-      className="story-action-panel"
-      role="navigation"
-      aria-label={t('storyTerminal.actions', 'Actions')}
-    >
+    <div className="story-action-panel" role="navigation" aria-label={t('storyTerminal.actions')}>
       {actions.map((action, i) => {
         const isDisabled = action.disabled === true;
         const isSelected = i === selectedIndex;
@@ -123,7 +117,7 @@ function ActionPanelInner({
             className={className}
             onClick={() => activateAction(action)}
             disabled={isDisabled}
-            title={isDisabled ? (action.disabledReason ?? '') : undefined}
+            title={isDisabled ? shortDisabledReason(action) : undefined}
             aria-label={displayLabel(action)}
             {...(action.type === 'hack' ? { 'data-tutorial': 'nearest-terminal' } : {})}
           >

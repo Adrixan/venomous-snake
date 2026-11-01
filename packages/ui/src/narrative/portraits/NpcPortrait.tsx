@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 export interface NpcPortraitProps {
   portraitId: string;
@@ -45,15 +46,15 @@ function FallbackPortrait({
   );
 }
 
-const PORTRAITS: Record<string, (size: number) => React.JSX.Element> = {
+const PORTRAITS: Record<string, (size: number, label: string) => React.JSX.Element> = {
   // ── Security guard: helmet, orange visor, badge ─────────────────────────────
-  guard: (size) => (
+  guard: (size, label) => (
     <svg
       width={size}
       height={size}
       viewBox="0 0 80 80"
       xmlns="http://www.w3.org/2000/svg"
-      aria-label="Guard portrait"
+      aria-label={label}
       role="img"
       style={{ display: 'block' }}
     >
@@ -95,13 +96,13 @@ const PORTRAITS: Record<string, (size: number) => React.JSX.Element> = {
   ),
 
   // ── Dr. Silva: goggles on forehead, messy hair, green accent ────────────────
-  silva: (size) => (
+  silva: (size, label) => (
     <svg
       width={size}
       height={size}
       viewBox="0 0 80 80"
       xmlns="http://www.w3.org/2000/svg"
-      aria-label="Dr. Silva portrait"
+      aria-label={label}
       role="img"
       style={{ display: 'block' }}
     >
@@ -166,13 +167,13 @@ const PORTRAITS: Record<string, (size: number) => React.JSX.Element> = {
   ),
 
   // ── Kai: headset, blue screen reflection, tech vibe ─────────────────────────
-  kai: (size) => (
+  kai: (size, label) => (
     <svg
       width={size}
       height={size}
       viewBox="0 0 80 80"
       xmlns="http://www.w3.org/2000/svg"
-      aria-label="Kai portrait"
+      aria-label={label}
       role="img"
       style={{ display: 'block' }}
     >
@@ -244,13 +245,13 @@ const PORTRAITS: Record<string, (size: number) => React.JSX.Element> = {
   ),
 
   // ── Reeves: buzz cut, red visor, scar ───────────────────────────────────────
-  reeves: (size) => (
+  reeves: (size, label) => (
     <svg
       width={size}
       height={size}
       viewBox="0 0 80 80"
       xmlns="http://www.w3.org/2000/svg"
-      aria-label="Reeves portrait"
+      aria-label={label}
       role="img"
       style={{ display: 'block' }}
     >
@@ -288,13 +289,13 @@ const PORTRAITS: Record<string, (size: number) => React.JSX.Element> = {
   ),
 
   // ── Patel: round glasses, neat hair, amber accent ───────────────────────────
-  patel: (size) => (
+  patel: (size, label) => (
     <svg
       width={size}
       height={size}
       viewBox="0 0 80 80"
       xmlns="http://www.w3.org/2000/svg"
-      aria-label="Patel portrait"
+      aria-label={label}
       role="img"
       style={{ display: 'block' }}
     >
@@ -337,13 +338,13 @@ const PORTRAITS: Record<string, (size: number) => React.JSX.Element> = {
   ),
 
   // ── LabBot: circular head, LED eyes, antenna, grille ────────────────────────
-  labbot: (size) => (
+  labbot: (size, label) => (
     <svg
       width={size}
       height={size}
       viewBox="0 0 80 80"
       xmlns="http://www.w3.org/2000/svg"
-      aria-label="Lab Bot portrait"
+      aria-label={label}
       role="img"
       style={{ display: 'block' }}
     >
@@ -433,13 +434,13 @@ const PORTRAITS: Record<string, (size: number) => React.JSX.Element> = {
   ),
 
   // ── Voss: eye implant, sharp angular face, purple glow ──────────────────────
-  voss: (size) => (
+  voss: (size, label) => (
     <svg
       width={size}
       height={size}
       viewBox="0 0 80 80"
       xmlns="http://www.w3.org/2000/svg"
-      aria-label="Voss portrait"
+      aria-label={label}
       role="img"
       style={{ display: 'block' }}
     >
@@ -497,13 +498,13 @@ const PORTRAITS: Record<string, (size: number) => React.JSX.Element> = {
   ),
 
   // ── Chen: hoodie, cyber-monocle, cyan ───────────────────────────────────────
-  chen: (size) => (
+  chen: (size, label) => (
     <svg
       width={size}
       height={size}
       viewBox="0 0 80 80"
       xmlns="http://www.w3.org/2000/svg"
-      aria-label="Chen portrait"
+      aria-label={label}
       role="img"
       style={{ display: 'block' }}
     >
@@ -563,13 +564,13 @@ const PORTRAITS: Record<string, (size: number) => React.JSX.Element> = {
   ),
 
   // ── Okafor: beret, thick eyebrows, stern broad face ─────────────────────────
-  okafor: (size) => (
+  okafor: (size, label) => (
     <svg
       width={size}
       height={size}
       viewBox="0 0 80 80"
       xmlns="http://www.w3.org/2000/svg"
-      aria-label="Okafor portrait"
+      aria-label={label}
       role="img"
       style={{ display: 'block' }}
     >
@@ -606,13 +607,13 @@ const PORTRAITS: Record<string, (size: number) => React.JSX.Element> = {
   ),
 
   // ── Jamie: headphones, friendly, green highlights ───────────────────────────
-  jamie: (size) => (
+  jamie: (size, label) => (
     <svg
       width={size}
       height={size}
       viewBox="0 0 80 80"
       xmlns="http://www.w3.org/2000/svg"
-      aria-label="Jamie portrait"
+      aria-label={label}
       role="img"
       style={{ display: 'block' }}
     >
@@ -678,13 +679,13 @@ const PORTRAITS: Record<string, (size: number) => React.JSX.Element> = {
   ),
 
   // ── Diaz: military haircut, earpiece, amber glow ────────────────────────────
-  diaz: (size) => (
+  diaz: (size, label) => (
     <svg
       width={size}
       height={size}
       viewBox="0 0 80 80"
       xmlns="http://www.w3.org/2000/svg"
-      aria-label="Diaz portrait"
+      aria-label={label}
       role="img"
       style={{ display: 'block' }}
     >
@@ -732,13 +733,13 @@ const PORTRAITS: Record<string, (size: number) => React.JSX.Element> = {
   ),
 
   // ── Echo: hexagonal AI face, magenta digital patterns ───────────────────────
-  echo: (size) => (
+  echo: (size, label) => (
     <svg
       width={size}
       height={size}
       viewBox="0 0 80 80"
       xmlns="http://www.w3.org/2000/svg"
-      aria-label="Echo AI portrait"
+      aria-label={label}
       role="img"
       style={{ display: 'block' }}
     >
@@ -812,13 +813,13 @@ const PORTRAITS: Record<string, (size: number) => React.JSX.Element> = {
   ),
 
   // ── Kim: slicked hair, monocle, gold accents ─────────────────────────────────
-  kim: (size) => (
+  kim: (size, label) => (
     <svg
       width={size}
       height={size}
       viewBox="0 0 80 80"
       xmlns="http://www.w3.org/2000/svg"
-      aria-label="Kim portrait"
+      aria-label={label}
       role="img"
       style={{ display: 'block' }}
     >
@@ -874,13 +875,13 @@ const PORTRAITS: Record<string, (size: number) => React.JSX.Element> = {
   ),
 
   // ── Blackwell: full face mask, red eye slits ─────────────────────────────────
-  blackwell: (size) => (
+  blackwell: (size, label) => (
     <svg
       width={size}
       height={size}
       viewBox="0 0 80 80"
       xmlns="http://www.w3.org/2000/svg"
-      aria-label="Blackwell portrait"
+      aria-label={label}
       role="img"
       style={{ display: 'block' }}
     >
@@ -943,13 +944,13 @@ const PORTRAITS: Record<string, (size: number) => React.JSX.Element> = {
   ),
 
   // ── Kowalski: hardhat, grease marks, orange ──────────────────────────────────
-  kowalski: (size) => (
+  kowalski: (size, label) => (
     <svg
       width={size}
       height={size}
       viewBox="0 0 80 80"
       xmlns="http://www.w3.org/2000/svg"
-      aria-label="Kowalski portrait"
+      aria-label={label}
       role="img"
       style={{ display: 'block' }}
     >
@@ -999,13 +1000,13 @@ const PORTRAITS: Record<string, (size: number) => React.JSX.Element> = {
   ),
 
   // ── Delta-7: angular industrial bot, amber LED eyes ──────────────────────────
-  delta7: (size) => (
+  delta7: (size, label) => (
     <svg
       width={size}
       height={size}
       viewBox="0 0 80 80"
       xmlns="http://www.w3.org/2000/svg"
-      aria-label="Delta-7 portrait"
+      aria-label={label}
       role="img"
       style={{ display: 'block' }}
     >
@@ -1116,13 +1117,13 @@ const PORTRAITS: Record<string, (size: number) => React.JSX.Element> = {
   ),
 
   // ── Volkov: heavy armor, cold blue visor ─────────────────────────────────────
-  volkov: (size) => (
+  volkov: (size, label) => (
     <svg
       width={size}
       height={size}
       viewBox="0 0 80 80"
       xmlns="http://www.w3.org/2000/svg"
-      aria-label="Volkov portrait"
+      aria-label={label}
       role="img"
       style={{ display: 'block' }}
     >
@@ -1176,13 +1177,13 @@ const PORTRAITS: Record<string, (size: number) => React.JSX.Element> = {
   ),
 
   // ── AI Fragment: corrupted/glitchy, static, red ──────────────────────────────
-  aifragment: (size) => (
+  aifragment: (size, label) => (
     <svg
       width={size}
       height={size}
       viewBox="0 0 80 80"
       xmlns="http://www.w3.org/2000/svg"
-      aria-label="AI Fragment portrait"
+      aria-label={label}
       role="img"
       style={{ display: 'block' }}
     >
@@ -1277,13 +1278,13 @@ const PORTRAITS: Record<string, (size: number) => React.JSX.Element> = {
   ),
 
   // ── Core Guardian: symmetrical AI, green matrix patterns ────────────────────
-  coreguardian: (size) => (
+  coreguardian: (size, label) => (
     <svg
       width={size}
       height={size}
       viewBox="0 0 80 80"
       xmlns="http://www.w3.org/2000/svg"
-      aria-label="Core Guardian portrait"
+      aria-label={label}
       role="img"
       style={{ display: 'block' }}
     >
@@ -1368,13 +1369,13 @@ const PORTRAITS: Record<string, (size: number) => React.JSX.Element> = {
   ),
 
   // ── Ghost: ethereal, semi-transparent, wispy ────────────────────────────────
-  ghost: (size) => (
+  ghost: (size, label) => (
     <svg
       width={size}
       height={size}
       viewBox="0 0 80 80"
       xmlns="http://www.w3.org/2000/svg"
-      aria-label="Ghost portrait"
+      aria-label={label}
       role="img"
       style={{ display: 'block' }}
     >
@@ -1433,13 +1434,13 @@ const PORTRAITS: Record<string, (size: number) => React.JSX.Element> = {
   ),
 
   // ── Sterling: CEO, sharp suit, monocle, gold ────────────────────────────────
-  sterling: (size) => (
+  sterling: (size, label) => (
     <svg
       width={size}
       height={size}
       viewBox="0 0 80 80"
       xmlns="http://www.w3.org/2000/svg"
-      aria-label="Sterling portrait"
+      aria-label={label}
       role="img"
       style={{ display: 'block' }}
     >
@@ -1498,13 +1499,13 @@ const PORTRAITS: Record<string, (size: number) => React.JSX.Element> = {
   ),
 
   // ── Nova: sleek AI assistant, holographic teal ──────────────────────────────
-  nova: (size) => (
+  nova: (size, label) => (
     <svg
       width={size}
       height={size}
       viewBox="0 0 80 80"
       xmlns="http://www.w3.org/2000/svg"
-      aria-label="Nova portrait"
+      aria-label={label}
       role="img"
       style={{ display: 'block' }}
     >
@@ -1592,13 +1593,13 @@ const PORTRAITS: Record<string, (size: number) => React.JSX.Element> = {
   ),
 
   // ── Snake: final boss, dark hood, toxic green slit eyes ──────────────────────
-  snake: (size) => (
+  snake: (size, label) => (
     <svg
       width={size}
       height={size}
       viewBox="0 0 80 80"
       xmlns="http://www.w3.org/2000/svg"
-      aria-label="Snake portrait"
+      aria-label={label}
       role="img"
       style={{ display: 'block' }}
     >
@@ -1669,13 +1670,13 @@ const PORTRAITS: Record<string, (size: number) => React.JSX.Element> = {
   ),
 
   // ── Player: agent silhouette, green visor ────────────────────────────────────
-  player: (size) => (
+  player: (size, label) => (
     <svg
       width={size}
       height={size}
       viewBox="0 0 80 80"
       xmlns="http://www.w3.org/2000/svg"
-      aria-label="Player portrait"
+      aria-label={label}
       role="img"
       style={{ display: 'block' }}
     >
@@ -1727,7 +1728,11 @@ const PORTRAITS: Record<string, (size: number) => React.JSX.Element> = {
 };
 
 export function NpcPortrait({ portraitId, size = 80 }: NpcPortraitProps): React.JSX.Element {
+  const { t } = useTranslation('ui');
   const renderer = PORTRAITS[portraitId];
-  if (renderer) return renderer(size);
+  if (renderer) {
+    const name = t(`portrait.names.${portraitId}`);
+    return renderer(size, t('portrait.aria', { name }));
+  }
   return <FallbackPortrait portraitId={portraitId} size={size} />;
 }

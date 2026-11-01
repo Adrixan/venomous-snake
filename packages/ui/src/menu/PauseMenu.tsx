@@ -104,10 +104,10 @@ export function PauseMenu({
             textShadow: '0 0 10px #00ff9d44',
           }}
         >
-          PAUSED
+          {t('menu.paused')}
         </h2>
 
-        <div role="menu" aria-label="Pause Menu">
+        <div role="menu" aria-label={t('menu.pause_aria')}>
           {items.map((item, index) => {
             const isSelected = index === selectedIndex;
             const buttonStyle: React.CSSProperties = {

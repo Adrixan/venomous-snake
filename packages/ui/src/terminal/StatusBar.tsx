@@ -15,7 +15,6 @@ interface ToolbarButton {
   id: string;
   icon: string;
   labelKey: string;
-  fallback: string;
   shortcut: string;
   action: () => void;
 }
@@ -34,7 +33,6 @@ function StatusBarInner({ onOpenPanel, onSave, enabled }: StatusBarProps): React
       id: 'quests',
       icon: '📋',
       labelKey: 'storyTerminal.quests',
-      fallback: 'Quests',
       shortcut: 'Q',
       action: handleQuests,
     },
@@ -42,7 +40,6 @@ function StatusBarInner({ onOpenPanel, onSave, enabled }: StatusBarProps): React
       id: 'map',
       icon: '🗺',
       labelKey: 'storyTerminal.map',
-      fallback: 'Map',
       shortcut: 'M',
       action: handleMap,
     },
@@ -50,7 +47,6 @@ function StatusBarInner({ onOpenPanel, onSave, enabled }: StatusBarProps): React
       id: 'inventory',
       icon: '🎒',
       labelKey: 'storyTerminal.inventory',
-      fallback: 'Items',
       shortcut: 'I',
       action: handleInventory,
     },
@@ -58,7 +54,6 @@ function StatusBarInner({ onOpenPanel, onSave, enabled }: StatusBarProps): React
       id: 'skills',
       icon: '✦',
       labelKey: 'storyTerminal.skills',
-      fallback: 'Skills',
       shortcut: 'K',
       action: handleSkills,
     },
@@ -66,7 +61,6 @@ function StatusBarInner({ onOpenPanel, onSave, enabled }: StatusBarProps): React
       id: 'settings',
       icon: '⚙',
       labelKey: 'storyTerminal.settings',
-      fallback: 'Settings',
       shortcut: 'S',
       action: handleSettings,
     },
@@ -74,7 +68,6 @@ function StatusBarInner({ onOpenPanel, onSave, enabled }: StatusBarProps): React
       id: 'save',
       icon: '💾',
       labelKey: 'storyTerminal.save',
-      fallback: 'Save',
       shortcut: 'F5',
       action: onSave,
     },
@@ -98,20 +91,16 @@ function StatusBarInner({ onOpenPanel, onSave, enabled }: StatusBarProps): React
   }, [enabled, handleSettings, onSave]);
 
   return (
-    <div
-      className="story-status-bar"
-      role="toolbar"
-      aria-label={t('storyTerminal.toolbar', 'Toolbar')}
-    >
+    <div className="story-status-bar" role="toolbar" aria-label={t('storyTerminal.toolbar')}>
       {buttons.map((btn) => (
         <button
           key={btn.id}
           className="story-status-btn"
           onClick={btn.action}
-          aria-label={t(btn.labelKey, btn.fallback)}
+          aria-label={t(btn.labelKey)}
         >
           <span aria-hidden="true">{btn.icon}</span>
-          {t(btn.labelKey, btn.fallback)}
+          {t(btn.labelKey)}
           <span className="story-status-shortcut" aria-hidden="true">
             [{btn.shortcut}]
           </span>

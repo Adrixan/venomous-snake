@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useCallback, useImperativeHandle, forwardRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { EditorState, Compartment } from '@codemirror/state';
 import {
   EditorView,
@@ -45,6 +46,7 @@ function TerminalEditorInner(
   }: TerminalEditorProps,
   ref: React.ForwardedRef<TerminalEditorHandle>,
 ): React.JSX.Element {
+  const { t } = useTranslation('ui');
   const containerRef = useRef<HTMLDivElement>(null);
   const viewRef = useRef<EditorView | null>(null);
   const readOnlyCompartment = useRef(new Compartment());
@@ -115,6 +117,12 @@ function TerminalEditorInner(
       closeBrackets(),
       autocompletion(),
       python(),
+      EditorState.phrases.of({
+        Completions: t('terminal.editor.phrases.completions'),
+        'Selection deleted': t('terminal.editor.phrases.selection_deleted'),
+        'Control character': t('terminal.editor.phrases.control_character'),
+        close: t('terminal.editor.phrases.close'),
+      }),
       terminalTheme,
       syntaxTheme,
       keymap.of([
@@ -182,27 +190,31 @@ function TerminalEditorInner(
 
   return (
     <div className={`terminal-editor-wrapper${isAndroid ? ' android-custom-kb' : ''}`}>
-      <div ref={containerRef} className="terminal-editor-cm" aria-label="Python code editor" />
+      <div
+        ref={containerRef}
+        className="terminal-editor-cm"
+        aria-label={t('terminal.editor.aria')}
+      />
       <div data-tutorial="run-submit-buttons" className="terminal-editor-toolbar">
         <button
           className="terminal-btn terminal-btn-run"
           onClick={handleRunClick}
           disabled={disabled}
-          aria-label="Run code (Ctrl+Enter)"
+          aria-label={t('terminal.editor.run_aria')}
         >
-          Run ▶
+          {t('terminal.editor.run')}
         </button>
         {onSubmit !== undefined && (
           <button
             className="terminal-btn terminal-btn-submit"
             onClick={handleSubmitClick}
             disabled={disabled}
-            aria-label="Submit solution"
+            aria-label={t('terminal.editor.submit_aria')}
           >
-            Submit ✓
+            {t('terminal.editor.submit')}
           </button>
         )}
-        <span style={{ fontSize: '11px', color: '#3d4752' }}>Ctrl+Enter</span>
+        <span style={{ fontSize: '11px', color: '#3d4752' }}>{t('terminal.run_shortcut')}</span>
       </div>
     </div>
   );

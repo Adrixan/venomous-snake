@@ -105,7 +105,7 @@ function SingleToast({ notification, onDismiss }: SingleToastProps): React.JSX.E
         </div>
         {notification.achievement.xpReward > 0 && (
           <div style={{ color: '#00ff9d', fontSize: '11px', marginTop: '4px' }}>
-            +{notification.achievement.xpReward} XP
+            {t('challenge.xp_earned', { xp: notification.achievement.xpReward })}
           </div>
         )}
       </div>
@@ -120,6 +120,7 @@ export function AchievementToast({
   notifications,
   onDismiss,
 }: AchievementToastProps): React.JSX.Element {
+  const { t } = useTranslation('ui');
   const containerStyle: React.CSSProperties = {
     position: 'fixed',
     bottom: '24px',
@@ -132,7 +133,7 @@ export function AchievementToast({
   };
 
   return (
-    <div style={containerStyle} aria-label="Achievement notifications">
+    <div style={containerStyle} aria-label={t('notifications.achievements_aria')}>
       {notifications.map((notification) => (
         <div key={notification.id} style={{ pointerEvents: 'auto' }}>
           <SingleToast notification={notification} onDismiss={onDismiss} />

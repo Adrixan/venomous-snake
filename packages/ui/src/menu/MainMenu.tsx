@@ -127,9 +127,9 @@ export function MainMenu({
       <div style={scanlineStyle} />
       <div style={{ position: 'relative', zIndex: 2, textAlign: 'center' }}>
         <h1 style={titleStyle}>VENOMOUS SNAKE</h1>
-        <p style={subtitleStyle}>Python Hacking RPG</p>
+        <p style={subtitleStyle}>{t('menu.subtitle')}</p>
 
-        <div role="menu" aria-label="Main Menu">
+        <div role="menu" aria-label={t('menu.main_aria')}>
           {visibleItems.map((item, index) => {
             const isSelected = index === selectedIndex;
             const buttonStyle: React.CSSProperties = {

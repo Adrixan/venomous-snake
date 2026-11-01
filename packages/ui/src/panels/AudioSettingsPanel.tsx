@@ -115,24 +115,20 @@ export function AudioSettingsPanel({
 
   return (
     <div>
-      <p style={sectionHeadingStyle}>{t('settings.audio', 'Audio')}</p>
+      <p style={sectionHeadingStyle}>{t('settings.audio')}</p>
 
       <VolumeRow
-        label={t('settings.volume_master', 'Master Volume')}
+        label={t('settings.volume_master')}
         value={masterVolume}
         onChange={onMasterVolume}
       />
-      <VolumeRow
-        label={t('settings.volume_music', 'Music')}
-        value={musicVolume}
-        onChange={onMusicVolume}
-      />
-      <VolumeRow label={t('settings.volume_sfx', 'SFX')} value={sfxVolume} onChange={onSfxVolume} />
+      <VolumeRow label={t('settings.volume_music')} value={musicVolume} onChange={onMusicVolume} />
+      <VolumeRow label={t('settings.volume_sfx')} value={sfxVolume} onChange={onSfxVolume} />
 
       <div style={rowStyle}>
-        <span style={labelStyle}>{t('settings.mute', 'Mute All')}</span>
+        <span style={labelStyle}>{t('settings.mute')}</span>
         <button style={muteButtonStyle} onClick={onToggleMute} aria-pressed={isMuted}>
-          {isMuted ? t('settings.unmute', 'UNMUTE') : t('settings.mute_btn', 'MUTE')}
+          {isMuted ? t('settings.unmute') : t('settings.mute_btn')}
         </button>
       </div>
     </div>

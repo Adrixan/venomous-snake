@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 import type { CipherMood } from '@venomous-snake/narrative';
 import { CipherPortrait } from './CipherPortrait';
 
@@ -18,6 +19,7 @@ export function CipherDialog({
   autoDismissMs = 8000,
   onDismiss,
 }: CipherDialogProps): React.JSX.Element {
+  const { t } = useTranslation('ui');
   const [displayedText, setDisplayedText] = useState('');
   const [isComplete, setIsComplete] = useState(false);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -68,7 +70,7 @@ export function CipherDialog({
     <div
       role="status"
       aria-live="polite"
-      aria-label="CIPHER message"
+      aria-label={t('cipher_ui.message_aria')}
       style={{
         display: 'flex',
         alignItems: 'flex-start',
@@ -142,18 +144,18 @@ export function CipherDialog({
               type="button"
               onClick={showFullText}
               style={buttonStyle('#00b4d8')}
-              aria-label="Skip typewriter animation"
+              aria-label={t('cipher_ui.skip_aria')}
             >
-              Skip
+              {t('cipher_ui.skip')}
             </button>
           )}
           <button
             type="button"
             onClick={onDismiss}
             style={buttonStyle('#00ff9d')}
-            aria-label="Dismiss CIPHER message"
+            aria-label={t('cipher_ui.dismiss_aria')}
           >
-            Dismiss
+            {t('cipher_ui.dismiss')}
           </button>
         </div>
       </div>

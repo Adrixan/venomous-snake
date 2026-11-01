@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 export interface LoadingScreenProps {
   /** Progress 0–1. When undefined the bar animates indeterminately. */
@@ -15,17 +16,13 @@ const ASCII_LOGO = `
 ╚██████╗██║██║     ██║  ██║███████╗██║  ██║
  ╚═════╝╚═╝╚═╝     ╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝`.trim();
 
-const SUBTITLE = 'VENOMOUS SNAKE • RATTLESNAKE CORP SECURITY DIVISION';
-
 /**
  * Cyberpunk loading screen with animated circuit pattern, neon progress bar,
  * and CIPHER ASCII logo. Used for initial game load, floor transitions, and
  * Pyodide initialisation.
  */
-export function LoadingScreen({
-  progress,
-  statusText = 'LOADING...',
-}: LoadingScreenProps): React.JSX.Element {
+export function LoadingScreen({ progress, statusText }: LoadingScreenProps): React.JSX.Element {
+  const { t } = useTranslation('ui');
   const [glitchActive, setGlitchActive] = useState(false);
   const [dotCount, setDotCount] = useState(1);
 
@@ -59,7 +56,7 @@ export function LoadingScreen({
         aria-valuenow={pct ?? undefined}
         aria-valuemin={0}
         aria-valuemax={100}
-        aria-label="Loading"
+        aria-label={t('loading.aria')}
       >
         {/* Animated circuit board background */}
         <div className="ls-circuit" aria-hidden="true">
@@ -74,7 +71,7 @@ export function LoadingScreen({
           <pre className={`ls-logo ${glitchActive ? 'ls-logo-glitch' : ''}`} aria-label="CIPHER">
             {ASCII_LOGO}
           </pre>
-          <p className="ls-subtitle">{SUBTITLE}</p>
+          <p className="ls-subtitle">{t('loading.subtitle')}</p>
 
           {/* Progress bar */}
           <div className="ls-bar-track" aria-hidden="true">
@@ -87,7 +84,7 @@ export function LoadingScreen({
 
           {/* Status text */}
           <p className="ls-status">
-            {statusText}
+            {statusText ?? t('loading.status')}
             <span className="ls-dots" aria-hidden="true">
               {'.'.repeat(dotCount)}
             </span>
