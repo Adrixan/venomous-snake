@@ -25,6 +25,7 @@ export const ch01_02_variables: Challenge = {
       hidden: false,
     },
   ],
+  structureChecks: [{ type: 'assign', name: 'alias' }],
 
   hints: [
     {

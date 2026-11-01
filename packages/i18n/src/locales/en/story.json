@@ -108,12 +108,17 @@
       "frame1": "[ CONNECTION LOST ]",
       "frame2": "Hey — setbacks happen. Every great programmer has a stack of failed attempts behind them. The question is whether you get back up.",
       "frame3": "I'll be right here when you're ready to try again. The building isn't going anywhere. Neither am I."
+    },
+    "controls": {
+      "skip": "SKIP",
+      "finish": "Click or press Space to skip",
+      "next": "Click or press Space to continue"
     }
   },
   "tutorial": {
     "step": {
-      "movement": "Use WASD or the arrow keys to move around. Try walking towards that terminal — the glowing one! I'll wait.",
-      "interaction": "Nice moves! Now press E or Space to interact with objects. Give that terminal a go — it won't bite. Probably.",
+      "movement": "This is your operations terminal. Everything you can do right now is listed in the action panel: pick one with a click or its number key.",
+      "interaction": "See that terminal in the list? Hacking it opens a Python challenge. Go on, it won't bite. Probably.",
       "terminalBasics": "Welcome to your hacking terminal! This is where the magic happens. You write Python code right here in the editor. Try typing: print('hello') — then hit Run.",
       "codeSubmit": "See those buttons? 'Run' tests your code without submitting. 'Submit' locks in your answer. Try Run first, check the output, then Submit when you're confident.",
       "firstSuccess": "You just wrote your first working hack! Seriously — that's not nothing. See that XP bar? Every challenge you complete fills it up. Keep going and you'll level up fast."

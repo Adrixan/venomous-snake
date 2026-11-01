@@ -108,12 +108,17 @@
       "frame1": "[ VERBINDUNG GETRENNT ]",
       "frame2": "Hey — Rückschläge passieren. Jeder großartige Programmierer hat einen Stapel gescheiterter Versuche hinter sich. Die Frage ist, ob man wieder aufsteht.",
       "frame3": "Ich bin gleich hier, wenn du bereit bist, es nochmal zu versuchen. Das Gebäude geht nirgendwo hin. Ich auch nicht."
+    },
+    "controls": {
+      "skip": "ÜBERSPRINGEN",
+      "finish": "Klicke oder drücke die Leertaste zum Überspringen",
+      "next": "Klicke oder drücke die Leertaste, um fortzufahren"
     }
   },
   "tutorial": {
     "step": {
-      "movement": "Nutze WASD oder die Pfeiltasten, um dich zu bewegen. Versuche, zu dem Terminal zu laufen — dem leuchtenden! Ich warte.",
-      "interaction": "Schöne Bewegungen! Drücke jetzt E oder Leertaste, um mit Objekten zu interagieren. Probiere das Terminal aus — es beißt nicht. Wahrscheinlich.",
+      "movement": "Das ist dein Einsatzterminal. Alles, was du gerade tun kannst, steht in der Aktionsliste: Wähle per Klick oder Zifferntaste.",
+      "interaction": "Siehst du das Terminal in der Liste? Wenn du es hackst, öffnet sich eine Python-Aufgabe. Nur zu, es beißt nicht. Wahrscheinlich.",
       "terminalBasics": "Willkommen an deinem Hacking-Terminal! Hier passiert die Magie. Du schreibst Python-Code direkt hier im Editor. Versuche es: print('hallo') — dann drücke Ausführen.",
       "codeSubmit": "Siehst du die Schaltflächen? 'Ausführen' testet deinen Code ohne Einreichen. 'Einreichen' sperrt deine Antwort ein. Probiere zuerst Ausführen, prüfe die Ausgabe, dann reiche ein wenn du sicher bist.",
       "firstSuccess": "Du hast gerade deinen ersten funktionierenden Hack geschrieben! Das ist wirklich etwas. Siehst du die XP-Leiste? Jede abgeschlossene Herausforderung füllt sie auf. Mach weiter und du levelst schnell auf."

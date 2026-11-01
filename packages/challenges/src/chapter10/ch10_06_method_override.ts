@@ -31,6 +31,8 @@ export const ch10_06_method_override: Challenge = {
       hidden: true,
     },
   ],
+  structureChecks: [{ type: 'node', node: 'ClassDef', min: 3 }],
+
   hints: [
     {
       tier: 1 as const,

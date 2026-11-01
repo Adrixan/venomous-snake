@@ -7,7 +7,7 @@ export default {
   ch01_02: {
     title: 'Deckidentität',
     description:
-      'Erstelle eine Variable namens \'codename\', weise ihr deinen Agentennamen als Zeichenkette zu und gib sie dann aus.\n\nVariablen speichern Werte zur späteren Verwendung. Nutze das =-Zeichen, um einen Wert zuzuweisen: meine_variable = "ein Text". Du kannst den Variablennamen dann überall verwenden, wo du den Wert selbst nutzen würdest.',
+      'Erstelle eine Variable namens \'alias\', weise ihr die Zeichenkette Ghost zu und gib sie aus.\n\nVariablen speichern Werte zur späteren Verwendung. Nutze das =-Zeichen, um einen Wert zuzuweisen: meine_variable = "ein Text". Du kannst den Variablennamen dann überall verwenden, wo du den Wert selbst nutzen würdest.',
   },
   ch01_03: {
     title: 'Zahlen knacken',

@@ -31,6 +31,10 @@ export const ch11_08_putting_it_together: Challenge = {
       hidden: true,
     },
   ],
+  structureChecks: [
+    { type: 'node', node: 'ClassDef' },
+    { type: 'call', name: 'filter_missions' },
+  ],
 
   hints: [
     {

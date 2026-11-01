@@ -3,7 +3,9 @@ import type {
   TestCase,
   ExecutionResult,
   PythonInterpreter,
+  StructureCheck,
 } from '@venomous-snake/shared-types';
+import { findUnmetChecks, hasPlaceholder } from './StructureChecker';
 
 export interface TestResult {
   testCase: TestCase;
@@ -11,6 +13,8 @@ export interface TestResult {
   actualOutput?: string;
   error?: string;
   executionTimeMs: number;
+  /** Set on a result that reports a broken writing rule rather than a test case. */
+  structureCheck?: StructureCheck;
 }
 
 export interface ChallengeResult {
@@ -35,12 +39,39 @@ export class ChallengeRunner {
       testResults.push(result);
     }
 
+    if (testResults.every((r) => r.passed)) {
+      testResults.push(...(await this.runStructureChecks(challenge, studentCode)));
+    }
+
     return {
       challengeId: challenge.id,
       allPassed: testResults.every((r) => r.passed),
       testResults,
       totalTimeMs: performance.now() - startTime,
     };
+  }
+
+  /** Reports leftover blanks and broken writing rules as failed results. */
+  private async runStructureChecks(challenge: Challenge, code: string): Promise<TestResult[]> {
+    const results: TestResult[] = [];
+    const report = (id: string, description: string, check?: StructureCheck): void => {
+      results.push({
+        testCase: { id, description, expectedOutput: '', hidden: false },
+        passed: false,
+        error: description,
+        executionTimeMs: 0,
+        ...(check !== undefined ? { structureCheck: check } : {}),
+      });
+    };
+    if (hasPlaceholder(code)) report('placeholder', 'Fill in every ___ blank');
+    const checks = challenge.structureChecks ?? [];
+    if (checks.length > 0) {
+      const unmet = await findUnmetChecks(this.interpreter, code, checks);
+      unmet.forEach((check, index) => {
+        report(`structure-${String(index)}`, `Required: ${JSON.stringify(check)}`, check);
+      });
+    }
+    return results;
   }
 
   private async runTestCase(testCase: TestCase, code: string): Promise<TestResult> {

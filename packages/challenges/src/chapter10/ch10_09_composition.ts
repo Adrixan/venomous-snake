@@ -29,6 +29,12 @@ export const ch10_09_composition: Challenge = {
       hidden: true,
     },
   ],
+  structureChecks: [
+    { type: 'node', node: 'ClassDef', min: 2 },
+    { type: 'call', name: 'add_floor' },
+    { type: 'call', name: 'list_floors' },
+  ],
+
   hints: [
     {
       tier: 1 as const,

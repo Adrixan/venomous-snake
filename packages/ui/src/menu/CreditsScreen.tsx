@@ -11,6 +11,8 @@ export interface CreditsScreenProps {
     achievementsUnlocked: number;
     floorsCleared: number;
   };
+  /** Runtime version line, shown as the game's own `python --version`. */
+  pythonVersion: string;
   onNewGamePlus: () => void;
   onReturnToMenu: () => void;
 }
@@ -28,6 +30,7 @@ function formatTime(seconds: number): string {
 
 export function CreditsScreen({
   stats,
+  pythonVersion,
   onNewGamePlus,
   onReturnToMenu,
 }: CreditsScreenProps): React.JSX.Element {
@@ -260,7 +263,7 @@ export function CreditsScreen({
             }}
           >
             <div>$ python --version</div>
-            <div>Python 3.12.0</div>
+            <div>{pythonVersion}</div>
             <div>&nbsp;</div>
             <div>$ ./venomous_snake --credits</div>
             <div>Mission complete. Well played.</div>

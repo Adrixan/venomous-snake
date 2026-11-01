@@ -33,6 +33,11 @@ export const ch10_02_methods: Challenge = {
       hidden: true,
     },
   ],
+  structureChecks: [
+    { type: 'node', node: 'ClassDef' },
+    { type: 'node', node: 'FunctionDef', min: 2 },
+  ],
+
   hints: [
     {
       tier: 1 as const,

@@ -33,6 +33,11 @@ export const ch12_10_final_showdown: Challenge = {
       hidden: true,
     },
   ],
+  structureChecks: [
+    { type: 'node', node: 'ClassDef' },
+    { type: 'node', node: 'FunctionDef' },
+    { type: 'node', node: ['For', 'comprehension'] },
+  ],
 
   hints: [
     {

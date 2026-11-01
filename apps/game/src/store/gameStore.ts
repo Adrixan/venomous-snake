@@ -1,5 +1,9 @@
 import { create } from 'zustand';
-import type { GameStoreState, NarrativeEntry } from '@venomous-snake/shared-types';
+import type {
+  GameStoreState,
+  NarrativeEntry,
+  PersistentProgress,
+} from '@venomous-snake/shared-types';
 
 const STORAGE_KEY = 'vs-settings';
 
@@ -57,6 +61,15 @@ const INITIAL_OVERLAY_STATE = {
   mapOpen: false,
 };
 
+const INITIAL_PROGRESS: PersistentProgress = {
+  unlockedSkills: [],
+  spentSkillXp: 0,
+  unlockedAchievements: [],
+  seenCutscenes: [],
+  playTimeMs: 0,
+  newGamePlus: 0,
+};
+
 export const useGameStore = create<GameStoreState>((set) => ({
   currentRoomId: 'lobby_entrance',
   overlay: INITIAL_OVERLAY_STATE,
@@ -90,6 +103,8 @@ export const useGameStore = create<GameStoreState>((set) => ({
 
   // Game completion
   gameCompleted: false,
+
+  ...INITIAL_PROGRESS,
 
   // Audio settings
   masterVolume: initialAudio.masterVolume,
@@ -210,6 +225,24 @@ export const useGameStore = create<GameStoreState>((set) => ({
     });
   },
   toggleMute: () => set((state) => ({ isMuted: !state.isMuted })),
+  unlockSkill: (skillId, xpCost) =>
+    set((state) => ({
+      unlockedSkills: [...state.unlockedSkills, skillId],
+      spentSkillXp: state.spentSkillXp + xpCost,
+    })),
+  addUnlockedAchievement: (id) =>
+    set((state) =>
+      state.unlockedAchievements.includes(id)
+        ? state
+        : { unlockedAchievements: [...state.unlockedAchievements, id] },
+    ),
+  markCutsceneSeen: (id) =>
+    set((state) =>
+      state.seenCutscenes.includes(id) ? state : { seenCutscenes: [...state.seenCutscenes, id] },
+    ),
+  addPlayTime: (ms) => set((state) => ({ playTimeMs: state.playTimeMs + ms })),
+  restoreProgress: (progress) => set(progress),
+
   resetGameState: () =>
     set({
       currentRoomId: 'lobby_entrance',
@@ -228,6 +261,7 @@ export const useGameStore = create<GameStoreState>((set) => ({
       challengeResult: null,
       completedChallenges: [],
       unlockedFloors: [0],
+      ...INITIAL_PROGRESS,
       dialogActive: false,
       dialogContent: null,
       alertLevel: 0,

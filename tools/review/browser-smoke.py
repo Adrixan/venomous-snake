@@ -3,7 +3,7 @@
 # ///
 """Smoke test of the running dev server.
 
-Title screen renders, a new game reaches an NPC dialog, the Python worker runs code and survives a runaway loop,
+Title screen renders, a new game passes the intro and tutorial to an NPC dialog, the Python worker runs code and survives a runaway loop,
 and there are no page errors.
 """
 from pathlib import Path
@@ -39,6 +39,9 @@ with sync_playwright() as p:
     page.get_by_placeholder('Enter codename...').fill('Tester')
     page.get_by_role('button', name='Next').click()
     page.get_by_role('button', name='Start Mission').click()
+    page.locator('button', has_text='SKIP').click()
+    page.get_by_role('button', name='Got it').click()
+    page.get_by_role('button', name='Got it').click()
     page.get_by_role('button', name='Talk to Guard').click()
     expect(page.get_by_role('dialog')).to_be_visible()
     result = page.evaluate(PYTHON_CHECK, INTERPRETER)

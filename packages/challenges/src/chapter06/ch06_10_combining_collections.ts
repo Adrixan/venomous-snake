@@ -32,6 +32,7 @@ export const ch06_10_combining_collections: Challenge = {
       hidden: true,
     },
   ],
+  structureChecks: [{ type: 'call', name: 'update' }],
 
   hints: [
     {

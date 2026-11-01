@@ -11,7 +11,7 @@ void i18n
     resources: { en, de },
     fallbackLng: 'en',
     defaultNS: 'common',
-    ns: ['common', 'ui', 'challenges', 'dialog', 'chapters', 'story'],
+    ns: ['common', 'ui', 'challenges', 'dialog', 'chapters', 'story', 'cipher'],
     interpolation: { escapeValue: false },
     detection: {
       order: ['localStorage', 'navigator'],

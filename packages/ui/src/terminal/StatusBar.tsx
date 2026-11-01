@@ -1,10 +1,14 @@
+import type { ActivePanel } from '@venomous-snake/shared-types';
 import React, { useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 
+export type ToolbarPanel = Exclude<ActivePanel, 'none'>;
+
 export interface StatusBarProps {
-  onOpenPanel: (panel: 'questlog' | 'map' | 'settings') => void;
+  onOpenPanel: (panel: ToolbarPanel) => void;
   onSave: () => void;
-  onPause: () => void;
+  /** False while something else owns the keyboard, such as a panel or a cutscene. */
+  enabled: boolean;
 }
 
 interface ToolbarButton {
@@ -16,12 +20,14 @@ interface ToolbarButton {
   action: () => void;
 }
 
-function StatusBarInner({ onOpenPanel, onSave, onPause }: StatusBarProps): React.JSX.Element {
+function StatusBarInner({ onOpenPanel, onSave, enabled }: StatusBarProps): React.JSX.Element {
   const { t } = useTranslation('ui');
 
   const handleQuests = useCallback(() => onOpenPanel('questlog'), [onOpenPanel]);
   const handleMap = useCallback(() => onOpenPanel('map'), [onOpenPanel]);
   const handleSettings = useCallback(() => onOpenPanel('settings'), [onOpenPanel]);
+  const handleInventory = useCallback(() => onOpenPanel('inventory'), [onOpenPanel]);
+  const handleSkills = useCallback(() => onOpenPanel('skills'), [onOpenPanel]);
 
   const buttons: ToolbarButton[] = [
     {
@@ -39,6 +45,22 @@ function StatusBarInner({ onOpenPanel, onSave, onPause }: StatusBarProps): React
       fallback: 'Map',
       shortcut: 'M',
       action: handleMap,
+    },
+    {
+      id: 'inventory',
+      icon: '🎒',
+      labelKey: 'storyTerminal.inventory',
+      fallback: 'Items',
+      shortcut: 'I',
+      action: handleInventory,
+    },
+    {
+      id: 'skills',
+      icon: '✦',
+      labelKey: 'storyTerminal.skills',
+      fallback: 'Skills',
+      shortcut: 'K',
+      action: handleSkills,
     },
     {
       id: 'settings',
@@ -59,31 +81,21 @@ function StatusBarInner({ onOpenPanel, onSave, onPause }: StatusBarProps): React
   ];
 
   // Keyboard shortcuts
+  // Panels, the map and pausing are owned by the app, which knows what else is open.
   useEffect(() => {
-    const onKey = (e: KeyboardEvent) => {
-      // Don't intercept when user is typing in an input/textarea
-      const tag = (e.target as HTMLElement).tagName;
-      if (tag === 'INPUT' || tag === 'TEXTAREA') return;
-
-      const key = e.key.toLowerCase();
-      if (key === 'q' && !e.ctrlKey && !e.metaKey) {
-        e.preventDefault();
-        handleQuests();
-      } else if (key === 'm' && !e.ctrlKey && !e.metaKey) {
-        e.preventDefault();
-        handleMap();
-      } else if (key === 'escape') {
-        e.preventDefault();
-        onPause();
-      } else if (e.key === 'F5') {
+    if (!enabled) return;
+    const onKey = (e: KeyboardEvent): void => {
+      if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) return;
+      if (e.key === 'F5') {
         e.preventDefault();
         onSave();
+      } else if (e.key.toLowerCase() === 's') {
+        handleSettings();
       }
     };
-
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [handleQuests, handleMap, onPause, onSave]);
+  }, [enabled, handleSettings, onSave]);
 
   return (
     <div

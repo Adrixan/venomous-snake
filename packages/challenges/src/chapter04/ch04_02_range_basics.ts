@@ -31,6 +31,10 @@ export const ch04_02_range_basics: Challenge = {
       hidden: true,
     },
   ],
+  structureChecks: [
+    { type: 'node', node: 'For' },
+    { type: 'call', name: 'range' },
+  ],
 
   hints: [
     {

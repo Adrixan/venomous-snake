@@ -53,6 +53,21 @@ export function GameControllerProvider({
     controllerRef.current = localRef.current;
   }
 
+  // Skills and achievements live in the store, so they survive a new controller.
+  useEffect(() => {
+    const controller = localRef.current;
+    if (controller === null) return;
+    const state = useGameStore.getState();
+    controller.restoreAchievements(state.unlockedAchievements);
+    controller.applySkills(state.unlockedSkills);
+    state.setLevel(controller.getLevel());
+    return useGameStore.subscribe((next, previous) => {
+      if (next.unlockedSkills !== previous.unlockedSkills) {
+        controller.applySkills(next.unlockedSkills);
+      }
+    });
+  }, []);
+
   // Wire EventBus → Zustand store
   useEffect(() => {
     const store = useGameStore.getState();
@@ -89,6 +104,7 @@ export function GameControllerProvider({
           break;
 
         case 'ACHIEVEMENT_UNLOCKED':
+          store.addUnlockedAchievement(event.payload.id);
           // Future: surface as toast notification
           console.info('[Achievement unlocked]', event.payload.nameKey);
           break;
@@ -150,16 +166,21 @@ function GameChallengeSessionBridge({
     () => ({
       evaluate: async (code: string): Promise<ChallengeResult & { xpEarned: number }> => {
         const result: SubmitResult = await controller.submitCode(code);
-        if (result.passed && challengeId !== null) {
-          EventBus.emit({
-            type: 'CHALLENGE_COMPLETED',
-            payload: { challengeId, xpEarned: result.xpEarned },
-          });
-        }
+        // Rewards first: completing a challenge triggers the autosave.
         for (const achievement of result.achievements) {
           EventBus.emit({
             type: 'ACHIEVEMENT_UNLOCKED',
             payload: { id: achievement.id, nameKey: achievement.nameKey },
+          });
+        }
+        if (result.passed && challengeId !== null) {
+          EventBus.emit({
+            type: 'XP_CHANGED',
+            payload: { xp: controller.getProgress().totalXp, level: controller.getLevel() },
+          });
+          EventBus.emit({
+            type: 'CHALLENGE_COMPLETED',
+            payload: { challengeId, xpEarned: result.xpEarned },
           });
         }
         return {

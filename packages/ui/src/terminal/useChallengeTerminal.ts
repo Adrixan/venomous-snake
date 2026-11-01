@@ -1,9 +1,16 @@
 import { useState, useCallback, useMemo, useRef, useEffect, useContext } from 'react';
+import { useTranslation } from 'react-i18next';
 import { ChallengeSessionContext } from './ChallengeSession';
-import type { Challenge, PythonOutput, PythonInterpreter } from '@venomous-snake/shared-types';
+import { structureLabel } from './structureLabel';
+import type {
+  Challenge,
+  PythonError,
+  PythonOutput,
+  PythonInterpreter,
+} from '@venomous-snake/shared-types';
 import { challengeMap } from '@venomous-snake/challenges';
 import { ChallengeRunner, HintEngine } from '@venomous-snake/challenge-engine';
-import type { ChallengeResult } from '@venomous-snake/challenge-engine';
+import type { ChallengeResult, TestResult } from '@venomous-snake/challenge-engine';
 import { getSharedInterpreter, initializeSharedInterpreter } from '@venomous-snake/python-runtime';
 
 export interface SubmitResult {
@@ -18,6 +25,8 @@ export interface UseChallengeTerminalReturn {
   outputs: PythonOutput[];
   isRunning: boolean;
   result: SubmitResult | null;
+  /** The Python error of the latest free run, for CIPHER to explain. */
+  runError: PythonError | null;
   hints: string[];
   challengeResult: ChallengeResult | null;
   submitCode: (code: string) => Promise<void>;
@@ -29,6 +38,7 @@ export interface UseChallengeTerminalReturn {
 
 export function useChallengeTerminal(challengeId: string | null): UseChallengeTerminalReturn {
   const session = useContext(ChallengeSessionContext);
+  const { t } = useTranslation('ui');
   const busy = useRef(false);
   const challenge = useMemo<Challenge | null>(
     () => (challengeId !== null ? (challengeMap[challengeId] ?? null) : null),
@@ -38,6 +48,7 @@ export function useChallengeTerminal(challengeId: string | null): UseChallengeTe
   const [outputs, setOutputs] = useState<PythonOutput[]>([]);
   const [isRunning, setIsRunning] = useState(false);
   const [result, setResult] = useState<SubmitResult | null>(null);
+  const [runError, setRunError] = useState<PythonError | null>(null);
   const [hints, setHints] = useState<string[]>([]);
   const [challengeResult, setChallengeResult] = useState<ChallengeResult | null>(null);
 
@@ -80,10 +91,11 @@ export function useChallengeTerminal(challengeId: string | null): UseChallengeTe
       setOutputs([]);
       try {
         await ensureReady();
-        await interpreterRef.current.execute(code, {
+        const execResult = await interpreterRef.current.execute(code, {
           interactive: true,
           echoPrompts: true,
         });
+        setRunError(execResult.error ?? null);
       } catch (error) {
         setOutputs([
           { type: 'stderr', text: error instanceof Error ? error.message : String(error) },
@@ -118,12 +130,16 @@ export function useChallengeTerminal(challengeId: string | null): UseChallengeTe
           : await runner.runChallenge(challenge, code);
         setChallengeResult(cResult);
 
+        const failure = (tr: TestResult): string | undefined => {
+          if (tr.structureCheck !== undefined) return structureLabel(t, tr.structureCheck);
+          return tr.testCase.id === 'placeholder' ? t('terminal.structure.blank') : tr.error;
+        };
         const outputLines = cResult.testResults
           .map((tr) => {
             const mark = tr.passed ? '✓' : '✗';
             return tr.passed
               ? `${mark} ${tr.testCase.description}`
-              : `${mark} ${tr.testCase.description}\n  ${tr.error ?? ''}`;
+              : `${mark} ${failure(tr) ?? tr.testCase.description}`;
           })
           .join('\n');
 
@@ -142,17 +158,18 @@ export function useChallengeTerminal(challengeId: string | null): UseChallengeTe
             xpEarned: 'xpEarned' in cResult ? Number(cResult.xpEarned) : challenge.xpReward,
           });
         } else {
-          const firstFailed = cResult.testResults.find((t) => !t.passed);
-          const failCount = cResult.testResults.filter((t) => !t.passed).length;
+          const firstFailed = cResult.testResults.find((tr) => !tr.passed);
+          const firstError = firstFailed === undefined ? undefined : failure(firstFailed);
+          const failCount = cResult.testResults.filter((tr) => !tr.passed).length;
 
           setOutputs((prev) => [
             ...prev,
             {
               type: 'stderr' as const,
-              text: `✗ ${failCount} test(s) failed\n${firstFailed?.error ?? ''}\n`,
+              text: `✗ ${failCount} test(s) failed\n${firstError ?? ''}\n`,
             },
           ]);
-          setResult({ passed: false, output: outputLines, error: firstFailed?.error });
+          setResult({ passed: false, output: outputLines, error: firstError });
         }
       } catch (error) {
         const message = error instanceof Error ? error.message : String(error);
@@ -163,11 +180,12 @@ export function useChallengeTerminal(challengeId: string | null): UseChallengeTe
         setIsRunning(false);
       }
     },
-    [challenge, runCode, ensureReady, session],
+    [challenge, runCode, ensureReady, session, t],
   );
 
   const resetState = useCallback(() => {
     setOutputs([]);
+    setRunError(null);
     setResult(null);
     setHints([]);
     setChallengeResult(null);
@@ -178,6 +196,7 @@ export function useChallengeTerminal(challengeId: string | null): UseChallengeTe
     outputs,
     isRunning,
     result,
+    runError,
     hints,
     challengeResult,
     submitCode,

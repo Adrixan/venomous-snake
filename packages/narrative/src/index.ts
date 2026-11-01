@@ -10,8 +10,8 @@ export type {
   NarrativeFlag,
   DialogSpeaker,
 } from './types';
-export { CipherAI } from './CipherAI';
-export type { CipherMood, CipherContext } from './CipherAI';
+export { CipherAI, createCipherTranslator } from './CipherAI';
+export type { CipherAIOptions, CipherContext, CipherMood, CipherTranslator } from './CipherAI';
 export { CUTSCENES } from './CutsceneData';
 export type { Cutscene, CutsceneScene } from './CutsceneData';
 export {

@@ -34,6 +34,10 @@ export const ch06_01_create_list: Challenge = {
       hidden: true,
     },
   ],
+  structureChecks: [
+    { type: 'assign', name: 'tools' },
+    { type: 'node', node: 'List' },
+  ],
 
   hints: [
     {

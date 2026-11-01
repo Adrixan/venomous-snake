@@ -29,6 +29,8 @@ export const ch09_10_combining_tools: Challenge = {
       hidden: true,
     },
   ],
+  structureChecks: [{ type: 'node', node: 'Lambda' }],
+
   hints: [
     {
       tier: 1 as const,

@@ -25,13 +25,12 @@ The helper scripts formerly in `.scratch/` now live in `tools/review/` (see Hous
 - No-WASM fallback: closed, `MiniPythonEvaluator` is gone; Python needs WASM.
 - Floor table: closed, `packages/challenges/src/floors.ts` is canonical, one chapter per floor.
 - Narrative: both sources are live. `story.json` narrates rooms through the engine, `narrative/dialogs` plus `dialog.json` drive NPC talks. Earlier notes calling the dialog trees unreachable were wrong: they were bundled, and only their overlay was never mounted.
-- Dormant features: NPC dialogs and items are wired. Credits, cutscenes, tutorial overlay, tutor mode and inventory panel are not rendered and are tree-shaken, so they do not reach players. They stay in the tree: removing them drops product scope, which is the owner's call.
+- Dormant features: all enabled on 2026-11-01 (see below). Still not used, on purpose: `ChallengePanel` (the terminal objectives replaced it), `ResponsiveLayout` and `useArrowNavigation` (the screens have their own layout and key handling), `AudioManager` with `MusicTracks` and `SoundEffects` (they expect `.ogg` files the repo does not have; the game uses procedural audio), `StoryManager`, `useCurriculumProgress`, `utils/performance.ts`.
 
 ## Next steps
 
 - Peter: `git stash drop` the redundant lint-staged backup `b46af8a` (stash@{0}); the permission classifier refused it twice.
 - Peter: a browser that ran the old localhost service worker may need it unregistered once; a fresh browser does not.
-- Open content work: 37 challenges still pass a printed answer (`hardcode-fails` allowlist in `known-violations.json`). Learners write the data themselves there, so stdout comparison has nothing to vary; they need AST checks such as "uses a for loop", a new engine feature.
 - Dialog German was machine-assisted: the register of casual characters (Echo, Nova, Kai) reads stiff in `Sie`, and source inconsistencies remain (NeoCorp versus Rattlesnake Corp, Sterling's "Mr. Snake"). Worth a native read.
 
 ## Housekeeping 2026-11-01
@@ -52,3 +51,11 @@ The helper scripts formerly in `.scratch/` now live in `tools/review/` (see Hous
 - Remaining review items closed: hidden tests of 66 challenges now use other data (a new `hardcode-fails` rule keeps it that way); NPC dialogs render, with an inventory derived from solved challenges; German `dialog.json` is complete; the service worker precaches from a build-generated list, so offline play works after one visit (bump `CACHE_VERSION` when Pyodide changes); a production CSP, an error boundary, and no more orientation lock or duplicate tracebacks.
 - Live host checked: it serves `.mjs` as `text/javascript`.
 - Released to production 2026-11-01 as `20261101072332-216473` with the local pipeline (`npm run release` in `~/code/lernspiele.aufner.org`): source `a64cb56`. Live check with a desktop `User-Agent`: Python under the CSP, service worker precache, German NPC dialog and an offline reload all work.
+
+## Dormant features and AST checks 2026-11-01
+- Writing rules: `Challenge.structureChecks` (node, call, assign, import), evaluated with Python's `ast` in `packages/challenge-engine/src/StructureChecker.ts` after the output tests pass and shown as objectives. Rules ask only for the taught concept, so alternatives stay valid. Leftover `___` blanks always fail. Only `ch01_01` stays on the allowlists: printing is the exercise there.
+- Wired: intro, floor, boss and victory cutscenes, credits, New Game+ (keeps XP, skills, achievements), tutorial overlay (rewritten for the text UI, restart in Settings), tutor mode, inventory panel with pickup toasts, skill tree with real effects (`speed_bonus`, `hint_boost`, XP is spent), floor banner and progress bar, CIPHER dialog and error explanations (new `cipher` i18n namespace), language switcher, Python loading screen, focus trap, screen reader announcements.
+- Saves now really hold skills, spent XP, achievements, seen cutscenes, play time and the New Game+ cycle.
+- Live bugs fixed on the way: XP never reached the store for any player, a second key handler in `StatusBar` paused the game on Esc, the tutorial bubble left the screen, `InventoryPanel` used the wrong namespace, `ch01_02` described a variable the test did not use.
+- Challenge hints are still English in German mode: `ChallengeHint.text` is not in `challengeContent`.
+- `tools/review/browser-smoke.py` drives the full opening; rerun it after UI changes.

@@ -36,6 +36,10 @@ export const ch06_06_dictionaries: Challenge = {
       hidden: true,
     },
   ],
+  structureChecks: [
+    { type: 'assign', name: 'employee' },
+    { type: 'node', node: 'Dict' },
+  ],
 
   hints: [
     {

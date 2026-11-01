@@ -31,6 +31,7 @@ export const ch05_08_args: Challenge = {
       hidden: true,
     },
   ],
+  structureChecks: [{ type: 'node', node: 'vararg' }],
 
   hints: [
     {

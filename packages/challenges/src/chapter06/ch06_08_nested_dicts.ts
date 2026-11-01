@@ -35,6 +35,10 @@ export const ch06_08_nested_dicts: Challenge = {
       hidden: true,
     },
   ],
+  structureChecks: [
+    { type: 'assign', name: 'floor_plan' },
+    { type: 'node', node: 'Dict', min: 3 },
+  ],
 
   hints: [
     {

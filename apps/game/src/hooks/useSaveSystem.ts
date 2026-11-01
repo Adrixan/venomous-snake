@@ -6,7 +6,7 @@ import { SAVE_FORMAT_VERSION } from '@venomous-snake/save-system';
 import { downloadTextFile } from '@venomous-snake/save-system';
 import { useGameStore } from '../store/gameStore';
 import type { GameController } from '../GameController';
-import { TextAdventureEngine, getRoomById } from '@venomous-snake/engine';
+import { ITEMS, TextAdventureEngine, getRoomById } from '@venomous-snake/engine';
 import { FLOORS } from '@venomous-snake/challenges';
 
 function buildSaveData(
@@ -27,7 +27,7 @@ function buildSaveData(
     savedAt: new Date().toISOString(),
     playerName: state.playerName || 'Agent',
     playerGender: state.playerGender,
-    playTimeMs: 0,
+    playTimeMs: state.playTimeMs,
     engine: new TextAdventureEngine({
       currentRoomId: state.currentRoomId,
       visitedRooms: state.visitedRooms,
@@ -37,17 +37,20 @@ function buildSaveData(
     progress: {
       challenges,
       totalXp: curriculum?.totalXp ?? state.xp,
-      spentSkillXp: 0,
-      achievements: [],
-      skills: [],
-      inventory: [],
+      spentSkillXp: state.spentSkillXp,
+      achievements: state.unlockedAchievements,
+      skills: state.unlockedSkills,
+      // Items follow from solved challenges; the field keeps saves readable elsewhere.
+      inventory: ITEMS.filter((item) => state.completedChallenges.includes(item.grantedBy)).map(
+        (item) => item.id,
+      ),
       streak: 0,
     },
     narrative: { flags: {}, completedDialogs: [] },
     alertLevel: state.alertLevel,
     gameCompleted: state.gameCompleted,
-    seenCutscenes: [],
-    newGamePlus: 0,
+    seenCutscenes: state.seenCutscenes,
+    newGamePlus: state.newGamePlus,
   };
 }
 
@@ -71,6 +74,14 @@ function restore(data: SaveData): void {
   for (const id of completed) state.addCompletedChallenge(id);
   state.addXp(data.progress.totalXp);
   state.setAlertLevel(data.alertLevel as 0 | 1 | 2 | 3);
+  state.restoreProgress({
+    unlockedSkills: data.progress.skills,
+    spentSkillXp: data.progress.spentSkillXp,
+    unlockedAchievements: data.progress.achievements,
+    seenCutscenes: data.seenCutscenes,
+    playTimeMs: data.playTimeMs,
+    newGamePlus: data.newGamePlus,
+  });
   state.setGameCompleted(data.gameCompleted);
   for (const floor of FLOORS) {
     if (floor.challengeIds.every((id) => completed.includes(id))) state.unlockFloor(floor.number);

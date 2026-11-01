@@ -9,6 +9,8 @@ export interface SettingsPanelProps {
   onBack: () => void;
   /** When provided, the volume sliders are delegated to AudioSettingsPanel. */
   audioSettings?: AudioSettingsPanelProps;
+  /** When provided, offers to run the tutorial again. */
+  onRestartTutorial?: () => void;
 }
 
 const FONT_FAMILY = "'JetBrains Mono', 'Fira Code', monospace";
@@ -48,7 +50,11 @@ function saveSettings(settings: GameSettings): void {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
 }
 
-export function SettingsPanel({ onBack, audioSettings }: SettingsPanelProps): React.JSX.Element {
+export function SettingsPanel({
+  onBack,
+  audioSettings,
+  onRestartTutorial,
+}: SettingsPanelProps): React.JSX.Element {
   const { t } = useTranslation('ui');
   const [settings, setSettings] = useState<GameSettings>(loadSettings);
 
@@ -332,6 +338,11 @@ export function SettingsPanel({ onBack, audioSettings }: SettingsPanelProps): Re
           </div>
         </div>
 
+        {onRestartTutorial !== undefined && (
+          <button style={buttonStyle} onClick={onRestartTutorial}>
+            {t('settings.restart_tutorial')}
+          </button>
+        )}
         <button style={buttonStyle} onClick={onBack}>
           {t('new_game.back')}
         </button>

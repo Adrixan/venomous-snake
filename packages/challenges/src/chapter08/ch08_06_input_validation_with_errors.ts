@@ -31,6 +31,11 @@ export const ch08_06_input_validation_with_errors: Challenge = {
       hidden: true,
     },
   ],
+  structureChecks: [
+    { type: 'node', node: 'Raise' },
+    { type: 'node', node: 'Try' },
+  ],
+
   hints: [
     {
       tier: 1 as const,

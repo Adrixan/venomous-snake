@@ -7,7 +7,7 @@ export default {
   ch01_02: {
     title: 'Cover Identity',
     description:
-      "Create a variable called 'codename' and assign it your operative name as a string, then print it.\n\nVariables store values for later use. Use the = sign to assign a value: my_variable = \"some text\". You can then use the variable name anywhere you'd use the value itself.",
+      "Create a variable called 'alias', assign it the string Ghost and print it.\n\nVariables store values for later use. Use the = sign to assign a value: my_variable = \"some text\". You can then use the variable name anywhere you'd use the value itself.",
   },
   ch01_03: {
     title: 'Cracking Numbers',

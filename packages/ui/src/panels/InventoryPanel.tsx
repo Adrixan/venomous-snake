@@ -1,3 +1,4 @@
+import { translateText } from '../i18n/translateText';
 import React, { useState, useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { InventoryItem } from '@venomous-snake/shared-types';
@@ -145,7 +146,9 @@ export function InventoryPanel({ isOpen, onClose, items }: InventoryPanelProps):
                       onMouseLeave={() => setHoveredItem(null)}
                     >
                       <span style={{ fontSize: '18px' }}>{icon ?? '•'}</span>
-                      <span style={{ color: '#e0e0e0', fontSize: '13px' }}>{t(item.nameKey)}</span>
+                      <span style={{ color: '#e0e0e0', fontSize: '13px' }}>
+                        {translateText(t, item.nameKey)}
+                      </span>
                       {isHovered && (
                         <div
                           style={{
@@ -163,7 +166,7 @@ export function InventoryPanel({ isOpen, onClose, items }: InventoryPanelProps):
                             marginLeft: '4px',
                           }}
                         >
-                          {t(item.descriptionKey)}
+                          {translateText(t, item.descriptionKey)}
                         </div>
                       )}
                     </div>

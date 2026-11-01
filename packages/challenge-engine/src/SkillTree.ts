@@ -1,10 +1,5 @@
 export type SkillCategory =
-  | 'fundamentals'
-  | 'control_flow'
-  | 'functions'
-  | 'data_structures'
-  | 'oop'
-  | 'advanced';
+  'fundamentals' | 'control_flow' | 'functions' | 'data_structures' | 'oop' | 'advanced';
 
 export interface SkillNode {
   id: string;

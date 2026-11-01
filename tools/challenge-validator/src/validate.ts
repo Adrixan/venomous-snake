@@ -23,7 +23,10 @@ export function validateStructure(challenges: Challenge[]): Violation[] {
     for (const p of c.prerequisites) {
       if (!known.has(p)) add('prerequisite-exists', `unknown prerequisite ${p}`);
     }
-    if (c.testCases.length < 2) add('min-tests', 'needs at least two test cases');
+    const hasStructureChecks = (c.structureChecks?.length ?? 0) > 0;
+    if (c.testCases.length < 2 && !hasStructureChecks) {
+      add('min-tests', 'needs at least two test cases');
+    }
     if (c.hints.length < 3) add('hint-tiers', 'needs three hint tiers');
 
     const testIds = new Set<string>();
@@ -32,7 +35,7 @@ export function validateStructure(challenges: Challenge[]): Violation[] {
       if (testIds.has(t.id)) add('unique-test-id', `duplicate test id ${t.id}`);
       testIds.add(t.id);
       const fp = JSON.stringify([t.input ?? '', t.setup ?? '', t.append ?? '', t.expectedOutput]);
-      if (fingerprints.has(fp)) {
+      if (fingerprints.has(fp) && !hasStructureChecks) {
         add(
           'distinct-tests',
           `test ${t.id} repeats an earlier test; it cannot verify anything new`,

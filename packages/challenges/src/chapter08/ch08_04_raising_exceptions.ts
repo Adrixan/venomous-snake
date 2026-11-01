@@ -29,6 +29,11 @@ export const ch08_04_raising_exceptions: Challenge = {
       hidden: true,
     },
   ],
+  structureChecks: [
+    { type: 'node', node: 'Raise' },
+    { type: 'node', node: 'Try' },
+  ],
+
   hints: [
     {
       tier: 1 as const,

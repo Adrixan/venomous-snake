@@ -52,6 +52,7 @@ function LocationHeaderInner({
         <span className="story-level-badge">Lv.{level}</span>
         <span
           className="story-xp-bar"
+          data-tutorial="xp-bar"
           aria-label={t('storyTerminal.xpProgress', `XP: ${String(bar.percent)}%`)}
         >
           <span className="story-xp-bar-track" aria-hidden="true">

@@ -16,7 +16,32 @@
       "error": "Terminal Error"
     },
     "line": "Ln",
-    "column": "Col"
+    "column": "Col",
+    "structure": {
+      "blank": "Fill in every ___ blank",
+      "node": "Use {{what}}",
+      "node_many": "Use {{what}} (at least {{count}})",
+      "call": "Call {{name}}()",
+      "call_many": "Call {{name}}() at least {{count}} times",
+      "assign": "Store the value in a variable named {{name}}",
+      "import": "Import the {{name}} module",
+      "nodes": {
+        "For": "a for loop",
+        "comprehension": "a comprehension",
+        "If": "an if statement",
+        "Lambda": "a lambda",
+        "List": "a list",
+        "Dict": "a dictionary",
+        "ClassDef": "a class",
+        "FunctionDef": "a function or method",
+        "Raise": "raise",
+        "Try": "try/except",
+        "ImportFrom": "from ... import",
+        "vararg": "a *args parameter",
+        "kwarg": "a **kwargs parameter"
+      }
+    },
+    "loading_python": "Loading Python runtime..."
   },
   "menu": {
     "new_game": "New Game",
@@ -63,7 +88,8 @@
     "keyboard_size_small": "Small",
     "keyboard_size_medium": "Medium",
     "keyboard_size_large": "Large",
-    "show_desktop_keyboard": "On-Screen Keyboard (Desktop)"
+    "show_desktop_keyboard": "On-Screen Keyboard (Desktop)",
+    "restart_tutorial": "Restart tutorial"
   },
   "hud": {
     "xp": "XP",
@@ -304,5 +330,13 @@
     "reset_confirm": "Are you sure? This will clear all tutorial progress.",
     "difficulty": "Difficulty",
     "concepts": "Concepts"
+  },
+  "storyTerminal": {
+    "quests": "Quests",
+    "map": "Map",
+    "settings": "Settings",
+    "save": "Save",
+    "inventory": "Items",
+    "skills": "Skills"
   }
 }

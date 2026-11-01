@@ -34,6 +34,11 @@ export const ch01_04_string_types: Challenge = {
       hidden: true,
     },
   ],
+  structureChecks: [
+    { type: 'assign', name: 'codename' },
+    { type: 'assign', name: 'clearance' },
+    { type: 'call', name: 'type', min: 2 },
+  ],
 
   hints: [
     {

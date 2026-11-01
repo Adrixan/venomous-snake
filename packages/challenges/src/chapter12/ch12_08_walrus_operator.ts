@@ -30,6 +30,11 @@ export const ch12_08_walrus_operator: Challenge = {
       hidden: true,
     },
   ],
+  structureChecks: [
+    { type: 'call', name: 'startswith' },
+    { type: 'call', name: 'split' },
+  ],
+
   hints: [
     { tier: 1 as const, text: 'Use startswith() to check if a log line begins with "ERROR".' },
     {

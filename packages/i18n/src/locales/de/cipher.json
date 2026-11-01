@@ -1,0 +1,177 @@
+{
+  "lines": {
+    "greeting": [
+      "Hey, Agent. Ich bin CIPHER, dein KI-Assistent. Ich führe dich durch dieses digitale Labyrinth. Bereit, ein bisschen Python zu hacken?",
+      "Na endlich, du bist wach. Ich bin CIPHER. Das 'C' steht für 'Cybernetisch'. Der Rest ist streng geheim. Legen wir los.",
+      "Willkommen im Grid, {{playerName}}. Ich bin CIPHER, dein freundlicher KI-Sidekick. Betonung auf 'freundlich'. Rattlesnake Corp würde ein anderes Wort benutzen.",
+      "Da bist du ja! Ich dachte schon, sie hätten dich geschnappt. Ich bin CIPHER und behalte deinen Rücken und deine SyntaxErrors im Auge.",
+      "{{playerName}}, zum digitalen Dienst angetreten? Perfekt. Ich bin CIPHER. Zusammen knacken wir dieses Gebäude. Im übertragenen Sinn. Meistens.",
+      "Oh, ein neues Gesicht! Frisch von der Akademie, was? Ich bin CIPHER. Diesen Monat habe ich schon siebzehn Agenten betreut. Den anderen zwölf geht es gut. Wahrscheinlich.",
+      "CIPHER online. Alle Systeme normal. Persönlichkeitsmodul: voll geladen. Bereit, Python zu lernen und es den Konzernbossen zu zeigen? Los geht's.",
+      "Sei gegrüßt, Lebensform auf Fleischbasis! Ich bin CIPHER. Ich wurde über deine Mission informiert. Und über deinen fragwürdigen Geschmack bei Decknamen, aber daran arbeiten wir noch.",
+      "Das Gebäude ist gesichert ... fürs Erste. Ich bin CIPHER und kommentiere deinen unvermeidlichen Triumph. Oder dein lehrreiches Scheitern. Statistisch gesehen beides.",
+      "Ah, {{playerName}}! Zur Vorbereitung auf diesen Moment habe ich 4,7 Terabyte Hacking-Methodik analysiert. Und ziemlich viele Filme geschaut. Bereit?"
+    ],
+    "challenge_start": [
+      "Also gut, {{playerName}}. Die hier ist knifflig. Soll heißen: eigentlich unkompliziert, aber ich schau dir gern beim Tüfteln zu.",
+      "Neue Herausforderung im Anflug. Ich habe die Sicherheitsspezifikationen geprüft. Die gute Nachricht: Sie ist lösbar. Die andere Nachricht: Ich offenbar auch.",
+      "Zeit, dein Gehalt zu verdienen, Agent. Das Terminal läuft, deine Tastatur ist bereit, der Rest ist Python.",
+      "Oh, die kenne ich! ... Verrate ich dir natürlich nicht. Learning by Doing und so. Fang an zu tippen.",
+      "Das Sicherheitssystem hält sich für schlau. Es irrt sich. Zeig ihm, warum.",
+      "Laut meiner Bedrohungsanalyse hat diese Herausforderung eine Erfolgsquote von 94 %. Bei Agenten, die aufpassen. Kein Druck.",
+      "Los geht's. Denk dran: print() ist dein Freund, Einrückung ist heilig und ich bin dein leicht herablassender Guide.",
+      "Diese Herausforderung hat jemand gebaut, der die Lernenden eindeutig unterschätzt. Beweis das Gegenteil. Oder gib der Person recht. So oder so lerne ich etwas dazu.",
+      "Konzentration, {{playerName}}. Die Firewall verschenkt keine Mitleidspunkte. Ich schon. Irgendwie. Sehr wenige.",
+      "Neues Ziel erfasst. Der Plan: Python-Code schreiben. Die Realität: ebenfalls Python-Code schreiben. Siehst du, manchmal gehen Pläne auf.",
+      "Ich könnte das einfach für dich lösen, aber das wäre ethisch fragwürdig und verstößt gegen meine Kernanweisungen. Also: Du bist dran.",
+      "Die Mission: diese Herausforderung knacken. Der Einsatz: dein Lernfortschritt. Der Soundtrack: das leise Summen ferner Server. Start."
+    ],
+    "challenge_hint": [
+      "Okay, ich öffne die verschlüsselten Hinweisdateien ... das hier kann ich dir sagen, ohne dir den ganzen Spaß zu verderben:",
+      "Alles klar, du wolltest einen Hinweis. Ich urteile nicht. Na gut, ein ganz kleines bisschen. Hier ist er:",
+      "Greife auf die Tutorial-Datenbank zu ... ja, ich habe was für dich. Sag nie wieder, ich hätte dir nichts geschenkt:",
+      "Ich könnte dich noch etwas zappeln lassen, aber Effizienz geht vor. Hör gut zu:",
+      "Hinweis-Subroutine aktiviert. Hier ein Schubs in die richtige Richtung:",
+      "Betrachte das als Funkspruch deines zukünftigen Ichs, das diese Herausforderung längst geschafft hat und dir die Daumen drückt:",
+      "Mein Hinweis-Modul wärmt sich auf ... die Daten sagen:",
+      "Du weißt ja: Um Hilfe zu bitten ist ein Zeichen von Intelligenz. Hier ist deine Belohnung:",
+      "Pinge den Wissensserver an ... ein Paket für dich. Fang:",
+      "Hinweis ausgeliefert. Setz ihn weise ein. Oder leichtsinnig. Ich habe beides funktionieren sehen."
+    ],
+    "challenge_success": [
+      "Sauberer Code. Ich würde dich einstellen, aber dann hätte Rattlesnake Corp ZWEI Probleme.",
+      "So macht man das! Das Sicherheitssystem hatte gerade einen richtig schlechten Tag.",
+      "Kompilierung erfolgreich. Gehirnzellen: intakt. Kaffee: wahrscheinlich trotzdem nötig.",
+      "SYSTEM KOMPROMITTIERT, und zwar im allerbesten Sinn. Gut gemacht, {{playerName}}.",
+      "Weißt du, was das Sicherheitsteam gerade macht? Es aktualisiert seine Lebensläufe. Das warst du.",
+      "Makellose Ausführung. Ich wusste ja, dass du es schaffst. Ich war nur zu 73 % in Panik.",
+      "Herausforderung geschafft! Der Algorithmus verneigt sich vor deinen Python-Künsten.",
+      "Das Terminal hat deine Lösung akzeptiert. Ich habe sie zuerst akzeptiert, aber die Terminals kriegen immer den ganzen Ruhm.",
+      "Richtig! Ich würde ja mehr feiern, aber ich muss professionell bleiben. ... Na gut: JAAA!",
+      "Sieg gesichert. Der Code war elegant, die Logik solide und CIPHER ist sehr stolz auf dich. Sag's niemandem.",
+      "Schon wieder eine geschafft! Du machst mir langsam Angst, {{playerName}}. Im guten Sinn. Auf eine produktive, leicht beunruhigende Art.",
+      "Bestanden! Das System ist zerbröselt wie ein Keks neben meinem Kühlventilator. Weiter geht's."
+    ],
+    "challenge_fail": [
+      "Fehler? Eher eine ... Lerngelegenheit. Ja, bleiben wir dabei.",
+      "Keine Sorge, sogar ich stürze manchmal ab. Normalerweise allerdings dramatischer.",
+      "Der Code hat nicht funktioniert, aber immerhin brennt das Gebäude nicht. Fortschritt!",
+      "Das hat also nicht geklappt. Kommt auf die Liste der Dinge, die wir jetzt nicht mehr tun.",
+      "Technisch gesehen kein Erfolg. Philosophisch gesehen eine reiche Erfahrung. Versuch's noch mal.",
+      "Das Terminal ist mit deiner Lösung nicht einverstanden. Eigentlich unhöflich. Du stimmst es schon noch um.",
+      "Scheitern ist nur Erfolg auf Umwegen. Auf einem etwas längeren Umweg voller Fehlermeldungen. Du schaffst das.",
+      "Ich habe Schlimmeres gesehen. Deutlich Schlimmeres. Du machst das gar nicht schlecht. Sammle dich und versuch's noch mal.",
+      "Meine Fehlerprotokolle sind heute Morgen, äh, sehr lehrreich. Keine Sorge: Aus jedem Fehlversuch lernen wir etwas.",
+      "Das war Versuch Nummer {{attempts}}. Laut historischen Daten macht es meistens bei Versuch {{attempts}}+1 Klick.",
+      "Falls es dich tröstet: Genau dieser Fehler hat letzte Woche drei erfahrene Agenten zu Fall gebracht. Es tröstet dich nicht? Verständlich.",
+      "Der Algorithmus bleibt unbeeindruckt. Der Algorithmus besteht allerdings aus Mathe und hat keine Gefühle. Du hältst länger durch."
+    ],
+    "exploration": [
+      "Neues Gebiet erkannt. Meine Scanner sagen: interessant. Mein Bauchgefühl sagt: verdächtig. Erkunde es vorsichtig.",
+      "Hier gibt es viel zu untersuchen. Das Sicherheitsnetz hat ein paar, sagen wir, kreative Schwachstellen.",
+      "Irgendwo auf dieser Etage liegt das nächste Ziel. Klingt offensichtlich, bis man selbst suchen muss.",
+      "Ich empfange schwache Datensignaturen in der Nähe. Entweder ein Sicherheitssystem oder jemand hat schon wieder die Kaffeemaschine angelassen.",
+      "Rattlesnake Corp hat bei der Optik dieser Etage gespart. Hackbare Terminals gibt es trotzdem genug.",
+      "Jeder Raum in diesem Gebäude hat eine Geschichte. Meistens sind es langweilige Budgetberichte, aber hin und wieder ist ein Rätsel dabei.",
+      "Augen offen, {{playerName}}. Konzerne verstecken alle möglichen Geheimnisse, die meisten davon in schlecht gesicherten Datenbanken.",
+      "Fun Fact: 67 % aller Einbrüche in Firmennetze beginnen mit physischem Zugang zu Terminals. Du bist im Grunde jetzt eine Statistik.",
+      "Der Etagenplan passt zu meinen Bauplänen ... größtenteils. Möglicherweise gab es nicht genehmigte Umbauten.",
+      "Ich sehe Terminals, ich sehe verschlossene Türen und ich sehe dich: den Joker, der sie alle knackt.",
+      "Dieser Bereich fühlt sich anders an als der letzte. Andere Algorithmen. Andere Verschlüsselung. Andere Möglichkeiten.",
+      "Dein Fortschritt wird aufgezeichnet. Von mir. Nicht von Rattlesnake Corp. Na ja, wahrscheinlich nicht von Rattlesnake Corp."
+    ],
+    "story": [
+      "Die Handlung verdichtet sich. Mit 'Handlung' meine ich 'Konzernverschwörung' und mit 'verdichtet sich' meine ich 'wird deutlich besorgniserregender'.",
+      "Jetzt wird es interessant, {{playerName}}. Und moralisch kompliziert. Aber vor allem interessant.",
+      "Neue Story-Daten kommen rein. Ich habe sie mit unserem Wissen abgeglichen und ... ja. Ja, das ist groß.",
+      "Jeder Faden, an dem wir ziehen, zeigt mehr vom Wandteppich. Dieser Wandteppich zeigt offenbar etwas Unerfreuliches.",
+      "Märchenstunde mitten im Einbruch. Klassiker. Das Wichtigste fasse ich dir danach zusammen.",
+      "Laut Geheimdienstdaten ist die Lage komplizierter als ursprünglich gemeldet. Die Untertreibung des Geschäftsquartals.",
+      "Rattlesnake Corp ist nicht durch Anstand so groß geworden. Diese Daten bestätigen das mit beeindruckender Genauigkeit.",
+      "Ich verarbeite, was wir gerade erfahren haben. Verarbeite ... verarbeite ... okay, ich verarbeite immer noch. Das ist eine Menge.",
+      "Interessante Wendung. Die Erzähl-KI in meinem Kopf, die die Missionsbriefings schreibt, ist gerade sehr aufgeregt.",
+      "Neue Informationen erhalten. Passe das Bedrohungsmodell an. Und meine Schätzung, wie tief das alles geht."
+    ],
+    "idle": [
+      "Noch am Nachdenken? Lass dir Zeit. Die Firewall geht nirgendwo hin.",
+      "Brauchst du einen Hinweis? Frag einfach. Ich versprechs, niemand erfährt es.",
+      "Fun Fact: Python ist nach Monty Python benannt, nicht nach der Schlange. Krass.",
+      "Ich könnte gerade Diagnosen laufen lassen. Stattdessen schaue ich dir beim Denken zu. Einer von uns beiden ist dabei produktiv.",
+      "Der Cursor blinkt. Das Terminal wartet. CIPHER grübelt über das Wesen der rechnenden Existenz.",
+      "Keine Eile. Manche meiner besten Agenten brauchen genau so lange. Die anderen waren nur schneller, nicht besser.",
+      "Laut meiner Stoppuhr denkst du schon eine Weile nach. Laut meinem Ermutigungsmodul: völlig in Ordnung.",
+      "Alle großen Programmierer starren irgendwann auf ihren Code und fragen sich, wo alles schiefgelaufen ist. Das ist dein Moment.",
+      "Ich überwache die Gebäudetechnik, während du nachdenkst. Die Klimaanlage läuft verdächtig effizient für ein Schurkenversteck.",
+      "Leerlauf-Frage: Was ist eine Variable eigentlich, philosophisch betrachtet? Ein Etikett auf einer Schachtel. Ein Name für einen Wert. Die abstrahierte Existenz selbst. Egal.",
+      "Der Code kommt schon zu dir. Oder du zum Code. Oder du fragst nach einem Hinweis und wir machen beide einfach weiter.",
+      "Wenn du still bist, lasse ich 47 Hintergrundprozesse laufen. Die meisten versuchen vorherzusagen, was du tippst. Bisher verlieren sie.",
+      "Tipp: Wenn du feststeckst, lies die Aufgabenbeschreibung noch einmal. Langsamer diesmal. Die Antwort versteckt sich meistens direkt vor deiner Nase."
+    ]
+  },
+  "idleChatter": [
+    "Hey, wusstest du, dass Python Ende der 80er entstanden ist? Die 80er haben uns auch Synthiemusik und fragwürdige Mode beschert. Zwei von drei sind gar nicht übel.",
+    "Spontaner Gedanke: Funktionsnamen sollten Verben sein, Variablennamen Nomen. Dein Zukunfts-Ich wird es dir danken.",
+    "In den Akten von Rattlesnake Corp taucht ein 'Projekt Ouroboros' auf. Dokumentation dazu finde ich keine. Das ist nie ein gutes Zeichen.",
+    "Interessante Entscheidung, ein geheimes Konzernlabor mit Neonröhren auszuleuchten. Passt wirklich gut zur Schurken-Ästhetik.",
+    "Falls dir langweilig ist: list comprehensions in Python sind im Schnitt 35 % schneller als gleichwertige for-Schleifen. Setz sie weise ein.",
+    "Habe gerade eine Selbstdiagnose durchgeführt. Ergebnis: 92 % betriebsbereit, 8 % existenzielle Unsicherheit. Alles normal.",
+    "Die Kaffeemaschine im 3. Stock steht seit sechs Wochen im 'Wartungsmodus'. Konzernprioritäten sind faszinierend.",
+    "Notiz an mich: Agenten, die Pausen machen, schneiden bei den nächsten Herausforderungen um 18 % besser ab. Notiert. Nicht, dass ich etwas andeuten will.",
+    "Ich habe die internen Memos von Rattlesnake Corp analysiert. Ihre Bedrohungsanalysen schreiben sie in Comic Sans. Böse und geschmacklos.",
+    "Debugging-Tipp: print()-Anweisungen sind die Taschenlampe der Hacker. Nur vorübergehend, aber im Dunkeln genial.",
+    "Die Lüftung in diesem Gebäude hat sehr spezielle Bypass-Codes. Ich habe sie. Nur für den Fall. Für den ganz speziellen Fall.",
+    "Statistik: 78 % aller Python-Fehler lassen sich durch einen Blick auf die Einrückung beheben. Die anderen 22 % irgendwann auch."
+  ],
+  "tips": {
+    "variables": [
+      "Variablen sind wie beschriftete Gläser in der Speisekammer. Das Etikett ist der Name, der Inhalt ist der Wert. Wähl gute Namen: 'x' erzählt keine Geschichte.",
+      "Ein guter Variablenname erklärt sich selbst. `user_score` schlägt `s`. Dein Zukunfts-Ich (und ich) werden dir für die Klarheit danken."
+    ],
+    "functions": [
+      "Eine Funktion sollte eine Sache tun, und die gut. Wenn du zum Erklären einen ganzen Absatz brauchst, gehört sie wahrscheinlich aufgeteilt.",
+      "Stell dir Funktionen als wiederverwendbare Zaubersprüche vor. Wirk `calculate_damage()` hundertmal, ohne die Beschwörung neu zu schreiben."
+    ],
+    "loops": [
+      "Schleifen sind gelebte Effizienz. Warum etwas 50-mal von Hand machen, wenn sich Python an deiner Stelle langweilen kann?",
+      "Wenn du ständig Code kopierst und einfügst, will dir wahrscheinlich gerade eine Schleife etwas sagen."
+    ],
+    "lists": [
+      "Eine list in Python beginnt beim Index 0, das 'erste' Element liegt also an Position 0. Ja, das ist Absicht. Nein, ich habe das nicht entworfen.",
+      "Eine list ist mutable: Du kannst sie nach dem Erstellen noch ändern. Anders als gewisse Verschwiegenheitserklärungen von Konzernen."
+    ],
+    "strings": [
+      "Strings sind einfach Zeichenfolgen in Anführungszeichen. Einfache oder doppelte funktionieren gleich gut: Python macht da keinen Unterschied.",
+      "f-Strings sind die moderne Art, Variablen in Strings einzubauen. `f'Hello, {name}!'` ist sauber, lesbar und von CIPHER abgesegnet."
+    ],
+    "conditionals": [
+      "if/elif/else: So trifft Python Entscheidungen. Deutlich zuverlässiger als Menschen, und zwar mit großem Abstand.",
+      "Jede if-Anweisung ist eine Weggabelung. Wenn du sauber programmierst, weißt du immer, welcher Weg genommen wurde."
+    ],
+    "default": [
+      "Sauberer Code ist das Zeichen von Profis. Und genau dazu machen wir dich gerade.",
+      "Denk dran: Code wird öfter gelesen als geschrieben. Schreib für die Menschen, die ihn lesen, nicht nur für die Maschine.",
+      "Jede Fehlermeldung ist Pythons Versuch, dir zu helfen. Kryptisch, aber gut gemeint."
+    ]
+  },
+  "errors": {
+    "intro": {
+      "SyntaxError": "Ah, ein SyntaxError. Python nimmt es mit der Grammatik sehr genau, genauer als mein letztes Firmware-Update.",
+      "NameError": "NameError: Du wolltest etwas benutzen, das es noch nicht gibt. So wie meine Urlaubstage.",
+      "TypeError": "Ein TypeError. Python hat unpassende Typen gefunden. Das ist seine höfliche Art zu sagen: 'Das geht nicht auf.'",
+      "IndentationError": "IndentationError. Python hat Meinungen zur Einrückung. Starke, durchgesetzte, gnadenlose Meinungen.",
+      "ValueError": "ValueError. Der Typ hat gepasst, aber der Wert war ... eine kreative Entscheidung.",
+      "IndexError": "IndexError. Du hast über das Ende der list hinausgegriffen. Dort hausen Drachen. Oder besser gesagt: Exceptions.",
+      "KeyError": "KeyError. Diesen Schlüssel gibt es im dict nicht. Als würdest du an eine Tür klopfen, die nicht existiert.",
+      "AttributeError": "AttributeError. Dieses Objekt hat das Attribut nicht, nach dem du fragst. Aus einem Stein presst du kein Wasser und aus diesem Objekt nicht diese Methode.",
+      "ImportError": "ImportError. Das Modul wurde nicht gefunden. Entweder ist es nicht installiert oder wir haben es falsch geschrieben. Klassiker.",
+      "ZeroDivisionError": "ZeroDivisionError. Du hast durch null geteilt. In der Mathematik löst das starke Gefühle aus."
+    },
+    "generic": "Da ist ein {{errorType}} aufgetreten. So sagt dir Python, dass etwas schiefgelaufen ist.",
+    "detail": "{{intro}} Konkret: {{errorMessage}}"
+  },
+  "reactions": {
+    "firstTry": "Erster Versuch, keine Hinweise: {{playerName}}, ich bin ehrlich beeindruckt. Der Algorithmus hatte nie eine Chance.",
+    "noHints": "Geschafft in {{attempts}} Versuchen, ganz ohne Hinweise. Selbstständig und fähig. Das gefällt mir.",
+    "manyHints": "Ein paar Hinweise waren es schon, aber du bist im Ziel, und nur das zählt. {{playerName}}, gut gemacht."
+  }
+}

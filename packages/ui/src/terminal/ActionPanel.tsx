@@ -125,6 +125,7 @@ function ActionPanelInner({
             disabled={isDisabled}
             title={isDisabled ? (action.disabledReason ?? '') : undefined}
             aria-label={displayLabel(action)}
+            {...(action.type === 'hack' ? { 'data-tutorial': 'nearest-terminal' } : {})}
           >
             <span className="story-action-icon" aria-hidden="true">
               {icon}

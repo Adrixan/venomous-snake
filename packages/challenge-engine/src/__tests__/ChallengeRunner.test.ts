@@ -37,6 +37,34 @@ function makeChallenge(partial: Partial<Challenge> = {}): Challenge {
   };
 }
 
+describe('ChallengeRunner writing rules', () => {
+  const passing = { success: true, output: [{ type: 'stdout', text: 'ok' }], executionTimeMs: 1 };
+  const challenge = makeChallenge({
+    testCases: [{ id: 'tc01', description: 'd', expectedOutput: 'ok', hidden: false }],
+  });
+
+  it('fails code that passes the tests but keeps a blank', async () => {
+    const runner = new ChallengeRunner(makeInterpreter(passing as ExecutionResult));
+    const result = await runner.runChallenge(challenge, 'print("ok")  # ___');
+    expect(result.allPassed).toBe(false);
+    expect(result.testResults.at(-1)?.testCase.id).toBe('placeholder');
+  });
+
+  it('does not mistake dunder names for blanks', async () => {
+    const runner = new ChallengeRunner(makeInterpreter(passing as ExecutionResult));
+    const result = await runner.runChallenge(challenge, 'class A:\n  def __init__(self): pass');
+    expect(result.allPassed).toBe(true);
+  });
+
+  it('treats an unreadable checker answer as unmet', async () => {
+    const check = { type: 'node', node: 'For' } as const;
+    const runner = new ChallengeRunner(makeInterpreter(passing as ExecutionResult));
+    const result = await runner.runChallenge({ ...challenge, structureChecks: [check] }, 'x');
+    expect(result.allPassed).toBe(false);
+    expect(result.testResults.at(-1)?.structureCheck).toEqual(check);
+  });
+});
+
 describe('ChallengeRunner', () => {
   it('runs a challenge with all tests passing', async () => {
     const result: ExecutionResult = {

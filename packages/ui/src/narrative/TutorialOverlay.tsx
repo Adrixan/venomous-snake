@@ -75,7 +75,10 @@ export function TutorialOverlay({
   const bubbleStyle: React.CSSProperties = spotlightRect
     ? {
         position: 'fixed',
-        top: spotlightRect.top + spotlightRect.height + 16,
+        // Targets in the lower half get the bubble above them, or it would leave the screen.
+        ...(spotlightRect.top > window.innerHeight / 2
+          ? { bottom: window.innerHeight - spotlightRect.top + 16 }
+          : { top: spotlightRect.top + spotlightRect.height + 16 }),
         left: Math.min(Math.max(spotlightRect.left, 16), window.innerWidth - 380),
         width: 360,
       }

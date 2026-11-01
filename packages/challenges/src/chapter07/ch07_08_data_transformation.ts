@@ -29,6 +29,8 @@ export const ch07_08_data_transformation: Challenge = {
       hidden: true,
     },
   ],
+  structureChecks: [{ type: 'import', module: 'json' }],
+
   hints: [
     { tier: 1 as const, text: 'Parse the JSON string first, then access the "targets" key.' },
     { tier: 2 as const, text: 'Use a list comprehension with .upper() to transform each target.' },
