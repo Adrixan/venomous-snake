@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
+// Official Ko-fi logo (Ko-fi brand asset kit v2), unmodified.
+import kofiLogo from './kofi_logo.svg';
 
 export interface MainMenuProps {
   hasSaveData: boolean;
@@ -19,18 +21,6 @@ interface MenuItem {
 
 const FONT_FAMILY = "'JetBrains Mono', 'Fira Code', monospace";
 const SUPPORT_URL = 'https://ko-fi.com/prof_aufner';
-
-const visuallyHidden: React.CSSProperties = {
-  position: 'absolute',
-  width: '1px',
-  height: '1px',
-  margin: '-1px',
-  padding: 0,
-  overflow: 'hidden',
-  clip: 'rect(0 0 0 0)',
-  whiteSpace: 'nowrap',
-  border: 0,
-};
 
 export function MainMenu({
   hasSaveData,
@@ -152,9 +142,10 @@ export function MainMenu({
   };
 
   const supportLinkStyle: React.CSSProperties = {
-    color: '#00ff9d',
-    textDecoration: 'underline',
-    textUnderlineOffset: '0.15em',
+    display: 'inline-block',
+    verticalAlign: 'middle',
+    lineHeight: 0,
+    marginLeft: '6px',
   };
 
   return (
@@ -202,8 +193,13 @@ export function MainMenu({
       <p style={supportStyle}>
         {t('menu.support_text')}{' '}
         <a href={SUPPORT_URL} target="_blank" rel="noopener noreferrer" style={supportLinkStyle}>
-          {t('menu.support_link')}
-          <span style={visuallyHidden}> {t('menu.support_hint')}</span>
+          <img
+            src={kofiLogo}
+            width={80}
+            height={22}
+            alt={`${t('menu.support_link')} ${t('menu.support_hint')}`}
+            style={{ display: 'block', height: '22px', width: 'auto' }}
+          />
         </a>
       </p>
     </div>
