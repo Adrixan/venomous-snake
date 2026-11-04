@@ -18,6 +18,19 @@ interface MenuItem {
 }
 
 const FONT_FAMILY = "'JetBrains Mono', 'Fira Code', monospace";
+const SUPPORT_URL = 'https://ko-fi.com/prof_aufner';
+
+const visuallyHidden: React.CSSProperties = {
+  position: 'absolute',
+  width: '1px',
+  height: '1px',
+  margin: '-1px',
+  padding: 0,
+  overflow: 'hidden',
+  clip: 'rect(0 0 0 0)',
+  whiteSpace: 'nowrap',
+  border: 0,
+};
 
 export function MainMenu({
   hasSaveData,
@@ -122,6 +135,28 @@ export function MainMenu({
     textAlign: 'center',
   };
 
+  // Voluntary support link (Prof. Aufner rule: visible, small, never pushed at minors).
+  const supportStyle: React.CSSProperties = {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    bottom: 0,
+    zIndex: 2,
+    margin: 0,
+    padding: '12px 16px calc(12px + env(safe-area-inset-bottom, 0px))',
+    color: '#a3a3a3',
+    fontFamily: FONT_FAMILY,
+    fontSize: '12px',
+    lineHeight: 1.5,
+    textAlign: 'center',
+  };
+
+  const supportLinkStyle: React.CSSProperties = {
+    color: '#00ff9d',
+    textDecoration: 'underline',
+    textUnderlineOffset: '0.15em',
+  };
+
   return (
     <div style={containerStyle}>
       <div style={scanlineStyle} />
@@ -164,6 +199,13 @@ export function MainMenu({
           })}
         </div>
       </div>
+      <p style={supportStyle}>
+        {t('menu.support_text')}{' '}
+        <a href={SUPPORT_URL} target="_blank" rel="noopener noreferrer" style={supportLinkStyle}>
+          {t('menu.support_link')}
+          <span style={visuallyHidden}> {t('menu.support_hint')}</span>
+        </a>
+      </p>
     </div>
   );
 }

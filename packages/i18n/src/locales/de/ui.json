@@ -143,7 +143,10 @@
     "subtitle": "Python-Hacking-RPG",
     "main_aria": "Hauptmenü",
     "pause_aria": "Pausenmenü",
-    "paused": "PAUSIERT"
+    "paused": "PAUSIERT",
+    "support_text": "Kostenlos und ohne Werbung. Für Erwachsene, die das Projekt unterstützen möchten:",
+    "support_link": "Prof. Aufner auf Ko-fi",
+    "support_hint": "(externe Seite, öffnet in neuem Tab)"
   },
   "error_boundary": {
     "title": "Systemausfall",

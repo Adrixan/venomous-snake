@@ -143,7 +143,10 @@
     "subtitle": "Python Hacking RPG",
     "main_aria": "Main Menu",
     "pause_aria": "Pause Menu",
-    "paused": "PAUSED"
+    "paused": "PAUSED",
+    "support_text": "Free and without ads. For adults who would like to support the project:",
+    "support_link": "Prof. Aufner on Ko-fi",
+    "support_hint": "(external site, opens in a new tab)"
   },
   "error_boundary": {
     "title": "System failure",
