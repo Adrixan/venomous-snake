@@ -71,3 +71,11 @@ The helper scripts formerly in `.scratch/` now live in `tools/review/` (see Hous
 - Trajectory: review scripts moved to `tools/review`, review findings closed, dormant features and ast writing rules enabled, full German translation, three production releases. Latest live: `20261101110425-290099`. Peter considers this work done.
 - Open, none blocking: native read of the German; `manifest.json` and the `index.html` meta description are English; main chunk 948 KB (lazy-load the inactive language); one unexplained test failure on 2026-11-01 never recurred; skill purchases that spend XP and the skill effects are unit-tested only, the endgame was driven through the event bus, not played.
 - Decisions pending: none. Next step: only what Peter asks for.
+
+## 2026-11-04 Ko-fi support link (prepared, NOT deployed)
+- Task from Peter via the Greeter: Ko-fi link (https://ko-fi.com/prof_aufner, from prof.aufner.org) on lernspiele, all games, lernmaterial and all materials, default for all releases.
+- Branch `feat/kofi-support-link` pushed in lernspiele.aufner.org (b2e77ea), lernmaterial.aufner.org (da4aabe), venomous-snake (34ee456). Not merged to main: releases build from default branches.
+- Mechanism: `scripts/support-footer.mjs` (identical in both site repos) injects the line at release time, inside `<footer class="footer">` or as a band, styles in `/css/support-footer.css`; release fails if a page lacks it. Venomous Snake is a fixed full-screen app: link in its main menu, manifest `supportFooter: "in-app"`, release checks the bundle.
+- Verified: snake lint/type-check/test/build, lernmaterial tests and `release:build`, lernspiele injection on a copy of release 20261103205921-190890 with screenshots (desktop and mobile).
+- Blocked on Peter: go/no-go, given § 46 SchUG open item (ask the Direktion about personal links on school materials) and Prof. Aufner rule 4 (Ko-fi never pushed at minors; text addresses adults). Kids games (kids/*) also get the line unless Peter excludes them.
+- On go: merge the three branches (--no-ff), `npm run release` in lernspiele.aufner.org and lernmaterial.aufner.org (one SSH attempt, fallback DEPLOY_VIA=m11x).
