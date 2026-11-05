@@ -144,6 +144,8 @@
     "main_aria": "Main Menu",
     "pause_aria": "Pause Menu",
     "paused": "PAUSED",
+    "prof_text": "Brought to you by",
+    "prof_link": "Prof. Aufner",
     "support_text": "Free and without ads. For adults who would like to support the project:",
     "support_link": "Prof. Aufner on Ko-fi",
     "support_hint": "(external site, opens in a new tab)"
