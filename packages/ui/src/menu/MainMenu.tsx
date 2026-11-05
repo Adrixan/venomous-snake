@@ -21,6 +21,7 @@ interface MenuItem {
 
 const FONT_FAMILY = "'JetBrains Mono', 'Fira Code', monospace";
 const SUPPORT_URL = 'https://ko-fi.com/prof_aufner';
+const PROF_URL = 'https://prof.aufner.org/';
 
 export function MainMenu({
   hasSaveData,
@@ -141,6 +142,25 @@ export function MainMenu({
     textAlign: 'center',
   };
 
+  const profLinkStyle: React.CSSProperties = {
+    color: 'inherit',
+    textDecoration: 'underline',
+    textUnderlineOffset: '0.2em',
+  };
+
+  // Visually hidden, read by screen readers (new-tab hint).
+  const srOnlyStyle: React.CSSProperties = {
+    position: 'absolute',
+    width: '1px',
+    height: '1px',
+    margin: '-1px',
+    padding: 0,
+    overflow: 'hidden',
+    clip: 'rect(0, 0, 0, 0)',
+    whiteSpace: 'nowrap',
+    border: 0,
+  };
+
   const supportLinkStyle: React.CSSProperties = {
     display: 'inline-block',
     verticalAlign: 'middle',
@@ -191,7 +211,12 @@ export function MainMenu({
         </div>
       </div>
       <p style={supportStyle}>
-        {t('menu.support_text')}{' '}
+        {t('menu.prof_text')}{' '}
+        <a href={PROF_URL} target="_blank" rel="noopener" style={profLinkStyle}>
+          {t('menu.prof_link')}
+          <span style={srOnlyStyle}> {t('menu.support_hint')}</span>
+        </a>
+        . {t('menu.support_text')}{' '}
         <a href={SUPPORT_URL} target="_blank" rel="noopener noreferrer" style={supportLinkStyle}>
           <img
             src={kofiLogo}
