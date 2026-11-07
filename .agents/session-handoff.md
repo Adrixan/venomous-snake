@@ -84,3 +84,8 @@ The helper scripts formerly in `.scratch/` now live in `tools/review/` (see Hous
 
 ## 2026-11-05 prof.aufner.org link
 - Main menu support line starts with "Ein Angebot von Prof. Aufner" (EN "Brought to you by"), link https://prof.aufner.org/, new tab, rel=noopener, screen-reader hint. Commit `e47ab91`, merge `d612724`; lint, type-check, test, build passed. Live via lernspiele release `20261105042700-768200`; the lernspiele release fails if the bundle lacks either URL.
+
+## 2026-11-07: relicensed to PolyForm Noncommercial 1.0.0
+- Peter's order: only he may make money from the games. `LICENSE` is the verbatim PolyForm Noncommercial 1.0.0 text with `Required Notice: Copyright 2026 Peter Aufner (https://prof.aufner.org)`; root and all workspace `package.json` files carry `"license": "PolyForm-Noncommercial-1.0.0"`; README licence section rewritten (content CC BY-NC-SA 4.0, third-party Pyodide MPL-2.0). Versions before 2026-11-07 stay AGPL-3.0 for those who received them.
+- Open: `dist/pyodide/` ships Pyodide (MPL-2.0) without a licence or source notice next to the files; MPL 3.2 wants recipients of the executable form told where the source is. Proposal: emit a short `pyodide/LICENSE.txt` in `selfHostedPyodide()`.
+- Gates green (pnpm audit 0, lint, type-check, tests, build). Release via lernspiele by the coordinator.
