@@ -124,5 +124,6 @@ venomous-snake/
 - Code: [PolyForm Noncommercial License 1.0.0](LICENSE) (SPDX `PolyForm-Noncommercial-1.0.0`). Use, changes and sharing for noncommercial purposes are allowed, including use by schools and other educational institutions.
 - Content (story, dialogue, challenge and lesson texts): [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/).
 - Commercial use of code and content is reserved to Peter Aufner (contact: https://prof.aufner.org).
+- Contributions are accepted only with a written agreement that lets Peter Aufner license them commercially.
 - Code licence PolyForm Noncommercial 1.0.0 since 2026-11-07 (Peter): only Peter may use it commercially; versions published before that date stay available under AGPL-3.0 to those who received them.
 - Third-party components keep their own licences, among them [Pyodide](https://github.com/pyodide/pyodide) (MPL-2.0, bundled unmodified in `pyodide/`, with CPython under the PSF License) and CodeMirror, React and i18next (MIT).
