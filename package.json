@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "description": "A stealth-action 2D Python tutorial RPG",
-  "license": "AGPL-3.0-or-later",
+  "license": "PolyForm-Noncommercial-1.0.0",
   "packageManager": "pnpm@10.30.3",
   "scripts": {
     "dev": "nx serve game",
