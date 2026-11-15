@@ -110,3 +110,26 @@ The helper scripts formerly in `.scratch/` now live in `tools/review/` (see Hous
 - Pyodide's `SECURITY.md` says vulnerabilities go through GitHub Security Advisories, not public issues, so the draft is written for the advisory form.
 - Draft: `docs/upstream-pyodide-issue.md`.
 - Needs Peter: open https://github.com/pyodide/pyodide/security/advisories/new, paste the title and body from the draft (fields "Type of issue" etc. are in the file), submit. Optional: a separate report to Emscripten for its bzip2 and sqlite3 ports (not drafted).
+
+## 2026-11-15 Lazy locales, German manifest, Pyodide licence, switcher fix (brief from the dispatcher)
+- Trajectory: Peter's open items from the retired list (archive `~/code/.agents/archive/open-tasks-peter-2026-11-15-0804.md` line 532) done: `pyodide/LICENSE.txt`, German manifest and meta description, lazy-loaded inactive language. Found and fixed on the way: the title screen language switcher was invisible.
+- Locales (`packages/i18n/src/i18n.ts`): custom i18next backend over `import('./locales/<lng>')`, so `en` and `de` are separate chunks; `main.tsx` renders after `i18nReady` and then `warmInactiveLanguage()` fetches the other chunk when idle (an SW installed by an older release never precached it, so this keeps offline switching working). Main chunk 948 KB -> 549 KB (en 180 KB, de 245 KB); cipher texts left the main chunk. German has no English fallback; new `packages/i18n/src/__tests__/parity.test.ts` guards that every English key exists in German. `supportedLngs` en/de with `load: 'languageOnly'`: unsupported locales (fr-FR) get English. `i18n.language` can still be `de-AT`/`en-US`; read `resolvedLanguage` for the bundle code. Tests that need a language call `await i18nReady; await i18n.loadLanguages(...)` (storyContent, challenge-validator).
+- German `manifest.json` (name "Venomous Snake – Python-Hacking-RPG" as the in-game subtitle, description, `lang: de`), meta description, `<html lang="de">` before i18n sets it.
+- `pyodide/LICENSE.txt` is generated in `selfHostedPyodide()` (`apps/game/vite.config.ts`): version from the package, MPL 3.2 source links (`github.com/pyodide/pyodide/tree/<version>`, npm), MPL 2.0 text (`apps/game/licenses/MPL-2.0.txt`, Mozilla's copy), CPython licence (`apps/game/licenses/CPython-3.14-LICENSE.txt`, from tag v3.14.2; the Pyodide wasm and stdlib ship CPython 3.14.2 without it). The build fails when Pyodide moves to a Python line other than 3.14: vendor that line's `LICENSE` then. README licence line mentions the file.
+- Switcher: since `b88b00e` the main menu is fixed at z-index 100 and covered the switcher (z-index 10). Now top right at z-index 101, inactive label #a3a3a3 (7.8:1 instead of 2.1:1), pressed state from `resolvedLanguage` (de-AT showed EN as active).
+- Gates: lint, type-check, all 12 test projects, build, `pnpm audit` 0; CI run 43723766197 green on 850ef25. Browser (headless `/usr/bin/chromium` against `vite preview`, scripts `.scratch/i18n/lazy-check.py`, `.scratch/i18n/switcher-check.py`, screenshots there): en-US, de-AT, stored `de`, fr-FR each load only their chunk first, the other after render; switching works both ways; switcher visible and clickable at 1280 and 360 px; no page errors (only the known `favicon.ico` 404). `tools/review/browser-smoke.py` passes against `pnpm dev`. `apps/game/index.html` fails `prettier --check`: pre-existing on main, not touched.
+- Commits: `91053d6` (merge `850ef25`), `29ede6c` (merge `8d13e07`), pushed; branches `feat/lazy-locales-pyodide-licence` and `fix/locale-switcher-above-menu` kept on the remote.
+- Release: handed to "Code: lernspiele.aufner.org" (`rc code lernspiele.aufner.org --brief -`, then a SendMessage about `8d13e07`). Check its handoff for the release id.
+
+## Open decisions
+- Third-party notices beyond MPL and PSF: the shipped wasm also carries bzip2 1.0.6, zlib, SQLite (public domain), libffi, expat, mpdecimal and HACL*; bzip2, mpdecimal (BSD-style) and libffi, expat (MIT) ask that their notices travel with binaries. `LICENSE.txt` now only points to docs.python.org/3.14/license.html. Options: A an agent appends the full notices to `LICENSE.txt` (vendored texts, about 1 h) **recommended**, since the pointer is not the notice those licences ask for; B keep the pointer.
+
+## Needs Peter
+- Post the drafted private advisory at https://github.com/pyodide/pyodide/security/advisories/new (title and body in `docs/upstream-pyodide-issue.md`). Unchanged; agents do not redraft it.
+- Native read of the machine-assisted German dialog (Echo, Nova, Kai read stiff; NeoCorp versus Rattlesnake Corp). Old item, no deadline.
+
+## Dated, not yet due
+- Once a Pyodide release ships SQLite >= 3.50.2 and bzip2 1.0.8: bump `pyodide` in `packages/python-runtime`, bump `CACHE_VERSION` in `apps/game/public/sw.js`, check the vendored CPython licence line (build guard), then move the Android `web/` pin in `~/code/venomous-snake-android`. Last checked 2026-11-15: 314.0.8 still pins SQLite 3.39.0 and bzip2 1.0.6.
+
+## Next steps
+- Only the open decision above and what Peter asks for. BIMM is out of scope (Peter handles it himself).
