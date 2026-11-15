@@ -89,3 +89,9 @@ The helper scripts formerly in `.scratch/` now live in `tools/review/` (see Hous
 - Peter's order: only he may make money from the games. `LICENSE` is the verbatim PolyForm Noncommercial 1.0.0 text with `Required Notice: Copyright 2026 Peter Aufner (https://prof.aufner.org)`; root and all workspace `package.json` files carry `"license": "PolyForm-Noncommercial-1.0.0"`; README licence section rewritten (content CC BY-NC-SA 4.0, third-party Pyodide MPL-2.0). Versions before 2026-11-07 stay AGPL-3.0 for those who received them.
 - Open: `dist/pyodide/` ships Pyodide (MPL-2.0) without a licence or source notice next to the files; MPL 3.2 wants recipients of the executable form told where the source is. Proposal: emit a short `pyodide/LICENSE.txt` in `selfHostedPyodide()`.
 - Gates green (pnpm audit 0, lint, type-check, tests, build). Release via lernspiele by the coordinator.
+
+## 2026-11-15 Modern Web Guidance run (web-modernize timer)
+- `legacy-scan` (modern-web-guidance 1.0.0) on `apps/game` and `packages`: one finding, `ime-safe-enter-submit` at `packages/ui/src/terminal/OutputPanel.tsx:36`, kept. Fix: Enter in the stdin field is ignored while composing (`isComposing` or `keyCode === 229`), plus `preventDefault`. Commit `85af55a`, merged to `main`. Re-scan: 0 findings.
+- Gates: lint, type-check, test, build green. Browser check (headless Playwright against `pnpm dev`, script kept locally in `.scratch/mwg/ime-check.py`): a composing Enter and a 229 Enter keep the field, a plain Enter submits, no page errors.
+- Not released: releases run through `npm run release` in `~/code/lernspiele.aufner.org` (another project; release by the coordinator or Peter).
+- Proposals in `.agents/to-do.md`: free-mode terminal is not interactive, so the stdin field is unreachable in play.
