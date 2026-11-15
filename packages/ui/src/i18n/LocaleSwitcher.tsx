@@ -16,9 +16,9 @@ const LABELS: Record<Language, string> = {
 
 export function LocaleSwitcher({ className }: LocaleSwitcherProps): React.JSX.Element {
   const { t, i18n } = useTranslation('ui');
-  const current = (
-    LANGUAGES.includes(i18n.language as Language) ? i18n.language : 'en'
-  ) as Language;
+  // `resolvedLanguage`, not `language`: an Austrian browser reports `de-AT`.
+  const resolved = i18n.resolvedLanguage ?? 'en';
+  const current = (LANGUAGES.includes(resolved as Language) ? resolved : 'en') as Language;
 
   const switchTo = (lang: Language) => {
     void i18n.changeLanguage(lang);
@@ -44,7 +44,7 @@ export function LocaleSwitcher({ className }: LocaleSwitcherProps): React.JSX.El
             background: current === lang ? 'rgba(0,255,136,0.15)' : 'transparent',
             border: 'none',
             borderRight: lang !== LANGUAGES[LANGUAGES.length - 1] ? '1px solid #1a2a3a' : 'none',
-            color: current === lang ? '#00ff88' : '#3d4752',
+            color: current === lang ? '#00ff88' : '#a3a3a3',
             fontFamily: FONT_FAMILY,
             fontSize: 12,
             fontWeight: current === lang ? 'bold' : 'normal',
