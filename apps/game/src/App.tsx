@@ -772,7 +772,15 @@ export function App(): React.JSX.Element {
           onSettings={handleMenuSettings}
           onTutorial={handleTutorMode}
         />
-        <div style={{ position: 'fixed', right: '16px', bottom: '16px', zIndex: 10 }}>
+        {/* Above the fixed main menu (z-index 100); top corner, the support line owns the bottom. */}
+        <div
+          style={{
+            position: 'fixed',
+            top: 'calc(16px + env(safe-area-inset-top, 0px))',
+            right: '16px',
+            zIndex: 101,
+          }}
+        >
           <LocaleSwitcher />
         </div>
         {saveModalMode === 'load' && (
