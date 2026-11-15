@@ -25,6 +25,62 @@ const MIME: Record<string, string> = {
   '.json': 'application/json',
 };
 
+/** CPython release line whose licence is vendored in `licenses/`; re-vendor when it changes. */
+const VENDORED_PSF_LICENSE = '3.14';
+
+/**
+ * MPL 2.0 section 3.2 asks that recipients of Pyodide's executable form learn where its
+ * source is; CPython's licence asks that its notice stays with every copy.
+ */
+function pyodideLicenseNotice(pyodideDir: string): string {
+  const { version } = JSON.parse(
+    fs.readFileSync(path.join(pyodideDir, 'package.json'), 'utf8'),
+  ) as { version: string };
+  const { info } = JSON.parse(
+    fs.readFileSync(path.join(pyodideDir, 'pyodide-lock.json'), 'utf8'),
+  ) as { info: { python: string } };
+  if (!info.python.startsWith(`${VENDORED_PSF_LICENSE}.`)) {
+    throw new Error(
+      `Pyodide ${version} bundles Python ${info.python}, but licenses/ holds the ` +
+        `CPython ${VENDORED_PSF_LICENSE} licence: vendor the matching one.`,
+    );
+  }
+  const licence = (name: string): string =>
+    fs.readFileSync(path.resolve(__dirname, 'licenses', name), 'utf8');
+  const rule = '='.repeat(72);
+  return [
+    `Pyodide ${version}`,
+    rule,
+    '',
+    `The files in this folder are the unmodified executable form of Pyodide ${version},`,
+    'distributed under the Mozilla Public License 2.0 (full text below).',
+    '',
+    'Source code of this exact version:',
+    `  https://github.com/pyodide/pyodide/tree/${version}`,
+    `  https://www.npmjs.com/package/pyodide/v/${version}`,
+    '',
+    `Pyodide contains CPython ${info.python} (licence below) and further libraries under`,
+    `their own licences, listed at https://docs.python.org/${VENDORED_PSF_LICENSE}/license.html`,
+    'and in the Pyodide source tree.',
+    '',
+    'Venomous Snake itself, outside this folder, is licensed separately: see',
+    'https://github.com/Adrixan/venomous-snake',
+    '',
+    '',
+    rule,
+    'Mozilla Public License 2.0 (Pyodide)',
+    rule,
+    '',
+    licence('MPL-2.0.txt'),
+    '',
+    rule,
+    `CPython ${info.python} licence`,
+    rule,
+    '',
+    licence(`CPython-${VENDORED_PSF_LICENSE}-LICENSE.txt`),
+  ].join('\n');
+}
+
 /**
  * Serves the Pyodide runtime from this origin (dev server and build output) so the
  * game works offline and never depends on a third-party CDN.
@@ -53,6 +109,11 @@ function selfHostedPyodide(): Plugin {
           source: fs.readFileSync(path.join(pyodideDir, name)),
         });
       }
+      this.emitFile({
+        type: 'asset',
+        fileName: 'pyodide/LICENSE.txt',
+        source: pyodideLicenseNotice(pyodideDir),
+      });
     },
   };
 }

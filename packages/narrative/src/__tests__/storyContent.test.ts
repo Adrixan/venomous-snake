@@ -1,5 +1,5 @@
-import { describe, it, expect } from 'vitest';
-import { i18n } from '@venomous-snake/i18n';
+import { beforeAll, describe, it, expect } from 'vitest';
+import { i18n, i18nReady } from '@venomous-snake/i18n';
 import { FLOORS } from '@venomous-snake/challenges';
 import {
   bossEncounterCutscene,
@@ -12,6 +12,11 @@ import { TUTORIAL_STEPS } from '../tutorial/tutorial-steps';
 const floorCutscenes = FLOORS.slice(1).map((floor) => getFloorTransitionCutscene(floor.number));
 
 describe('story content', () => {
+  beforeAll(async () => {
+    await i18nReady;
+    await i18n.loadLanguages(['en', 'de']);
+  });
+
   it('has a transition for every floor above the lobby', () => {
     expect(floorCutscenes.every((cutscene) => cutscene !== undefined)).toBe(true);
   });
