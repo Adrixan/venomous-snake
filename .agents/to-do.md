@@ -7,3 +7,7 @@
 ## 2026-11-15 D52: Pyodide upstream report (decided by Peter: agent drafts, Peter posts)
 - Done: draft in `docs/upstream-pyodide-issue.md`. Needs Peter: post it via https://github.com/pyodide/pyodide/security/advisories/new (Pyodide's policy rules out public issues for vulnerabilities). Do not redraft; the item is closed for agents.
 - After a Pyodide release with SQLite >= 3.50.2 and bzip2 1.0.8: bump `pyodide` in `packages/python-runtime`, bump the service worker `CACHE_VERSION`, then move the Android `web/` pin.
+
+## 2026-11-15 Open items from the retired list
+- Done: `pyodide/LICENSE.txt`, German manifest and meta description, lazy-loaded inactive language, visible title screen switcher (see handoff). Release handed to Code: lernspiele.aufner.org.
+- Open decision: full third-party notices in `LICENSE.txt` (handoff, "Open decisions").
