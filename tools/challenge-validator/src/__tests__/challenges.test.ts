@@ -4,7 +4,7 @@ import { createRequire } from 'node:module';
 import { describe, it, expect, beforeAll } from 'vitest';
 import { loadPyodide } from 'pyodide';
 import { allChallenges } from '@venomous-snake/challenges';
-import { i18n } from '@venomous-snake/i18n';
+import { i18n, i18nReady } from '@venomous-snake/i18n';
 import { InProcessInterpreter } from '@venomous-snake/python-runtime';
 import type { PyodideLike } from '@venomous-snake/python-runtime';
 import { findUnmetChecks } from '@venomous-snake/challenge-engine';
@@ -56,6 +56,11 @@ describe('challenge definitions', () => {
 });
 
 describe('German challenge text', () => {
+  beforeAll(async () => {
+    await i18nReady;
+    await i18n.loadLanguages('de');
+  });
+
   const german = (id: string): GermanDetails =>
     i18n.getResource('de', 'challenges', id.slice(0, 7)) as GermanDetails;
   /** Program text a translation must keep: quoted output, calls and blanks. */
