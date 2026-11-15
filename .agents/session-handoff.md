@@ -121,15 +121,19 @@ The helper scripts formerly in `.scratch/` now live in `tools/review/` (see Hous
 - Commits: `91053d6` (merge `850ef25`), `29ede6c` (merge `8d13e07`), pushed; branches `feat/lazy-locales-pyodide-licence` and `fix/locale-switcher-above-menu` kept on the remote.
 - Release: handed to "Code: lernspiele.aufner.org" (`rc code lernspiele.aufner.org --brief -`, then a SendMessage about `8d13e07`). Check its handoff for the release id.
 
+## 2026-11-15 Third-party notices (Peter's decision: "Add full notices")
+- `pyodide/LICENSE.txt` now ends with `apps/game/licenses/third-party-notices.txt`: a component table, CPython 3.14.2's "Licenses and Acknowledgements for Incorporated Software" (verbatim from `Doc/license.rst`, covers expat 2.7.3, libmpdec, mimalloc, SipHash, dtoa and others), HACL* (MIT, from its CPython source header), libffi (commit f08493d), zlib 1.3.1, bzip2 1.0.6, zstd 1.5.7 (BSD of its dual licence), liblzma (XZ 5.2.2, public domain), SQLite 3.39.0 (public domain), hiwire (MPL 2.0). Components and versions come from Pyodide 314.0.7 `cpython/Makefile` and strings in the shipped wasm; texts fetched at those versions.
+- `CPython-3.14-LICENSE.txt` renamed `CPython-LICENSE.txt`. The build guard is now exact: it fails unless the pyodide package is `LICENSES_VENDORED_FOR` (314.0.7) in `apps/game/vite.config.ts`, because a bump can change CPython and every library. Shown to fail with a wrong constant.
+
 ## Open decisions
-- Third-party notices beyond MPL and PSF: the shipped wasm also carries bzip2 1.0.6, zlib, SQLite (public domain), libffi, expat, mpdecimal and HACL*; bzip2, mpdecimal (BSD-style) and libffi, expat (MIT) ask that their notices travel with binaries. `LICENSE.txt` now only points to docs.python.org/3.14/license.html. Options: A an agent appends the full notices to `LICENSE.txt` (vendored texts, about 1 h) **recommended**, since the pointer is not the notice those licences ask for; B keep the pointer.
+- None.
 
 ## Needs Peter
 - Post the drafted private advisory at https://github.com/pyodide/pyodide/security/advisories/new (title and body in `docs/upstream-pyodide-issue.md`). Unchanged; agents do not redraft it.
 - Native read of the machine-assisted German dialog (Echo, Nova, Kai read stiff; NeoCorp versus Rattlesnake Corp). Old item, no deadline.
 
 ## Dated, not yet due
-- Once a Pyodide release ships SQLite >= 3.50.2 and bzip2 1.0.8: bump `pyodide` in `packages/python-runtime`, bump `CACHE_VERSION` in `apps/game/public/sw.js`, check the vendored CPython licence line (build guard), then move the Android `web/` pin in `~/code/venomous-snake-android`. Last checked 2026-11-15: 314.0.8 still pins SQLite 3.39.0 and bzip2 1.0.6.
+- Once a Pyodide release ships SQLite >= 3.50.2 and bzip2 1.0.8: bump `pyodide` in `packages/python-runtime`, bump `CACHE_VERSION` in `apps/game/public/sw.js`, re-check and re-vendor `apps/game/licenses/` for the new Pyodide (component versions from its `cpython/Makefile`, CPython `Doc/license.rst`), then raise `LICENSES_VENDORED_FOR`, then move the Android `web/` pin in `~/code/venomous-snake-android`. Last checked 2026-11-15: 314.0.8 still pins SQLite 3.39.0 and bzip2 1.0.6.
 
 ## Next steps
 - Only the open decision above and what Peter asks for. BIMM is out of scope (Peter handles it himself).

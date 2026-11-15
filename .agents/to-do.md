@@ -10,4 +10,4 @@
 
 ## 2026-11-15 Open items from the retired list
 - Done: `pyodide/LICENSE.txt`, German manifest and meta description, lazy-loaded inactive language, visible title screen switcher (see handoff). Release handed to Code: lernspiele.aufner.org.
-- Open decision: full third-party notices in `LICENSE.txt` (handoff, "Open decisions").
+- Done on Peter's decision: full third-party notices in `pyodide/LICENSE.txt`.
