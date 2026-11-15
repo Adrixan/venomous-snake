@@ -34,6 +34,10 @@ export interface UseChallengeTerminalReturn {
   runCode: (code: string) => Promise<void>;
   resetState: () => void;
   requestHint: () => void;
+  /** Prompt of the `input()` call a free run is waiting on, if any. */
+  inputPrompt: string | undefined;
+  /** Answers the pending `input()` call. */
+  submitInput: (value: string) => void;
   interpreter: PythonInterpreter;
 }
 
@@ -52,6 +56,7 @@ export function useChallengeTerminal(challengeId: string | null): UseChallengeTe
   const [runError, setRunError] = useState<PythonError | null>(null);
   const [hints, setHints] = useState<string[]>([]);
   const [challengeResult, setChallengeResult] = useState<ChallengeResult | null>(null);
+  const [inputPrompt, setInputPrompt] = useState<string | undefined>(undefined);
 
   const interpreterRef = useRef<PythonInterpreter>(getSharedInterpreter());
   const runnerRef = useRef<ChallengeRunner>(new ChallengeRunner(interpreterRef.current));
@@ -66,9 +71,14 @@ export function useChallengeTerminal(challengeId: string | null): UseChallengeTe
     const unsubOutput = interpreter.onOutput((output) => {
       setOutputs((prev) => [...prev, output]);
     });
+    // Free runs are interactive: input() pauses the run until the learner answers.
+    // Graded runs stay non-interactive (ChallengeRunner), so this never fires for them.
+    // Unsubscribing on unmount ends a run still waiting for input.
+    const unsubInput = interpreter.onInputRequest((prompt) => setInputPrompt(prompt));
 
     return () => {
       unsubOutput();
+      unsubInput();
     };
   }, []);
 
@@ -102,11 +112,12 @@ export function useChallengeTerminal(challengeId: string | null): UseChallengeTe
         console.error('Python run failed', error);
         setOutputs([{ type: 'stderr', text: t('terminal.python_unavailable') }]);
       } finally {
+        setInputPrompt(undefined);
         busy.current = false;
         setIsRunning(false);
       }
     },
-    [ensureReady, challenge, t],
+    [ensureReady, t],
   );
 
   const submitCode = useCallback(
@@ -188,6 +199,11 @@ export function useChallengeTerminal(challengeId: string | null): UseChallengeTe
     [challenge, runCode, ensureReady, session, t],
   );
 
+  const submitInput = useCallback((value: string) => {
+    setInputPrompt(undefined);
+    interpreterRef.current.provideInput(value);
+  }, []);
+
   const resetState = useCallback(() => {
     setOutputs([]);
     setRunError(null);
@@ -215,6 +231,8 @@ export function useChallengeTerminal(challengeId: string | null): UseChallengeTe
         setHints((previous) => [...previous, text]);
       }
     },
+    inputPrompt,
+    submitInput,
     interpreter: interpreterRef.current,
   };
 }

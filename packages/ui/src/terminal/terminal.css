@@ -148,6 +148,8 @@
 }
 
 .terminal-output-stdout {
+  /* Inline, so an input() answer continues the prompt's line like a real terminal. */
+  display: inline;
   margin: 0;
   white-space: pre-wrap;
   word-break: break-word;
@@ -155,6 +157,7 @@
 }
 
 .terminal-output-stderr {
+  display: inline;
   margin: 0;
   white-space: pre-wrap;
   word-break: break-word;
@@ -165,12 +168,19 @@
 
 .terminal-input-area {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 8px;
   padding: 6px 12px;
   background: var(--term-bg-darker);
   border-top: 1px solid var(--term-border);
   flex-shrink: 0;
+}
+
+.terminal-input-label {
+  color: var(--term-green);
+  font-size: 12px;
+  white-space: nowrap;
 }
 
 .terminal-input-prompt {
@@ -180,7 +190,8 @@
 }
 
 .terminal-input-field {
-  flex: 1;
+  flex: 1 1 12ch;
+  min-width: 0;
   background: var(--term-bg);
   border: 1px solid var(--term-border);
   color: var(--term-green);
@@ -190,9 +201,13 @@
   outline: none;
 }
 
-.terminal-input-field:focus {
+.terminal-input-field:focus-visible {
   border-color: var(--term-green);
   box-shadow: 0 0 6px rgba(0, 255, 157, 0.3);
+}
+
+.terminal-input-submit {
+  flex-shrink: 0;
 }
 
 /* ─── Status Bar ──────────────────────────────────────────────────────────── */

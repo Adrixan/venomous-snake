@@ -82,7 +82,8 @@
       "clear_aria": "Clear output",
       "log_aria": "Program output",
       "empty": "No output yet. Run your code with Ctrl+Enter.",
-      "input_aria": "Program input"
+      "input_label": "Input for input():",
+      "input_submit": "Send ⏎"
     },
     "editor": {
       "aria": "Python code editor",

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, useCallback } from 'react';
+import React, { useEffect, useId, useRef, useState, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { PythonOutput } from '@venomous-snake/shared-types';
 import './terminal.css';
@@ -6,6 +6,7 @@ import './terminal.css';
 interface OutputPanelProps {
   outputs: PythonOutput[];
   onClear: () => void;
+  /** Prompt of a pending `input()` call; the stdin form shows while it is set. */
   inputPrompt?: string;
   onInputSubmit?: (value: string) => void;
 }
@@ -20,6 +21,8 @@ function OutputPanelInner({
   const bottomRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const [inputValue, setInputValue] = useState('');
+  const inputId = useId();
+  const promptId = useId();
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -31,25 +34,30 @@ function OutputPanelInner({
     }
   }, [inputPrompt]);
 
-  const handleInputKeyDown = useCallback(
-    (e: React.KeyboardEvent<HTMLInputElement>) => {
-      if (e.key === 'Enter') {
-        e.preventDefault();
-        // Enter that confirms an IME composition (CJK input) must not submit.
-        // keyCode 229 covers Safari, which clears isComposing before this keydown.
-        if (e.nativeEvent.isComposing || e.keyCode === 229) {
-          return;
-        }
-        onInputSubmit?.(inputValue);
-        setInputValue('');
-      }
+  const handleFormSubmit = useCallback(
+    (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      onInputSubmit?.(inputValue);
+      setInputValue('');
     },
     [inputValue, onInputSubmit],
   );
 
+  const handleInputKeyDown = useCallback((e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key !== 'Enter') return;
+    // Stop the browser's implicit submission; all submits go through requestSubmit.
+    e.preventDefault();
+    // Enter that confirms an IME composition (CJK input) must not submit.
+    // keyCode 229 covers Safari, which clears isComposing before this keydown.
+    if (e.nativeEvent.isComposing || e.keyCode === 229) return;
+    e.currentTarget.form?.requestSubmit();
+  }, []);
+
   const handleInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
   }, []);
+
+  const promptText = inputPrompt?.trim() ?? '';
 
   return (
     <div className="terminal-output-area">
@@ -86,18 +94,34 @@ function OutputPanelInner({
         <div ref={bottomRef} />
       </div>
       {inputPrompt !== undefined && (
-        <div className="terminal-input-area">
-          <span className="terminal-input-prompt">{inputPrompt}</span>
+        <form className="terminal-input-area" onSubmit={handleFormSubmit}>
+          <label htmlFor={inputId} className="terminal-input-label">
+            {t('terminal.output.input_label')}
+          </label>
+          {promptText !== '' && (
+            <span id={promptId} className="terminal-input-prompt">
+              {promptText}
+            </span>
+          )}
           <input
             ref={inputRef}
+            id={inputId}
             className="terminal-input-field"
             type="text"
             value={inputValue}
             onChange={handleInputChange}
             onKeyDown={handleInputKeyDown}
-            aria-label={t('terminal.output.input_aria')}
+            autoComplete="off"
+            autoCapitalize="off"
+            autoCorrect="off"
+            spellCheck={false}
+            enterKeyHint="send"
+            {...(promptText !== '' ? { 'aria-describedby': promptId } : {})}
           />
-        </div>
+          <button type="submit" className="terminal-btn terminal-input-submit">
+            {t('terminal.output.input_submit')}
+          </button>
+        </form>
       )}
     </div>
   );

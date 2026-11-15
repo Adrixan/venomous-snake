@@ -92,6 +92,23 @@ describe('PyodideRuntime', () => {
     expect(seen.join('')).toBe('Name: Ada\nAge: 36\nAda 37\n');
   });
 
+  it('ends a run waiting for input when the last input listener leaves', async () => {
+    let unsubscribe: () => void = () => undefined;
+    unsubscribe = py.onInputRequest(() => queueMicrotask(() => unsubscribe()));
+    const r = await py.execute('x = input("Name: ")\nprint("never")', { interactive: true });
+    expect(r.success).toBe(true);
+    expect(stdout(r)).toBe('Name: ');
+    const next = await py.execute('print("next")');
+    expect(stdout(next)).toBe('next\n');
+  });
+
+  it('raises EOFError for input() without interactive mode', async () => {
+    const unsubscribe = py.onInputRequest(() => undefined);
+    const r = await py.execute('input("Name: ")');
+    unsubscribe();
+    expect(r.error?.type).toBe('EOFError');
+  });
+
   it('survives loops that finish quickly', async () => {
     const r = await py.execute('print(sum(range(100000)))');
     expect(stdout(r)).toBe('4999950000\n');

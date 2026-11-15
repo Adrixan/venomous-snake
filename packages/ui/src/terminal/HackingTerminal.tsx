@@ -153,22 +153,16 @@ function FreeModeTerminal({
       if (!interpreter.isReady()) return;
       setStatus('executing');
       try {
-        const result = await interpreter.execute(code, {
+        // Output, tracebacks included, streams in through onOutput; interactive runs
+        // pause at input() and show the stdin form through onInputRequest.
+        await interpreter.execute(code, {
+          interactive: true,
+          echoPrompts: true,
           timeoutMessage: (seconds) => t('terminal.failure.time_limit', { seconds }),
         });
-        setOutputs((prev) => [...prev, ...result.output]);
-        if (result.error !== undefined) {
-          const err = result.error;
-          setOutputs((prev) => [
-            ...prev,
-            {
-              type: 'stderr' as const,
-              text: err.traceback ?? `${err.type}: ${err.message}`,
-            },
-          ]);
-        }
         onSubmit?.(code);
       } finally {
+        setInputPrompt(undefined);
         setStatus('ready');
       }
     },
@@ -305,6 +299,8 @@ function ChallengeModeTerminal({
     runCode,
     resetState,
     requestHint,
+    inputPrompt,
+    submitInput,
     interpreter,
   } = useChallengeTerminal(challengeId);
 
@@ -508,7 +504,11 @@ function ChallengeModeTerminal({
             {...(readOnlyRanges ? { readOnlyRanges } : {})}
           />
         </div>
-        <OutputPanel outputs={outputs} onClear={resetState} />
+        <OutputPanel
+          outputs={outputs}
+          onClear={resetState}
+          {...(inputPrompt !== undefined ? { inputPrompt, onInputSubmit: submitInput } : {})}
+        />
       </div>
 
       {/* Result panel */}
