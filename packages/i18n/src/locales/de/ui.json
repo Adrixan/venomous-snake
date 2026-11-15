@@ -82,7 +82,8 @@
       "clear_aria": "Ausgabe löschen",
       "log_aria": "Programmausgabe",
       "empty": "Noch keine Ausgabe. Führe deinen Code mit Strg+Eingabe aus.",
-      "input_aria": "Programmeingabe"
+      "input_label": "Eingabe für input():",
+      "input_submit": "Senden ⏎"
     },
     "editor": {
       "aria": "Python-Code-Editor",

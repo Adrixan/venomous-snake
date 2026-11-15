@@ -82,6 +82,9 @@ export abstract class BaseInterpreter implements PythonInterpreter {
     this.inputCallbacks.add(callback);
     return () => {
       this.inputCallbacks.delete(callback);
+      // Nobody is left to answer (the terminal closed): end the waiting run so the
+      // run queue of the shared interpreter does not stall.
+      if (this.inputCallbacks.size === 0) this.cancelPendingInput();
     };
   }
 
@@ -99,6 +102,7 @@ export abstract class BaseInterpreter implements PythonInterpreter {
   }
 
   private requestInput(prompt: string): Promise<string | null> {
+    if (this.inputCallbacks.size === 0) return Promise.resolve(null);
     return new Promise<string | null>((resolve) => {
       this.inputWaiter = resolve;
       for (const callback of this.inputCallbacks) callback(prompt);
