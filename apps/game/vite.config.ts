@@ -25,26 +25,29 @@ const MIME: Record<string, string> = {
   '.json': 'application/json',
 };
 
-/** CPython release line whose licence is vendored in `licenses/`; re-vendor when it changes. */
-const VENDORED_PSF_LICENSE = '3.14';
+/**
+ * Pyodide release the texts in `licenses/` were taken for. A Pyodide bump can change CPython
+ * and every bundled library, so the build stops until they are checked and re-vendored.
+ */
+const LICENSES_VENDORED_FOR = '314.0.7';
 
 /**
  * MPL 2.0 section 3.2 asks that recipients of Pyodide's executable form learn where its
- * source is; CPython's licence asks that its notice stays with every copy.
+ * source is; CPython and the bundled libraries ask that their notices travel with every copy.
  */
 function pyodideLicenseNotice(pyodideDir: string): string {
   const { version } = JSON.parse(
     fs.readFileSync(path.join(pyodideDir, 'package.json'), 'utf8'),
   ) as { version: string };
+  if (version !== LICENSES_VENDORED_FOR) {
+    throw new Error(
+      `Pyodide is ${version}, but apps/game/licenses/ was vendored for ` +
+        `${LICENSES_VENDORED_FOR}: re-check its CPython licence and third-party notices.`,
+    );
+  }
   const { info } = JSON.parse(
     fs.readFileSync(path.join(pyodideDir, 'pyodide-lock.json'), 'utf8'),
   ) as { info: { python: string } };
-  if (!info.python.startsWith(`${VENDORED_PSF_LICENSE}.`)) {
-    throw new Error(
-      `Pyodide ${version} bundles Python ${info.python}, but licenses/ holds the ` +
-        `CPython ${VENDORED_PSF_LICENSE} licence: vendor the matching one.`,
-    );
-  }
   const licence = (name: string): string =>
     fs.readFileSync(path.resolve(__dirname, 'licenses', name), 'utf8');
   const rule = '='.repeat(72);
@@ -59,9 +62,8 @@ function pyodideLicenseNotice(pyodideDir: string): string {
     `  https://github.com/pyodide/pyodide/tree/${version}`,
     `  https://www.npmjs.com/package/pyodide/v/${version}`,
     '',
-    `Pyodide contains CPython ${info.python} (licence below) and further libraries under`,
-    `their own licences, listed at https://docs.python.org/${VENDORED_PSF_LICENSE}/license.html`,
-    'and in the Pyodide source tree.',
+    `Pyodide contains CPython ${info.python} and further libraries; their licences and`,
+    'notices follow the MPL text.',
     '',
     'Venomous Snake itself, outside this folder, is licensed separately: see',
     'https://github.com/Adrixan/venomous-snake',
@@ -77,7 +79,9 @@ function pyodideLicenseNotice(pyodideDir: string): string {
     `CPython ${info.python} licence`,
     rule,
     '',
-    licence(`CPython-${VENDORED_PSF_LICENSE}-LICENSE.txt`),
+    licence('CPython-LICENSE.txt'),
+    '',
+    licence('third-party-notices.txt'),
   ].join('\n');
 }
 
