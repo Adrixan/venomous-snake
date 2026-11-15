@@ -34,6 +34,12 @@ function OutputPanelInner({
   const handleInputKeyDown = useCallback(
     (e: React.KeyboardEvent<HTMLInputElement>) => {
       if (e.key === 'Enter') {
+        e.preventDefault();
+        // Enter that confirms an IME composition (CJK input) must not submit.
+        // keyCode 229 covers Safari, which clears isComposing before this keydown.
+        if (e.nativeEvent.isComposing || e.keyCode === 229) {
+          return;
+        }
         onInputSubmit?.(inputValue);
         setInputValue('');
       }
