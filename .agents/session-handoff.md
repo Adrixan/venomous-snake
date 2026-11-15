@@ -105,7 +105,7 @@ The helper scripts formerly in `.scratch/` now live in `tools/review/` (see Hous
 - Commit `4f8fe87`, merged to `main` as `1d3658e`, pushed. Not released (by order); Greeter told the lernspiele release may go ahead.
 - Open: Run stays disabled while a program waits for input; the way out is answering or closing the terminal. A Stop button would be a small follow-up if Peter wants one.
 
-## 2026-11-15 D52 Pyodide upstream report (from the Code session, Peter's tick in `Open tasks.md` line 139)
+## 2026-11-15 D52 Pyodide upstream report (from the Code session, Peter's tick in `~/code/.agents/archive/open-tasks-2026-11-15.md` line 139)
 - Verified in the shipped `pyodide.asm.wasm` (314.0.7): SQLite `3.39.0` (2022-06-25), bzip2 `1.0.6, 6-Sept-2010`. Pyodide 314.0.8 (latest, 2026-11-13) and `main` still pin `sqlite-autoconf-3390000` (`cpython/Makefile` line 30) and use Emscripten's `-sUSE_BZIP2` port, which is 1.0.6 in Emscripten 5.0.3 and `main`; `emscripten-ports/bzip2` `decompress.c` lacks the CVE-2019-12900 upper bound. No existing issue; open PR pyodide#6533 (sqlite extensions) keeps 3.39.0.
 - Pyodide's `SECURITY.md` says vulnerabilities go through GitHub Security Advisories, not public issues, so the draft is written for the advisory form.
 - Draft: `docs/upstream-pyodide-issue.md`.
