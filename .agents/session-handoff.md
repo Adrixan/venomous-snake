@@ -95,3 +95,18 @@ The helper scripts formerly in `.scratch/` now live in `tools/review/` (see Hous
 - Gates: lint, type-check, test, build green. Browser check (headless Playwright against `pnpm dev`, script kept locally in `.scratch/mwg/ime-check.py`): a composing Enter and a 229 Enter keep the field, a plain Enter submits, no page errors.
 - Not released: releases run through `npm run release` in `~/code/lernspiele.aufner.org` (another project; release by the coordinator or Peter).
 - Proposals in `.agents/to-do.md`: free-mode terminal is not interactive, so the stdin field is unreachable in play.
+
+## 2026-11-15 Interactive input() (Peter's decision "Venomous Snake input()")
+- Trajectory: free mode runs Python with `interactive: true` and `echoPrompts: true`; challenge mode subscribes `onInputRequest` in `useChallengeTerminal` for free runs (graded runs stay non-interactive, `ChallengeRunner`). The stdin field in `OutputPanel` is a `<form>` with a visible `<label for>` ("Eingabe für input():" / "Input for input():"), the prompt as `aria-describedby`, a `type="submit"` button ("Senden ⏎" / "Send ⏎"); Enter goes through `requestSubmit` and keeps the IME guard. i18n key `input_aria` replaced by `input_label` and `input_submit`.
+- Runtime: `BaseInterpreter` ends a run waiting for input when the last `onInputRequest` listener unsubscribes (terminal closed), so the shared interpreter queue cannot stall; `requestInput` without listeners resolves to `null`.
+- Fixed on the way: free mode appended streamed output and tracebacks twice (it also collected `result.output`). Output chunks are now `display: inline`, so an answer continues its prompt's line.
+- Tests: new `packages/ui/src/terminal/__tests__/OutputPanel.test.tsx` (jsdom via `// @vitest-environment jsdom`, react-dom `act`, no new dependency), two runtime tests (cancel on unsubscribe, EOFError without interactive). Gates lint, type-check, test, build, `pnpm audit` 0 green.
+- Browser check (headless Chromium `/usr/bin/chromium`, `pnpm dev`, script `.scratch/input/input-check.py`, screenshots there): free mode and a challenge free run both ask `Name:` then `Alter:`, answers via the Send button and via Enter, output `Name: Ada / Alter: 36 / Hallo Ada 37`, closing while input is pending leaves the next run working, no overflow at 360 px. Only console errors: `favicon.ico` 404 under the dev server (pre-existing, unrelated).
+- Commit `4f8fe87`, merged to `main` as `1d3658e`, pushed. Not released (by order); Greeter told the lernspiele release may go ahead.
+- Open: Run stays disabled while a program waits for input; the way out is answering or closing the terminal. A Stop button would be a small follow-up if Peter wants one.
+
+## 2026-11-15 D52 Pyodide upstream report (from the Code session, Peter's tick in `Open tasks.md` line 139)
+- Verified in the shipped `pyodide.asm.wasm` (314.0.7): SQLite `3.39.0` (2022-06-25), bzip2 `1.0.6, 6-Sept-2010`. Pyodide 314.0.8 (latest, 2026-11-13) and `main` still pin `sqlite-autoconf-3390000` (`cpython/Makefile` line 30) and use Emscripten's `-sUSE_BZIP2` port, which is 1.0.6 in Emscripten 5.0.3 and `main`; `emscripten-ports/bzip2` `decompress.c` lacks the CVE-2019-12900 upper bound. No existing issue; open PR pyodide#6533 (sqlite extensions) keeps 3.39.0.
+- Pyodide's `SECURITY.md` says vulnerabilities go through GitHub Security Advisories, not public issues, so the draft is written for the advisory form.
+- Draft: `docs/upstream-pyodide-issue.md`.
+- Needs Peter: open https://github.com/pyodide/pyodide/security/advisories/new, paste the title and body from the draft (fields "Type of issue" etc. are in the file), submit. Optional: a separate report to Emscripten for its bzip2 and sqlite3 ports (not drafted).
